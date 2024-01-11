@@ -1,0 +1,4 @@
+name: SchoolWars
+version: '${project.version}'
+main: de.kuscheltiermafia.schoolwars.SchoolWars
+api-version: '1.20'
