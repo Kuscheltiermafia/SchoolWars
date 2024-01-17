@@ -20,7 +20,7 @@ public class JoinEvent implements Listener {
 
         Player p = e.getPlayer();
 
-        p.teleport(new Location(p.getWorld(), -24, 80, 175, 90, 0));
+        p.teleport(new Location(p.getWorld(), -24, 80.5, 176, 90, 0));
 
         for (Player pl : Bukkit.getOnlinePlayers()){
 

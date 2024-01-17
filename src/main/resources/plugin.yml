@@ -2,3 +2,8 @@ name: SchoolWars
 version: '${project.version}'
 main: de.kuscheltiermafia.schoolwars.SchoolWars
 api-version: '1.20'
+commands:
+  start:
+    description: Starts the game
+  clearTeams:
+    description: clears all teams

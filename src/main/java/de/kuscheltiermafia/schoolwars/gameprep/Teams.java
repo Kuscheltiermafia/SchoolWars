@@ -10,33 +10,36 @@ import org.bukkit.scoreboard.Team;
 
 public class Teams {
 
-    static ScoreboardManager manager = Bukkit.getScoreboardManager();
-    static Scoreboard board = manager.getNewScoreboard();
-
-    static Team sport = board.registerNewTeam("Sport");
-    static Team sprache = board.registerNewTeam("Sprache");
-    static Team nws = board.registerNewTeam("NWS");
+    static Team sport;
+    static Team sprache;
+    static Team nws;
 
     public static void prep() {
 
-        sport.setPrefix(ChatColor.DARK_RED + "[Sport]");
-        sprache.setPrefix(ChatColor.GOLD + "[Sprache]");
-        nws.setPrefix(ChatColor.GREEN + "[NWS]");
+        Scoreboard board = SchoolWars.getBoard();
+
+        sport = board.registerNewTeam("Sport");
+        sprache = board.registerNewTeam("Sprache");
+        nws = board.registerNewTeam("NWS");
 
     }
 
-    public void joinTeams(){
+    public static void joinTeams(){
 
-        int left = SchoolWars.getPlayerCount();
+        int left = SchoolWars.getPlayerCount() + 1;
 
         for(Player p : Bukkit.getOnlinePlayers()){
 
             if (left % 3 == 0){
-                sport.addPlayer(p);
+                sport.addEntry(p.getName());
+                p.sendMessage(ChatColor.WHITE + "Du bist im Team: " + ChatColor.DARK_RED + "Sport");
+
             } else if (left % 4 == 1) {
-                sprache.addPlayer(p);
+                sprache.addEntry(p.getName());
+                p.sendMessage(ChatColor.WHITE + "Du bist im Team: " + ChatColor.GOLD + "Sprache");
             }else{
-                nws.addPlayer(p);
+                nws.addEntry(p.getName());
+                p.sendMessage(ChatColor.WHITE + "Du bist im Team: " + ChatColor.GREEN + "Naturwissenschaftler");
             }
 
             left--;
@@ -44,5 +47,17 @@ public class Teams {
         }
     }
 
+//    public static void clearTeams(){
+//
+//        for(int i = 0; i < nws.getSize() + 1; i++){
+//            nws.removeEntry(nws.getEntries().stream().findFirst().toString());
+//        }
+//        for(int i = 0; i < sport.getSize() + 1; i++){
+//            nws.removeEntry(sport.getEntries().stream().findFirst().toString());
+//        }
+//        for(int i = 0; i < sprache.getSize() + 1; i++){
+//            nws.removeEntry(sprache.getEntries().stream().findFirst().toString());
+//        }
+//    }
 
 }
