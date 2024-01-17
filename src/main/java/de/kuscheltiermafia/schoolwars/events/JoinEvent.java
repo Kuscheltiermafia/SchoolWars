@@ -16,15 +16,17 @@ public class JoinEvent implements Listener {
     @EventHandler
     public void onPLayerJoin(PlayerJoinEvent e){
 
+        SchoolWars.setPlayerCount(SchoolWars.getPlayerCount() + 1);
+
         Player p = e.getPlayer();
 
-        p.teleport(new Location(p.getWorld(), -24, 80, 175));
+        p.teleport(new Location(p.getWorld(), -24, 80, 175, 90, 0));
 
         for (Player pl : Bukkit.getOnlinePlayers()){
 
-            pl.spawnParticle(Particle.LAVA, p.getLocation(), 1, 0.01, 0.01, 0.01);
-//            pl.spawnParticle(Particle.EXPLOSION_LARGE, p.getLocation(), 5, 1);
-//            pl.spawnParticle(Particle.PORTAL, p.getLocation(), 200, 4);
+            pl.spawnParticle(Particle.LAVA, p.getLocation(), 40, 0, 0.2, 0);
+            pl.spawnParticle(Particle.EXPLOSION_HUGE, p.getLocation(), 10, 0, 0.2, 0);
+            pl.spawnParticle(Particle.PORTAL, p.getLocation(), 100, 0, 0.2, 0);
 
         }
 
