@@ -1,63 +1,71 @@
 package de.kuscheltiermafia.schoolwars.gameprep;
 
-import de.kuscheltiermafia.schoolwars.SchoolWars;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.ScoreboardManager;
-import org.bukkit.scoreboard.Team;
+
+import java.util.ArrayList;
 
 public class Teams {
 
-    static Team sport;
-    static Team sprache;
-    static Team nws;
+    public static ArrayList<String> sprachler = new ArrayList<String>();
+    public static ArrayList<String> naturwissenschaftler = new ArrayList<String>();
+    public static ArrayList<String> sportler = new ArrayList<String>();
 
-    public static void prep() {
-
-        Scoreboard board = SchoolWars.getBoard();
-
-        sport = board.registerNewTeam("Sport");
-        sprache = board.registerNewTeam("Sprache");
-        nws = board.registerNewTeam("NWS");
-
-    }
 
     public static void joinTeams(){
 
-        int left = SchoolWars.getPlayerCount() + 1;
+        int i = Bukkit.getOnlinePlayers().size();
 
         for(Player p : Bukkit.getOnlinePlayers()){
 
-            if (left % 3 == 0){
-                sport.addEntry(p.getName());
-                p.sendMessage(ChatColor.WHITE + "Du bist im Team: " + ChatColor.DARK_RED + "Sport");
-
-            } else if (left % 4 == 1) {
-                sprache.addEntry(p.getName());
-                p.sendMessage(ChatColor.WHITE + "Du bist im Team: " + ChatColor.GOLD + "Sprache");
-            }else{
-                nws.addEntry(p.getName());
-                p.sendMessage(ChatColor.WHITE + "Du bist im Team: " + ChatColor.GREEN + "Naturwissenschaftler");
+            if(i % 3 == 0){
+                sprachler.add(p.getName()); ;
+            } else if(i % 3 == 1){
+                naturwissenschaftler.add(p.getName());
+            } else {
+                sportler.add(p.getName());
             }
 
-            left--;
+            i--;
+
 
         }
+
     }
 
-//    public static void clearTeams(){
-//
-//        for(int i = 0; i < nws.getSize() + 1; i++){
-//            nws.removeEntry(nws.getEntries().stream().findFirst().toString());
-//        }
-//        for(int i = 0; i < sport.getSize() + 1; i++){
-//            nws.removeEntry(sport.getEntries().stream().findFirst().toString());
-//        }
-//        for(int i = 0; i < sprache.getSize() + 1; i++){
-//            nws.removeEntry(sprache.getEntries().stream().findFirst().toString());
-//        }
-//    }
+    public static void configurePlayer(String playerName, String team){
+
+        Player p = Bukkit.getPlayer(playerName);
+
+        if(team.equals("sprachler")){
+            p.sendMessage("Du bist ein " + ChatColor.GOLD + "Sprachler");
+
+            p.setDisplayName(ChatColor.GOLD + "[Sprache] " + p.getName());
+            p.setPlayerListName(ChatColor.GOLD + "[Sprache] " + p.getName());
+        }else if(team.equals("naturwissenschaftler")){
+            p.sendMessage("Du bist ein " + ChatColor.GREEN + "Naturwissenschaftler");
+
+            p.setDisplayName(ChatColor.GREEN + "[NWS] " + p.getName());
+            p.setPlayerListName(ChatColor.GREEN + "[NWS] " + p.getName());
+        }else if(team.equals("sportler")){
+            p.sendMessage("Du bist ein " + ChatColor.DARK_RED + "Sportler");
+
+            p.setDisplayName(ChatColor.DARK_RED + "[Sport] " + p.getName());
+            p.setPlayerListName(ChatColor.DARK_RED + "[Sport] " + p.getName());
+        }
+
+    }
+
+    public static void clearTeams(){
+        sprachler.clear();
+        naturwissenschaftler.clear();
+        sportler.clear();
+    }
+
+    public static void resetPlayer(Player p){
+        p.setDisplayName(p.getName());
+        p.setPlayerListName(p.getName());
+    }
 
 }

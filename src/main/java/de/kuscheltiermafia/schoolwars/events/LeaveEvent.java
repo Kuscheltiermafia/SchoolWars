@@ -10,6 +10,7 @@ public class LeaveEvent implements Listener {
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent e){
         SchoolWars.setPlayerCount(SchoolWars.getPlayerCount() - 1);
+        e.setQuitMessage("");
     }
 
 }

@@ -1,0 +1,10 @@
+de\kuscheltiermafia\schoolwars\events\interactionCancel.class
+de\kuscheltiermafia\schoolwars\events\JoinEvent.class
+de\kuscheltiermafia\schoolwars\commands\adminItems.class
+de\kuscheltiermafia\schoolwars\commands\ClearTeams.class
+de\kuscheltiermafia\schoolwars\events\LeaveEvent.class
+de\kuscheltiermafia\schoolwars\commands\TeamList.class
+de\kuscheltiermafia\schoolwars\items\Items.class
+de\kuscheltiermafia\schoolwars\commands\StartGame.class
+de\kuscheltiermafia\schoolwars\SchoolWars.class
+de\kuscheltiermafia\schoolwars\gameprep\Teams.class
