@@ -1,12 +1,15 @@
 package de.kuscheltiermafia.schoolwars;
 
-//import de.kuscheltiermafia.schoolwars.commands.ClearTeams;
+import com.sun.tools.javac.jvm.Gen;
 import de.kuscheltiermafia.schoolwars.commands.ClearTeams;
 import de.kuscheltiermafia.schoolwars.commands.StartGame;
+import de.kuscheltiermafia.schoolwars.commands.TeamList;
 import de.kuscheltiermafia.schoolwars.commands.adminItems;
+import de.kuscheltiermafia.schoolwars.events.DeathEvent;
 import de.kuscheltiermafia.schoolwars.events.JoinEvent;
 import de.kuscheltiermafia.schoolwars.events.interactionCancel;
 import de.kuscheltiermafia.schoolwars.gameprep.Teams;
+import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -34,16 +37,18 @@ public final class SchoolWars extends JavaPlugin {
         board = Bukkit.getScoreboardManager().getNewScoreboard();
 
         Items.initItems();
+        GenerateItems.generateItemLocations();
 
         PluginManager pluginManager = Bukkit.getPluginManager();
 
         pluginManager.registerEvents(new JoinEvent(), this);
         pluginManager.registerEvents(new interactionCancel(), this);
+        pluginManager.registerEvents(new DeathEvent(), this);
 
         getCommand("start").setExecutor(new StartGame());
         getCommand("clearTeams").setExecutor(new ClearTeams());
         getCommand("itemlist").setExecutor(new adminItems());
-        getCommand("teamlist").setExecutor(new de.kuscheltiermafia.schoolwars.commands.TeamList());
+        getCommand("teamlist").setExecutor(new TeamList());
 
         Teams.clearTeams();
         for (Player p :Bukkit.getOnlinePlayers()) {

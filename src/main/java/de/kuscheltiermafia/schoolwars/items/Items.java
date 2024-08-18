@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Items {
@@ -15,6 +16,10 @@ public class Items {
     public static ItemStack spacer;
     public static ItemStack nuke;
 
+    public static ItemStack nws_ranzen;
+    public static ItemStack sprach_ranzen;
+    public static ItemStack sport_ranzen;
+
 
 
     public static void initItems() {
@@ -24,6 +29,15 @@ public class Items {
         spacer = createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, " ", 2, 1, null, false);
         nuke = createItem(Material.TNT, "§4Atombombe", 1, 1, null, true);
         laptop = createItem(Material.HEAVY_WEIGHTED_PRESSURE_PLATE, "§8iFake Laptop", 1, 1, null, false);
+
+        ArrayList<String> ranzen_lore = new ArrayList<String>();
+        ranzen_lore.add("§7- Dies ist dein Ranzen -");
+        ranzen_lore.add("§7Beschütze und verstecke ihn");
+        ranzen_lore.add("§7unter allen Umständen!");
+
+        nws_ranzen = createItem(Material.GREEN_WOOL, "§2Grüner Ranzen", 1, 1, ranzen_lore, false);
+        sprach_ranzen = createItem(Material.YELLOW_WOOL, "§6Gelber Ranzen", 1, 1, ranzen_lore, false);
+        sport_ranzen = createItem(Material.RED_WOOL, "§4Roter Ranzen", 1, 1, ranzen_lore, false);
 
     }
 

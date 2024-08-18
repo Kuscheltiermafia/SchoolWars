@@ -18,13 +18,12 @@ public class JoinEvent implements Listener {
     @EventHandler
     public void onPLayerJoin(PlayerJoinEvent e){
 
-
-
         SchoolWars.setPlayerCount(SchoolWars.getPlayerCount() + 1);
 
         Player p = e.getPlayer();
 
         p.teleport(new Location(p.getWorld(), -24, 80.5, 176, 90, 0));
+        p.setRespawnLocation(new Location(p.getWorld(), -33.5, 88, 145.5, -90, 0));
 
         for (Player pl : Bukkit.getOnlinePlayers()){
 
@@ -53,11 +52,11 @@ public class JoinEvent implements Listener {
             } else if (Teams.sprachler.contains(p.getName())){
                 Teams.configurePlayer(p.getName(), "sprachler");
             } else {
-                p.sendMessage("Du bist keinem Team zugeordnet.");
+                p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist keinem Team zugeordnet.");
             }
 
         }else {
-            e.getPlayer().sendMessage("Das Spiel hat noch nicht begonnen.");
+            e.getPlayer().sendMessage(ChatColor.YELLOW + "[SchoolWars] Das Spiel hat noch nicht begonnen.");
         }
 
         e.setJoinMessage("");
