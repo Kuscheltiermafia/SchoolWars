@@ -1,5 +1,25 @@
+/**
+ * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
+ * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
+ * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
+ * ██║╚██╔╝██║██╔══██║██║  ██║██╔══╝      ██╔══██╗  ╚██╔╝
+ * ██║ ╚═╝ ██║██║  ██║██████╔╝███████╗    ██████╔╝   ██║
+ * ╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝ ╚══════╝    ╚═════╝    ╚═╝
+ *
+ * ██╗  ██╗██╗   ██╗███████╗ ██████╗██╗  ██╗███████╗██╗  ████████╗██╗███████╗██████╗ ███╗   ███╗ █████╗ ███████╗██╗ █████╗
+ * ██║ ██╔╝██║   ██║██╔════╝██╔════╝██║  ██║██╔════╝██║  ╚══██╔══╝██║██╔════╝██╔══██╗████╗ ████║██╔══██╗██╔════╝██║██╔══██╗
+ * █████╔╝ ██║   ██║███████╗██║     ███████║█████╗  ██║     ██║   ██║█████╗  ██████╔╝██╔████╔██║███████║█████╗  ██║███████║
+ * ██╔═██╗ ██║   ██║╚════██║██║     ██╔══██║██╔══╝  ██║     ██║   ██║██╔══╝  ██╔══██╗██║╚██╔╝██║██╔══██║██╔══╝  ██║██╔══██║
+ * ██║  ██╗╚██████╔╝███████║╚██████╗██║  ██║███████╗███████╗██║   ██║███████╗██║  ██║██║ ╚═╝ ██║██║  ██║██║     ██║██║  ██║
+ * ╚═╝  ╚═╝ ╚═════╝ ╚══════╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝   ╚═╝╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝
+ *
+ * This is a plugin from Morgon and CrAzyA22 - Unless explicitly stated otherwise you are not permitted to use any of the given code!
+ *
+ */
+
 package de.kuscheltiermafia.schoolwars.events;
 
+import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.gameprep.Teams;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
@@ -29,23 +49,30 @@ public class DeathEvent implements Listener {
             String killerName = "";
 
 
+//destroy Ranzen
             if (Teams.naturwissenschaftler.contains(p.getName())) {
                 playerName = ChatColor.GREEN + "[NWS] " + p.getName();
-                Ranzen.destroyRanzen(p.getKiller(), ChatColor.GREEN + "naturwissenschaftler", p.getLocation());
-                p.getInventory().remove(new ItemStack(Items.nws_ranzen));
+                if(p.getKiller() != null && p.getInventory().contains(Items.nws_ranzen)) {
+                    Ranzen.destroyRanzen(p.getKiller(), SchoolWars.nameNaturwissenschaftler, p.getLocation());
+                    p.getInventory().remove(new ItemStack(Items.nws_ranzen));
+                }
             } else if (Teams.sportler.contains(p.getName())) {
                 playerName = ChatColor.DARK_RED + "[Sport] " + p.getName();
-                Ranzen.destroyRanzen(p.getKiller(), ChatColor.DARK_RED + "sportler", p.getLocation());
-                p.getInventory().remove(new ItemStack(Items.sport_ranzen));
+                if(p.getKiller() != null && p.getInventory().contains(Items.sport_ranzen)) {
+                    Ranzen.destroyRanzen(p.getKiller(), SchoolWars.nameSportler, p.getLocation());
+                    p.getInventory().remove(new ItemStack(Items.sport_ranzen));
+                }
 
             } else if (Teams.sprachler.contains(p.getName())) {
                 playerName = ChatColor.GOLD + "[Sprache] " + p.getName();
-                Ranzen.destroyRanzen(p.getKiller(), ChatColor.GOLD + "sprachler", p.getLocation());
-                p.getInventory().remove(new ItemStack(Items.sprach_ranzen));
+                if(p.getKiller() != null && p.getInventory().contains(Items.sprach_ranzen)) {
+                    Ranzen.destroyRanzen(p.getKiller(), SchoolWars.nameSprachler, p.getLocation());
+                    p.getInventory().remove(new ItemStack(Items.sprach_ranzen));
+                }
 
             }
 
-
+//Ready Killers Name for message
             if (p.getKiller() != null) {
                 Player killer = p.getKiller();
                 killerName = killer.getName();
@@ -59,13 +86,14 @@ public class DeathEvent implements Listener {
                 }
             }
 
-
+//send death message
             if (p.getKiller() == null) {
                 Bukkit.broadcastMessage(playerName + ChatColor.GRAY + " hat auf natürliche Weise sein Ende gefunden.");
             } else {
                 Bukkit.broadcastMessage(playerName + ChatColor.GRAY + " wurde von " + killerName + ChatColor.GRAY + " besiegt.");
             }
 
+///set player to dead state
             p.setHealth(20);
             p.sendTitle("§4Du wurdest besiegt!", "Dein Team muss dich wiederbeleben.", 10, 70, 20);
             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 999999, 255, false, false, false));

@@ -17,87 +17,46 @@
  *
  */
 
-package de.kuscheltiermafia.schoolwars.commands;
+package de.kuscheltiermafia.schoolwars.events;
 
-import de.kuscheltiermafia.schoolwars.SchoolWars;
-import de.kuscheltiermafia.schoolwars.events.RevivePlayer;
-import de.kuscheltiermafia.schoolwars.gameprep.Teams;
-import de.kuscheltiermafia.schoolwars.items.GenerateItems;
-import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
+import de.kuscheltiermafia.schoolwars.items.Items;
 import org.bukkit.Location;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.inventory.ItemStack;
 
-import static de.kuscheltiermafia.schoolwars.events.RevivePlayer.deadPlayers;
+public class HandleKuehlpack implements Listener {
 
-public class StartGame implements CommandExecutor {
+//Give Kuehlpack to Player when he clicks on the Itemframe
+    @EventHandler
+    public void onClickItemframe(PlayerInteractEntityEvent e){
 
-    @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+        if (e.getRightClicked() instanceof ItemFrame) {
 
-        SchoolWars.gameStarted = false;
+            Player p = e.getPlayer();
+            ItemFrame itemFrame = (ItemFrame) e.getRightClicked();
+            Location loc = itemFrame.getLocation();
 
-//Set Playernames and ready them for battle
-        Teams.clearTeams();
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            Teams.resetPlayer(p);
-            p.getInventory().clear();
-            p.setGameMode(GameMode.SURVIVAL);
-            p.setHealth(20);
-            p.getActivePotionEffects().clear();
-        }
-
-        SchoolWars.gameStarted = true;
-
-        Teams.joinTeams();
-        GenerateItems.summonItems();
-
-//revive Player
-        for (Player p: Bukkit.getOnlinePlayers()) {
-            if (deadPlayers.containsKey(p.getName())) {
-                Bukkit.getEntity(deadPlayers.get(p.getName())).remove();
-                p.teleport(p.getLocation().add(0, 1, 0));
-                p.removePotionEffect(PotionEffectType.SLOWNESS);
-                p.removePotionEffect(PotionEffectType.RESISTANCE);
-                p.setHealth(20);
-
-                deadPlayers.remove(p.getName());
+            if (itemFrame.getItem().equals(Items.kuehlpack)) {
+                e.setCancelled(true);
+                if(!p.getInventory().contains(Items.kuehlpack)) {
+                    p.getInventory().addItem(new ItemStack(Items.kuehlpack));
+                }
             }
-        }
-
-//Teleport Players to their respective spawnpoints
-        for(String playerName : Teams.sprachler){
-
-            Player p = Bukkit.getPlayer(playerName);
-
-            Teams.configurePlayer(playerName, "sprachler");
-            p.teleport(new Location(p.getWorld(), -20.5, 89, 146.5, -90, 0));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 1, false, false, false));
 
         }
-        for (String playerName : Teams.naturwissenschaftler){
-
-            Player p = Bukkit.getPlayer(playerName);
-
-            Teams.configurePlayer(playerName, "naturwissenschaftler");
-            p.teleport(new Location(p.getWorld(), 5, 81, 192, 90, 0));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 1, false, false, false));
-        }
-        for (String playerName : Teams.sportler){
-
-            Player p = Bukkit.getPlayer(playerName);
-
-            Teams.configurePlayer(playerName, "sportler");
-            p.teleport(new Location(p.getWorld(), 70.5, 81, 167.5, 90, 0));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 1, false, false, false));
-        }
-
-        return false;
     }
+
+//Prevent Players from dropping Kuehlpack
+    @EventHandler
+    public void onDropKuehlpack(PlayerDropItemEvent e) {
+        if(e.getItemDrop().getItemStack().equals(Items.kuehlpack)) {
+            e.setCancelled(true);
+        }
+    }
+
 }

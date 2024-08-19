@@ -1,3 +1,22 @@
+/**
+ * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
+ * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
+ * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
+ * ██║╚██╔╝██║██╔══██║██║  ██║██╔══╝      ██╔══██╗  ╚██╔╝
+ * ██║ ╚═╝ ██║██║  ██║██████╔╝███████╗    ██████╔╝   ██║
+ * ╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝ ╚══════╝    ╚═════╝    ╚═╝
+ *
+ * ██╗  ██╗██╗   ██╗███████╗ ██████╗██╗  ██╗███████╗██╗  ████████╗██╗███████╗██████╗ ███╗   ███╗ █████╗ ███████╗██╗ █████╗
+ * ██║ ██╔╝██║   ██║██╔════╝██╔════╝██║  ██║██╔════╝██║  ╚══██╔══╝██║██╔════╝██╔══██╗████╗ ████║██╔══██╗██╔════╝██║██╔══██╗
+ * █████╔╝ ██║   ██║███████╗██║     ███████║█████╗  ██║     ██║   ██║█████╗  ██████╔╝██╔████╔██║███████║█████╗  ██║███████║
+ * ██╔═██╗ ██║   ██║╚════██║██║     ██╔══██║██╔══╝  ██║     ██║   ██║██╔══╝  ██╔══██╗██║╚██╔╝██║██╔══██║██╔══╝  ██║██╔══██║
+ * ██║  ██╗╚██████╔╝███████║╚██████╗██║  ██║███████╗███████╗██║   ██║███████╗██║  ██║██║ ╚═╝ ██║██║  ██║██║     ██║██║  ██║
+ * ╚═╝  ╚═╝ ╚═════╝ ╚══════╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝   ╚═╝╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝
+ *
+ * This is a plugin from Morgon and CrAzyA22 - Unless explicitly stated otherwise you are not permitted to use any of the given code!
+ *
+ */
+
 package de.kuscheltiermafia.schoolwars.mechanics;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
@@ -78,15 +97,26 @@ public class Ranzen implements Listener {
         }
     }
 
+    public static HashMap<String, Integer> ranzenAmount = new HashMap<String, Integer>();
+
+    public static void generateRanzenCounter(){
+        ranzenAmount.put(SchoolWars.nameSportler, 0);
+        ranzenAmount.put(SchoolWars.nameNaturwissenschaftler, 0);
+        ranzenAmount.put(SchoolWars.nameSprachler, 0);
+    }
+
     public static void giveRanzen(String team, Player p) {
         if (team.equals("sprachler")) {
             p.getInventory().addItem(new ItemStack(Items.sprach_ranzen));
+            ranzenAmount.put(SchoolWars.nameSprachler, ranzenAmount.get(SchoolWars.nameSprachler) + 1);
         }
         if (team.equals("naturwissenschaftler")) {
             p.getInventory().addItem(new ItemStack(Items.nws_ranzen));
+            ranzenAmount.put(SchoolWars.nameNaturwissenschaftler, ranzenAmount.get(SchoolWars.nameNaturwissenschaftler) + 1);
         }
         if (team.equals("sportler")) {
             p.getInventory().addItem(new ItemStack(Items.sport_ranzen));
+            ranzenAmount.put(SchoolWars.nameSportler, ranzenAmount.get(SchoolWars.nameSportler) + 1);
         }
     }
 
@@ -101,6 +131,12 @@ public class Ranzen implements Listener {
 
         }
         Bukkit.broadcastMessage(p.getDisplayName() + ChatColor.DARK_GRAY + " hat einen Ranzen der " + team.substring(0, 1).toUpperCase() + team.substring(1) + ChatColor.DARK_GRAY + " zerstört!");
+
+        ranzenAmount.put(team, ranzenAmount.get(team) - 1);
+
+        if (ranzenAmount.get(team) == 0) {
+            Bukkit.broadcastMessage(ChatColor.DARK_RED + "Das Team der " + team.substring(0, 1).toUpperCase() + team.substring(1) + ChatColor.DARK_RED + " hat keinen Ranzen mehr!");
+        }
 
     }
 

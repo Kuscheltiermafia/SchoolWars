@@ -19,85 +19,51 @@
 
 package de.kuscheltiermafia.schoolwars.commands;
 
-import de.kuscheltiermafia.schoolwars.SchoolWars;
-import de.kuscheltiermafia.schoolwars.events.RevivePlayer;
-import de.kuscheltiermafia.schoolwars.gameprep.Teams;
-import de.kuscheltiermafia.schoolwars.items.GenerateItems;
-import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
+import de.kuscheltiermafia.schoolwars.items.Items;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
-import static de.kuscheltiermafia.schoolwars.events.RevivePlayer.deadPlayers;
+public class ItemList implements CommandExecutor{
 
-public class StartGame implements CommandExecutor {
+    public static int page;
+
+    public static int[] spacers = new int[]{1, 3, 4, 5, 6, 7, 8, 9, 18, 27, 36, 45, 17, 26, 35, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53};
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-
-        SchoolWars.gameStarted = false;
-
-//Set Playernames and ready them for battle
-        Teams.clearTeams();
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            Teams.resetPlayer(p);
-            p.getInventory().clear();
-            p.setGameMode(GameMode.SURVIVAL);
-            p.setHealth(20);
-            p.getActivePotionEffects().clear();
+    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+        if(sender instanceof Player) {
+            Player p = (Player) sender;
+            page = 1;
+            fillItemlist(p, page);
         }
-
-        SchoolWars.gameStarted = true;
-
-        Teams.joinTeams();
-        GenerateItems.summonItems();
-
-//revive Player
-        for (Player p: Bukkit.getOnlinePlayers()) {
-            if (deadPlayers.containsKey(p.getName())) {
-                Bukkit.getEntity(deadPlayers.get(p.getName())).remove();
-                p.teleport(p.getLocation().add(0, 1, 0));
-                p.removePotionEffect(PotionEffectType.SLOWNESS);
-                p.removePotionEffect(PotionEffectType.RESISTANCE);
-                p.setHealth(20);
-
-                deadPlayers.remove(p.getName());
-            }
-        }
-
-//Teleport Players to their respective spawnpoints
-        for(String playerName : Teams.sprachler){
-
-            Player p = Bukkit.getPlayer(playerName);
-
-            Teams.configurePlayer(playerName, "sprachler");
-            p.teleport(new Location(p.getWorld(), -20.5, 89, 146.5, -90, 0));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 1, false, false, false));
-
-        }
-        for (String playerName : Teams.naturwissenschaftler){
-
-            Player p = Bukkit.getPlayer(playerName);
-
-            Teams.configurePlayer(playerName, "naturwissenschaftler");
-            p.teleport(new Location(p.getWorld(), 5, 81, 192, 90, 0));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 1, false, false, false));
-        }
-        for (String playerName : Teams.sportler){
-
-            Player p = Bukkit.getPlayer(playerName);
-
-            Teams.configurePlayer(playerName, "sportler");
-            p.teleport(new Location(p.getWorld(), 70.5, 81, 167.5, 90, 0));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 1, false, false, false));
-        }
-
         return false;
     }
+
+    public static void fillItemlist(Player p, int currentPage) {
+        Inventory itemList = Bukkit.createInventory(null, 9*6, "§4Itemlist - Page " + page);
+
+        int pageModi = 28 * (currentPage - 1);
+
+        Bukkit.broadcastMessage("page " + currentPage + "pageModi " + pageModi);
+
+        itemList.setItem(0, new ItemStack(Items.page_down));
+        itemList.setItem(2, new ItemStack(Items.page_up));
+
+        for(int i = 0; i < spacers.length; i++) {
+            int slot = spacers[i];
+            itemList.setItem(slot, new ItemStack(Items.spacer));
+        }
+
+        for (int i = 0; i < 28; i++) {
+            itemList.addItem(Items.itemList.get(i + pageModi));
+        }
+
+        p.openInventory(itemList);
+    }
+
 }

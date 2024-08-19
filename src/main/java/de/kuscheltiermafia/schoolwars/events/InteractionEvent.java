@@ -19,70 +19,109 @@
 
 package de.kuscheltiermafia.schoolwars.events;
 
-import de.kuscheltiermafia.schoolwars.SchoolWars;
-import de.kuscheltiermafia.schoolwars.gameprep.Teams;
+import de.kuscheltiermafia.schoolwars.commands.ItemList;
 import de.kuscheltiermafia.schoolwars.items.Items;
-import org.bukkit.*;
-import org.bukkit.entity.Player;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDismountEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.*;
 
-public class JoinEvent implements Listener {
 
+public class InteractionEvent implements Listener {
+
+//Prevent players from clicking spacers, allow moving between UI pages
     @EventHandler
-    public void onPLayerJoin(PlayerJoinEvent e){
+    public void clickSpacer(InventoryClickEvent e) {
 
-        SchoolWars.setPlayerCount(SchoolWars.getPlayerCount() + 1);
+        Player p = (Player) e.getWhoClicked();
 
-        Player p = e.getPlayer();
-
-        p.teleport(new Location(p.getWorld(), -24, 80.5, 176, 90, 0));
-        p.setRespawnLocation(new Location(p.getWorld(), -33.5, 88, 145.5, -90, 0));
-
-//Spawn particles
-        for (Player pl : Bukkit.getOnlinePlayers()){
-
-            pl.spawnParticle(Particle.LAVA, p.getLocation(), 40, 0, 0.2, 0);
-            pl.spawnParticle(Particle.EXPLOSION, p.getLocation(), 10, 0, 0.2, 0);
-            pl.spawnParticle(Particle.PORTAL, p.getLocation(), 100, 0, 0.2, 0);
-
-        }
-
-//Send Welcome Message
-        p.sendMessage( ChatColor.YELLOW + "---------------SCHOOL WARS---------------");
-        p.sendMessage("Willkommen in diesem grandiosen Spiel,");
-        p.sendMessage("in dem du auch in deiner Freizeit");
-        p.sendMessage("die " + ChatColor.RED + "Freuden der Schule" + ChatColor.WHITE + " erfahren kannst.");
-        p.sendMessage( ChatColor.YELLOW + "-----------------------------------------");
-
-//Put Player back in Team after Disconnect
-        if (SchoolWars.gameStarted){
-
-            p.sendMessage("Das Spiel hat bereits begonnen.");
-
-            if (Teams.naturwissenschaftler.contains(p.getName()) ){
-                Teams.configurePlayer(p.getName(), "naturwissenschaftler");
-                p.setGameMode(GameMode.ADVENTURE);
-            } else if (Teams.sportler.contains(p.getName())){
-                Teams.configurePlayer(p.getName(), "sportler");
-                p.setGameMode(GameMode.ADVENTURE);
-            } else if (Teams.sprachler.contains(p.getName())){
-                Teams.configurePlayer(p.getName(), "sprachler");
-                p.setGameMode(GameMode.ADVENTURE);
-            } else {
-                p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist keinem Team zugeordnet.");
-                p.setGameMode(GameMode.SPECTATOR);
+        try {
+            if (e.getCurrentItem().equals(Items.spacer)) {
+                e.setCancelled(true);
+            }else if(e.getCurrentItem().equals(Items.page_up)) {
+                p.closeInventory();
+                ItemList.page++;
+                ItemList.fillItemlist(p, ItemList.page);
+                e.setCancelled(true);
+            }else if(e.getCurrentItem().equals(Items.page_down) && ItemList.page > 1) {
+                p.closeInventory();
+                ItemList.page--;
+                ItemList.fillItemlist(p, ItemList.page);
+                e.setCancelled(true);
             }
+        }catch (Exception ignored){}
+    }
 
-        }else {
-            e.getPlayer().sendMessage(ChatColor.YELLOW + "[SchoolWars] Das Spiel hat noch nicht begonnen.");
-            p.setGameMode(GameMode.ADVENTURE);
+//Prevent Players from breaking Blocks
+    @EventHandler
+    public void OnBreakBlock(BlockBreakEvent e){
+        Player p = e.getPlayer();
+        if (!p.isOp()){
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§4Das darfst du nicht!"));
+            e.setCancelled(true);
         }
+    }
 
-        e.setJoinMessage("");
+//Prevent Players from placing Blocks
+    @EventHandler
+    public void OnPlaceBlock(BlockPlaceEvent e){
+        Player p = e.getPlayer();
+        if (!p.isOp()){
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§4Das darfst du nicht!"));
+            e.setCancelled(true);
+        }
+    }
+
+
+//Prevent dead Players from standing up
+    @EventHandler
+    public void onDismount(EntityDismountEvent e){
+        if (e.getEntity() instanceof Player){
+            Player p = (Player) e.getEntity();
+            if (e.getDismounted() instanceof Bat){
+                e.setCancelled(true);
+            }
+        }
+    }
+
+
+//Prevent dead Players from interacting
+    @EventHandler
+    public void onInteract(PlayerInteractEvent e) {
+
+        if (RevivePlayer.deadPlayers.containsKey(e.getPlayer().getName())) {
+            e.setCancelled(true);
+        }
 
     }
 
+//Prevent dead Players from hitting
+    @EventHandler
+    public void onPunch(EntityDamageByEntityEvent e) {
+        if (e.getDamager() instanceof Player) {
+            if (RevivePlayer.deadPlayers.containsKey(e.getDamager().getName())) {
+                e.setCancelled(true);
+            }
+        }
+    }
+
+
+    //Prevent Itemframe from being destroyed
+    @EventHandler
+    public void onDamageItemFrame(EntityDamageByEntityEvent e) {
+        if (e.getEntity() instanceof ItemFrame) {
+            e.setCancelled(true);
+        }
+    }
+
+
+
+    
 }

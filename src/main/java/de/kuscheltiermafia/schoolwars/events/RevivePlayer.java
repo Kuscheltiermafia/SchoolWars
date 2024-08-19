@@ -1,3 +1,22 @@
+/**
+ * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
+ * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
+ * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
+ * ██║╚██╔╝██║██╔══██║██║  ██║██╔══╝      ██╔══██╗  ╚██╔╝
+ * ██║ ╚═╝ ██║██║  ██║██████╔╝███████╗    ██████╔╝   ██║
+ * ╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝ ╚══════╝    ╚═════╝    ╚═╝
+ *
+ * ██╗  ██╗██╗   ██╗███████╗ ██████╗██╗  ██╗███████╗██╗  ████████╗██╗███████╗██████╗ ███╗   ███╗ █████╗ ███████╗██╗ █████╗
+ * ██║ ██╔╝██║   ██║██╔════╝██╔════╝██║  ██║██╔════╝██║  ╚══██╔══╝██║██╔════╝██╔══██╗████╗ ████║██╔══██╗██╔════╝██║██╔══██╗
+ * █████╔╝ ██║   ██║███████╗██║     ███████║█████╗  ██║     ██║   ██║█████╗  ██████╔╝██╔████╔██║███████║█████╗  ██║███████║
+ * ██╔═██╗ ██║   ██║╚════██║██║     ██╔══██║██╔══╝  ██║     ██║   ██║██╔══╝  ██╔══██╗██║╚██╔╝██║██╔══██║██╔══╝  ██║██╔══██║
+ * ██║  ██╗╚██████╔╝███████║╚██████╗██║  ██║███████╗███████╗██║   ██║███████╗██║  ██║██║ ╚═╝ ██║██║  ██║██║     ██║██║  ██║
+ * ╚═╝  ╚═╝ ╚═════╝ ╚══════╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝   ╚═╝╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝
+ *
+ * This is a plugin from Morgon and CrAzyA22 - Unless explicitly stated otherwise you are not permitted to use any of the given code!
+ *
+ */
+
 package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.items.Items;
@@ -19,7 +38,7 @@ import java.util.UUID;
 
 public class RevivePlayer implements Listener {
 
-    static HashMap<String, UUID> deadPlayers = new HashMap<>();
+    public static HashMap<String, UUID> deadPlayers = new HashMap<>();
 
     @EventHandler
     public static void onClickPlayer(PlayerInteractAtEntityEvent e) {
@@ -29,7 +48,7 @@ public class RevivePlayer implements Listener {
             Player player = e.getPlayer();
             Player target = (Player) e.getRightClicked();
 
-            if (target.getLocation().distance(player.getLocation()) <= 3 && deadPlayers.containsKey(target.getName()) && player.getInventory().getItemInMainHand().getItemMeta().getItemName().equals("§bKühlpack") && !deadPlayers.containsKey(player.getName()) ) {
+            if (target.getLocation().distance(player.getLocation()) <= 3 && deadPlayers.containsKey(target.getName()) && player.getInventory().getItemInMainHand().equals(Items.kuehlpack) && !deadPlayers.containsKey(player.getName()) ) {
 
                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GREEN + "Du hast " + target.getName() + " wiederbelebt."));
 

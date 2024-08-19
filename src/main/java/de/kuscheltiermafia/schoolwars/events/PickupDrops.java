@@ -17,87 +17,40 @@
  *
  */
 
-package de.kuscheltiermafia.schoolwars.commands;
+package de.kuscheltiermafia.schoolwars.events;
 
-import de.kuscheltiermafia.schoolwars.SchoolWars;
-import de.kuscheltiermafia.schoolwars.events.RevivePlayer;
-import de.kuscheltiermafia.schoolwars.gameprep.Teams;
-import de.kuscheltiermafia.schoolwars.items.GenerateItems;
-import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
-import static de.kuscheltiermafia.schoolwars.events.RevivePlayer.deadPlayers;
+public class PickupDrops implements Listener {
 
-public class StartGame implements CommandExecutor {
+    @EventHandler
+    public void onDropPickup(PlayerInteractEvent e) {
 
-    @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+        try {
+            if (e.getClickedBlock().getLocation() != null) {
+                Location loc = e.getClickedBlock().getLocation().add(0, 1, 0);
+                Player p = e.getPlayer();
 
-        SchoolWars.gameStarted = false;
+                if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+                    for (Entity entity : loc.getWorld().getNearbyEntities(loc, 1, 1, 1)) {
+                        if (entity instanceof Item) {
+                            Item item = (Item) entity;
+                            p.getInventory().addItem(new ItemStack(item.getItemStack()));
 
-//Set Playernames and ready them for battle
-        Teams.clearTeams();
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            Teams.resetPlayer(p);
-            p.getInventory().clear();
-            p.setGameMode(GameMode.SURVIVAL);
-            p.setHealth(20);
-            p.getActivePotionEffects().clear();
-        }
-
-        SchoolWars.gameStarted = true;
-
-        Teams.joinTeams();
-        GenerateItems.summonItems();
-
-//revive Player
-        for (Player p: Bukkit.getOnlinePlayers()) {
-            if (deadPlayers.containsKey(p.getName())) {
-                Bukkit.getEntity(deadPlayers.get(p.getName())).remove();
-                p.teleport(p.getLocation().add(0, 1, 0));
-                p.removePotionEffect(PotionEffectType.SLOWNESS);
-                p.removePotionEffect(PotionEffectType.RESISTANCE);
-                p.setHealth(20);
-
-                deadPlayers.remove(p.getName());
+                            entity.remove();
+                        }
+                    }
+                }
             }
-        }
-
-//Teleport Players to their respective spawnpoints
-        for(String playerName : Teams.sprachler){
-
-            Player p = Bukkit.getPlayer(playerName);
-
-            Teams.configurePlayer(playerName, "sprachler");
-            p.teleport(new Location(p.getWorld(), -20.5, 89, 146.5, -90, 0));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 1, false, false, false));
-
-        }
-        for (String playerName : Teams.naturwissenschaftler){
-
-            Player p = Bukkit.getPlayer(playerName);
-
-            Teams.configurePlayer(playerName, "naturwissenschaftler");
-            p.teleport(new Location(p.getWorld(), 5, 81, 192, 90, 0));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 1, false, false, false));
-        }
-        for (String playerName : Teams.sportler){
-
-            Player p = Bukkit.getPlayer(playerName);
-
-            Teams.configurePlayer(playerName, "sportler");
-            p.teleport(new Location(p.getWorld(), 70.5, 81, 167.5, 90, 0));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 1, false, false, false));
-        }
-
-        return false;
+        }catch (Exception ignored){}
     }
+
 }
