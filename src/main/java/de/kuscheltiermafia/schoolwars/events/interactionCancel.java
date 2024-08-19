@@ -18,6 +18,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDismountEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -117,5 +118,40 @@ public class interactionCancel implements Listener {
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§2Du hast deinen Ranzen aufgehoben!"));
             e.setCancelled(true);
         }else {Bukkit.broadcastMessage("Nope x3");}
+    }
+
+    @EventHandler
+    public void onInteract(PlayerInteractEvent e) {
+
+        if (RevivePlayer.deadPlayers.containsKey(e.getPlayer().getName())) {
+            e.setCancelled(true);
+        }
+
+    }
+
+    @EventHandler
+    public void onPunch(EntityDamageByEntityEvent e) {
+        if (e.getDamager() instanceof Player) {
+            if (RevivePlayer.deadPlayers.containsKey(e.getDamager().getName())) {
+                e.setCancelled(true);
+            }
+        }
+    }
+
+
+    @EventHandler
+    public void onClickItemframe(PlayerInteractEntityEvent e){
+
+        Player p = e.getPlayer();
+        Entity target = e.getRightClicked();
+        Location loc = target.getLocation();
+
+
+
+        if (target instanceof ItemFrame && loc.getBlock().getLocation().equals(new Location(loc.getWorld(), -31, 88, 143))){
+            e.setCancelled(true);
+            p.getInventory().addItem(new ItemStack(Items.kuehlpack));
+        }
+
     }
 }

@@ -3,10 +3,7 @@ package de.kuscheltiermafia.schoolwars.events;
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.gameprep.Teams;
 import de.kuscheltiermafia.schoolwars.items.Items;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -47,16 +44,21 @@ public class JoinEvent implements Listener {
 
             if (Teams.naturwissenschaftler.contains(p.getName()) ){
                 Teams.configurePlayer(p.getName(), "naturwissenschaftler");
+                p.setGameMode(GameMode.ADVENTURE);
             } else if (Teams.sportler.contains(p.getName())){
                 Teams.configurePlayer(p.getName(), "sportler");
+                p.setGameMode(GameMode.ADVENTURE);
             } else if (Teams.sprachler.contains(p.getName())){
                 Teams.configurePlayer(p.getName(), "sprachler");
+                p.setGameMode(GameMode.ADVENTURE);
             } else {
                 p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist keinem Team zugeordnet.");
+                p.setGameMode(GameMode.SPECTATOR);
             }
 
         }else {
             e.getPlayer().sendMessage(ChatColor.YELLOW + "[SchoolWars] Das Spiel hat noch nicht begonnen.");
+            p.setGameMode(GameMode.ADVENTURE);
         }
 
         e.setJoinMessage("");

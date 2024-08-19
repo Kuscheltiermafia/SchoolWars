@@ -1,13 +1,10 @@
 package de.kuscheltiermafia.schoolwars;
 
-import com.sun.tools.javac.jvm.Gen;
 import de.kuscheltiermafia.schoolwars.commands.ClearTeams;
 import de.kuscheltiermafia.schoolwars.commands.StartGame;
 import de.kuscheltiermafia.schoolwars.commands.TeamList;
 import de.kuscheltiermafia.schoolwars.commands.adminItems;
-import de.kuscheltiermafia.schoolwars.events.DeathEvent;
-import de.kuscheltiermafia.schoolwars.events.JoinEvent;
-import de.kuscheltiermafia.schoolwars.events.interactionCancel;
+import de.kuscheltiermafia.schoolwars.events.*;
 import de.kuscheltiermafia.schoolwars.gameprep.Teams;
 import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.items.Items;
@@ -44,6 +41,7 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new JoinEvent(), this);
         pluginManager.registerEvents(new interactionCancel(), this);
         pluginManager.registerEvents(new DeathEvent(), this);
+        pluginManager.registerEvents(new RevivePlayer(), this);
 
         getCommand("start").setExecutor(new StartGame());
         getCommand("clearTeams").setExecutor(new ClearTeams());

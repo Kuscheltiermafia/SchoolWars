@@ -33,6 +33,7 @@ public class adminItems implements CommandExecutor{
             itemList.addItem(new ItemStack(Items.laptop));
 
             p.openInventory(itemList);
+
         }
         return false;
     }
