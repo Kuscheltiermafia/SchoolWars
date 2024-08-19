@@ -34,8 +34,6 @@ public class GenerateItems {
     public static void createItemsEntity(ItemStack item, Location loc) {
         Block b = loc.getBlock();
         Entity itemEntity = b.getWorld().dropItemNaturally(loc, item);
-        itemEntity.setCustomName(item.getItemMeta().getDisplayName());
-        itemEntity.setCustomNameVisible(true);
         itemEntity.setPersistent(true);
         itemEntity.setInvulnerable(true);
     }

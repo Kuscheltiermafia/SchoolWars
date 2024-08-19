@@ -27,10 +27,9 @@ public class adminItems implements CommandExecutor{
                 itemList.setItem(slot, new ItemStack(Items.spacer));
             }
 
-            itemList.addItem(new ItemStack(Items.minas_flasche));
-            itemList.addItem(new ItemStack(Items.nuke));
-            itemList.addItem(new ItemStack(Items.placeholder));
-            itemList.addItem(new ItemStack(Items.laptop));
+            for(ItemStack items : Items.itemList) {
+             itemList.addItem(items);
+            }
 
             p.openInventory(itemList);
 

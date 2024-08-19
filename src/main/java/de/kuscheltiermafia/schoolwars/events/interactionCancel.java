@@ -1,22 +1,23 @@
 package de.kuscheltiermafia.schoolwars.events;
 
+import de.kuscheltiermafia.schoolwars.gameprep.Teams;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Bat;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Pig;
-import org.bukkit.entity.Player;
+import org.bukkit.block.Block;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDismountEvent;
-import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -32,7 +33,7 @@ public class interactionCancel implements Listener {
         if(e.getWhoClicked() instanceof Player) {
             ItemStack item = e.getCurrentItem();
             if (item != null) {
-                if (item.hasItemMeta()) {
+                if (!item.getItemMeta().equals(null)) {
                     if(item.getItemMeta().getCustomModelData() == 2) {
                     e.setCancelled(true);
                     }else{return;}
@@ -98,26 +99,63 @@ public class interactionCancel implements Listener {
         Player p = e.getPlayer();
         Entity ranzen = e.getRightClicked();
 
-        Bukkit.broadcastMessage("Player: " + p + " Ranzen: " + ranzen);
-
-        if(ranzen.getCustomName().equals("§2Grüner Ranzen")) {
-            ranzen.remove();
-            Ranzen.giveRanzen("naturwissenschaftler", p);
-            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§2Du hast deinen Ranzen aufgehoben!"));
-            e.setCancelled(true);
-        }else {Bukkit.broadcastMessage("Nope x1");}
-        if(ranzen.getCustomName().equals("§6Gelber Ranzen")) {
-            ranzen.remove();
-            Ranzen.giveRanzen("sprachler", p);
-            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§2Du hast deinen Ranzen aufgehoben!"));
-            e.setCancelled(true);
-        }else {Bukkit.broadcastMessage("Nope x2");}
-        if(ranzen.getCustomName().equals("§4Roter Ranzen")) {
-            ranzen.remove();
-            Ranzen.giveRanzen("sportler", p);
-            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§2Du hast deinen Ranzen aufgehoben!"));
-            e.setCancelled(true);
-        }else {Bukkit.broadcastMessage("Nope x3");}
+        if(ranzen.hasMetadata("naturwissenschaftler")) {
+            if(Teams.naturwissenschaftler.contains(p.getName())) {
+                if (Ranzen.displayPositions.containsKey(ranzen.getLocation().subtract(0.5, 0, 0.5))) {
+                    Entity display = Ranzen.displayPositions.get(ranzen.getLocation().subtract(0.5, 0, 0.5));
+                    display.remove();
+                }
+                ranzen.remove();
+                Ranzen.giveRanzen("naturwissenschaftler", p);
+                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§2Du hast deinen Ranzen aufgehoben!"));
+                e.setCancelled(true);
+            }else if(!Teams.naturwissenschaftler.contains(p.getName())) {
+                Ranzen.destroyRanzen(p, ChatColor.GREEN + "naturwissenschaftler", ranzen.getLocation());
+                if (Ranzen.displayPositions.containsKey(ranzen.getLocation().subtract(0.5, 0, 0.5))) {
+                    Entity display = Ranzen.displayPositions.get(ranzen.getLocation().subtract(0.5, 0, 0.5));
+                    display.remove();
+                }
+                ranzen.remove();
+            }
+        }
+        if(ranzen.hasMetadata("sprachler")) {
+            if(Teams.sprachler.contains(p.getName())) {
+                if (Ranzen.displayPositions.containsKey(ranzen.getLocation().subtract(0.5, 0, 0.5))) {
+                    Entity display = Ranzen.displayPositions.get(ranzen.getLocation().subtract(0.5, 0, 0.5));
+                    display.remove();
+                }
+                ranzen.remove();
+                Ranzen.giveRanzen("sprachler", p);
+                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§2Du hast deinen Ranzen aufgehoben!"));
+                e.setCancelled(true);
+            }else if(!Teams.sprachler.contains(p.getName())) {
+                Ranzen.destroyRanzen(p, ChatColor.GOLD + "sprachler", ranzen.getLocation());
+                if (Ranzen.displayPositions.containsKey(ranzen.getLocation().subtract(0.5, 0, 0.5))) {
+                    Entity display = Ranzen.displayPositions.get(ranzen.getLocation().subtract(0.5, 0, 0.5));
+                    display.remove();
+                }
+                ranzen.remove();
+            }
+        }
+        if(ranzen.hasMetadata("sportler")) {
+            if(Teams.sportler.contains(p.getName())) {
+                if (Ranzen.displayPositions.containsKey(ranzen.getLocation().subtract(0.5, 0, 0.5))) {
+                    BlockDisplay display = Ranzen.displayPositions.get(ranzen.getLocation().subtract(0.5, 0, 0.5));
+                    display.remove();
+                }
+                ranzen.remove();
+                Ranzen.giveRanzen("sportler", p);
+                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§2Du hast deinen Ranzen aufgehoben!"));
+                e.setCancelled(true);
+            }else if(!Teams.sportler.contains(p.getName())) {
+                Ranzen.destroyRanzen(p, ChatColor.DARK_RED + "sportler", ranzen.getLocation());
+                if (Ranzen.displayPositions.containsKey(ranzen.getLocation().subtract(0.5, 0, 0.5))) {
+                    Entity display = Ranzen.displayPositions.get(ranzen.getLocation().subtract(0.5, 0, 0.5));
+                    display.remove();
+                }
+                ranzen.remove();
+            }
+        }
     }
 
     @EventHandler

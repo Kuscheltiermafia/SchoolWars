@@ -8,6 +8,7 @@ import de.kuscheltiermafia.schoolwars.events.*;
 import de.kuscheltiermafia.schoolwars.gameprep.Teams;
 import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.items.Items;
+import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -49,6 +50,8 @@ public final class SchoolWars extends JavaPlugin {
         getCommand("teamlist").setExecutor(new TeamList());
 
         Teams.clearTeams();
+        Ranzen.clearRanzen();
+
         for (Player p :Bukkit.getOnlinePlayers()) {
             Teams.resetPlayer(p);
         }

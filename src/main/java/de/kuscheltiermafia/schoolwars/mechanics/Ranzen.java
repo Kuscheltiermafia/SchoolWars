@@ -1,53 +1,80 @@
 package de.kuscheltiermafia.schoolwars.mechanics;
 
+import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.items.Items;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.BlockDisplay;
+import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Transformation;
+import org.bukkit.metadata.FixedMetadataValue;
+
+import java.util.HashMap;
 
 public class Ranzen implements Listener {
 
-    public static void createRanzen(String team, Location loc) {
-        if (team.equals("naturwissenschaftler")) {
-            BlockDisplay nws_ranzen = Bukkit.getServer().getWorld("schoolwars").spawn(loc, BlockDisplay.class);
+    public static HashMap<Location, BlockDisplay> displayPositions = new HashMap<Location, BlockDisplay>();
 
-            Transformation transformation = nws_ranzen.getTransformation();
-            transformation.getScale().set(0.9);
+    public static void createRanzen(String team, Location loc) {
+
+        if (team.equals("naturwissenschaftler")) {
+
+            Interaction nws_ranzen_hb = Bukkit.getServer().getWorld("schoolwars").spawn(loc.add(0.5, 0, 0.5), Interaction.class);
+            BlockDisplay nws_ranzen = Bukkit.getServer().getWorld("schoolwars").spawn(loc.subtract(0.5, 0, 0.5), BlockDisplay.class);
 
             nws_ranzen.setBlock(Bukkit.createBlockData(Material.GREEN_WOOL));
 
-            nws_ranzen.setGlowing(true);
             nws_ranzen.setCustomName("§2Grüner Ranzen");
-            nws_ranzen.setCustomNameVisible(true);
+
+            nws_ranzen.setDisplayHeight(0.9f);
+            nws_ranzen.setDisplayWidth(0.9f);
+
+            displayPositions.put(loc, nws_ranzen);
+
+            nws_ranzen_hb.setInteractionHeight(1);
+            nws_ranzen_hb.setInteractionWidth(1);
+
+            nws_ranzen_hb.setMetadata("naturwissenschaftler", new FixedMetadataValue(SchoolWars.getPlugin(), nws_ranzen.getCustomName()));
+
         }
         if (team.equals("sprachler")) {
-            BlockDisplay sprach_ranzen = Bukkit.getServer().getWorld("schoolwars").spawn(loc, BlockDisplay.class);
-
-            Transformation transformation = sprach_ranzen.getTransformation();
-            transformation.getScale().set(0.9);
+            Interaction sprach_ranzen_hb = Bukkit.getServer().getWorld("schoolwars").spawn(loc.add(0.5, 0, 0.5), Interaction.class);
+            BlockDisplay sprach_ranzen = Bukkit.getServer().getWorld("schoolwars").spawn(loc.subtract(0.5, 0, 0.5), BlockDisplay.class);
 
             sprach_ranzen.setBlock(Bukkit.createBlockData(Material.YELLOW_WOOL));
 
-            sprach_ranzen.setGlowing(true);
             sprach_ranzen.setCustomName("§6Gelber Ranzen");
-            sprach_ranzen.setCustomNameVisible(true);
+
+            sprach_ranzen.setDisplayHeight(0.9f);
+            sprach_ranzen.setDisplayWidth(0.9f);
+
+            displayPositions.put(loc, sprach_ranzen);
+
+            sprach_ranzen_hb.setInteractionHeight(1);
+            sprach_ranzen_hb.setInteractionWidth(1);
+
+            sprach_ranzen_hb.setMetadata("sprachler", new FixedMetadataValue(SchoolWars.getPlugin(), sprach_ranzen.getCustomName()));
+
         }
         if (team.equals("sportler")) {
-            BlockDisplay sport_ranzen = Bukkit.getServer().getWorld("schoolwars").spawn(loc, BlockDisplay.class);
-
-            Transformation transformation = sport_ranzen.getTransformation();
-            transformation.getScale().set(0.9);
+            Interaction sport_ranzen_hb = Bukkit.getServer().getWorld("schoolwars").spawn(loc.add(0.5, 0, 0.5), Interaction.class);
+            BlockDisplay sport_ranzen = Bukkit.getServer().getWorld("schoolwars").spawn(loc.subtract(0.5, 0, 0.5), BlockDisplay.class);
 
             sport_ranzen.setBlock(Bukkit.createBlockData(Material.RED_WOOL));
 
-            sport_ranzen.setGlowing(true);
             sport_ranzen.setCustomName("§4Roter Ranzen");
-            sport_ranzen.setCustomNameVisible(true);
+
+            sport_ranzen.setDisplayHeight(0.9f);
+            sport_ranzen.setDisplayWidth(0.9f);
+
+            displayPositions.put(loc, sport_ranzen);
+
+            sport_ranzen_hb.setInteractionHeight(1);
+            sport_ranzen_hb.setInteractionWidth(1);
+
+            sport_ranzen_hb.setMetadata("sportler", new FixedMetadataValue(SchoolWars.getPlugin(), sport_ranzen.getCustomName()));
+
         }
     }
 
@@ -60,6 +87,35 @@ public class Ranzen implements Listener {
         }
         if (team.equals("sportler")) {
             p.getInventory().addItem(new ItemStack(Items.sport_ranzen));
+        }
+    }
+
+    public static void destroyRanzen(Player p, String team, Location loc) {
+
+        for(Player online : Bukkit.getOnlinePlayers()) {
+            online.spawnParticle(Particle.EXPLOSION, loc, 5, 0, 0, 0);
+
+            //todo: remove prefix
+
+            online.sendTitle(ChatColor.DARK_RED + p.getDisplayName() + " hat einen Ranzen zerstört!", ChatColor.DARK_GRAY + "- Es war ein Ranzen von den " + team.substring(0, 1).toUpperCase() + team.substring(1) + "n " + ChatColor.DARK_GRAY + "-", 10, 50, 10);
+
+        }
+        Bukkit.broadcastMessage(p.getDisplayName() + ChatColor.DARK_GRAY + " hat einen Ranzen der " + team.substring(0, 1).toUpperCase() + team.substring(1) + ChatColor.DARK_GRAY + " zerstört!");
+
+    }
+
+    public static void clearRanzen(){
+        for(Interaction interaction : Bukkit.getWorld("schoolwars").getEntitiesByClass(Interaction.class)) {
+            if(Ranzen.displayPositions.containsKey(interaction.getLocation().subtract(0.5, 0, 0.5))) {
+                BlockDisplay display = Ranzen.displayPositions.get(interaction.getLocation().subtract(0.5, 0, 0.5));
+                display.remove();
+                interaction.remove();
+            }
+        }
+        for(Player p : Bukkit.getOnlinePlayers()) {
+           p.getInventory().remove(new ItemStack(Items.nws_ranzen));
+           p.getInventory().remove(new ItemStack(Items.sport_ranzen));
+           p.getInventory().remove(new ItemStack(Items.sprach_ranzen));
         }
     }
 }

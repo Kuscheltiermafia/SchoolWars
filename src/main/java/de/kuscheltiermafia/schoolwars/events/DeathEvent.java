@@ -31,10 +31,18 @@ public class DeathEvent implements Listener {
 
             if (Teams.naturwissenschaftler.contains(p.getName())) {
                 playerName = ChatColor.GREEN + "[NWS] " + p.getName();
+                Ranzen.destroyRanzen(p.getKiller(), ChatColor.GREEN + "naturwissenschaftler", p.getLocation());
+                p.getInventory().remove(new ItemStack(Items.nws_ranzen));
             } else if (Teams.sportler.contains(p.getName())) {
                 playerName = ChatColor.DARK_RED + "[Sport] " + p.getName();
+                Ranzen.destroyRanzen(p.getKiller(), ChatColor.DARK_RED + "sportler", p.getLocation());
+                p.getInventory().remove(new ItemStack(Items.sport_ranzen));
+
             } else if (Teams.sprachler.contains(p.getName())) {
                 playerName = ChatColor.GOLD + "[Sprache] " + p.getName();
+                Ranzen.destroyRanzen(p.getKiller(), ChatColor.GOLD + "sprachler", p.getLocation());
+                p.getInventory().remove(new ItemStack(Items.sprach_ranzen));
+
             }
 
 
