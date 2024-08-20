@@ -61,9 +61,13 @@ public class Items {
     public static ItemStack baar_kaffee;
     public static ItemStack cookie;
     public static ItemStack generalSchluessel;
+    public static ItemStack physikSchluessel;
     public static ItemStack rollator;
     public static ItemStack no_page_down;
     public static ItemStack no_page_up;
+    public static ItemStack leere_tasse;
+    public static ItemStack useless_uranium;
+    public static ItemStack fluor;
 
     public static ArrayList<ItemStack> itemList = new ArrayList<ItemStack>();
 
@@ -100,10 +104,16 @@ public class Items {
         nuke = createItem(Material.TNT, "§4Atombombe", 1, 1, null, true, false);
         itemList.add(nuke);
 
-        uranium = createItem(Material.GREEN_DYE, "§aAngereichertes Uran-235", 64, 1, null, true, false);
+        uranium = createItem(Material.GREEN_DYE, "§aAngereichertes Uran-235", 1, 64, null, true, false);
         itemList.add(uranium);
 
-        versuch = createItem(Material.HEAVY_CORE, ChatColor.DARK_GRAY + "Versuchsaufbau", 16, 1, null, false, false);
+        useless_uranium = createItem(Material.LIME_DYE, ChatColor.GREEN + "Uran", 1, 64, null, false, false);
+        itemList.add(useless_uranium);
+
+        fluor = createItem(Material.SUGAR, ChatColor.GRAY + "Fluor", 1, 64, null, false, false);
+        itemList.add(fluor);
+
+        versuch = createItem(Material.HEAVY_CORE, ChatColor.DARK_GRAY + "Taktischer Versuchsaufbau", 1, 16, null, false, false);
         itemList.add(versuch);
 
 
@@ -115,7 +125,7 @@ public class Items {
         moritz_hut_lore.add("§7Geehrt sei Morgon!");
         moritz_hut_lore.add("§7Victory at all costs!");
         moritz_hut_lore.add("§4Heil Morgon!");
-        moritz_hut = createItem(Material.NETHERITE_HELMET, ChatColor.BLACK + "Moritz' Hut", 1, 1, moritz_hut_lore, true, false);
+        moritz_hut = createItem(Material.NETHERITE_HELMET, ChatColor.WHITE + "Moritz' Hut", 1, 1, moritz_hut_lore, true, false);
         itemList.add(moritz_hut);
 
         kaputtes_ipad = createItem(Material.NETHERITE_SCRAP, ChatColor.WHITE + "Kaputtes iPad", 1, 1, null, false, false);
@@ -130,20 +140,29 @@ public class Items {
         baar_kaffee = createItem(Material.FLOWER_POT, ChatColor.GRAY + "Baars Kaffee", 1, 1, null, false, false);
         itemList.add(baar_kaffee);
 
+        leere_tasse = createItem(Material.FLOWER_POT, ChatColor.WHITE + "Leere Tasse", 1, 1, null, false, false);
+        itemList.add(leere_tasse);
+
         karls_elexier = createItem(Material.POTION,ChatColor.LIGHT_PURPLE + "Elexir Karls des Kleinen", 1, 1, null, false, false);
         itemList.add(karls_elexier);
 
         generalSchluessel = createItem(Material.TRIPWIRE_HOOK, ChatColor.GOLD + "Generalschlüssel", 1, 1, null, false, false);
         itemList.add(generalSchluessel);
 
+        ArrayList<String> physikSchlüssel_lore = new ArrayList<String>();
+        physikSchlüssel_lore.add("Öffnet die Schränke der Physik");
+        physikSchluessel = createItem(Material.TRIPWIRE_HOOK, ChatColor.GOLD + "Physikschlüssel", 1, 1, physikSchlüssel_lore, false, false);
+        itemList.add(physikSchluessel);
+
         rollator = createItem(Material.NETHER_BRICK_FENCE, ChatColor.GRAY + "Rollator", 1, 1, null, false, false);
         itemList.add(rollator);
+
 
 //Vapes
         vape_fruitberry = createItem(Material.PINK_CANDLE, ChatColor.LIGHT_PURPLE + "Vape Fruitberry Punch", 1, 1, null, false, false);
         itemList.add(vape_fruitberry);
 
-        vape_arschwasser = createItem(Material.BROWN_CANDLE, ChatColor.GREEN + "Vape Tropical Arschwasser", 1, 1, null, false, false);
+        vape_arschwasser = createItem(Material.LIME_CANDLE , ChatColor.GREEN + "Vape Tropical Arschwasser", 1, 1, null, false, false);
         itemList.add(vape_arschwasser);
 
         vape_strawberry = createItem(Material.RED_CANDLE, ChatColor.RED + "Vape Strawberry Burst ", 1, 1, null, false, false);
@@ -155,13 +174,13 @@ public class Items {
         vape_triple = createItem(Material.BLUE_CANDLE, ChatColor.BLUE + "Vape Triple Fruit Combo", 1, 1, null, false, false);
         itemList.add(vape_triple);
 
-        vape_arabics = createItem(Material.GRAY_CANDLE, ChatColor.GRAY + "Vape Double Arabics", 1, 1, null, false, false);
+        vape_arabics = createItem(Material.BROWN_CANDLE, ChatColor.GRAY + "Vape Double Arabics", 1, 1, null, false, false);
         itemList.add(vape_arabics);
 
         vape_air = createItem(Material.WHITE_CANDLE, ChatColor.YELLOW + "Vape AIR", 1, 1, null, false, false);
         itemList.add(vape_air);
 
-        vape_empty = createItem(Material.BLACK_CANDLE, ChatColor.BLACK + "Leere Vape", 1, 1, null, false, false);
+        vape_empty = createItem(Material.BLACK_CANDLE, ChatColor.WHITE + "Leere Vape", 1, 1, null, false, false);
         itemList.add(vape_empty);
 
 //Programming Utils

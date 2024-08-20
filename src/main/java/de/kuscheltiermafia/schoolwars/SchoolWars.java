@@ -67,12 +67,14 @@ public final class SchoolWars extends JavaPlugin {
         PluginManager pluginManager = Bukkit.getPluginManager();
 
         pluginManager.registerEvents(new JoinEvent(), this);
+        pluginManager.registerEvents(new LeaveEvent(), this);
         pluginManager.registerEvents(new InteractionEvent(), this);
         pluginManager.registerEvents(new DeathEvent(), this);
         pluginManager.registerEvents(new RevivePlayer(), this);
         pluginManager.registerEvents(new RanzenEvents(), this);
         pluginManager.registerEvents(new HandleKuehlpack(), this);
         pluginManager.registerEvents(new PickupDrops(), this);
+        pluginManager.registerEvents(new AtombombeEvents(), this);
 
         getCommand("start").setExecutor(new StartGame());
         getCommand("clearTeams").setExecutor(new ClearTeams());

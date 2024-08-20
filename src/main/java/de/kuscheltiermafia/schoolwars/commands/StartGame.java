@@ -27,10 +27,11 @@ import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -42,6 +43,19 @@ public class StartGame implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 
         SchoolWars.gameStarted = false;
+
+//reset Map
+        try {
+            for (Item item : Bukkit.getWorld("schoolwars").getEntitiesByClass(Item.class)) {
+                item.remove();
+            }
+            for (Interaction interaction : Bukkit.getWorld("schoolwars").getEntitiesByClass(Interaction.class)) {
+                interaction.remove();
+            }
+            for (BlockDisplay blockdisplay : Bukkit.getWorld("schoolwars").getEntitiesByClass(BlockDisplay.class)) {
+                blockdisplay.remove();
+            }
+        }catch (Exception ignored) {}
 
 //Set Playernames and ready them for battle
         Teams.clearTeams();

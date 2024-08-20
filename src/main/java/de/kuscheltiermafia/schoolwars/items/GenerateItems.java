@@ -24,6 +24,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 
 import java.util.Random;
 
@@ -35,10 +36,13 @@ public class GenerateItems {
 
         spawnItems = new ItemIdentifier[][]{
                 {
-                new ItemIdentifier("minas_flasche", 1, Items.minas_flasche, new Location(Bukkit.getWorld("schoolwars"), 36.5, 88, 150.5)),
-                new ItemIdentifier("minas_flasche", 2, Items.minas_flasche, new Location(Bukkit.getWorld("schoolwars"), -64.5, 81, 193.5)),
-                new ItemIdentifier("minas_flasche", 3, Items.minas_flasche, new Location(Bukkit.getWorld("schoolwars"), 31.5, 88, 161.5)),
-                new ItemIdentifier("minas_flasche", 4, Items.minas_flasche, new Location(Bukkit.getWorld("schoolwars"), 24.5, 81, 196.5))
+                    new ItemIdentifier("minas_flasche", 1, Items.minas_flasche, new Location(Bukkit.getWorld("schoolwars"), 37, 88, 150)),
+                    new ItemIdentifier("minas_flasche", 2, Items.minas_flasche, new Location(Bukkit.getWorld("schoolwars"), -65, 81, 193)),
+                    new ItemIdentifier("minas_flasche", 3, Items.minas_flasche, new Location(Bukkit.getWorld("schoolwars"), 31, 88, 161)),
+                    new ItemIdentifier("minas_flasche", 4, Items.minas_flasche, new Location(Bukkit.getWorld("schoolwars"), 24, 82, 196))
+                },
+                {
+                    new ItemIdentifier("bens_vape", 1, Items.vape_fruitberry, new Location(Bukkit.getWorld("schoolwars"), 42, 87, 141)),
                 }
         };
 
@@ -51,24 +55,22 @@ public class GenerateItems {
     }
 
     public static void createItemsEntity(ItemStack item, Location loc) {
-
         Block b = loc.getBlock();
 
-        Item itemEntity = b.getWorld().dropItemNaturally(loc, item);
+        Item itemEntity = b.getWorld().dropItem(loc, item);
         itemEntity.setPersistent(true);
         itemEntity.setInvulnerable(true);
+        itemEntity.setVelocity(new Vector(0, 0, 0));
         itemEntity.setPickupDelay(Integer.MAX_VALUE);
-
-        Bukkit.broadcastMessage("Spawned an Item!");
     }
 
     public static void spawnItem(int i1) {
 
         Random rand = new Random();
-        int random = rand.nextInt(3);
+        int random = rand.nextInt(spawnItems[i1].length);
 
 
-        for(int i2 = 0; i2 < 4; i2++) {
+        for(int i2 = 0; i2 < spawnItems[i1].length ; i2++) {
 
             ItemStack item = spawnItems[i1][i2].getItem();
             int randID = spawnItems[i1][i2].getRandID();

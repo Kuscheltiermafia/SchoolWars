@@ -25,6 +25,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -67,7 +68,7 @@ public class InteractionEvent implements Listener {
     @EventHandler
     public void OnBreakBlock(BlockBreakEvent e){
         Player p = e.getPlayer();
-        if (!p.isOp()){
+        if (p.getGameMode() != GameMode.CREATIVE){
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§4Das darfst du nicht!"));
             e.setCancelled(true);
         }
@@ -77,7 +78,7 @@ public class InteractionEvent implements Listener {
     @EventHandler
     public void OnPlaceBlock(BlockPlaceEvent e){
         Player p = e.getPlayer();
-        if (!p.isOp()){
+        if (p.getGameMode() != GameMode.CREATIVE){
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§4Das darfst du nicht!"));
             e.setCancelled(true);
         }
@@ -99,7 +100,6 @@ public class InteractionEvent implements Listener {
 //Prevent dead Players from interacting
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
-
         if (RevivePlayer.deadPlayers.containsKey(e.getPlayer().getName())) {
             e.setCancelled(true);
         }
