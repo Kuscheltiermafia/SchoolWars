@@ -24,6 +24,8 @@ import de.kuscheltiermafia.schoolwars.items.Items;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,6 +35,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDismountEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.ItemStack;
 
 
 public class InteractionEvent implements Listener {
@@ -40,23 +43,22 @@ public class InteractionEvent implements Listener {
 //Prevent players from clicking spacers, allow moving between UI pages
     @EventHandler
     public void clickSpacer(InventoryClickEvent e) {
-
         Player p = (Player) e.getWhoClicked();
-
         try {
             if (e.getCurrentItem().equals(Items.spacer)) {
                 e.setCancelled(true);
             }else if(e.getCurrentItem().equals(Items.page_up)) {
-                Bukkit.broadcastMessage("page " + ItemList.page);
-                ItemList.page++;
-                ItemList.fillItemlist(e.getInventory(), ItemList.page);
                 e.setCancelled(true);
+                p.getInventory().remove(Items.page_up);
+                ItemList.itemListPage.put(p, ItemList.itemListPage.get(p) + 1);
+                ItemList.fillItemlist(e.getInventory(), ItemList.itemListPage.get(p), p);
             }else if(e.getCurrentItem().equals(Items.page_down)) {
-                Bukkit.broadcastMessage("page " + ItemList.page);
-                ItemList.page--;
-                ItemList.fillItemlist(e.getInventory(), ItemList.page);
                 e.setCancelled(true);
-                Bukkit.broadcastMessage("page " + ItemList.page);
+                p.getInventory().remove(Items.page_down);
+                ItemList.itemListPage.put(p, ItemList.itemListPage.get(p) - 1);
+                ItemList.fillItemlist(e.getInventory(), ItemList.itemListPage.get(p), p);
+            }else if(e.getCurrentItem().equals(Items.no_page_down) || e.getCurrentItem().equals(Items.no_page_up) || e.getCurrentItem().equals(new ItemStack(Items.createItem(Material.BOOK, ChatColor.DARK_RED + "Current Page: " + ItemList.itemListPage.get(p), 20, 1, null, false, false)))) {
+                e.setCancelled(true);
             }
         }catch (Exception ignored){}
     }

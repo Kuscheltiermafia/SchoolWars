@@ -21,11 +21,8 @@ package de.kuscheltiermafia.schoolwars.items;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.ToolComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +62,8 @@ public class Items {
     public static ItemStack cookie;
     public static ItemStack generalSchluessel;
     public static ItemStack rollator;
+    public static ItemStack no_page_down;
+    public static ItemStack no_page_up;
 
     public static ArrayList<ItemStack> itemList = new ArrayList<ItemStack>();
 
@@ -169,6 +168,8 @@ public class Items {
         spacer = createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, " ", 20, 1, null, false, true);
         page_up = createItem(Material.ARROW, "§4Next Page", 21, 1, null, false, false);
         page_down = createItem(Material.ARROW, "§4Previous Page", 22, 1, null, false, false);
+        no_page_down = createItem(Material.BARRIER, "§4No previous Page available", 21, 1, null, false, false);
+        no_page_up = createItem(Material.BARRIER, "§4No next Page available", 22, 1, null, false, false);
         placeholder = createItem(Material.STRUCTURE_VOID, "§5§l§kA§r§7 PLACEHOLDER §r§5§l§kA", 1, 1, null, true, false);
         itemList.add(placeholder);
 

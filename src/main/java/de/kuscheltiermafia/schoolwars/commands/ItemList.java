@@ -21,6 +21,7 @@ package de.kuscheltiermafia.schoolwars.commands;
 
 import de.kuscheltiermafia.schoolwars.items.Items;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -33,35 +34,46 @@ import java.util.HashMap;
 
 public class ItemList implements CommandExecutor{
 
-    public static int[] spacers = new int[]{1, 3, 4, 5, 6, 7, 8, 9, 18, 27, 36, 45, 17, 26, 35, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53};
+    public static HashMap<Player, Integer> itemListPage = new HashMap<Player, Integer>();
+
+    public static int[] spacers = new int[]{3, 4, 5, 6, 7, 8, 9, 18, 27, 36, 45, 17, 26, 35, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53};
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
 
         if(sender instanceof Player) {
 
-            Inventory itemList = Bukkit.createInventory(null, 9*6, "§4Itemlist - Page " + page + 1);
 
             Player p = (Player) sender;
-            fillItemlist(itemList, page);
+
+            Inventory itemList = Bukkit.createInventory(null, 9*6, "§4Itemlist");
+
+            itemListPage.put(p, 0);
+
+            fillItemlist(itemList, itemListPage.get(p), p);
 
             p.openInventory(itemList);
         }
         return false;
     }
 
-    public static void fillItemlist(Inventory itemList, int currentPage) {
+    public static void fillItemlist(Inventory itemList, int currentPage, Player user) {
 
         int pageModi = 28 * (currentPage);
-
-        Bukkit.broadcastMessage("page " + currentPage + "pageModi " + pageModi);
 
         for(int i = 0; i < itemList.getSize(); i++) {
             itemList.setItem(i, new ItemStack(Material.AIR));
         }
 
-        itemList.setItem(0, new ItemStack(Items.page_down));
-        itemList.setItem(2, new ItemStack(Items.page_up));
+        if(itemListPage.get(user) == 0) {
+            itemList.setItem(0, new ItemStack(Items.no_page_down));
+        }else{itemList.setItem(0, new ItemStack(Items.page_down));}
+
+        if((itemListPage.get(user) + 1) * 28 <= Items.itemList.size()) {
+            itemList.setItem(2, new ItemStack(Items.page_up));
+        }else{itemList.setItem(2, new ItemStack(Items.no_page_up));}
+
+        itemList.setItem(1, new ItemStack(Items.createItem(Material.BOOK, ChatColor.DARK_RED + "Current Page: " + itemListPage.get(user), 20, 1, null, false, false)));
 
         for(int i = 0; i < spacers.length; i++) {
             int slot = spacers[i];
