@@ -1,9 +1,11 @@
 de\kuscheltiermafia\schoolwars\commands\ClearTeams.class
+de\kuscheltiermafia\schoolwars\events\AtombombeEvents$1.class
 de\kuscheltiermafia\schoolwars\items\ItemIdentifier.class
 de\kuscheltiermafia\schoolwars\commands\TeamList.class
 de\kuscheltiermafia\schoolwars\items\GenerateItems.class
 de\kuscheltiermafia\schoolwars\items\Items.class
 de\kuscheltiermafia\schoolwars\commands\StartGame.class
+de\kuscheltiermafia\schoolwars\events\AtombombeEvents.class
 de\kuscheltiermafia\schoolwars\events\JoinEvent.class
 de\kuscheltiermafia\schoolwars\events\DeathEvent.class
 de\kuscheltiermafia\schoolwars\events\HandleKuehlpack.class
@@ -14,5 +16,6 @@ de\kuscheltiermafia\schoolwars\events\RanzenEvents.class
 de\kuscheltiermafia\schoolwars\SchoolWars.class
 de\kuscheltiermafia\schoolwars\gameprep\Teams.class
 de\kuscheltiermafia\schoolwars\mechanics\Ranzen.class
+de\kuscheltiermafia\schoolwars\events\AtombombeEvents$2.class
 de\kuscheltiermafia\schoolwars\events\RevivePlayer.class
 de\kuscheltiermafia\schoolwars\events\PickupDrops.class
