@@ -23,6 +23,7 @@ import de.kuscheltiermafia.schoolwars.commands.ItemList;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -46,15 +47,16 @@ public class InteractionEvent implements Listener {
             if (e.getCurrentItem().equals(Items.spacer)) {
                 e.setCancelled(true);
             }else if(e.getCurrentItem().equals(Items.page_up)) {
-                p.closeInventory();
+                Bukkit.broadcastMessage("page " + ItemList.page);
                 ItemList.page++;
-                ItemList.fillItemlist(p, ItemList.page);
+                ItemList.fillItemlist(e.getInventory(), ItemList.page);
                 e.setCancelled(true);
-            }else if(e.getCurrentItem().equals(Items.page_down) && ItemList.page > 1) {
-                p.closeInventory();
+            }else if(e.getCurrentItem().equals(Items.page_down)) {
+                Bukkit.broadcastMessage("page " + ItemList.page);
                 ItemList.page--;
-                ItemList.fillItemlist(p, ItemList.page);
+                ItemList.fillItemlist(e.getInventory(), ItemList.page);
                 e.setCancelled(true);
+                Bukkit.broadcastMessage("page " + ItemList.page);
             }
         }catch (Exception ignored){}
     }

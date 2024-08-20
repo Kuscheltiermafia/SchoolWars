@@ -21,6 +21,7 @@ package de.kuscheltiermafia.schoolwars.commands;
 
 import de.kuscheltiermafia.schoolwars.items.Items;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -28,28 +29,36 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class ItemList implements CommandExecutor{
+import java.util.HashMap;
 
-    public static int page;
+public class ItemList implements CommandExecutor{
 
     public static int[] spacers = new int[]{1, 3, 4, 5, 6, 7, 8, 9, 18, 27, 36, 45, 17, 26, 35, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53};
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+
         if(sender instanceof Player) {
+
+            Inventory itemList = Bukkit.createInventory(null, 9*6, "§4Itemlist - Page " + page + 1);
+
             Player p = (Player) sender;
-            page = 1;
-            fillItemlist(p, page);
+            fillItemlist(itemList, page);
+
+            p.openInventory(itemList);
         }
         return false;
     }
 
-    public static void fillItemlist(Player p, int currentPage) {
-        Inventory itemList = Bukkit.createInventory(null, 9*6, "§4Itemlist - Page " + page);
+    public static void fillItemlist(Inventory itemList, int currentPage) {
 
-        int pageModi = 28 * (currentPage - 1);
+        int pageModi = 28 * (currentPage);
 
         Bukkit.broadcastMessage("page " + currentPage + "pageModi " + pageModi);
+
+        for(int i = 0; i < itemList.getSize(); i++) {
+            itemList.setItem(i, new ItemStack(Material.AIR));
+        }
 
         itemList.setItem(0, new ItemStack(Items.page_down));
         itemList.setItem(2, new ItemStack(Items.page_up));
@@ -63,7 +72,6 @@ public class ItemList implements CommandExecutor{
             itemList.addItem(Items.itemList.get(i + pageModi));
         }
 
-        p.openInventory(itemList);
     }
 
 }
