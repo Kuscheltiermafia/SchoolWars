@@ -16,6 +16,5 @@ de\kuscheltiermafia\schoolwars\events\RanzenEvents.class
 de\kuscheltiermafia\schoolwars\SchoolWars.class
 de\kuscheltiermafia\schoolwars\gameprep\Teams.class
 de\kuscheltiermafia\schoolwars\mechanics\Ranzen.class
-de\kuscheltiermafia\schoolwars\events\AtombombeEvents$2.class
 de\kuscheltiermafia\schoolwars\events\RevivePlayer.class
 de\kuscheltiermafia\schoolwars\events\PickupDrops.class

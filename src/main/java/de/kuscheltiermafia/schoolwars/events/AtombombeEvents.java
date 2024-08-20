@@ -96,93 +96,11 @@ public class AtombombeEvents implements Listener {
 
     public static void onZentrifugeVoll(ArrayList inv, Block b) {
         if (inv.contains(Items.fluor) && inv.contains(Items.useless_uranium)) {
-            zentrifugeActive = true;
-
             new BukkitRunnable() {
                 @Override
                 public void run() {
-
-                    i++;
-
-                    for (Entity player : b.getLocation().getWorld().getNearbyEntities(b.getLocation(), 5, 4, 5)) {
-                        if(player instanceof Player) {
-                            Player p = (Player) player;
-                            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(progress));
-                        }
-                    }
-
-                    String n = "§7█";
-                    String d = "§4█";
-
-                    Bukkit.broadcastMessage("Current: " + i);
-                    switch(i) {
-                        case 1:
-                            progress = n+n+n+n+n+n+n+n+n+n;
-                            Bukkit.broadcastMessage(progress);
-                            break;
-                        case 60:
-                            progress = d + n + n + n + n + n + n + n + n + n;
-                            Bukkit.broadcastMessage(progress);
-                            break;
-                        case 120:
-                            progress = d + d + n + n + n + n + n + n + n + n;
-                            Bukkit.broadcastMessage(progress);
-                            break;
-                        case 180:
-                            progress = d + d + d + n + n + n + n + n + n + n;
-                            Bukkit.broadcastMessage(progress);
-                            break;
-                        case 240:
-                            progress = d + d + d + d + n + n + n + n + n + n;
-                            Bukkit.broadcastMessage(progress);
-                            break;
-                        case 300:
-                            progress = d + d + d + d + d + n + n + n + n + n;
-                            Bukkit.broadcastMessage(progress);
-                            break;
-                        case 360:
-                            progress = d + d + d + d + d + d + n + n + n + n;
-                            Bukkit.broadcastMessage(progress);
-                            break;
-                        case 420:
-                            progress = d + d + d + d + d + d + d + n + n + n;
-                            Bukkit.broadcastMessage(progress);
-                            break;
-                        case 480:
-                            progress = d + d + d + d + d + d + d + d + n + n;
-                            Bukkit.broadcastMessage(progress);
-                            break;
-                        case 540:
-                            progress = d + d + d + d + d + d + d + d + d + n;
-                            Bukkit.broadcastMessage(progress);
-                            break;
-                        case 600:
-                            progress = d + d + d + d + d + d + d + d + d + d;
-                            Bukkit.broadcastMessage(progress);
-                            break;
-                    }
-
-                    if(zentrifugeActive = false) {
-                        cancel();
-                        return;
-                    }
-
-                }
-            }.runTaskTimer(SchoolWars.getPlugin(), 0, 1);
-
-
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    Bukkit.broadcastMessage("Essen ist fertig :D");
-
-                    zentrifugeActive = false;
-
                     GenerateItems.createItemsEntity(new ItemStack(Items.uranium), b.getLocation().add(0, 2, 0));
-
-                    Bukkit.broadcastMessage("Put item");
                     return;
-
                 }
             }.runTaskLater(SchoolWars.getPlugin(), 20 * 30);
         }
