@@ -23,8 +23,10 @@ import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.events.RevivePlayer;
 import de.kuscheltiermafia.schoolwars.gameprep.Teams;
 import de.kuscheltiermafia.schoolwars.items.GenerateItems;
+import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -32,8 +34,14 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import sun.security.krb5.JavaxSecurityAuthKerberosAccess;
+
+import javax.management.openmbean.OpenMBeanInfoSupport;
 
 import static de.kuscheltiermafia.schoolwars.events.RevivePlayer.deadPlayers;
 
@@ -55,7 +63,8 @@ public class StartGame implements CommandExecutor {
             for (BlockDisplay blockdisplay : Bukkit.getWorld("schoolwars").getEntitiesByClass(BlockDisplay.class)) {
                 blockdisplay.remove();
             }
-        }catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
 //Set Playernames and ready them for battle
         Teams.clearTeams();
@@ -73,7 +82,7 @@ public class StartGame implements CommandExecutor {
         GenerateItems.summonItems();
 
 //revive Player
-        for (Player p: Bukkit.getOnlinePlayers()) {
+        for (Player p : Bukkit.getOnlinePlayers()) {
             if (deadPlayers.containsKey(p.getName())) {
                 Bukkit.getEntity(deadPlayers.get(p.getName())).remove();
                 p.teleport(p.getLocation().add(0, 1, 0));
@@ -86,16 +95,16 @@ public class StartGame implements CommandExecutor {
         }
 
 //Teleport Players to their respective spawnpoints
-        for(String playerName : Teams.sprachler){
+        for (String playerName : Teams.sprachler) {
 
             Player p = Bukkit.getPlayer(playerName);
 
             Teams.configurePlayer(playerName, "sprachler");
             p.teleport(new Location(p.getWorld(), -20.5, 89, 146.5, -90, 0));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 1, false, false, false));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 40, 1, false, false, false));
 
         }
-        for (String playerName : Teams.naturwissenschaftler){
+        for (String playerName : Teams.naturwissenschaftler) {
 
             Player p = Bukkit.getPlayer(playerName);
 
@@ -103,7 +112,7 @@ public class StartGame implements CommandExecutor {
             p.teleport(new Location(p.getWorld(), 5, 81, 192, 90, 0));
             p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 1, false, false, false));
         }
-        for (String playerName : Teams.sportler){
+        for (String playerName : Teams.sportler) {
 
             Player p = Bukkit.getPlayer(playerName);
 

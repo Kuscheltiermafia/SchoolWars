@@ -19,28 +19,29 @@
 
 package de.kuscheltiermafia.schoolwars.mechanics;
 
-import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-
-public class progressBars {
-
-    public static HashMap<String, Integer> progressBars = new HashMap<String, Integer>();
+import org.bukkit.ChatColor;
 
 
-    public static void createProgressBar(String name) {
+public class ProgressBarHandler {
 
-        progressBars.put(name, 0);
+    public static int amountDone = 0;
 
-    }
-
-    public static void progressBarsUpdate(Player p, String name, Integer progress) {
-
-        p.sendMessage();
-
-        if(progress)
+    public static String progressBarsUpdate(double progress) {
+        String done = ChatColor.DARK_GREEN + "█";
+        String todo = ChatColor.DARK_GRAY + "█";
+        amountDone = (int) Math.ceil(progress / 10);
+        StringBuilder finishedString = new StringBuilder();
 
 
+        for (int i = 0; i < amountDone; i++) {
+            finishedString.append(done);
+        }
+
+        for (int i = 0; i < 10 - amountDone; i++) {
+            finishedString.append(todo);
+        }
+
+        return finishedString.toString();
     }
 
 }

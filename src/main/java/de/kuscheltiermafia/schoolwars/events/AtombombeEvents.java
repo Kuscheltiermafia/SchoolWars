@@ -22,17 +22,12 @@ package de.kuscheltiermafia.schoolwars.events;
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.items.Items;
+import de.kuscheltiermafia.schoolwars.mechanics.ProgressBarHandler;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.block.Dispenser;
-import org.bukkit.block.Dropper;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -42,12 +37,15 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 
 public class AtombombeEvents implements Listener {
 
     ArrayList<ItemStack> zentrifugeInventory = new ArrayList<ItemStack>();
     public static boolean zentrifugeActive;
+
+    static int duration = 20 * 30;
 
     @EventHandler
     public void onVersuch(PlayerInteractEvent e) {
@@ -96,13 +94,37 @@ public class AtombombeEvents implements Listener {
 
     public static void onZentrifugeVoll(ArrayList inv, Block b) {
         if (inv.contains(Items.fluor) && inv.contains(Items.useless_uranium)) {
+
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    GenerateItems.createItemsEntity(new ItemStack(Items.uranium), b.getLocation().add(0, 2, 0));
-                    return;
+                    GenerateItems.createItemsEntity(new ItemStack(Items.uranium), b.getLocation().add(0.5, 2.75, 0.5));
                 }
-            }.runTaskLater(SchoolWars.getPlugin(), 20 * 30);
+            }.runTaskLater(SchoolWars.getPlugin(), duration);
+
+            Location loc = b.getLocation();
+
+
+            for(int i = 0; i < duration; i++) {
+                int finalI = i;
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        double calcProgress = (double) finalI / duration * 100;
+
+                        Collection<Entity> nearbyPlayers = loc.getWorld().getNearbyEntities(loc, 5, 5, 5);
+
+                        for(Entity p: nearbyPlayers) {
+                            if (p instanceof Player) {
+                                ((Player) p).spigot().sendMessage (ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "-- Zentrifugenfortschritt: " + ProgressBarHandler.progressBarsUpdate(calcProgress) + ChatColor.GRAY + " --"));
+                                if (finalI % 30 == 0) {
+                                    ((Player) p).playSound(loc, "entity.minecart.riding", SoundCategory.BLOCKS, 100, 1);
+                                }
+                            }
+                        }
+                    }
+                }.runTaskLater(SchoolWars.getPlugin(), finalI);
+            }
         }
     }
 }

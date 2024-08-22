@@ -23,7 +23,6 @@ import de.kuscheltiermafia.schoolwars.commands.ItemList;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -89,7 +88,6 @@ public class InteractionEvent implements Listener {
     @EventHandler
     public void onDismount(EntityDismountEvent e){
         if (e.getEntity() instanceof Player){
-            Player p = (Player) e.getEntity();
             if (e.getDismounted() instanceof Bat){
                 e.setCancelled(true);
             }
@@ -124,6 +122,33 @@ public class InteractionEvent implements Listener {
             e.setCancelled(true);
         }
     }
+
+//Brot hier, willkommen zu einem neuem GROOVETUBE VIDEO. Heute BROTEN WIR mein riesiges Brot, man könnte es auch *****, das wäre aber etwas brot (aka gay)
+// Mein Bro heißt BERND das Brot, was ein ziemlich schöner Name ist. Aber ich heiße ANTON VIVALDI KLEMMT IM BROT, ich weiß, ein viel schöneren Namen.
+// **** KiKa, ich bin viel cooler und grooovicker, warum haben die diesen blöden narzasistischen Bernd genommen.
+// Also leute, wenn ihr mik supporten wollt, folgt mir einfach ma auf Forza, dann können ma auch ma zusammen ein groovickes Rennen fahren.
+// Aber ihr werdet nie gewinnen, weil wie alle kennen bin ich ANTON VIVALDI KLEMMT IM BROT der beste im KLATSCHEN! Oder war es CLUTCHEN? Ach egal, ich brotshippe jetzt.
+// Denn alle 11 Minuten verbrennt ein Brot wegen Bernd, also lasst uns alle zusammenhalten und ANTON VIVALDI KLEMMT IM BROT supporten.
+// OH! Na sie mal einer an! Das ist ja ein schönes Dinkelbrot!😏 Für das würde ich verbrennen ... Aber meine Mama hat mich immer gelehrt. Brenne nie für ein Dinkelbrot.
+//Aber wenn ich mir so die Bilder von diesem Dinkelbrot anschaue, bemerkte ich, dass sie einen 10/10 BRAYT HAT! Also brottete ich sie, bis ich nicht mehr konnte.
+// Und so kamen ANTON VIVALDI KLEMMT IM BROT und das liebe Dinkelbrot zusammen. Happy End!
+// Bis die Nutella kam ... TO BE BROTINUED
+//
+//
+//https://youtu.be/FuCvyB1FvF4
+//
+//@EventHandler
+//public void JulisuCapped(JuliusCapEvent e) { //<--- Ik bin nik Julisu
+//    e.setCancelled(true);
+//    Bukkit.broadcastMessage("Julius wollte capen, aber er wurde gecappt");}
+////
+//ANTON HAT EINEN KLEINEN OpenMBeanInfoSupport#
+//ICH BIN EIN KRASSER JavaxSecurityAuthKerberosAccess
+//warum ist mein cursor ein fucking lightbulb huhuhuhu
+
+//Es war einmal ein Julius in einem Teich!
+//Er fiel in den Teich!
+//Er starb!
 
 
 
