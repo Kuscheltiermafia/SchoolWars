@@ -74,12 +74,12 @@ public class AtombombeEvents implements Listener {
             Block b = e.getClickedBlock();
             Player p = e.getPlayer();
             if(b.getLocation().add(0, 1, 0).getBlock().getType().equals(Material.POLISHED_TUFF_WALL) && b.getLocation().add(0, 2, 0).getBlock().getType().equals(Material.STONE_BUTTON)) {
-                if(p.getInventory().getItemInMainHand().equals(Items.useless_uranium)) {
+                if(p.getInventory().getItemInMainHand().getItemMeta().equals(Items.useless_uranium.getItemMeta())) {
                     p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount() - 1);
                     zentrifugeInventory.add(Items.useless_uranium);
                     onZentrifugeVoll(zentrifugeInventory, b);
                     e.setCancelled(true);
-                } else if(p.getInventory().getItemInMainHand().equals(Items.fluor)) {
+                } else if(p.getInventory().getItemInMainHand().getItemMeta().equals(Items.fluor.getItemMeta())) {
                     p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount() - 1);
                     zentrifugeInventory.add(Items.fluor);
                     onZentrifugeVoll(zentrifugeInventory, b);
@@ -116,7 +116,7 @@ public class AtombombeEvents implements Listener {
 
                         for(Entity p: nearbyPlayers) {
                             if (p instanceof Player) {
-                                ((Player) p).spigot().sendMessage (ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "-- Zentrifugenfortschritt: " + ProgressBarHandler.progressBarsUpdate(calcProgress) + ChatColor.GRAY + " --"));
+                                ((Player) p).spigot().sendMessage (ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "-- Zentrifugenfortschritt: " + ProgressBarHandler.progressBarsUpdate(calcProgress, ChatColor.DARK_GREEN) + ChatColor.GRAY + " --"));
                                 if (finalI % 30 == 0) {
                                     ((Player) p).playSound(loc, "entity.minecart.riding", SoundCategory.BLOCKS, 100, 1);
                                 }

@@ -21,11 +21,15 @@ package de.kuscheltiermafia.schoolwars.items;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Items {
 
@@ -74,10 +78,10 @@ public class Items {
     public static void initItems() {
 
 //Waffen
-        minas_flasche = createItem(Material.GLASS_BOTTLE, "§4Minas' Flasche", 1, 1, null, false, false);
+        minas_flasche = weaponiseItem(createItem(Material.GLASS_BOTTLE, "§4Minas' Flasche", 1, 1, null, false, false), 3, 1, EquipmentSlot.HAND);
         itemList.add(minas_flasche);
 
-        schulbuch = createItem(Material.KNOWLEDGE_BOOK, ChatColor.BLUE + "Fokus Kampfkunst", 1, 1, null, false, false);
+        schulbuch = weaponiseItem(createItem(Material.KNOWLEDGE_BOOK, ChatColor.BLUE + "Fokus Kampfkunst", 1, 1, null, false, false), 6, 1, EquipmentSlot.HAND);
         itemList.add(schulbuch);
 
         xlr_kabel = createItem(Material.LEAD, ChatColor.DARK_GRAY + "XLR Kabel", 1, 16, null, false, false);
@@ -225,5 +229,17 @@ public class Items {
         return genItem;
     }
 
+    public static ItemStack weaponiseItem(ItemStack item, double damage, double attackSpeed, EquipmentSlot slot) {
 
+        ItemMeta meta = item.getItemMeta();
+        AttributeModifier damageModifier = new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", damage, AttributeModifier.Operation.ADD_NUMBER, slot);
+        AttributeModifier speedModifier = new AttributeModifier(UUID.randomUUID(), "generic.attackSpeed", attackSpeed, AttributeModifier.Operation.ADD_NUMBER, slot);
+
+        meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, damageModifier);
+        meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, speedModifier);
+
+        item.setItemMeta(meta);
+
+        return item;
+    }
 }

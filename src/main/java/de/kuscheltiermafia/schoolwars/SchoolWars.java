@@ -19,10 +19,7 @@
 
 package de.kuscheltiermafia.schoolwars;
 
-import de.kuscheltiermafia.schoolwars.commands.ClearTeams;
-import de.kuscheltiermafia.schoolwars.commands.ItemList;
-import de.kuscheltiermafia.schoolwars.commands.StartGame;
-import de.kuscheltiermafia.schoolwars.commands.TeamList;
+import de.kuscheltiermafia.schoolwars.commands.*;
 import de.kuscheltiermafia.schoolwars.events.*;
 import de.kuscheltiermafia.schoolwars.gameprep.Teams;
 import de.kuscheltiermafia.schoolwars.items.GenerateItems;
@@ -75,11 +72,13 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new HandleKuehlpack(), this);
         pluginManager.registerEvents(new PickupDrops(), this);
         pluginManager.registerEvents(new AtombombeEvents(), this);
+        pluginManager.registerEvents(new KarlElixier(), this);
 
         getCommand("start").setExecutor(new StartGame());
         getCommand("clearTeams").setExecutor(new ClearTeams());
         getCommand("itemlist").setExecutor(new ItemList());
         getCommand("teamlist").setExecutor(new TeamList());
+        getCommand("revive").setExecutor(new Revive());
 
         Teams.clearTeams();
         Ranzen.clearRanzen();

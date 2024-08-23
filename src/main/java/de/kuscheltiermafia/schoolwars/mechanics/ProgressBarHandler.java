@@ -26,8 +26,8 @@ public class ProgressBarHandler {
 
     public static int amountDone = 0;
 
-    public static String progressBarsUpdate(double progress) {
-        String done = ChatColor.DARK_GREEN + "█";
+    public static String progressBarsUpdate(double progress, ChatColor progressColor) {
+        String done = progressColor + "█";
         String todo = ChatColor.DARK_GRAY + "█";
         amountDone = (int) Math.ceil(progress / 10);
         StringBuilder finishedString = new StringBuilder();
