@@ -72,6 +72,9 @@ public class Items {
     public static ItemStack leere_tasse;
     public static ItemStack useless_uranium;
     public static ItemStack fluor;
+    public static ItemStack nobel_praemie;
+    public static ItemStack focken;
+    public static ItemStack script;
 
     public static ArrayList<ItemStack> itemList = new ArrayList<ItemStack>();
 
@@ -147,19 +150,41 @@ public class Items {
         leere_tasse = createItem(Material.FLOWER_POT, ChatColor.WHITE + "Leere Tasse", 1, 1, null, false, false);
         itemList.add(leere_tasse);
 
-        karls_elexier = createItem(Material.POTION,ChatColor.LIGHT_PURPLE + "Elexir Karls des Kleinen", 1, 1, null, false, false);
+        ArrayList<String> karls_elexir_lore = new ArrayList<String>();
+        karls_elexir_lore.add(ChatColor.WHITE + "Nomen est omen");
+        karls_elexier = createItem(Material.POTION,ChatColor.LIGHT_PURPLE + "Elexir Karls des Kleinen", 1, 1, karls_elexir_lore, false, false);
         itemList.add(karls_elexier);
 
         generalSchluessel = createItem(Material.TRIPWIRE_HOOK, ChatColor.GOLD + "Generalschlüssel", 1, 1, null, false, false);
         itemList.add(generalSchluessel);
 
         ArrayList<String> physikSchlüssel_lore = new ArrayList<String>();
-        physikSchlüssel_lore.add("Öffnet die Schränke der Physik");
+        physikSchlüssel_lore.add(ChatColor.WHITE + "Öffnet die Schränke der Physik");
         physikSchluessel = createItem(Material.TRIPWIRE_HOOK, ChatColor.GOLD + "Physikschlüssel", 1, 1, physikSchlüssel_lore, false, false);
         itemList.add(physikSchluessel);
 
         rollator = createItem(Material.NETHER_BRICK_FENCE, ChatColor.GRAY + "Rollator", 1, 1, null, false, false);
         itemList.add(rollator);
+
+        nobel_praemie = createItem(Material.SUNFLOWER, ChatColor.GOLD + "Nōbelprämie", 1, 1, null, true, false);
+        itemList.add(nobel_praemie);
+
+        ArrayList<String> focken_lore = new ArrayList<String>();
+        focken_lore.add("§7- " + ChatColor.LIGHT_PURPLE + "Fantastisches orientiertes cooles kurioses entanguliertes Neutron" + "§7 -");
+        focken_lore.add("§7oder kurz, FOCKEN!");
+        focken_lore.add("§7Keine Ahnung was das ist...");
+
+        focken = createItem(Material.DARK_OAK_BUTTON, ChatColor.LIGHT_PURPLE + "Focken", 1, 1, focken_lore, true, false);
+        itemList.add(focken);
+
+        ArrayList<String> script_lore = new ArrayList<String>();
+        script_lore.add("§l§f                   - Prolog -");
+        script_lore.add("§fRegisseurin geht nachdenklich auf der Bühne auf und ab,");
+        script_lore.add("§fsich gelegentlich die Hände reibend bzw. am Kopf kratzend.");
+        script_lore.add("§fKritikerin liest am vorderen rechten Bühnenrand");
+        script_lore.add("§fvöllig unbewegt „Die Kritik der reinen Vernunft“.");
+        script = createItem(Material.PAPER, ChatColor.GOLD + "Script: Alice im Wunderland", 1, 1, script_lore, true, false);
+        itemList.add(script);
 
 
 //Vapes
@@ -236,7 +261,7 @@ public class Items {
         AttributeModifier speedModifier = new AttributeModifier(UUID.randomUUID(), "generic.attackSpeed", attackSpeed, AttributeModifier.Operation.ADD_NUMBER, slot);
 
         meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, damageModifier);
-        meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, speedModifier);
+        meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, speedModifier);
 
         item.setItemMeta(meta);
 
