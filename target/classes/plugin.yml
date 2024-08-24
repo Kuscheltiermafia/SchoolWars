@@ -13,3 +13,5 @@ commands:
     description: lists all players in the teams
   revive:
     description: Revives a given player
+  scale:
+    description: Changes the scale of a player. Only for debugging purposes

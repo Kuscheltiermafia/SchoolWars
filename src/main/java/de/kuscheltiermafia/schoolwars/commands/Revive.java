@@ -20,6 +20,7 @@
 package de.kuscheltiermafia.schoolwars.commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -33,7 +34,7 @@ public class Revive implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
 
-        if(args.length == 0 && sender instanceof Player) {
+        if(args.length == 0 && sender instanceof Player && ((Player) sender).isOp()) {
          Player target = (Player) sender;
 
             Bukkit.getEntity(deadPlayers.get(target.getName())).remove();
@@ -46,7 +47,7 @@ public class Revive implements CommandExecutor {
             deadPlayers.remove(target.getName());
         }
 
-        if(args.length == 1) {
+        if(args.length == 1 && ((Player) sender).isOp()) {
             Player target = (Player) Bukkit.getPlayer(args[0]);
 
             Bukkit.getEntity(deadPlayers.get(target.getName())).remove();

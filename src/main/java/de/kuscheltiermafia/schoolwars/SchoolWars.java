@@ -79,6 +79,7 @@ public final class SchoolWars extends JavaPlugin {
         getCommand("itemlist").setExecutor(new ItemList());
         getCommand("teamlist").setExecutor(new TeamList());
         getCommand("revive").setExecutor(new Revive());
+        getCommand("scale").setExecutor(new SizeChanger());
 
         Teams.clearTeams();
         Ranzen.clearRanzen();
