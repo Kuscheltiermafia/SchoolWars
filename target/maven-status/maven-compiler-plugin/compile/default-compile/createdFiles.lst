@@ -19,6 +19,7 @@ de\kuscheltiermafia\schoolwars\items\GenerateItems.class
 de\kuscheltiermafia\schoolwars\items\Items.class
 de\kuscheltiermafia\schoolwars\events\KarlElixier$3.class
 de\kuscheltiermafia\schoolwars\events\JoinEvent.class
+de\kuscheltiermafia\schoolwars\commands\SizeChanger.class
 de\kuscheltiermafia\schoolwars\events\LeaveEvent.class
 de\kuscheltiermafia\schoolwars\SchoolWars.class
 de\kuscheltiermafia\schoolwars\gameprep\Teams.class
