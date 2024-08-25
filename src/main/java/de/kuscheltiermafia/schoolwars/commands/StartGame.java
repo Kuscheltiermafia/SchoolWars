@@ -20,28 +20,17 @@
 package de.kuscheltiermafia.schoolwars.commands;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
-import de.kuscheltiermafia.schoolwars.events.RevivePlayer;
 import de.kuscheltiermafia.schoolwars.gameprep.Teams;
 import de.kuscheltiermafia.schoolwars.items.GenerateItems;
-import de.kuscheltiermafia.schoolwars.items.Items;
-import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import sun.security.krb5.JavaxSecurityAuthKerberosAccess;
-
-import javax.management.openmbean.OpenMBeanInfoSupport;
 
 import static de.kuscheltiermafia.schoolwars.events.RevivePlayer.deadPlayers;
 

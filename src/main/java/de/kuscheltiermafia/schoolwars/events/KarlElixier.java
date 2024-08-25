@@ -24,6 +24,7 @@ import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.ProgressBarHandler;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.SoundCategory;
@@ -48,6 +49,7 @@ public class KarlElixier implements Listener {
         if(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             Player p = e.getPlayer();
             if(e.getPlayer().getInventory().getItemInMainHand().equals(Items.karls_elexier) && p.getAttribute(Attribute.GENERIC_SCALE).getBaseValue() > 0.95) {
+                p.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
                 decreaseSize(p);
                 for(int i = 0; i < karlDauer; i++) {
                     int finalI = i;
@@ -73,7 +75,8 @@ public class KarlElixier implements Listener {
                                             p.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(1);
                                             p.damage(100);
                                         }
-                                        if (p.getLocation().add(0, 1, 0).getBlock().getType() == Material.AIR && p.getAttribute(Attribute.GENERIC_SCALE).getValue() < 0.6) {
+
+                                        if (p.getLocation().add(0, 1, 0).getBlock().getType() == Material.AIR && p.getAttribute(Attribute.GENERIC_SCALE).getValue() < 0.55) {
                                             increaseSize(p);
                                         }
                                     }
@@ -93,7 +96,6 @@ public class KarlElixier implements Listener {
                 @Override
                 public void run() {
                     p.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(p.getAttribute(Attribute.GENERIC_SCALE).getBaseValue() - 0.1);
-                    p.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
                     playSound("entity.generic.drink", p);
                 }
             }.runTaskLater(SchoolWars.getPlugin(), i * 10);
@@ -101,12 +103,11 @@ public class KarlElixier implements Listener {
     }
 
     public static void increaseSize(Player p) {
-        for(int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
             new BukkitRunnable() {
                 @Override
                 public void run() {
                     p.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(p.getAttribute(Attribute.GENERIC_SCALE).getBaseValue() + 0.1);
-                    p.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
                     playSound("block.sponge.absorb", p);
                 }
             }.runTaskLater(SchoolWars.getPlugin(), i * 10);

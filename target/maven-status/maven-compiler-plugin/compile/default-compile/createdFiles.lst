@@ -3,11 +3,13 @@ de\kuscheltiermafia\schoolwars\events\KarlElixier$2.class
 de\kuscheltiermafia\schoolwars\commands\StartGame.class
 de\kuscheltiermafia\schoolwars\events\KarlElixier$4.class
 de\kuscheltiermafia\schoolwars\events\AtombombeEvents.class
+de\kuscheltiermafia\schoolwars\events\Rolator.class
 de\kuscheltiermafia\schoolwars\commands\Revive.class
 de\kuscheltiermafia\schoolwars\events\DeathEvent.class
 de\kuscheltiermafia\schoolwars\events\HandleKuehlpack.class
 de\kuscheltiermafia\schoolwars\events\InteractionEvent.class
 de\kuscheltiermafia\schoolwars\commands\ItemList.class
+de\kuscheltiermafia\schoolwars\events\Rolator$1.class
 de\kuscheltiermafia\schoolwars\events\RanzenEvents.class
 de\kuscheltiermafia\schoolwars\events\AtombombeEvents$2.class
 de\kuscheltiermafia\schoolwars\events\KarlElixier.class
@@ -24,6 +26,7 @@ de\kuscheltiermafia\schoolwars\events\LeaveEvent.class
 de\kuscheltiermafia\schoolwars\SchoolWars.class
 de\kuscheltiermafia\schoolwars\gameprep\Teams.class
 de\kuscheltiermafia\schoolwars\mechanics\Ranzen.class
+de\kuscheltiermafia\schoolwars\mechanics\ParticleHandler.class
 de\kuscheltiermafia\schoolwars\mechanics\ProgressBarHandler.class
 de\kuscheltiermafia\schoolwars\events\RevivePlayer.class
 de\kuscheltiermafia\schoolwars\events\KarlElixier$1.class
