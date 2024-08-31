@@ -1,12 +1,10 @@
 de\kuscheltiermafia\schoolwars\events\KarlElixier$2$1.class
 de\kuscheltiermafia\schoolwars\events\Minasisierung$2.class
 de\kuscheltiermafia\schoolwars\events\KarlElixier$2.class
-de\kuscheltiermafia\schoolwars\commands\PleaseGiveMeAutismUwu.class
 de\kuscheltiermafia\schoolwars\commands\StartGame.class
 de\kuscheltiermafia\schoolwars\events\KarlElixier$4.class
 de\kuscheltiermafia\schoolwars\events\AtombombeEvents.class
 de\kuscheltiermafia\schoolwars\events\Rolator.class
-de\kuscheltiermafia\schoolwars\commands\Revive.class
 de\kuscheltiermafia\schoolwars\events\DeathEvent.class
 de\kuscheltiermafia\schoolwars\events\HandleKuehlpack.class
 de\kuscheltiermafia\schoolwars\events\InteractionEvent.class
@@ -24,7 +22,7 @@ de\kuscheltiermafia\schoolwars\items\Items.class
 de\kuscheltiermafia\schoolwars\events\KarlElixier$3.class
 de\kuscheltiermafia\schoolwars\events\Minasisierung$1.class
 de\kuscheltiermafia\schoolwars\events\JoinEvent.class
-de\kuscheltiermafia\schoolwars\commands\SizeChanger.class
+de\kuscheltiermafia\schoolwars\commands\Debug.class
 de\kuscheltiermafia\schoolwars\events\LeaveEvent.class
 de\kuscheltiermafia\schoolwars\events\Minasisierung.class
 de\kuscheltiermafia\schoolwars\SchoolWars.class

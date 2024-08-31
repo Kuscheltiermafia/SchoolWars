@@ -38,17 +38,20 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
 
 
 public class KarlElixier implements Listener {
 
-    public static int karlDauer = 60 * 20;
+    public int karlDauer = 60 * 20;
+    static HashMap<String, Boolean> increase = new HashMap<>();
 
     @EventHandler
     public void onKarlEvent(PlayerInteractEvent e) {
         if(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             Player p = e.getPlayer();
             if(e.getPlayer().getInventory().getItemInMainHand().equals(Items.karls_elexier) && p.getAttribute(Attribute.GENERIC_SCALE).getBaseValue() > 0.95) {
+                increase.put(p.getName(), true);
                 p.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
                 decreaseSize(p);
                 for(int i = 0; i < karlDauer; i++) {
@@ -64,20 +67,21 @@ public class KarlElixier implements Listener {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            for(int i = 0; i < 5 * 20; i++) {
+                            for(int i = 1; i < 5 * 20 + 1; i++) {
                                 int finalI = i;
                                 new BukkitRunnable() {
                                     public void run() {
                                         if(p.getLocation().add(0, 1, 0).getBlock().getType() != Material.AIR && p.getAttribute(Attribute.GENERIC_SCALE).getBaseValue() < 1 && finalI % 5 == 0) {
                                             warn(finalI, p);
                                         }
+                                        if (p.getLocation().add(0, 1, 0).getBlock().getType() == Material.AIR && p.getAttribute(Attribute.GENERIC_SCALE).getValue() < 0.55) {
+                                            increaseSize(p);
+                                            increase.put(p.getName(), false);
+                                        }
+
                                         if (finalI == 5 * 20 - 1 && p.getAttribute(Attribute.GENERIC_SCALE).getValue() < 1){
                                             p.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(1);
                                             p.damage(100);
-                                        }
-
-                                        if (p.getLocation().add(0, 1, 0).getBlock().getType() == Material.AIR && p.getAttribute(Attribute.GENERIC_SCALE).getValue() < 0.55) {
-                                            increaseSize(p);
                                         }
                                     }
                                 }.runTaskLater(SchoolWars.getPlugin(), i);
@@ -103,14 +107,16 @@ public class KarlElixier implements Listener {
     }
 
     public static void increaseSize(Player p) {
-        for (int i = 0; i < 5; i++) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    p.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(p.getAttribute(Attribute.GENERIC_SCALE).getBaseValue() + 0.1);
-                    playSound("block.sponge.absorb", p);
-                }
-            }.runTaskLater(SchoolWars.getPlugin(), i * 10);
+        if (increase.get(p.getName())) {
+            for (int i = 0; i < 5; i++) {
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        p.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(p.getAttribute(Attribute.GENERIC_SCALE).getBaseValue() + 0.1);
+                        playSound("block.sponge.absorb", p);
+                    }
+                }.runTaskLater(SchoolWars.getPlugin(), i * 10);
+            }
         }
     }
 

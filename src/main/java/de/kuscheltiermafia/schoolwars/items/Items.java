@@ -95,10 +95,10 @@ public class Items {
         xlr_kabel = createItem(Material.LEAD, ChatColor.DARK_GRAY + "XLR Kabel", 1, 16, null, false, false);
         itemList.add(xlr_kabel);
 
-        attack_stuhl = weaponiseItem(createItem(Material.OAK_STAIRS, ChatColor.WHITE + "Stuhl", 1, 1, null, true, false), 2, 0.5, EquipmentSlot.HAND);
+        attack_stuhl = weaponiseItem(createItem(Material.OAK_STAIRS, ChatColor.WHITE + "Stuhl", 1, 1, null, false, false), 2, 0.5, EquipmentSlot.HAND);
         itemList.add(attack_stuhl);
 
-        buffed_stuhl = weaponiseItem(createItem(Material.OAK_STAIRS, "§5§l§kA§r§f Stuhl §r§5§l§kA", 1, 1, null, false, false), 1, 0.5, EquipmentSlot.HAND);
+        buffed_stuhl = weaponiseItem(createItem(Material.OAK_STAIRS, "§5§l§kA§r§f Stuhl §r§5§l§kA", 1, 1, null, true, false), 1, 0.5, EquipmentSlot.HAND);
         itemList.add(buffed_stuhl);
 
 //Support
@@ -160,6 +160,7 @@ public class Items {
 
         ArrayList<String> karls_elexir_lore = new ArrayList<String>();
         karls_elexir_lore.add(ChatColor.WHITE + "Nomen est omen");
+        karls_elexir_lore.add(ChatColor.WHITE + "Mit Bedacht zu verwenden");
         karls_elexier = createItem(Material.POTION,ChatColor.LIGHT_PURPLE + "Elexir Karls des Kleinen", 1, 1, karls_elexir_lore, false, false);
         itemList.add(karls_elexier);
 
