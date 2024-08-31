@@ -2,17 +2,21 @@ package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.items.Items;
+import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
 import de.kuscheltiermafia.schoolwars.mechanics.ProgressBarHandler;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class Minasisierung implements Listener {
@@ -54,6 +58,24 @@ public class Minasisierung implements Listener {
                     }
                 }
             }.runTaskLater(SchoolWars.getPlugin(), i);
+        }
+    }
+
+
+    @EventHandler
+    public void OnStuhlHit(EntityDamageByEntityEvent e) {
+        if(e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
+            Player hitter = (Player) e.getDamager();
+            Player hitted = (Player) e.getEntity();
+
+            if(hitter.getInventory().getItemInMainHand().equals(Items.buffed_stuhl) && !hitted.getLocation().subtract(0, 2, 0).getBlock().getType().equals(Material.AIR)) {
+                hitted.teleport(hitted.getLocation().subtract(0, 1, 0));
+                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 999999, 255, false, false, false));
+
+                ParticleHandler.createParticles(hitted.getLocation(), Particle.CRIT, 20, 0.2, true, null);
+                ParticleHandler.createParticles(hitted.getLocation(), Particle.CLOUD, 30, 0.4, true, null);
+            }
+
         }
     }
 }

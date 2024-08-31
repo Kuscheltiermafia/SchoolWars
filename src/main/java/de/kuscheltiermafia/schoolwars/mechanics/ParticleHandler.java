@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ParticleHandler {
 
-    public static void createParticles(Location loc, Particle particle, int count, int speed, boolean everyone, @Nullable ArrayList<Player> players) {
+    public static void createParticles(Location loc, Particle particle, int count, double speed, boolean everyone, @Nullable ArrayList<Player> players) {
         if(everyone) {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 p.spawnParticle(particle, loc, count, 0, 0, 0, speed);
