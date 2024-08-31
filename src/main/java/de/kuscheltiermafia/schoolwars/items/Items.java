@@ -35,6 +35,8 @@ public class Items {
 
     public static ItemStack minas_flasche;
     public static ItemStack laptop;
+    public static ItemStack buffed_minas_flasche;
+    public static ItemStack buffed_stuhl;
     public static ItemStack placeholder;
     public static ItemStack nuke;
     public static ItemStack kuehlpack;
@@ -84,14 +86,20 @@ public class Items {
         minas_flasche = weaponiseItem(createItem(Material.GLASS_BOTTLE, "§4Minas' Flasche", 1, 1, null, false, false), 3, 1, EquipmentSlot.HAND);
         itemList.add(minas_flasche);
 
+        buffed_minas_flasche = weaponiseItem(createItem(Material.GLASS_BOTTLE, "§l§k§4Ä §r§4 Minas' Flasche §r§l§k§4Ä", 1, 1, null, true, false), 14, 0.95, EquipmentSlot.HAND);
+        itemList.add(buffed_minas_flasche);
+
         schulbuch = weaponiseItem(createItem(Material.KNOWLEDGE_BOOK, ChatColor.BLUE + "Fokus Kampfkunst", 1, 1, null, false, false), 6, 1, EquipmentSlot.HAND);
         itemList.add(schulbuch);
 
         xlr_kabel = createItem(Material.LEAD, ChatColor.DARK_GRAY + "XLR Kabel", 1, 16, null, false, false);
         itemList.add(xlr_kabel);
 
-        attack_stuhl = createItem(Material.OAK_STAIRS, ChatColor.WHITE + "Stuhl", 1, 1, null, false, false);
+        attack_stuhl = weaponiseItem(createItem(Material.OAK_STAIRS, ChatColor.WHITE + "Stuhl", 1, 1, null, true, false), 2, 0.5, EquipmentSlot.HAND);
         itemList.add(attack_stuhl);
+
+        buffed_stuhl = weaponiseItem(createItem(Material.GLASS_BOTTLE, "§l§k§4Ä §r§f Stuhl §r§l§k§4Ä", 1, 1, null, false, false), 3, 1, EquipmentSlot.HAND);
+        itemList.add(buffed_stuhl);
 
 //Support
         ArrayList<String> kuehlpack_lore = new ArrayList<String>();

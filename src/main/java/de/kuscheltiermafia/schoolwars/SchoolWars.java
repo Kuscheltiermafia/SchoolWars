@@ -107,8 +107,4 @@ public final class SchoolWars extends JavaPlugin {
     public static int getPlayerCount() {
         return playerCount;
     }
-
-    static public Scoreboard getBoard() {
-        return board;
-    }
 }
