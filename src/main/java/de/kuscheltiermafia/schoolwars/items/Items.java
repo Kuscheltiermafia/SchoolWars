@@ -86,7 +86,7 @@ public class Items {
         minas_flasche = weaponiseItem(createItem(Material.GLASS_BOTTLE, "§4Minas' Flasche", 1, 1, null, false, false), 3, 1, EquipmentSlot.HAND);
         itemList.add(minas_flasche);
 
-        buffed_minas_flasche = weaponiseItem(createItem(Material.GLASS_BOTTLE, "§l§k§4Ä §r§4 Minas' Flasche §r§l§k§4Ä", 1, 1, null, true, false), 14, 0.95, EquipmentSlot.HAND);
+        buffed_minas_flasche = weaponiseItem(createItem(Material.GLASS_BOTTLE, "§5§l§kA§r§4 Minas' Flasche §r§5§l§kA", 1, 1, null, true, false), 10, 0.95, EquipmentSlot.HAND);
         itemList.add(buffed_minas_flasche);
 
         schulbuch = weaponiseItem(createItem(Material.KNOWLEDGE_BOOK, ChatColor.BLUE + "Fokus Kampfkunst", 1, 1, null, false, false), 6, 1, EquipmentSlot.HAND);
@@ -98,7 +98,7 @@ public class Items {
         attack_stuhl = weaponiseItem(createItem(Material.OAK_STAIRS, ChatColor.WHITE + "Stuhl", 1, 1, null, true, false), 2, 0.5, EquipmentSlot.HAND);
         itemList.add(attack_stuhl);
 
-        buffed_stuhl = weaponiseItem(createItem(Material.GLASS_BOTTLE, "§l§k§4Ä §r§f Stuhl §r§l§k§4Ä", 1, 1, null, false, false), 3, 1, EquipmentSlot.HAND);
+        buffed_stuhl = weaponiseItem(createItem(Material.OAK_STAIRS, "§5§l§kA§r§f Stuhl §r§5§l§kA", 1, 1, null, false, false), 1, 0.5, EquipmentSlot.HAND);
         itemList.add(buffed_stuhl);
 
 //Support

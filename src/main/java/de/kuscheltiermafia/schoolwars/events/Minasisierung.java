@@ -14,10 +14,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.ArrayList;
 
 public class Minasisierung implements Listener {
 
@@ -25,14 +28,18 @@ public class Minasisierung implements Listener {
 
     public static void onMinasisierung(Player p) {
         for(ItemStack item : p.getInventory().getContents()) {
-            if(item.equals(Items.minas_flasche)) {
-                item.setType(Items.buffed_minas_flasche.getType());
-                item.setItemMeta(Items.buffed_minas_flasche.getItemMeta());
-            }
-            if(item.equals(Items.attack_stuhl)) {
-                item.setType(Items.buffed_stuhl.getType());
-                item.setItemMeta(Items.buffed_stuhl.getItemMeta());
-            }
+            try {
+                if(!item.equals(null)) {
+                    if (item.equals(Items.minas_flasche)) {
+                        item.setType(Items.buffed_minas_flasche.getType());
+                        item.setItemMeta(Items.buffed_minas_flasche.getItemMeta());
+                    }
+                    if (item.equals(Items.attack_stuhl)) {
+                        item.setType(Items.buffed_stuhl.getType());
+                        item.setItemMeta(Items.buffed_stuhl.getItemMeta());
+                    }
+                }
+            } catch (Exception ignored){}
         }
 
 
@@ -61,6 +68,8 @@ public class Minasisierung implements Listener {
         }
     }
 
+    public static ArrayList<Player> stunned = new ArrayList<Player>();
+
 
     @EventHandler
     public void OnStuhlHit(EntityDamageByEntityEvent e) {
@@ -68,14 +77,29 @@ public class Minasisierung implements Listener {
             Player hitter = (Player) e.getDamager();
             Player hitted = (Player) e.getEntity();
 
-            if(hitter.getInventory().getItemInMainHand().equals(Items.buffed_stuhl) && !hitted.getLocation().subtract(0, 2, 0).getBlock().getType().equals(Material.AIR)) {
+            if(hitter.getInventory().getItemInMainHand().equals(Items.buffed_stuhl)) {
                 hitted.teleport(hitted.getLocation().subtract(0, 1, 0));
-                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 999999, 255, false, false, false));
+                hitted.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 20 * 2, 1, false, false, false));
 
                 ParticleHandler.createParticles(hitted.getLocation(), Particle.CRIT, 20, 0.2, true, null);
-                ParticleHandler.createParticles(hitted.getLocation(), Particle.CLOUD, 30, 0.4, true, null);
+                ParticleHandler.createParticles(hitted.getLocation(), Particle.CLOUD, 30, 0.2, true, null);
+
+                stunned.add(hitted);
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        stunned.remove(hitted);
+                    }
+                }.runTaskLater(SchoolWars.getPlugin(), 20 * 2);
             }
 
+        }
+    }
+
+    @EventHandler
+    public void onPlayerJump(PlayerMoveEvent e) {
+        if(stunned.contains(e.getPlayer())) {
+            e.setCancelled(true);
         }
     }
 }
