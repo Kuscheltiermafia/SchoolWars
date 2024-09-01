@@ -57,7 +57,7 @@ public class InteractionEvent implements Listener {
                 p.getInventory().remove(Items.page_down);
                 ItemList.itemListPage.put(p, ItemList.itemListPage.get(p) - 1);
                 ItemList.fillItemlist(e.getInventory(), ItemList.itemListPage.get(p), p);
-            }else if(e.getCurrentItem().equals(Items.no_page_down) || e.getCurrentItem().equals(Items.no_page_up) || e.getCurrentItem().equals(new ItemStack(Items.createItem(Material.BOOK, ChatColor.DARK_RED + "Current Page: " + ItemList.itemListPage.get(p), 20, 1, null, false, false)))) {
+            }else if(e.getCurrentItem().equals(Items.no_page_down) || e.getCurrentItem().equals(Items.no_page_up) || e.getCurrentItem().equals(new ItemStack(Items.createItem(Material.BOOK, ChatColor.DARK_RED + "Current Page: " + ItemList.itemListPage.get(p), 20, 1, null, false, false, false)))) {
                 e.setCancelled(true);
             }
         }catch (Exception ignored){}

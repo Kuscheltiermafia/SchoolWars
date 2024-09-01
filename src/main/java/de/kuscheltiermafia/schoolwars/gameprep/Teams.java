@@ -27,11 +27,9 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 
-public class Teams {
+import static de.kuscheltiermafia.schoolwars.SchoolWars.*;
 
-    public static ArrayList<String> sprachler = new ArrayList<String>();
-    public static ArrayList<String> naturwissenschaftler = new ArrayList<String>();
-    public static ArrayList<String> sportler = new ArrayList<String>();
+public class Teams {
 
 
     public static void joinTeams(){
@@ -41,11 +39,11 @@ public class Teams {
         for(Player p : Bukkit.getOnlinePlayers()){
 
             if(i % 3 == 0){
-                sprachler.add(p.getName()); ;
+                sprachler.mitglieder.add(p.getName());
             } else if(i % 3 == 1){
-                naturwissenschaftler.add(p.getName());
+                nws.mitglieder.add(p.getName());
             } else {
-                sportler.add(p.getName());
+                sportler.mitglieder.add(p.getName());
             }
 
             i--;
@@ -55,39 +53,11 @@ public class Teams {
 
     }
 
-    public static void configurePlayer(String playerName, String team){
-
-        Player p = Bukkit.getPlayer(playerName);
-
-        if(team.equals("sprachler")){
-            p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist ein " + ChatColor.GOLD + "Sprachler");
-            p.setDisplayName(ChatColor.GOLD + "[Sprache] " + p.getName());
-            p.setPlayerListName(ChatColor.GOLD + "[Sprache] " + p.getName());
-            p.setCustomName(ChatColor.GOLD + "[Sprache] " + p.getName());
-            Ranzen.giveRanzen("sprachler", p);
-            p.getInventory().addItem(Items.schulbuch1);
-        }else if(team.equals("naturwissenschaftler")){
-            p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist ein " + ChatColor.GREEN + "Naturwissenschaftler");
-            p.setDisplayName(ChatColor.GREEN + "[NWS] " + p.getName());
-            p.setPlayerListName(ChatColor.GREEN + "[NWS] " + p.getName());
-            p.setCustomName(ChatColor.GREEN + "[NWS] " + p.getName());
-            Ranzen.giveRanzen("naturwissenschaftler", p);
-            p.getInventory().addItem(Items.schulbuch1);
-        }else if(team.equals("sportler")){
-            p.sendMessage( ChatColor.YELLOW + "[SchoolWars] Du bist ein " + ChatColor.DARK_RED + "Sportler");
-            p.setDisplayName(ChatColor.DARK_RED + "[Sport] " + p.getName());
-            p.setPlayerListName(ChatColor.DARK_RED + "[Sport] " + p.getName());
-            p.setCustomName(ChatColor.DARK_RED + "[Sport] " + p.getName());
-            Ranzen.giveRanzen("sportler", p);
-            p.getInventory().addItem(Items.schulbuch1);
-        }
-
-    }
 
     public static void clearTeams(){
-        sprachler.clear();
-        naturwissenschaftler.clear();
-        sportler.clear();
+        sprachler.mitglieder.clear();
+        nws.mitglieder.clear();
+        sportler.mitglieder.clear();
     }
 
     public static void resetPlayer(Player p){

@@ -20,6 +20,9 @@
 package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.gameprep.NWS;
+import de.kuscheltiermafia.schoolwars.gameprep.Sportler;
+import de.kuscheltiermafia.schoolwars.gameprep.Sprachler;
 import de.kuscheltiermafia.schoolwars.gameprep.Teams;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
@@ -32,6 +35,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import static de.kuscheltiermafia.schoolwars.SchoolWars.*;
 
 public class DeathEvent implements Listener {
 
@@ -50,23 +55,23 @@ public class DeathEvent implements Listener {
 
 
 //destroy Ranzen
-            if (Teams.naturwissenschaftler.contains(p.getName())) {
+            if (nws.mitglieder.contains(p.getName())) {
                 playerName = ChatColor.GREEN + "[NWS] " + p.getName();
                 if(p.getKiller() != null && p.getInventory().contains(Items.nws_ranzen)) {
-                    Ranzen.destroyRanzen(p.getKiller(), SchoolWars.nameNaturwissenschaftler, p.getLocation());
+                    Ranzen.destroyRanzen(p.getKiller(), nws.teamName, p.getLocation());
                     p.getInventory().remove(new ItemStack(Items.nws_ranzen));
                 }
-            } else if (Teams.sportler.contains(p.getName())) {
+            } else if (sportler.mitglieder.contains(p.getName())) {
                 playerName = ChatColor.DARK_RED + "[Sport] " + p.getName();
                 if(p.getKiller() != null && p.getInventory().contains(Items.sport_ranzen)) {
-                    Ranzen.destroyRanzen(p.getKiller(), SchoolWars.nameSportler, p.getLocation());
+                    Ranzen.destroyRanzen(p.getKiller(), sportler.teamName, p.getLocation());
                     p.getInventory().remove(new ItemStack(Items.sport_ranzen));
                 }
 
-            } else if (Teams.sprachler.contains(p.getName())) {
+            } else if (sprachler.mitglieder.contains(p.getName())) {
                 playerName = ChatColor.GOLD + "[Sprache] " + p.getName();
                 if(p.getKiller() != null && p.getInventory().contains(Items.sprach_ranzen)) {
-                    Ranzen.destroyRanzen(p.getKiller(), SchoolWars.nameSprachler, p.getLocation());
+                    Ranzen.destroyRanzen(p.getKiller(), sprachler.teamName, p.getLocation());
                     p.getInventory().remove(new ItemStack(Items.sprach_ranzen));
                 }
 
@@ -77,11 +82,11 @@ public class DeathEvent implements Listener {
                 Player killer = p.getKiller();
                 killerName = killer.getName();
 
-                if (Teams.naturwissenschaftler.contains(killer.getName())) {
+                if (nws.mitglieder.contains(killer.getName())) {
                     killerName = ChatColor.GREEN + "[NWS] " + killer.getName();
-                } else if (Teams.sportler.contains(killer.getName())) {
+                } else if (sportler.mitglieder.contains(killer.getName())) {
                     killerName = ChatColor.DARK_RED + "[Sport] " + killer.getName();
-                } else if (Teams.sprachler.contains(killer.getName())) {
+                } else if (sprachler.mitglieder.contains(killer.getName())) {
                     killerName = ChatColor.GOLD + "[Sprache] " + killer.getName();
                 }
             }

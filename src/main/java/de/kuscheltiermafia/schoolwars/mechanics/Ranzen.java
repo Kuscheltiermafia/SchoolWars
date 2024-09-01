@@ -20,6 +20,9 @@
 package de.kuscheltiermafia.schoolwars.mechanics;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.gameprep.NWS;
+import de.kuscheltiermafia.schoolwars.gameprep.Sportler;
+import de.kuscheltiermafia.schoolwars.gameprep.Sprachler;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import org.bukkit.*;
 import org.bukkit.entity.BlockDisplay;
@@ -30,6 +33,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.HashMap;
+
+import static de.kuscheltiermafia.schoolwars.SchoolWars.*;
 
 public class Ranzen implements Listener {
 
@@ -100,24 +105,9 @@ public class Ranzen implements Listener {
     public static HashMap<String, Integer> ranzenAmount = new HashMap<String, Integer>();
 
     public static void generateRanzenCounter(){
-        ranzenAmount.put(SchoolWars.nameSportler, 0);
-        ranzenAmount.put(SchoolWars.nameNaturwissenschaftler, 0);
-        ranzenAmount.put(SchoolWars.nameSprachler, 0);
-    }
-
-    public static void giveRanzen(String team, Player p) {
-        if (team.equals("sprachler")) {
-            p.getInventory().addItem(new ItemStack(Items.sprach_ranzen));
-            ranzenAmount.put(SchoolWars.nameSprachler, ranzenAmount.get(SchoolWars.nameSprachler) + 1);
-        }
-        if (team.equals("naturwissenschaftler")) {
-            p.getInventory().addItem(new ItemStack(Items.nws_ranzen));
-            ranzenAmount.put(SchoolWars.nameNaturwissenschaftler, ranzenAmount.get(SchoolWars.nameNaturwissenschaftler) + 1);
-        }
-        if (team.equals("sportler")) {
-            p.getInventory().addItem(new ItemStack(Items.sport_ranzen));
-            ranzenAmount.put(SchoolWars.nameSportler, ranzenAmount.get(SchoolWars.nameSportler) + 1);
-        }
+        ranzenAmount.put(sportler.teamName, 0);
+        ranzenAmount.put(nws.teamName, 0);
+        ranzenAmount.put(sprachler.teamName, 0);
     }
 
     public static void destroyRanzen(Player p, String team, Location loc) {

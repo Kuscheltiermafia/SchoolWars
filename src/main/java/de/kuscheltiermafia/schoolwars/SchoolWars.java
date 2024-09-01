@@ -21,10 +21,15 @@ package de.kuscheltiermafia.schoolwars;
 
 import de.kuscheltiermafia.schoolwars.commands.*;
 import de.kuscheltiermafia.schoolwars.events.*;
+import de.kuscheltiermafia.schoolwars.gameprep.NWS;
+import de.kuscheltiermafia.schoolwars.gameprep.Sportler;
+import de.kuscheltiermafia.schoolwars.gameprep.Sprachler;
 import de.kuscheltiermafia.schoolwars.gameprep.Teams;
 import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.items.Items;
+import de.kuscheltiermafia.schoolwars.mechanics.LehrerHandler;
 import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
+import de.kuscheltiermafia.schoolwars.reputation.PlayerRepModel;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -33,6 +38,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
+
+import java.util.HashMap;
 
 import static de.kuscheltiermafia.schoolwars.events.RevivePlayer.deadPlayers;
 
@@ -48,9 +55,11 @@ public final class SchoolWars extends JavaPlugin {
 
     public static boolean gameStarted;
 
-    public static String nameSportler = ChatColor.DARK_RED + "sportler";
-    public static String nameSprachler = ChatColor.GOLD + "sprachler";
-    public static String nameNaturwissenschaftler = ChatColor.GREEN + "naturwissenschaftler";
+    public static NWS nws = new NWS();
+    public static Sprachler sprachler = new Sprachler();
+    public static Sportler sportler = new Sportler();
+
+    public static HashMap<String, PlayerRepModel> playerReputation = new HashMap<>();
 
 
     @Override
@@ -61,10 +70,20 @@ public final class SchoolWars extends JavaPlugin {
         plugin = this;
         board = Bukkit.getScoreboardManager().getNewScoreboard();
 
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            try {
+            playerReputation.put(p.getName(), new PlayerRepModel(p.getName()));
+            }catch (Exception ignored){}
+        }
+
         Items.initItems();
         SchulbuchLevels.initShelfLocations();
+        SchulbuchLevels.resetBookshelf();
         GenerateItems.generateItemLocations();
         Ranzen.generateRanzenCounter();
+        Lehrer.initLehrerAlgorithm();
+        LehrerHandler.initLehrerQuests();
+        LehrerHandler.initLehrer(4, 87, 190);
 
         PluginManager pluginManager = Bukkit.getPluginManager();
 
@@ -81,6 +100,8 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new Rolator(), this);
         pluginManager.registerEvents(new Minasisierung(), this);
         pluginManager.registerEvents(new SchulbuchLevels(), this);
+        pluginManager.registerEvents(new Generalschluessel(), this);
+        pluginManager.registerEvents(new Lehrer(), this);
 
         getCommand("start").setExecutor(new StartGame());
         getCommand("clearTeams").setExecutor(new ClearTeams());
@@ -110,6 +131,9 @@ public final class SchoolWars extends JavaPlugin {
                 deadPlayers.remove(p.getName());
             }
         }
+
+        LehrerHandler.removeLehrer();
+        playerReputation.clear();
     }
 
     public static SchoolWars getPlugin(){

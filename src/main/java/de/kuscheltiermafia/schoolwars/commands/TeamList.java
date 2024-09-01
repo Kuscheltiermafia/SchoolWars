@@ -19,11 +19,16 @@
 
 package de.kuscheltiermafia.schoolwars.commands;
 
+import de.kuscheltiermafia.schoolwars.gameprep.NWS;
+import de.kuscheltiermafia.schoolwars.gameprep.Sportler;
+import de.kuscheltiermafia.schoolwars.gameprep.Sprachler;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import static de.kuscheltiermafia.schoolwars.SchoolWars.*;
 
 public class TeamList implements CommandExecutor {
 
@@ -31,15 +36,15 @@ public class TeamList implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 
         commandSender.sendMessage(ChatColor.GOLD + "§lSprachler:");
-        for (String playerName : de.kuscheltiermafia.schoolwars.gameprep.Teams.sprachler) {
+        for (String playerName : sprachler.mitglieder) {
             commandSender.sendMessage(ChatColor.GOLD + playerName);
         }
         commandSender.sendMessage(ChatColor.GREEN + "§lNaturwissenschaftler:");
-        for (String playerName : de.kuscheltiermafia.schoolwars.gameprep.Teams.naturwissenschaftler) {
+        for (String playerName : nws.mitglieder) {
             commandSender.sendMessage(ChatColor.GREEN + playerName);
         }
         commandSender.sendMessage(ChatColor.DARK_RED + "§lSportler:");
-        for (String playerName : de.kuscheltiermafia.schoolwars.gameprep.Teams.sportler) {
+        for (String playerName : sportler.mitglieder) {
             commandSender.sendMessage(ChatColor.DARK_RED + playerName);
         }
 

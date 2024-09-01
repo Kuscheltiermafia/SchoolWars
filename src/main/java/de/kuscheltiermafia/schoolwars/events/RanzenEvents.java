@@ -20,6 +20,9 @@
 package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.gameprep.NWS;
+import de.kuscheltiermafia.schoolwars.gameprep.Sportler;
+import de.kuscheltiermafia.schoolwars.gameprep.Sprachler;
 import de.kuscheltiermafia.schoolwars.gameprep.Teams;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
@@ -35,6 +38,9 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
+import static de.kuscheltiermafia.schoolwars.SchoolWars.*;
+import static de.kuscheltiermafia.schoolwars.mechanics.Ranzen.ranzenAmount;
+
 public class RanzenEvents implements Listener {
 
     @EventHandler
@@ -43,17 +49,18 @@ public class RanzenEvents implements Listener {
         Entity ranzen = e.getRightClicked();
 
         if(ranzen.hasMetadata("naturwissenschaftler")) {
-            if(Teams.naturwissenschaftler.contains(p.getName())) {
+            if(nws.mitglieder.contains(p.getName())) {
                 if (Ranzen.displayPositions.containsKey(ranzen.getLocation().subtract(0.5, 0, 0.5))) {
                     Entity display = Ranzen.displayPositions.get(ranzen.getLocation().subtract(0.5, 0, 0.5));
                     display.remove();
                 }
                 ranzen.remove();
-                Ranzen.giveRanzen("naturwissenschaftler", p);
+                p.getInventory().addItem(new ItemStack(Items.nws_ranzen));
+                ranzenAmount.put(nws.teamName, ranzenAmount.get(nws.teamName) + 1);
                 p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§2Du hast deinen Ranzen aufgehoben!"));
                 e.setCancelled(true);
-            }else if(!Teams.naturwissenschaftler.contains(p.getName())) {
-                Ranzen.destroyRanzen(p, SchoolWars.nameNaturwissenschaftler, ranzen.getLocation());
+            }else if(!nws.mitglieder.contains(p.getName())) {
+                Ranzen.destroyRanzen(p, nws.teamName, ranzen.getLocation());
                 if (Ranzen.displayPositions.containsKey(ranzen.getLocation().subtract(0.5, 0, 0.5))) {
                     Entity display = Ranzen.displayPositions.get(ranzen.getLocation().subtract(0.5, 0, 0.5));
                     display.remove();
@@ -62,17 +69,18 @@ public class RanzenEvents implements Listener {
             }
         }
         if(ranzen.hasMetadata("sprachler")) {
-            if(Teams.sprachler.contains(p.getName())) {
+            if(sprachler.mitglieder.contains(p.getName())) {
                 if (Ranzen.displayPositions.containsKey(ranzen.getLocation().subtract(0.5, 0, 0.5))) {
                     Entity display = Ranzen.displayPositions.get(ranzen.getLocation().subtract(0.5, 0, 0.5));
                     display.remove();
                 }
                 ranzen.remove();
-                Ranzen.giveRanzen("sprachler", p);
+                p.getInventory().addItem(new ItemStack(Items.sprach_ranzen));
+                ranzenAmount.put(sprachler.teamName, ranzenAmount.get(sprachler.teamName) + 1);
                 p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§2Du hast deinen Ranzen aufgehoben!"));
                 e.setCancelled(true);
-            }else if(!Teams.sprachler.contains(p.getName())) {
-                Ranzen.destroyRanzen(p, SchoolWars.nameSprachler, ranzen.getLocation());
+            }else if(!sprachler.mitglieder.contains(p.getName())) {
+                Ranzen.destroyRanzen(p, sprachler.teamName, ranzen.getLocation());
                 if (Ranzen.displayPositions.containsKey(ranzen.getLocation().subtract(0.5, 0, 0.5))) {
                     Entity display = Ranzen.displayPositions.get(ranzen.getLocation().subtract(0.5, 0, 0.5));
                     display.remove();
@@ -81,17 +89,18 @@ public class RanzenEvents implements Listener {
             }
         }
         if(ranzen.hasMetadata("sportler")) {
-            if(Teams.sportler.contains(p.getName())) {
+            if(sportler.mitglieder.contains(p.getName())) {
                 if (Ranzen.displayPositions.containsKey(ranzen.getLocation().subtract(0.5, 0, 0.5))) {
                     BlockDisplay display = Ranzen.displayPositions.get(ranzen.getLocation().subtract(0.5, 0, 0.5));
                     display.remove();
                 }
                 ranzen.remove();
-                Ranzen.giveRanzen("sportler", p);
+                p.getInventory().addItem(new ItemStack(Items.sport_ranzen));
+                ranzenAmount.put(sportler.teamName, ranzenAmount.get(sportler.teamName) + 1);
                 p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§2Du hast deinen Ranzen aufgehoben!"));
                 e.setCancelled(true);
-            }else if(!Teams.sportler.contains(p.getName())) {
-                Ranzen.destroyRanzen(p, SchoolWars.nameSportler, ranzen.getLocation());
+            }else if(!sportler.mitglieder.contains(p.getName())) {
+                Ranzen.destroyRanzen(p, sportler.teamName, ranzen.getLocation());
                 if (Ranzen.displayPositions.containsKey(ranzen.getLocation().subtract(0.5, 0, 0.5))) {
                     Entity display = Ranzen.displayPositions.get(ranzen.getLocation().subtract(0.5, 0, 0.5));
                     display.remove();

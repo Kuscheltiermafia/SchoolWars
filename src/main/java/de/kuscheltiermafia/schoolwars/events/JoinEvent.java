@@ -20,14 +20,20 @@
 package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.gameprep.NWS;
+import de.kuscheltiermafia.schoolwars.gameprep.Sportler;
+import de.kuscheltiermafia.schoolwars.gameprep.Sprachler;
 import de.kuscheltiermafia.schoolwars.gameprep.Teams;
 import de.kuscheltiermafia.schoolwars.items.Items;
+import de.kuscheltiermafia.schoolwars.reputation.PlayerRepModel;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
+
+import static de.kuscheltiermafia.schoolwars.SchoolWars.*;
 
 public class JoinEvent implements Listener {
 
@@ -37,6 +43,10 @@ public class JoinEvent implements Listener {
         SchoolWars.setPlayerCount(SchoolWars.getPlayerCount() + 1);
 
         Player p = e.getPlayer();
+
+        try {
+            playerReputation.put(p.getName(), new PlayerRepModel(p.getName()));
+        }catch (Exception ignored){}
 
         p.teleport(new Location(p.getWorld(), -24, 80.5, 176, 90, 0));
         p.setRespawnLocation(new Location(p.getWorld(), -33.5, 88, 145.5, -90, 0));
@@ -62,14 +72,14 @@ public class JoinEvent implements Listener {
 
             p.sendMessage("Das Spiel hat bereits begonnen.");
 
-            if (Teams.naturwissenschaftler.contains(p.getName()) ){
-                Teams.configurePlayer(p.getName(), "naturwissenschaftler");
+            if (nws.mitglieder.contains(p.getName()) ){
+                nws.readyPlayer(p);
                 p.setGameMode(GameMode.SURVIVAL);
-            } else if (Teams.sportler.contains(p.getName())){
-                Teams.configurePlayer(p.getName(), "sportler");
+            } else if (sportler.mitglieder.contains(p.getName())){
+                sportler.readyPlayer(p);
                 p.setGameMode(GameMode.SURVIVAL);
-            } else if (Teams.sprachler.contains(p.getName())){
-                Teams.configurePlayer(p.getName(), "sprachler");
+            } else if (sprachler.mitglieder.contains(p.getName())){
+                sprachler.readyPlayer(p);
                 p.setGameMode(GameMode.SURVIVAL);
             } else {
                 p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist keinem Team zugeordnet.");
