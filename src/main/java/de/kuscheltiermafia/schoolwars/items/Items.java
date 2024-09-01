@@ -40,7 +40,11 @@ public class Items {
     public static ItemStack placeholder;
     public static ItemStack nuke;
     public static ItemStack kuehlpack;
-    public static ItemStack schulbuch;
+    public static ItemStack schulbuch1;
+    public static ItemStack schulbuch2;
+    public static ItemStack schulbuch3;
+    public static ItemStack schulbuch4;
+    public static ItemStack schulbuch5;
     public static ItemStack moritz_hut;
     public static ItemStack kaputtes_ipad;
     public static ItemStack vape_fruitberry;
@@ -89,8 +93,20 @@ public class Items {
         buffed_minas_flasche = weaponiseItem(createItem(Material.GLASS_BOTTLE, "§5§l§kA§r§4 Minas' Flasche §r§5§l§kA", 1, 1, null, true, false), 10, 0.95, EquipmentSlot.HAND);
         itemList.add(buffed_minas_flasche);
 
-        schulbuch = weaponiseItem(createItem(Material.KNOWLEDGE_BOOK, ChatColor.BLUE + "Fokus Kampfkunst", 1, 1, null, false, false), 6, 1, EquipmentSlot.HAND);
-        itemList.add(schulbuch);
+        schulbuch1 = weaponiseItem(createItem(Material.KNOWLEDGE_BOOK, ChatColor.BLUE + "Fokus Kampfkunst", 1, 1, null, false, false), 3, 1, EquipmentSlot.HAND);
+        itemList.add(schulbuch1);
+
+        schulbuch2 = weaponiseItem(createItem(Material.KNOWLEDGE_BOOK, ChatColor.DARK_BLUE + "Diercke Slam", 1, 1, null, false, false), 6, 1.1, EquipmentSlot.HAND);
+        itemList.add(schulbuch2);
+
+        schulbuch3 = weaponiseItem(createItem(Material.KNOWLEDGE_BOOK, ChatColor.RED + "Dornbader Schlag", 1, 1, null, false, false), 9, 1.2, EquipmentSlot.HAND);
+        itemList.add(schulbuch3);
+
+        schulbuch4 = weaponiseItem(createItem(Material.KNOWLEDGE_BOOK, ChatColor.GREEN + "Green Line to Hell", 1, 1, null, false, false), 12, 1.3, EquipmentSlot.HAND);
+        itemList.add(schulbuch4);
+
+        schulbuch5 = weaponiseItem(createItem(Material.KNOWLEDGE_BOOK, ChatColor.DARK_RED + "C.C.Buchner CHAOS", 1, 1, null, false, false), 15, 1.4, EquipmentSlot.HAND);
+        itemList.add(schulbuch5);
 
         xlr_kabel = createItem(Material.LEAD, ChatColor.DARK_GRAY + "XLR Kabel", 1, 16, null, false, false);
         itemList.add(xlr_kabel);

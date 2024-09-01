@@ -18,6 +18,7 @@ de\kuscheltiermafia\schoolwars\events\KarlElixier.class
 de\kuscheltiermafia\schoolwars\commands\ClearTeams.class
 de\kuscheltiermafia\schoolwars\events\AtombombeEvents$1.class
 de\kuscheltiermafia\schoolwars\items\ItemIdentifier.class
+de\kuscheltiermafia\schoolwars\events\SchulbuchLevels.class
 de\kuscheltiermafia\schoolwars\commands\TeamList.class
 de\kuscheltiermafia\schoolwars\items\GenerateItems.class
 de\kuscheltiermafia\schoolwars\items\Items.class

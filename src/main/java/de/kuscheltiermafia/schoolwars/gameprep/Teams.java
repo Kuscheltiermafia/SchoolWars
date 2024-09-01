@@ -19,6 +19,7 @@
 
 package de.kuscheltiermafia.schoolwars.gameprep;
 
+import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -64,18 +65,21 @@ public class Teams {
             p.setPlayerListName(ChatColor.GOLD + "[Sprache] " + p.getName());
             p.setCustomName(ChatColor.GOLD + "[Sprache] " + p.getName());
             Ranzen.giveRanzen("sprachler", p);
+            p.getInventory().addItem(Items.schulbuch1);
         }else if(team.equals("naturwissenschaftler")){
             p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist ein " + ChatColor.GREEN + "Naturwissenschaftler");
             p.setDisplayName(ChatColor.GREEN + "[NWS] " + p.getName());
             p.setPlayerListName(ChatColor.GREEN + "[NWS] " + p.getName());
             p.setCustomName(ChatColor.GREEN + "[NWS] " + p.getName());
             Ranzen.giveRanzen("naturwissenschaftler", p);
+            p.getInventory().addItem(Items.schulbuch1);
         }else if(team.equals("sportler")){
             p.sendMessage( ChatColor.YELLOW + "[SchoolWars] Du bist ein " + ChatColor.DARK_RED + "Sportler");
             p.setDisplayName(ChatColor.DARK_RED + "[Sport] " + p.getName());
             p.setPlayerListName(ChatColor.DARK_RED + "[Sport] " + p.getName());
             p.setCustomName(ChatColor.DARK_RED + "[Sport] " + p.getName());
             Ranzen.giveRanzen("sportler", p);
+            p.getInventory().addItem(Items.schulbuch1);
         }
 
     }

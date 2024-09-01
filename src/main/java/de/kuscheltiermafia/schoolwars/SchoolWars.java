@@ -58,6 +58,7 @@ public final class SchoolWars extends JavaPlugin {
         board = Bukkit.getScoreboardManager().getNewScoreboard();
 
         Items.initItems();
+        SchulbuchLevels.initShelfLocations();
         GenerateItems.generateItemLocations();
         Ranzen.generateRanzenCounter();
 
@@ -75,6 +76,7 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new KarlElixier(), this);
         pluginManager.registerEvents(new Rolator(), this);
         pluginManager.registerEvents(new Minasisierung(), this);
+        pluginManager.registerEvents(new SchulbuchLevels(), this);
 
         getCommand("start").setExecutor(new StartGame());
         getCommand("clearTeams").setExecutor(new ClearTeams());
