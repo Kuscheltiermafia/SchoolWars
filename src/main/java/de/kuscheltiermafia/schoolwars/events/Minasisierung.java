@@ -1,3 +1,22 @@
+/**
+ * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
+ * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
+ * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
+ * ██║╚██╔╝██║██╔══██║██║  ██║██╔══╝      ██╔══██╗  ╚██╔╝
+ * ██║ ╚═╝ ██║██║  ██║██████╔╝███████╗    ██████╔╝   ██║
+ * ╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝ ╚══════╝    ╚═════╝    ╚═╝
+ *
+ * ██╗  ██╗██╗   ██╗███████╗ ██████╗██╗  ██╗███████╗██╗  ████████╗██╗███████╗██████╗ ███╗   ███╗ █████╗ ███████╗██╗ █████╗
+ * ██║ ██╔╝██║   ██║██╔════╝██╔════╝██║  ██║██╔════╝██║  ╚══██╔══╝██║██╔════╝██╔══██╗████╗ ████║██╔══██╗██╔════╝██║██╔══██╗
+ * █████╔╝ ██║   ██║███████╗██║     ███████║█████╗  ██║     ██║   ██║█████╗  ██████╔╝██╔████╔██║███████║█████╗  ██║███████║
+ * ██╔═██╗ ██║   ██║╚════██║██║     ██╔══██║██╔══╝  ██║     ██║   ██║██╔══╝  ██╔══██╗██║╚██╔╝██║██╔══██║██╔══╝  ██║██╔══██║
+ * ██║  ██╗╚██████╔╝███████║╚██████╗██║  ██║███████╗███████╗██║   ██║███████╗██║  ██║██║ ╚═╝ ██║██║  ██║██║     ██║██║  ██║
+ * ╚═╝  ╚═╝ ╚═════╝ ╚══════╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝   ╚═╝╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝
+ *
+ * This is a plugin from Morgon and CrAzyA22 - Unless explicitly stated otherwise you are not permitted to use any of the given code!
+ *
+ */
+
 package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
@@ -13,18 +32,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 
 public class Minasisierung implements Listener {
 
-    public static int minasDauer = 20 * 60 * 5;
+    public static int minasDauer = 20 * 30;
 
     public static void onMinasisierung(Player p) {
         for(ItemStack item : p.getInventory().getContents()) {
@@ -54,11 +71,9 @@ public class Minasisierung implements Listener {
                     if(finalI == minasDauer - 1) {
                         for(ItemStack item : p.getInventory().getContents()) {
                             if(item.equals(Items.buffed_minas_flasche)) {
-                                item.setType(Items.minas_flasche.getType());
                                 item.setItemMeta(Items.minas_flasche.getItemMeta());
                             }
                             if(item.equals(Items.buffed_stuhl)) {
-                                item.setType(Items.attack_stuhl.getType());
                                 item.setItemMeta(Items.attack_stuhl.getItemMeta());
                             }
                         }
@@ -77,27 +92,34 @@ public class Minasisierung implements Listener {
             Player hitter = (Player) e.getDamager();
             Player hitted = (Player) e.getEntity();
 
-            if(hitter.getInventory().getItemInMainHand().equals(Items.buffed_stuhl)) {
-                hitted.teleport(hitted.getLocation().subtract(0, 1, 0));
-                hitted.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 20 * 2, 1, false, false, false));
+            if(hitter.getInventory().getItemInMainHand().equals(Items.buffed_stuhl) && hitter.getCooldown(Material.OAK_STAIRS) < 2) {
+                hitted.teleport(hitted.getLocation().subtract(0, 1.4, 0));
 
-                ParticleHandler.createParticles(hitted.getLocation(), Particle.CRIT, 20, 0.2, true, null);
-                ParticleHandler.createParticles(hitted.getLocation(), Particle.CLOUD, 30, 0.2, true, null);
+                hitter.setCooldown(Material.OAK_STAIRS, 20 * 6);
+
+                ParticleHandler.createParticles(hitted.getLocation().add(0, 1, 0), Particle.CRIT, 20, 0.2, true, null);
+                ParticleHandler.createParticles(hitted.getLocation().add(0, 1, 0), Particle.CLOUD, 30, 0.2, true, null);
 
                 stunned.add(hitted);
                 new BukkitRunnable() {
                     @Override
                     public void run() {
+                        hitted.teleport(hitted.getLocation().add(0, 2, 0));
                         stunned.remove(hitted);
                     }
-                }.runTaskLater(SchoolWars.getPlugin(), 20 * 2);
+                }.runTaskLater(SchoolWars.getPlugin(), 20 * 3);
             }
-
         }
     }
 
     @EventHandler
-    public void onPlayerJump(PlayerMoveEvent e) {
+    public void onStunnedJump(PlayerMoveEvent e) {
+        if(stunned.contains(e.getPlayer())) {
+            e.setCancelled(true);
+        }
+    }
+    @EventHandler
+    public void onStunnedInteraction(PlayerInteractEvent e) {
         if(stunned.contains(e.getPlayer())) {
             e.setCancelled(true);
         }
