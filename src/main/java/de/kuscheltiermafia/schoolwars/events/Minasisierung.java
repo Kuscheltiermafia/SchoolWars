@@ -22,6 +22,7 @@ package de.kuscheltiermafia.schoolwars.events;
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
+import de.kuscheltiermafia.schoolwars.mechanics.PlayerStun;
 import de.kuscheltiermafia.schoolwars.mechanics.ProgressBarHandler;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -70,11 +71,13 @@ public class Minasisierung implements Listener {
 
                     if(finalI == minasDauer - 1) {
                         for(ItemStack item : p.getInventory().getContents()) {
-                            if(item.equals(Items.buffed_minas_flasche)) {
-                                item.setItemMeta(Items.minas_flasche.getItemMeta());
-                            }
-                            if(item.equals(Items.buffed_stuhl)) {
-                                item.setItemMeta(Items.attack_stuhl.getItemMeta());
+                            if(item != null) {
+                                if (item.equals(Items.buffed_minas_flasche)) {
+                                    item.setItemMeta(Items.minas_flasche.getItemMeta());
+                                }
+                                if (item.equals(Items.buffed_stuhl)) {
+                                    item.setItemMeta(Items.attack_stuhl.getItemMeta());
+                                }
                             }
                         }
                     }
@@ -83,9 +86,6 @@ public class Minasisierung implements Listener {
         }
     }
 
-    public static ArrayList<Player> stunned = new ArrayList<Player>();
-
-
     @EventHandler
     public void OnStuhlHit(EntityDamageByEntityEvent e) {
         if(e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
@@ -93,35 +93,12 @@ public class Minasisierung implements Listener {
             Player hitted = (Player) e.getEntity();
 
             if(hitter.getInventory().getItemInMainHand().equals(Items.buffed_stuhl) && hitter.getCooldown(Material.OAK_STAIRS) < 2) {
-                hitted.teleport(hitted.getLocation().subtract(0, 1.4, 0));
-
                 hitter.setCooldown(Material.OAK_STAIRS, 20 * 6);
 
                 ParticleHandler.createParticles(hitted.getLocation().add(0, 1, 0), Particle.CRIT, 20, 0.2, true, null);
                 ParticleHandler.createParticles(hitted.getLocation().add(0, 1, 0), Particle.CLOUD, 30, 0.2, true, null);
-
-                stunned.add(hitted);
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        hitted.teleport(hitted.getLocation().add(0, 2, 0));
-                        stunned.remove(hitted);
-                    }
-                }.runTaskLater(SchoolWars.getPlugin(), 20 * 3);
+                PlayerStun.stunPlayer(hitted, 3, true);
             }
-        }
-    }
-
-    @EventHandler
-    public void onStunnedJump(PlayerMoveEvent e) {
-        if(stunned.contains(e.getPlayer())) {
-            e.setCancelled(true);
-        }
-    }
-    @EventHandler
-    public void onStunnedInteraction(PlayerInteractEvent e) {
-        if(stunned.contains(e.getPlayer())) {
-            e.setCancelled(true);
         }
     }
 }

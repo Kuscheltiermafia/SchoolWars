@@ -28,6 +28,7 @@ import de.kuscheltiermafia.schoolwars.gameprep.Teams;
 import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.LehrerHandler;
+import de.kuscheltiermafia.schoolwars.mechanics.PlayerStun;
 import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
 import de.kuscheltiermafia.schoolwars.reputation.PlayerRepModel;
 import org.bukkit.Bukkit;
@@ -102,6 +103,7 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new SchulbuchLevels(), this);
         pluginManager.registerEvents(new Generalschluessel(), this);
         pluginManager.registerEvents(new Lehrer(), this);
+        pluginManager.registerEvents(new PlayerStun(), this);
 
         getCommand("start").setExecutor(new StartGame());
         getCommand("clearTeams").setExecutor(new ClearTeams());

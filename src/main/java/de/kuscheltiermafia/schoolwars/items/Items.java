@@ -85,6 +85,7 @@ public class Items {
     public static ItemStack focken;
     public static ItemStack script;
     public static ItemStack stroke_master;
+    public static ItemStack strick;
 
     public static ArrayList<ItemStack> itemList = new ArrayList<ItemStack>();
 
@@ -120,6 +121,9 @@ public class Items {
 
         buffed_stuhl = weaponiseItem(createItem(Material.OAK_STAIRS, "§5§l§kA§r§f Stuhl §r§5§l§kA", 1, 1, null, true, false, false), 1, 0.5, EquipmentSlot.HAND);
         itemList.add(buffed_stuhl);
+
+        strick = createItem(Material.LEAD, ChatColor.BOLD + "" + ChatColor.DARK_RED + "Du bist momentan nicht in der Lage dich zu bewegen!", 1, 1, null, true, false, false);
+        itemList.add(strick);
 
 //Support
         ArrayList<String> kuehlpack_lore = new ArrayList<String>();

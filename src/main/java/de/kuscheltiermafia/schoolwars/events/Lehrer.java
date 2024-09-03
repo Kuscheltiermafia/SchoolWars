@@ -80,7 +80,7 @@ public class Lehrer implements Listener {
                 }
                 initLehrerAlgorithm();
             }
-        }.runTaskLater(SchoolWars.getPlugin(), 20 * 2);
+        }.runTaskLater(SchoolWars.getPlugin(), 20 * 60 * 3);
     }
 
     @EventHandler
@@ -143,6 +143,7 @@ public class Lehrer implements Listener {
                     p.getInventory().addItem(p.getOpenInventory().getItem(24));
 
                     playerReputation.get(p.getName()).addReputation(lehrerName, repReward.get(lehrerName));
+
                     
                     Villager l = openQuest.get(p);
 

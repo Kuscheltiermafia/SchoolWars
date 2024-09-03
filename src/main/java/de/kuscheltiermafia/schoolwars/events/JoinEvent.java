@@ -20,6 +20,7 @@
 package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.commands.Debug;
 import de.kuscheltiermafia.schoolwars.gameprep.NWS;
 import de.kuscheltiermafia.schoolwars.gameprep.Sportler;
 import de.kuscheltiermafia.schoolwars.gameprep.Sprachler;
@@ -92,6 +93,10 @@ public class JoinEvent implements Listener {
         }
 
         e.setJoinMessage("");
+
+        for(Player a : Debug.joinMsg) {
+            a.sendMessage(ChatColor.DARK_RED + "[!] " + ChatColor.YELLOW + "" + e.getPlayer() + ChatColor.DARK_GRAY + " joined SchoolWars.");
+        }
 
     }
 
