@@ -25,6 +25,7 @@ import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -66,6 +67,13 @@ public class Rolator implements Listener {
                             if(loc.getBlock().getType().equals(Material.AIR) || !p.isSneaking()) {
                                 if(!BukkitRunnablesFicktEuch) {
                                     p.teleport(loc);
+                                    for(Entity e : p.getNearbyEntities(1, 1, 1)) {
+                                        if(e instanceof Player) {
+                                            Player t = (Player) e;
+                                            ParticleHandler.createParticles(t.getLocation(), Particle.CRIT, 10, 0, true, null);
+                                            t.damage(15);
+                                        }
+                                    }
                                     ParticleHandler.createParticles(loc, Particle.CLOUD, 10, 0, true, null);
                                     loc.add(loc.getDirection().getX() / 1.3, 0, loc.getDirection().getZ() / 1.3);
                                 }

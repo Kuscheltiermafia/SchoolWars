@@ -22,14 +22,17 @@ package de.kuscheltiermafia.schoolwars.items;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
+import java.util.HashMap;
 import java.util.Random;
 
 public class GenerateItems {
 
+    public static HashMap<Interaction, Item> itemHitboxes = new HashMap<>();
     static ItemIdentifier[][] spawnItems;
 
     public static void generateItemLocations() {
@@ -62,6 +65,12 @@ public class GenerateItems {
         itemEntity.setInvulnerable(true);
         itemEntity.setVelocity(new Vector(0, 0, 0));
         itemEntity.setPickupDelay(Integer.MAX_VALUE);
+
+        Interaction itemHitbox = itemEntity.getWorld().spawn(itemEntity.getLocation(), Interaction.class);
+        itemHitbox.setInteractionHeight(0.25f);
+        itemHitbox.setInteractionWidth(0.25f);
+
+        itemHitboxes.put(itemHitbox, itemEntity);
     }
 
     public static void spawnItem(int i1) {

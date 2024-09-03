@@ -33,17 +33,17 @@ public class LehrerHandler {
         rewardLehrerItems.put("Fischer", Items.fischers_spiel);
         repReward.put("Fischer", 1d);
 
-
         requieredLehrerItems.put("Schneider", Items.kaputtes_ipad);
         rewardLehrerItems.put("Schneider", Items.rollator);
         repReward.put("Schneider", 1d);
     }
 
     public static void removeLehrer() {
-        for (Villager currentLehrer : lehrerList) {
-            lehrerList.remove(currentLehrer);
-            currentLehrer.remove();
-
+        for (Villager currentLehrer : Bukkit.getWorld("schoolwars").getEntitiesByClass(Villager.class)) {
+            if(currentLehrer.getCustomName() != null) {
+                lehrerList.remove(currentLehrer);
+                currentLehrer.remove();
+            }
         }
     }
 

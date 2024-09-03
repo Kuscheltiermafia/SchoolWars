@@ -144,7 +144,6 @@ public class Lehrer implements Listener {
 
                     playerReputation.get(p.getName()).addReputation(lehrerName, repReward.get(lehrerName));
 
-                    
                     Villager l = openQuest.get(p);
 
                     LehrerHandler.lehrerList.remove(l);

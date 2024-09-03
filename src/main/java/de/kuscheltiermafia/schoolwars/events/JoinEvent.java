@@ -95,7 +95,7 @@ public class JoinEvent implements Listener {
         e.setJoinMessage("");
 
         for(Player a : Debug.joinMsg) {
-            a.sendMessage(ChatColor.DARK_RED + "[!] " + ChatColor.YELLOW + "" + e.getPlayer() + ChatColor.DARK_GRAY + " joined SchoolWars.");
+            a.sendMessage(ChatColor.DARK_RED + "[!] " + ChatColor.YELLOW + "" + e.getPlayer().getName() + ChatColor.DARK_GRAY + " joined SchoolWars.");
         }
 
     }
