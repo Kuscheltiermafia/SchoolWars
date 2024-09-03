@@ -19,12 +19,14 @@
 
 package de.kuscheltiermafia.schoolwars.items;
 
+import de.kuscheltiermafia.schoolwars.SchoolWars;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
@@ -40,12 +42,12 @@ public class GenerateItems {
         spawnItems = new ItemIdentifier[][]{
                 {
                     new ItemIdentifier("minas_flasche", 1, Items.minas_flasche, new Location(Bukkit.getWorld("schoolwars"), 37, 88, 150)),
-                    new ItemIdentifier("minas_flasche", 2, Items.minas_flasche, new Location(Bukkit.getWorld("schoolwars"), -65, 81, 193)),
+                    new ItemIdentifier("minas_flasche", 2, Items.minas_flasche, new Location(Bukkit.getWorld("schoolwars"), -64, 81, 193)),
                     new ItemIdentifier("minas_flasche", 3, Items.minas_flasche, new Location(Bukkit.getWorld("schoolwars"), 31, 88, 161)),
-                    new ItemIdentifier("minas_flasche", 4, Items.minas_flasche, new Location(Bukkit.getWorld("schoolwars"), 25, 82, 196))
+                    new ItemIdentifier("minas_flasche", 4, Items.minas_flasche, new Location(Bukkit.getWorld("schoolwars"), 23.0, 81.0, 195.0))
                 },
                 {
-                    new ItemIdentifier("bens_vape", 1, Items.vape_fruitberry, new Location(Bukkit.getWorld("schoolwars"), 42, 87, 141)),
+                    new ItemIdentifier("bens_vape", 1, Items.vape_fruitberry, new Location(Bukkit.getWorld("schoolwars"), 43, 88, 143)),
                 }
         };
 
@@ -60,17 +62,23 @@ public class GenerateItems {
     public static void createItemsEntity(ItemStack item, Location loc) {
         Block b = loc.getBlock();
 
-        Item itemEntity = b.getWorld().dropItem(loc, item);
+        Item itemEntity = b.getWorld().dropItem(loc.add(0, 0.2, 0), item);
         itemEntity.setPersistent(true);
         itemEntity.setInvulnerable(true);
         itemEntity.setVelocity(new Vector(0, 0, 0));
         itemEntity.setPickupDelay(Integer.MAX_VALUE);
 
-        Interaction itemHitbox = itemEntity.getWorld().spawn(itemEntity.getLocation(), Interaction.class);
-        itemHitbox.setInteractionHeight(0.25f);
-        itemHitbox.setInteractionWidth(0.25f);
+        new BukkitRunnable() {
+            public void run() {
+                itemEntity.teleport(loc);
 
-        itemHitboxes.put(itemHitbox, itemEntity);
+                Interaction itemHitbox = itemEntity.getWorld().spawn(itemEntity.getLocation(), Interaction.class);
+                itemHitbox.setInteractionHeight(0.25f);
+                itemHitbox.setInteractionWidth(0.25f);
+
+                itemHitboxes.put(itemHitbox, itemEntity);
+            }
+        }.runTaskLater(SchoolWars.getPlugin(), 20);
     }
 
     public static void spawnItem(int i1) {
