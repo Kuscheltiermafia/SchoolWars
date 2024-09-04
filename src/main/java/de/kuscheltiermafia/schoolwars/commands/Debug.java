@@ -21,6 +21,7 @@ package de.kuscheltiermafia.schoolwars.commands;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.events.Minasisierung;
+import de.kuscheltiermafia.schoolwars.mechanics.Bereiche;
 import de.kuscheltiermafia.schoolwars.mechanics.LehrerHandler;
 import de.kuscheltiermafia.schoolwars.mechanics.PlayerStun;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -161,6 +162,12 @@ public class Debug implements CommandExecutor {
                         p.sendMessage(debugPrefix + "Please use /debug stun <player> <duration in seconds>");
                     }
                     break;
+                case "area":
+                    if(args[1].equals("check")) {
+                        if(args.length == 2) {
+                            p.sendMessage(debugPrefix + "Your current area is: " + Bereiche.checkArea(p));
+                        }
+                    }
                 }
             }
             return false;

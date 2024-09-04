@@ -60,6 +60,7 @@ public class Lehrer implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
+                //Quest Lehrer
                 Random rand = new Random();
                 int random = rand.nextInt(10);
                 if(random == 2) {
@@ -71,13 +72,20 @@ public class Lehrer implements Listener {
                                 LehrerHandler.createFrauSchneider(new Location(Bukkit.getWorld("schoolwars"), 48.0, 87.0, 169.0));
                                 ParticleHandler.createParticles(new Location(Bukkit.getWorld("schoolwars"), 48.0, 87.0, 169.0), Particle.EXPLOSION, 2, 0, true, null);
                             }
+                            break;
                         case 1:
                             if(!LehrerHandler.lehrerList.contains(LehrerHandler.fischer)) {
                                 LehrerHandler.createHerrFischer(new Location(Bukkit.getWorld("schoolwars"), 44.0, 80.0, 149.0));
                                 ParticleHandler.createParticles(new Location(Bukkit.getWorld("schoolwars"), 44.0, 80.0, 149.0), Particle.EXPLOSION, 2, 0, true, null);
                             }
+                            break;
                     }
                 }
+
+                //spawn Lehrer on Player
+
+
+                //restart algorithm
                 initLehrerAlgorithm();
             }
         }.runTaskLater(SchoolWars.getPlugin(), 20 * 60 * 3);

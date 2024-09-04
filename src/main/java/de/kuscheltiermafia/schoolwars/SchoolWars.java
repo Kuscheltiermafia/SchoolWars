@@ -27,6 +27,7 @@ import de.kuscheltiermafia.schoolwars.gameprep.Sprachler;
 import de.kuscheltiermafia.schoolwars.gameprep.Teams;
 import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.items.Items;
+import de.kuscheltiermafia.schoolwars.mechanics.Bereiche;
 import de.kuscheltiermafia.schoolwars.mechanics.LehrerHandler;
 import de.kuscheltiermafia.schoolwars.mechanics.PlayerStun;
 import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
@@ -84,6 +85,7 @@ public final class SchoolWars extends JavaPlugin {
         Ranzen.generateRanzenCounter();
         Lehrer.initLehrerAlgorithm();
         LehrerHandler.initLehrerQuests();
+        Bereiche.initAreas();
         LehrerHandler.initLehrer(4, 87, 190);
 
         PluginManager pluginManager = Bukkit.getPluginManager();
