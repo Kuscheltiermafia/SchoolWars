@@ -24,12 +24,10 @@ import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.Bereiche;
 import de.kuscheltiermafia.schoolwars.mechanics.LehrerHandler;
 import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
-import de.kuscheltiermafia.schoolwars.reputation.PlayerRepModel;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Particle;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
@@ -43,9 +41,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.Random;
-import java.util.UUID;
 
-import static de.kuscheltiermafia.schoolwars.SchoolWars.playerReputation;
+import static de.kuscheltiermafia.schoolwars.SchoolWars.playerMirror;
 import static de.kuscheltiermafia.schoolwars.mechanics.LehrerHandler.repReward;
 
 public class Lehrer implements Listener {
@@ -88,11 +85,10 @@ public class Lehrer implements Listener {
                 for(Player p : Bukkit.getOnlinePlayers()) {
                     if(Bereiche.lehrerAufsichtAreas.contains(Bereiche.checkArea(p))) {
                         Random rand2 = new Random();
-                        int random2 = rand2.nextInt(10 + (int) Math.round(playerReputation.get(p.getName()).getReputation("floeter")));
+                        int random2 = rand2.nextInt(10 + (int) Math.round(playerMirror.get(p.getName()).getReputation("floeter")));
                         if(random2 == 2) {
                             ParticleHandler.createParticles(Bereiche.lehrerSpawnPos.get(Bereiche.checkArea(p)), Particle.EXPLOSION, 2, 0, true, null);
                             LehrerHandler.createHerrFloeter(Bereiche.lehrerSpawnPos.get(Bereiche.checkArea(p)));
-                            startSurveilance(p, "Flöter", 10);
                         }
                     }
                 }
@@ -102,18 +98,6 @@ public class Lehrer implements Listener {
             }
         }.runTaskLater(SchoolWars.getPlugin(), 20 * 10);
     }
-
-    public static void startSurveilance(Player p, String lehrer, int duration) {
-        for(int i = 0; i < duration * 20; i++) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    //Zu müde dafür, machs wann anders
-                }
-            }.runTaskLater(SchoolWars.getPlugin(), i);
-        }
-    }
-
 
     @EventHandler
     public void onLehrerClick(PlayerInteractEntityEvent e) {
@@ -174,7 +158,7 @@ public class Lehrer implements Listener {
                     p.getInventory().remove(p.getOpenInventory().getItem(20));
                     p.getInventory().addItem(p.getOpenInventory().getItem(24));
 
-                    playerReputation.get(p.getName()).addReputation(lehrerName, repReward.get(lehrerName));
+                    playerMirror.get(p.getName()).addReputation(lehrerName, repReward.get(lehrerName));
 
                     Villager l = openQuest.get(p);
 

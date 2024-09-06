@@ -17,57 +17,38 @@
  *
  */
 
-package de.kuscheltiermafia.schoolwars.events;
+package de.kuscheltiermafia.schoolwars.mechanics;
 
-import de.kuscheltiermafia.schoolwars.items.Items;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Bat;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
 
-public class RevivePlayer implements Listener {
+public class Area {
 
-    public static HashMap<String, UUID> deadPlayers = new HashMap<>();
+    Location minCoord;
+    Location maxCoord;
+    Location lehrerSpawnPos;
 
-    @EventHandler
-    public static void onClickPlayer(PlayerInteractAtEntityEvent e) {
+    public Area(Location minCoord, Location maxCoord, Location lehrerSpawnPos) {
+        this.minCoord = minCoord;
+        this.maxCoord = maxCoord;
+        this.lehrerSpawnPos = lehrerSpawnPos;
+    }
 
-        if (e.getRightClicked() instanceof Player) {
+    public ArrayList<Player> getPlayersInArea() {
+        ArrayList<Player> playersInArea = new ArrayList<>();
 
-            Player player = e.getPlayer();
-            Player target = (Player) e.getRightClicked();
-
-            if (target.getLocation().distance(player.getLocation()) <= 3 && deadPlayers.containsKey(target.getName()) && player.getInventory().getItemInMainHand().equals(Items.kuehlpack) && !deadPlayers.containsKey(player.getName()) ) {
-
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GREEN + "Du hast " + target.getName() + " wiederbelebt."));
-
-                Bukkit.getEntity(deadPlayers.get(target.getName())).remove();
-                target.teleport(target.getLocation().add(0, 1, 0));
-                target.removePotionEffect(PotionEffectType.SLOWNESS);
-                target.removePotionEffect(PotionEffectType.RESISTANCE);
-                target.setHealth(20);
-                target.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 60, 255, true, true, true));
-
-                deadPlayers.remove(target.getName());
-
-                player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
-
-                target.sendTitle("§aDu wurdest wiederbelebt!", player.getDisplayName() + ChatColor.GRAY + " hat dir geholfen", 10, 70, 20);
-
+        for (Player player : Bukkit.getOnlinePlayers()){
+            if (player.getLocation().getX() >= minCoord.getX() && player.getLocation().getY() >= minCoord.getY() && player.getLocation().getZ() >= minCoord.getZ()) {
+                if (player.getLocation().getX() <= maxCoord.getX() && player.getLocation().getY() <= maxCoord.getY() && player.getLocation().getZ() <= maxCoord.getZ()) {
+                    playersInArea.add(player);
+                }
             }
         }
 
+        return playersInArea;
     }
-
+    
 }

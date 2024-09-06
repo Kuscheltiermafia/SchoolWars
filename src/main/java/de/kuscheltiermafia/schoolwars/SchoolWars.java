@@ -31,19 +31,16 @@ import de.kuscheltiermafia.schoolwars.mechanics.Bereiche;
 import de.kuscheltiermafia.schoolwars.mechanics.LehrerHandler;
 import de.kuscheltiermafia.schoolwars.mechanics.PlayerStun;
 import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
-import de.kuscheltiermafia.schoolwars.reputation.PlayerRepModel;
+import de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.HashMap;
 
-import static de.kuscheltiermafia.schoolwars.events.RevivePlayer.deadPlayers;
+import static de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer.revivePlayer;
 
 
 public final class SchoolWars extends JavaPlugin {
@@ -61,7 +58,7 @@ public final class SchoolWars extends JavaPlugin {
     public static Sprachler sprachler = new Sprachler();
     public static Sportler sportler = new Sportler();
 
-    public static HashMap<String, PlayerRepModel> playerReputation = new HashMap<>();
+    public static HashMap<String, PlayerMirror> playerMirror = new HashMap<>();
 
 
     @Override
@@ -74,7 +71,7 @@ public final class SchoolWars extends JavaPlugin {
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             try {
-            playerReputation.put(p.getName(), new PlayerRepModel(p.getName()));
+            playerMirror.put(p.getName(), new PlayerMirror(p.getName()));
             }catch (Exception ignored){}
         }
 
@@ -94,7 +91,7 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new LeaveEvent(), this);
         pluginManager.registerEvents(new InteractionEvent(), this);
         pluginManager.registerEvents(new DeathEvent(), this);
-        pluginManager.registerEvents(new RevivePlayer(), this);
+        pluginManager.registerEvents(new RevivePlayerEvent(), this);
         pluginManager.registerEvents(new RanzenEvents(), this);
         pluginManager.registerEvents(new HandleKuehlpack(), this);
         pluginManager.registerEvents(new PickupDrops(), this);
@@ -125,19 +122,13 @@ public final class SchoolWars extends JavaPlugin {
     @Override
     public void onDisable() {
         for(Player p : Bukkit.getOnlinePlayers()) {
-            if(deadPlayers.containsKey(p.getName())) {
-                Bukkit.getEntity(deadPlayers.get(p.getName())).remove();
-                p.teleport(p.getLocation().add(0, 1, 0));
-                p.removePotionEffect(PotionEffectType.SLOWNESS);
-                p.removePotionEffect(PotionEffectType.RESISTANCE);
-                p.setHealth(20);
-                p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 60, 255, true, true, true));
-                deadPlayers.remove(p.getName());
+            if(!playerMirror.get(p.getName()).isAlive()) {
+                revivePlayer(p, p);
             }
         }
 
         LehrerHandler.removeLehrer();
-        playerReputation.clear();
+        playerMirror.clear();
     }
 
     public static SchoolWars getPlugin(){

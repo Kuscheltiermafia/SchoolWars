@@ -37,6 +37,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 
+import static de.kuscheltiermafia.schoolwars.SchoolWars.playerMirror;
+
 
 public class InteractionEvent implements Listener {
 
@@ -98,7 +100,7 @@ public class InteractionEvent implements Listener {
 //Prevent dead Players from interacting
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
-        if (RevivePlayer.deadPlayers.containsKey(e.getPlayer().getName())) {
+        if (!playerMirror.get(e.getPlayer().getName()).isAlive()) {
             e.setCancelled(true);
         }
 
@@ -108,7 +110,7 @@ public class InteractionEvent implements Listener {
     @EventHandler
     public void onPunch(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player) {
-            if (RevivePlayer.deadPlayers.containsKey(e.getDamager().getName())) {
+            if (!playerMirror.get(e.getDamager().getName()).isAlive()) {
                 e.setCancelled(true);
             }
         }

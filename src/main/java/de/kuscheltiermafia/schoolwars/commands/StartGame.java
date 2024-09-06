@@ -20,22 +20,18 @@
 package de.kuscheltiermafia.schoolwars.commands;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
-import de.kuscheltiermafia.schoolwars.gameprep.NWS;
-import de.kuscheltiermafia.schoolwars.gameprep.Sportler;
-import de.kuscheltiermafia.schoolwars.gameprep.Sprachler;
 import de.kuscheltiermafia.schoolwars.gameprep.Teams;
 import de.kuscheltiermafia.schoolwars.items.GenerateItems;
-import de.kuscheltiermafia.schoolwars.reputation.PlayerRepModel;
+import de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer;
+import de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
-import org.bukkit.potion.PotionEffectType;
 
 import static de.kuscheltiermafia.schoolwars.SchoolWars.*;
-import static de.kuscheltiermafia.schoolwars.events.RevivePlayer.deadPlayers;
 
 public class StartGame implements CommandExecutor {
 
@@ -45,7 +41,7 @@ public class StartGame implements CommandExecutor {
         SchoolWars.gameStarted = false;
 
 //reset
-        playerReputation.clear();
+        playerMirror.clear();
 
         try {
             for (Item item : Bukkit.getWorld("schoolwars").getEntitiesByClass(Item.class)) {
@@ -79,21 +75,15 @@ public class StartGame implements CommandExecutor {
         GenerateItems.summonItems();
 
 //prepare reputation
-        playerReputation.clear();
+        playerMirror.clear();
         for (Player p : Bukkit.getOnlinePlayers()) {
-            playerReputation.put(p.getName(), new PlayerRepModel(p.getName()));
+            playerMirror.put(p.getName(), new PlayerMirror(p.getName()));
         }
 
 //revive Player
         for (Player p : Bukkit.getOnlinePlayers()) {
-            if (deadPlayers.containsKey(p.getName())) {
-                Bukkit.getEntity(deadPlayers.get(p.getName())).remove();
-                p.teleport(p.getLocation().add(0, 1, 0));
-                p.removePotionEffect(PotionEffectType.SLOWNESS);
-                p.removePotionEffect(PotionEffectType.RESISTANCE);
-                p.setHealth(20);
-
-                deadPlayers.remove(p.getName());
+            if (!playerMirror.get(p.getName()).isAlive()) {
+                RevivePlayer.revivePlayer(p, p);
             }
         }
 
