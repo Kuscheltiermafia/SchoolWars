@@ -141,6 +141,10 @@ public class Debug implements CommandExecutor {
                                 LehrerHandler.createHerrFischer(p.getLocation());
                                 p.sendMessage(debugPrefix + "Successfully spawned Herr Fischer at your location!");
                                 break;
+                            case "h_floeter":
+                                LehrerHandler.createHerrFloeter(p.getLocation());
+                                p.sendMessage(debugPrefix + "Successfully spawned Herr Flöter at your location!");
+                                break;
                         }
                     }
                     break;

@@ -15,7 +15,9 @@ public class LehrerHandler {
     public static Villager blumpfi;
     public static Villager schneider;
     public static Villager fischer;
+    public static Villager floeter;
     public static ArrayList<Villager> lehrerList = new ArrayList<>();
+    public static ArrayList<Villager> questLehrerList = new ArrayList<>();
 
     public static HashMap<String, ItemStack> requieredLehrerItems = new HashMap<>();
     public static HashMap<String, ItemStack> rewardLehrerItems = new HashMap<>();
@@ -74,11 +76,18 @@ public class LehrerHandler {
     public static void createFrauSchneider(Location loc) {
         schneider = createLehrer(loc, "Frau Schneider",Villager.Type.SWAMP, true, false, true);
         lehrerList.add(schneider);
+        questLehrerList.add(schneider);
     }
 
     public static void createHerrFischer(Location loc) {
         fischer = createLehrer(loc, "Herr Fischer",Villager.Type.PLAINS, true, false, true);
         lehrerList.add(fischer);
+        questLehrerList.add(fischer);
+    }
+
+    public static void createHerrFloeter(Location loc) {
+        floeter = createLehrer(loc, "Herr Flöter",Villager.Type.PLAINS, true, false, true);
+        lehrerList.add(floeter);
     }
 
 }

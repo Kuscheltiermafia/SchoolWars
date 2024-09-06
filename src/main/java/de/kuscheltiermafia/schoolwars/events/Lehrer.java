@@ -21,8 +21,10 @@ package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.items.Items;
+import de.kuscheltiermafia.schoolwars.mechanics.Bereiche;
 import de.kuscheltiermafia.schoolwars.mechanics.LehrerHandler;
 import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
+import de.kuscheltiermafia.schoolwars.reputation.PlayerRepModel;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -83,17 +85,39 @@ public class Lehrer implements Listener {
                 }
 
                 //spawn Lehrer on Player
-
+                for(Player p : Bukkit.getOnlinePlayers()) {
+                    if(Bereiche.lehrerAufsichtAreas.contains(Bereiche.checkArea(p))) {
+                        Random rand2 = new Random();
+                        int random2 = rand2.nextInt(10 + (int) Math.round(playerReputation.get(p.getName()).getReputation("floeter")));
+                        if(random2 == 2) {
+                            ParticleHandler.createParticles(Bereiche.lehrerSpawnPos.get(Bereiche.checkArea(p)), Particle.EXPLOSION, 2, 0, true, null);
+                            LehrerHandler.createHerrFloeter(Bereiche.lehrerSpawnPos.get(Bereiche.checkArea(p)));
+                            startSurveilance(p, "Flöter", 10);
+                        }
+                    }
+                }
 
                 //restart algorithm
                 initLehrerAlgorithm();
             }
-        }.runTaskLater(SchoolWars.getPlugin(), 20 * 60 * 3);
+        }.runTaskLater(SchoolWars.getPlugin(), 20 * 10);
     }
+
+    public static void startSurveilance(Player p, String lehrer, int duration) {
+        for(int i = 0; i < duration * 20; i++) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    //Zu müde dafür, machs wann anders
+                }
+            }.runTaskLater(SchoolWars.getPlugin(), i);
+        }
+    }
+
 
     @EventHandler
     public void onLehrerClick(PlayerInteractEntityEvent e) {
-        if(e.getRightClicked() instanceof Villager && LehrerHandler.lehrerList.contains(e.getRightClicked())) {
+        if(e.getRightClicked() instanceof Villager && LehrerHandler.questLehrerList.contains(e.getRightClicked())) {
             Player p = e.getPlayer();
             Villager l = (Villager) e.getRightClicked();
 
