@@ -21,8 +21,10 @@ package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.items.Items;
+import de.kuscheltiermafia.schoolwars.mechanics.Bereiche;
 import de.kuscheltiermafia.schoolwars.mechanics.LehrerHandler;
 import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
+import de.kuscheltiermafia.schoolwars.reputation.PlayerRepModel;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -60,6 +62,7 @@ public class Lehrer implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
+                //Quest Lehrer
                 Random rand = new Random();
                 int random = rand.nextInt(10);
                 if(random == 2) {
@@ -71,21 +74,50 @@ public class Lehrer implements Listener {
                                 LehrerHandler.createFrauSchneider(new Location(Bukkit.getWorld("schoolwars"), 48.0, 87.0, 169.0));
                                 ParticleHandler.createParticles(new Location(Bukkit.getWorld("schoolwars"), 48.0, 87.0, 169.0), Particle.EXPLOSION, 2, 0, true, null);
                             }
+                            break;
                         case 1:
                             if(!LehrerHandler.lehrerList.contains(LehrerHandler.fischer)) {
                                 LehrerHandler.createHerrFischer(new Location(Bukkit.getWorld("schoolwars"), 44.0, 80.0, 149.0));
                                 ParticleHandler.createParticles(new Location(Bukkit.getWorld("schoolwars"), 44.0, 80.0, 149.0), Particle.EXPLOSION, 2, 0, true, null);
                             }
+                            break;
                     }
                 }
+
+                //spawn Lehrer on Player
+                for(Player p : Bukkit.getOnlinePlayers()) {
+                    if(Bereiche.lehrerAufsichtAreas.contains(Bereiche.checkArea(p))) {
+                        Random rand2 = new Random();
+                        int random2 = rand2.nextInt(10 + (int) Math.round(playerReputation.get(p.getName()).getReputation("floeter")));
+                        if(random2 == 2) {
+                            ParticleHandler.createParticles(Bereiche.lehrerSpawnPos.get(Bereiche.checkArea(p)), Particle.EXPLOSION, 2, 0, true, null);
+                            LehrerHandler.createHerrFloeter(Bereiche.lehrerSpawnPos.get(Bereiche.checkArea(p)));
+                            startSurveilance(p, "Flöter", 10);
+                        }
+                    }
+                }
+
+                //restart algorithm
                 initLehrerAlgorithm();
             }
-        }.runTaskLater(SchoolWars.getPlugin(), 20 * 2);
+        }.runTaskLater(SchoolWars.getPlugin(), 20 * 10);
     }
+
+    public static void startSurveilance(Player p, String lehrer, int duration) {
+        for(int i = 0; i < duration * 20; i++) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    //Zu müde dafür, machs wann anders
+                }
+            }.runTaskLater(SchoolWars.getPlugin(), i);
+        }
+    }
+
 
     @EventHandler
     public void onLehrerClick(PlayerInteractEntityEvent e) {
-        if(e.getRightClicked() instanceof Villager && LehrerHandler.lehrerList.contains(e.getRightClicked())) {
+        if(e.getRightClicked() instanceof Villager && LehrerHandler.questLehrerList.contains(e.getRightClicked())) {
             Player p = e.getPlayer();
             Villager l = (Villager) e.getRightClicked();
 
@@ -143,7 +175,7 @@ public class Lehrer implements Listener {
                     p.getInventory().addItem(p.getOpenInventory().getItem(24));
 
                     playerReputation.get(p.getName()).addReputation(lehrerName, repReward.get(lehrerName));
-                    
+
                     Villager l = openQuest.get(p);
 
                     LehrerHandler.lehrerList.remove(l);

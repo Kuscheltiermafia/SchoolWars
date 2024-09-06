@@ -19,6 +19,7 @@
 
 package de.kuscheltiermafia.schoolwars.events;
 
+import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
@@ -26,29 +27,22 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class PickupDrops implements Listener {
 
     @EventHandler
-    public void onDropPickup(PlayerInteractEvent e) {
+    public void onDropPickup(PlayerInteractEntityEvent e) {
 
         try {
-            if (e.getClickedBlock().getLocation() != null) {
-                Location loc = e.getClickedBlock().getLocation().add(0, 1, 0);
+            if (GenerateItems.itemHitboxes.containsKey(e.getRightClicked())) {
                 Player p = e.getPlayer();
-
-                if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-                    for (Entity entity : loc.getWorld().getNearbyEntities(loc, 1, 1, 1)) {
-                        if (entity instanceof Item) {
-                            Item item = (Item) entity;
-                            p.getInventory().addItem(new ItemStack(item.getItemStack()));
-
-                            entity.remove();
-                        }
-                    }
-                }
+                Item item = GenerateItems.itemHitboxes.get(e.getRightClicked());
+                p.getInventory().addItem(new ItemStack(item.getItemStack()));
+                item.remove();
+                e.getRightClicked().remove();
             }
         }catch (Exception ignored){}
     }

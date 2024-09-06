@@ -17,87 +17,92 @@
  *
  */
 
-package de.kuscheltiermafia.schoolwars.events;
+package de.kuscheltiermafia.schoolwars.mechanics;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
-import de.kuscheltiermafia.schoolwars.commands.Debug;
-import de.kuscheltiermafia.schoolwars.gameprep.NWS;
-import de.kuscheltiermafia.schoolwars.gameprep.Sportler;
-import de.kuscheltiermafia.schoolwars.gameprep.Sprachler;
-import de.kuscheltiermafia.schoolwars.gameprep.Teams;
 import de.kuscheltiermafia.schoolwars.items.Items;
-import de.kuscheltiermafia.schoolwars.reputation.PlayerRepModel;
-import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
-import static de.kuscheltiermafia.schoolwars.SchoolWars.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-public class JoinEvent implements Listener {
+public class PlayerStun implements Listener {
 
-    @EventHandler
-    public void onPLayerJoin(PlayerJoinEvent e){
+    public static ArrayList<Player> stunned = new ArrayList<Player>();
+    public static HashMap<Player, ItemStack[]> playerInvsave = new HashMap<>();
 
-        SchoolWars.setPlayerCount(SchoolWars.getPlayerCount() + 1);
 
-        Player p = e.getPlayer();
-
-        try {
-            playerReputation.put(p.getName(), new PlayerRepModel(p.getName()));
-        }catch (Exception ignored){}
-
-        p.teleport(new Location(p.getWorld(), -24, 80.5, 176, 90, 0));
-        p.setRespawnLocation(new Location(p.getWorld(), -33.5, 88, 145.5, -90, 0));
-
-//Spawn particles
-        for (Player pl : Bukkit.getOnlinePlayers()){
-
-            pl.spawnParticle(Particle.LAVA, p.getLocation(), 40, 0, 0.2, 0);
-            pl.spawnParticle(Particle.EXPLOSION, p.getLocation(), 10, 0, 0.2, 0);
-            pl.spawnParticle(Particle.PORTAL, p.getLocation(), 100, 0, 0.2, 0);
-
+    public static void stunPlayer(Player p, int duration, boolean inFloor) {
+        stunned.add(p);
+        ItemStack[] hotbarItems = new ItemStack[]{p.getInventory().getItem(0), p.getInventory().getItem(1), p.getInventory().getItem(2), p.getInventory().getItem(3), p.getInventory().getItem(4), p.getInventory().getItem(5), p.getInventory().getItem(6), p.getInventory().getItem(7), p.getInventory().getItem(8)};
+        for(int i = 0; i < 9; i++) {
+            p.getInventory().setItem(i, Items.strick);
         }
 
-//Send Welcome Message
-        p.sendMessage( ChatColor.YELLOW + "---------------SCHOOL WARS---------------");
-        p.sendMessage("Willkommen in diesem grandiosen Spiel,");
-        p.sendMessage("in dem du auch in deiner Freizeit");
-        p.sendMessage("die " + ChatColor.RED + "Freuden der Schule" + ChatColor.WHITE + " erfahren kannst.");
-        p.sendMessage( ChatColor.YELLOW + "-----------------------------------------");
+        playerInvsave.put(p, hotbarItems);
 
-//Put Player back in Team after Disconnect
-        if (SchoolWars.gameStarted){
+        for(int i = 0; i < duration * 20; i++) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    p.getInventory().setHeldItemSlot(4);
+                }
+            }.runTaskLater(SchoolWars.getPlugin(), i);
+        }
 
-            p.sendMessage("Das Spiel hat bereits begonnen.");
+        if(inFloor) {
+            p.teleport(p.getLocation().subtract(0, 1.4, 0));
+        }
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                stunned.remove(p);
+                p.getInventory().remove(Items.strick);
 
-            if (nws.mitglieder.contains(p.getName()) ){
-                nws.readyPlayer(p);
-                p.setGameMode(GameMode.SURVIVAL);
-            } else if (sportler.mitglieder.contains(p.getName())){
-                sportler.readyPlayer(p);
-                p.setGameMode(GameMode.SURVIVAL);
-            } else if (sprachler.mitglieder.contains(p.getName())){
-                sprachler.readyPlayer(p);
-                p.setGameMode(GameMode.SURVIVAL);
-            } else {
-                p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist keinem Team zugeordnet.");
-                p.setGameMode(GameMode.SPECTATOR);
+                for(int i = 0; i < 9; i++) {
+                    ItemStack[] hotbarStacks = playerInvsave.get(p);
+                    p.getInventory().setItem(i, hotbarStacks[i]);
+                }
+
+                if(inFloor) {
+                    p.teleport(p.getLocation().add(0, 2, 0));
+                }
             }
-
-        }else {
-            e.getPlayer().sendMessage(ChatColor.YELLOW + "[SchoolWars] Das Spiel hat noch nicht begonnen.");
-            p.setGameMode(GameMode.SURVIVAL);
-        }
-
-        e.setJoinMessage("");
-
-        for(Player a : Debug.joinMsg) {
-            a.sendMessage(ChatColor.DARK_RED + "[!] " + ChatColor.YELLOW + "" + e.getPlayer().getName() + ChatColor.DARK_GRAY + " joined SchoolWars.");
-        }
+        }.runTaskLater(SchoolWars.getPlugin(), duration * 20);
 
     }
 
+
+    @EventHandler
+    public void onStunnedJump(PlayerMoveEvent e) {
+        if(stunned.contains(e.getPlayer())) {
+            e.setCancelled(true);
+        }
+    }
+    @EventHandler
+    public void onStunnedInteraction(PlayerInteractEvent e) {
+        if(stunned.contains(e.getPlayer())) {
+            e.setCancelled(true);
+        }
+    }
+    @EventHandler
+    public void onStunnedDrop(PlayerDropItemEvent e) {
+        if(stunned.contains(e.getPlayer())) {
+            e.setCancelled(true);
+        }
+    }
+    @EventHandler
+    public void onStunnedInv(InventoryClickEvent e) {
+        if(stunned.contains(e.getWhoClicked())) {
+            e.setCancelled(true);
+        }
+    }
 }
