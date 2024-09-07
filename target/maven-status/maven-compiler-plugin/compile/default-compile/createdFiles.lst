@@ -10,6 +10,7 @@ de\kuscheltiermafia\schoolwars\events\HandleKuehlpack.class
 de\kuscheltiermafia\schoolwars\events\InteractionEvent.class
 de\kuscheltiermafia\schoolwars\commands\ItemList.class
 de\kuscheltiermafia\schoolwars\events\RanzenEvents.class
+de\kuscheltiermafia\schoolwars\mechanics\Intro$2.class
 de\kuscheltiermafia\schoolwars\mechanics\PlayerStun$1.class
 de\kuscheltiermafia\schoolwars\events\AtombombeEvents$2.class
 de\kuscheltiermafia\schoolwars\commands\ClearTeams.class
@@ -18,6 +19,8 @@ de\kuscheltiermafia\schoolwars\events\Generalschluessel$1.class
 de\kuscheltiermafia\schoolwars\items\GenerateItems$1.class
 de\kuscheltiermafia\schoolwars\events\AtombombeEvents$1.class
 de\kuscheltiermafia\schoolwars\gameprep\NWS.class
+de\kuscheltiermafia\schoolwars\mechanics\Intro$1.class
+de\kuscheltiermafia\schoolwars\mechanics\Intro$4.class
 de\kuscheltiermafia\schoolwars\lehrer\Stundenplan.class
 de\kuscheltiermafia\schoolwars\commands\Debug.class
 de\kuscheltiermafia\schoolwars\gameprep\Sportler.class
@@ -47,6 +50,8 @@ de\kuscheltiermafia\schoolwars\events\KarlElixier$3.class
 de\kuscheltiermafia\schoolwars\events\Minasisierung$1.class
 de\kuscheltiermafia\schoolwars\events\JoinEvent.class
 de\kuscheltiermafia\schoolwars\lehrer\Bereiche.class
+de\kuscheltiermafia\schoolwars\mechanics\Intro$3.class
+de\kuscheltiermafia\schoolwars\mechanics\Intro.class
 de\kuscheltiermafia\schoolwars\mechanics\PlayerStun$2.class
 de\kuscheltiermafia\schoolwars\SchoolWars.class
 de\kuscheltiermafia\schoolwars\gameprep\Teams.class

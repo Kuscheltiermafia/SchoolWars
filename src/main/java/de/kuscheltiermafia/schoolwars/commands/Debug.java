@@ -22,6 +22,7 @@ package de.kuscheltiermafia.schoolwars.commands;
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.events.Minasisierung;
 import de.kuscheltiermafia.schoolwars.lehrer.*;
+import de.kuscheltiermafia.schoolwars.mechanics.Intro;
 import de.kuscheltiermafia.schoolwars.mechanics.PlayerStun;
 import de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -201,6 +202,21 @@ public class Debug implements CommandExecutor {
                         }
                     }else {
                         p.sendMessage(debugPrefix + "Game has not started yet!");
+                    }
+                    break;
+                case "intro":
+                    if(args.length == 1) {
+                        p.sendMessage(debugPrefix + "Started intro sequence!");
+                        Intro.introScene(p);
+                    } else if (args.length == 2) {
+                        if(args[1].equals("2")) {
+                            p.sendMessage(debugPrefix + "Started intro sequence at 2. stage!");
+                            Intro.secondSequence(p);
+                        }
+                        if(args[1].equals("3")) {
+                            p.sendMessage(debugPrefix + "Started intro sequence at 3. stage!");
+                            Intro.thirdSequence(p);
+                        }
                     }
                     break;
             }
