@@ -17,84 +17,59 @@
  *
  */
 
-package de.kuscheltiermafia.schoolwars.commands;
+package de.kuscheltiermafia.schoolwars.lehrer;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
-import de.kuscheltiermafia.schoolwars.gameprep.Teams;
-import de.kuscheltiermafia.schoolwars.items.GenerateItems;
-import de.kuscheltiermafia.schoolwars.lehrer.Stundenplan;
-import de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer;
-import de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror;
+import de.kuscheltiermafia.schoolwars.commands.ItemList;
+import de.kuscheltiermafia.schoolwars.items.Items;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.*;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
 
-import static de.kuscheltiermafia.schoolwars.SchoolWars.*;
+import java.util.ArrayList;
 
-public class StartGame implements CommandExecutor {
+public class SekretariatStundenplan implements Listener {
 
-    @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+    @EventHandler
+    public void onStundenplanView(PlayerInteractEvent e) {
+        if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && e.getClickedBlock().getLocation().equals(new Location(SchoolWars.world, -49.0, 88.0, 173.0))) {
+            e.setCancelled(true);
 
-        if (Debug.startWorks) {
-            SchoolWars.gameStarted = false;
+            Inventory stundenplan = Bukkit.createInventory(null, 9*6, "§4Momentaner Stundenplan");
 
-//reset
-            playerMirror.clear();
-
-            try {
-                for (Item item : Bukkit.getWorld("schoolwars").getEntitiesByClass(Item.class)) {
-                    item.remove();
-                }
-                for (Interaction interaction : Bukkit.getWorld("schoolwars").getEntitiesByClass(Interaction.class)) {
-                    interaction.remove();
-                }
-                for (BlockDisplay blockdisplay : Bukkit.getWorld("schoolwars").getEntitiesByClass(BlockDisplay.class)) {
-                    blockdisplay.remove();
-                }
-            } catch (Exception ignored) {
+            stundenplan.setItem(0, Items.spacer);
+            stundenplan.setItem(1, Items.spacer);
+            stundenplan.setItem(2, Items.spacer);
+            for(int i = 0; i < ItemList.spacers.length; i++) {
+                stundenplan.setItem(ItemList.spacers[i], Items.spacer);
             }
 
-//prepare game
-
-            Stundenplan.updateStundenplan(true);
-            Stundenplan.updateStundenplan(false);
-
-//Set Playernames and ready them for battle
-            Teams.clearTeams();
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                Teams.resetPlayer(p);
-                p.getInventory().clear();
-                p.setGameMode(GameMode.SURVIVAL);
-                p.setHealth(20);
-                p.getActivePotionEffects().clear();
-            }
-
-            Teams.joinTeams();
-            nws.prepare();
-            sportler.prepare();
-            sprachler.prepare();
-
-            GenerateItems.summonItems();
-
-//prepare reputation
-            playerMirror.clear();
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                playerMirror.put(p.getName(), new PlayerMirror(p.getName()));
-            }
-
-//revive Player
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                if (!playerMirror.get(p.getName()).isAlive()) {
-                    RevivePlayer.revivePlayer(p, p);
+            for(Lehrer lehrer : Stundenplan.studenplan.keySet()) {
+                if(lehrer.isMale) {
+                    ArrayList<String> lore = new ArrayList<>();
+                    lore.add(ChatColor.GRAY + Stundenplan.studenplan.get(lehrer).name);
+                    stundenplan.addItem(Items.createItem(Material.OAK_SIGN, ChatColor.WHITE + "Herr " + lehrer.name, 1, 1, lore, false, false, false));
+                }else{
+                    ArrayList<String> lore = new ArrayList<>();
+                    lore.add(ChatColor.GRAY + Stundenplan.studenplan.get(lehrer).name);
+                    stundenplan.addItem(Items.createItem(Material.OAK_SIGN, ChatColor.WHITE + "Frau " + lehrer.name, 1, 1, lore, false, false, false));
                 }
             }
-
-            SchoolWars.gameStarted = true;
+            e.getPlayer().openInventory(stundenplan);
         }
-        return false;
+    }
+
+    @EventHandler
+    public void onStundenplanInteraction(InventoryClickEvent e) {
+        if(e.getWhoClicked().getOpenInventory().getTitle().equals("§4Momentaner Stundenplan")) {
+            e.setCancelled(true);
+        }
     }
 }

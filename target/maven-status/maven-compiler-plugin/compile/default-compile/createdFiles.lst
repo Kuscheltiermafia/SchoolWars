@@ -28,6 +28,7 @@ de\kuscheltiermafia\schoolwars\mechanics\Ranzen.class
 de\kuscheltiermafia\schoolwars\mechanics\ParticleHandler.class
 de\kuscheltiermafia\schoolwars\mechanics\PlayerStun.class
 de\kuscheltiermafia\schoolwars\events\KarlElixier$1.class
+de\kuscheltiermafia\schoolwars\lehrer\SekretariatStundenplan.class
 de\kuscheltiermafia\schoolwars\events\KarlElixier$4.class
 de\kuscheltiermafia\schoolwars\events\RevivePlayerEvent.class
 de\kuscheltiermafia\schoolwars\lehrer\Stundenplan$1.class

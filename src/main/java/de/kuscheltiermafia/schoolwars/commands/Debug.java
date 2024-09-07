@@ -41,8 +41,8 @@ import static de.kuscheltiermafia.schoolwars.SchoolWars.playerMirror;
 public class Debug implements CommandExecutor {
 
     public static ArrayList<Player> joinMsg = new ArrayList<>();
-    public static ArrayList<Player> debugMode = new ArrayList<>();
-    public String debugPrefix = ChatColor.DARK_RED + "[!] " + ChatColor.DARK_GRAY;
+    public static Boolean startWorks = true;
+    public String debugPrefix = ChatColor.DARK_RED + "[!] " + ChatColor.GRAY;
 
 
     @Override
@@ -99,14 +99,14 @@ public class Debug implements CommandExecutor {
                         p.sendMessage(debugPrefix + "Or use /debug rep <Player> <Lehrer> (Groß- und Kleinschreibung beachten!)");
                     } else if (args.length == 2) {
                         try {
-                            p.sendMessage(debugPrefix + "Reputation: " + ChatColor.RED + playerMirror.get(p.getName()).getReputation(args[1]));
+                            p.sendMessage(debugPrefix + "Reputation: " + ChatColor.RED + playerMirror.get(p.getName()).getReputation(Lehrer.getLehrerByName(args[1])));
                         } catch (Exception faultyInput) {
                             p.sendMessage(debugPrefix + "Lehrer not found!");
                         }
                     } else if (args.length == 3) {
                         try {
                             Player target = Bukkit.getPlayer(args[1]);
-                            p.sendMessage(debugPrefix + "Reputation: " + ChatColor.RED + playerMirror.get(target.getName()).getReputation(args[2]));
+                            p.sendMessage(debugPrefix + "Reputation: " + ChatColor.RED + playerMirror.get(target.getName()).getReputation(Lehrer.getLehrerByName(args[2])));
                         } catch (Exception faultyInput) {
                             p.sendMessage(debugPrefix + "Lehrer not found!");
                         }
@@ -135,13 +135,13 @@ public class Debug implements CommandExecutor {
                             p.sendMessage(debugPrefix + "You will now recieve join messages!");
                             joinMsg.add(p);
                         }
-                    }else if(args[1].equals("debug")) {
-                        if (debugMode.contains(p)) {
-                            p.sendMessage(debugPrefix + "You are now affected by /start again!!");
-                            debugMode.remove(p);
+                    }else if(args[1].equals("start")) {
+                        if (startWorks) {
+                            p.sendMessage(debugPrefix + "/start will no longer work!");
+                            startWorks = false;
                         } else {
-                            p.sendMessage(debugPrefix + "You will no longer be affected by /start!");
-                            debugMode.add(p);
+                            p.sendMessage(debugPrefix + "/start will now work again!");
+                            startWorks = true;
                         }
                     }
                     break;

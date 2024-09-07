@@ -24,14 +24,15 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 import static de.kuscheltiermafia.schoolwars.SchoolWars.world;
 
 
 public enum Area {
-    LEHRERZIMMER("Lehrerzimmer", new Location(world, -35.0, 87.0, 200.0), new Location(world, 25.0, 91.0, 204.0), new Location(world, 4.0, 87.0, 191.0), 4 /*Rest oder so idk*/, Raum.NORMAL),
-    HINTERER_PAUSENHOF("Hinterer Pausenhof", new Location(world, 43.0, 79.0, 130.0), new Location(world, 84.0, 85.0, 184.0), new Location(world, 43.0, 80.0, 177.0), 2, Raum.NORMAL),
+    LEHRERZIMMER("Lehrerzimmer", new Location(world, -35.0, 87.0, 200.0), new Location(world, 25.0, 91.0, 204.0), new Location(world, 4.0, 87.0, 191.0), 4, Raum.GENERAL),
+    HINTERER_PAUSENHOF("Hinterer Pausenhof", new Location(world, 43.0, 79.0, 130.0), new Location(world, 84.0, 85.0, 184.0), new Location(world, 43.0, 80.0, 177.0), 2, Raum.GENERAL),
     NEUER_MUSIKSAAL("Neuer Musiksaal", new Location(world, 43.0, 79.0, 187.0), new Location(world, 57.0, 85.0, 200.0), new Location(world, 46.0, 80.0, 199.0), 1, Raum.MUSIK),
     PHYSIKSAAL("Physiksaal", new Location(world, -33.0, 79.0, 187.0), new Location(world, -21.0, 85.0, 197.0), new Location(world, -21.0, 80.0, 192.0), 1, Raum.PHYSIK),
     RAUM_E04("Raum E04", new Location(world, -40.0, 79.0, 142.0), new Location(world, -28.0, 84.0, 150.0), new Location(world, -28.0, 80.0, 143.0), 1, Raum.NORMAL),
@@ -51,12 +52,15 @@ public enum Area {
     RAUM_208("Raum 208", new Location(world, 20.0, 94.0, 142.0), new Location(world, 31.0, 98.0, 150.0), new Location(world, 31.0, 94.0, 143.0), 1, Raum.NORMAL),
     OBERE_INFORMATIK("Raum xxx", new Location(world, -33.0, 86.0, 187.0), new Location(world, -20.0, 91.0, 197.0), new Location(world, -22.0, 87.0, 189.0), 1, Raum.PHYSIK),
     WERKRAUM("Werkraum", new Location(world, -34.0, 72.0, 168.0), new Location(world, -27.0, 76.0, 185.0), new Location(world, 31.0, 94.0, 143.0), 1, Raum.PHYSIK),
-    LINKER_FLUEGEL_GANG_ERSTER_STOCK("Linker Flügel erstes Obergeschoss", new Location(world, -45.0, 87.0, 152.0), new Location(world, 40.0, 91.0, 158.0), new Location(world, -22.0, 87.0, 189.0), 0, Raum.PHYSIK),
-    PAUSENHOF("Pausenhof", new Location(world, -34.0, 77.0, 160.0), new Location(world, 42.0, 84.0, 185.0), new Location(world, -15.0, 80, 175.0), 1, Raum.NORMAL),
+    LINKER_FLUEGEL_GANG_ERSTER_STOCK("Linker Flügel erstes Obergeschoss", new Location(world, -45.0, 87.0, 152.0), new Location(world, 40.0, 91.0, 158.0), new Location(world, -22.0, 87.0, 189.0), 0, Raum.GENERAL),
+    PAUSENHOF("Pausenhof", new Location(world, -34.0, 77.0, 160.0), new Location(world, 42.0, 84.0, 185.0), new Location(world, -15.0, 80, 175.0), 1, Raum.GENERAL),
     PHYSIK_VORBEREITUNG_1("Physik Vorbereitung", new Location(world, -19.0, 80.0, 187.0), new Location(world, -13.0, 85.0, 197.0), new Location(world, -17.0, 80.0, 188.0), 1, Raum.PHYSIK),
     PHYSIK_VORBEREITUNG_2("Physik Vorbereitung", new Location(world, -11.0, 80.0, 187.0), new Location(world, -5.0, 85.0, 197.0), new Location(world, -7.0, 80.0, 188.0), 1, Raum.PHYSIK),
     PHYSIK_UEBUNG("Physik Übung", new Location(world, -4.0, 80.0, 187.0), new Location(world, 13.0, 84.0, 197.0), new Location(world, -3.0, 80.0, 192.0), 1, Raum.PHYSIK),
-    ROBOTIK_RAUM("Robotik Raum", new Location(world, 14.0, 79.0, 187.0), new Location(world, 25.0, 84.0, 197.0), new Location(world, 19.0, 80.0, 189.0), 1, Raum.PHYSIK);
+    ROBOTIK_RAUM("Robotik Raum", new Location(world, 14.0, 79.0, 187.0), new Location(world, 25.0, 84.0, 197.0), new Location(world, 19.0, 80.0, 189.0), 1, Raum.PHYSIK),
+    GLASKASTEN_1("Glaskasten 1", new Location(world, 31.0, 87.0, 167.0), new Location(world, 36.0, 91.0, 170.0), new Location(world, 35.0, 87.0, 167.0), 1, Raum.GLASKASTEN),
+    GLASKASTEN_2("Glaskasten 2", new Location(world, 31.0, 87.0, 172.0), new Location(world, 36.0, 91.0, 175.0), new Location(world, 35.0, 87.0, 171.0), 2, Raum.GLASKASTEN),
+    GLASKASTEN_3("Glaskasten 3", new Location(world, 31.0, 87.0, 177.0), new Location(world, 36.0, 91.0, 180.0), new Location(world, 35.0, 87.0, 180.0), 1, Raum.GLASKASTEN);
 
 
     final String name;

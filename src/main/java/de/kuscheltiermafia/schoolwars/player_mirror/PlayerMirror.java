@@ -41,7 +41,7 @@ public class PlayerMirror {
     }
 
 //reputation
-    public Double getReputation(String lehrer) {
+    public Double getReputation(Lehrer lehrer) {
         return rep.get(lehrer);
     }
 

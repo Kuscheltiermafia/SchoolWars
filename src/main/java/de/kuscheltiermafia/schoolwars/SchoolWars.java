@@ -30,6 +30,7 @@ import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.lehrer.Bereiche;
 import de.kuscheltiermafia.schoolwars.lehrer.LehrerQuests;
 import de.kuscheltiermafia.schoolwars.lehrer.LehrerHandler;
+import de.kuscheltiermafia.schoolwars.lehrer.SekretariatStundenplan;
 import de.kuscheltiermafia.schoolwars.mechanics.PlayerStun;
 import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
 import de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror;
@@ -47,8 +48,6 @@ import static de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer.revivePlayer
 
 
 public final class SchoolWars extends JavaPlugin {
-
-
 
     public static SchoolWars plugin;
 
@@ -106,6 +105,7 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new Generalschluessel(), this);
         pluginManager.registerEvents(new LehrerQuests(), this);
         pluginManager.registerEvents(new PlayerStun(), this);
+        pluginManager.registerEvents(new SekretariatStundenplan(), this);
 
         getCommand("start").setExecutor(new StartGame());
         getCommand("clearTeams").setExecutor(new ClearTeams());

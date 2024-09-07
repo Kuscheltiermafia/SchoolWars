@@ -5,5 +5,8 @@ public enum Raum {
     KUNST,
     PHYSIK,
     CHEMIE,
-    MUSIK;
+    GENERAL,
+    MUSIK,
+    OS_SEKI,
+    GLASKASTEN;
 }
