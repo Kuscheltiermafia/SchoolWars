@@ -42,7 +42,6 @@ de\kuscheltiermafia\schoolwars\gameprep\Sprachler.class
 de\kuscheltiermafia\schoolwars\commands\TeamList.class
 de\kuscheltiermafia\schoolwars\items\GenerateItems.class
 de\kuscheltiermafia\schoolwars\items\Items.class
-de\kuscheltiermafia\schoolwars\lehrer\LehrerQuests$1.class
 de\kuscheltiermafia\schoolwars\events\KarlElixier$3.class
 de\kuscheltiermafia\schoolwars\events\Minasisierung$1.class
 de\kuscheltiermafia\schoolwars\events\JoinEvent.class

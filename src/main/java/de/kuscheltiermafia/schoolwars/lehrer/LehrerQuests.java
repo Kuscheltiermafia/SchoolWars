@@ -52,7 +52,7 @@ public class LehrerQuests implements Listener {
 
     public HashMap<Player, Villager> openQuest = new HashMap<>();
 
-    public static void initLehrerAlgorithm() {
+    /*public static void initLehrerAlgorithm() {
 
         new BukkitRunnable() {
             @Override
@@ -85,7 +85,7 @@ public class LehrerQuests implements Listener {
                 initLehrerAlgorithm();
             }
         }.runTaskLater(SchoolWars.getPlugin(), 20 * 10);
-    }
+    } */
 
     @EventHandler
     public void onLehrerClick(PlayerInteractEntityEvent e) {

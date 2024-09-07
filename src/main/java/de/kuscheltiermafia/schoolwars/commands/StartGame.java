@@ -59,6 +59,7 @@ public class StartGame implements CommandExecutor {
 //prepare game
 
         Stundenplan.updateStundenplan(true);
+        Stundenplan.updateStundenplan(false);
 
 //Set Playernames and ready them for battle
         Teams.clearTeams();

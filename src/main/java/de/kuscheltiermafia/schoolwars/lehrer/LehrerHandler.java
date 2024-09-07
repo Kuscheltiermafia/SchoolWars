@@ -76,7 +76,7 @@ public class LehrerHandler {
         if(isMale) {
             currentLehrer.setCustomName("Herr " + name);
         }else{
-            currentLehrer.setCustomName("Herr " + name);
+            currentLehrer.setCustomName("Frau " + name);
         }
         currentLehrer.setCustomNameVisible(true);
         currentLehrer.setVillagerType(type);

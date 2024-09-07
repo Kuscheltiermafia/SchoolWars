@@ -85,7 +85,7 @@ public final class SchoolWars extends JavaPlugin {
         SchulbuchLevels.resetBookshelf();
         GenerateItems.generateItemLocations();
         Ranzen.generateRanzenCounter();
-        LehrerQuests.initLehrerAlgorithm();
+        //LehrerQuests.initLehrerAlgorithm();
         LehrerHandler.initLehrerQuests();
 
         PluginManager pluginManager = Bukkit.getPluginManager();
