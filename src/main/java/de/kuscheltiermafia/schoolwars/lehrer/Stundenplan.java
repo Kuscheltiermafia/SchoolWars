@@ -64,7 +64,7 @@ public class Stundenplan {
         for (Area area : Area.values()) {
             for (int i = 0; i < area.maxLehrerAmount; i++) {
                 if (!shuffledLehrer.isEmpty()) {
-                    if(area.raum == null || shuffledLehrer.get(0).raum.equals(area.raum)) {
+                    if(area.raum == Raum.NORMAL || shuffledLehrer.get(0).raum.equals(area.raum)) {
                         LehrerHandler.summonLehrer(area.lehrerSpawnPos, shuffledLehrer.get(0));
                         studenplan.put(shuffledLehrer.get(0), area);
                         shuffledLehrer.remove(0);

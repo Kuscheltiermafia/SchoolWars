@@ -23,21 +23,21 @@ import org.bukkit.entity.Villager;
 
 public enum Lehrer {
 
-    SCHNEIDER("Schneider", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, true, false, null),
-    FISCHER("Fischer", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, true, true, null),
-    FLOETER("Floeter", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, true, null),
+    SCHNEIDER("Schneider", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, true, false, Raum.NORMAL),
+    FISCHER("Fischer", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, true, true, Raum.NORMAL),
+    FLOETER("Floeter", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, true, Raum.NORMAL),
     KLIEM("Kliem", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, true, true, Raum.PHYSIK),
-    GERLICH("Gerlich", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, true, null),
+    GERLICH("Gerlich", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, true, Raum.NORMAL),
     BAAR("Baar", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, true, true, Raum.CHEMIE),
     KESSELRING("Kesselring", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, true, Raum.PHYSIK),
-    HERGET("Herget", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, true, null),
-    GREB("Greb", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, false, null),
+    HERGET("Herget", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, true, Raum.NORMAL),
+    GREB("Greb", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, false, Raum.NORMAL),
     GEITNER("Geitner", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, true, Raum.PHYSIK),
     BLUMPFI("Blumpfingstl", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, false, Raum.KUNST),
     KRAUS("Kraus", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, true, Raum.MUSIK),
     METTENLEITER("Mettenleiter", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, false, false, false, Raum.MUSIK),
-    DEHNER("Dehner", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, false, null),
-    WEISS("Weiß", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, false, null),
+    DEHNER("Dehner", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, false, Raum.NORMAL),
+    WEISS("Weiß", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, false, Raum.NORMAL),
     OLTEAN("Oltean", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, false, Raum.KUNST);
 
     final String name;
