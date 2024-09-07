@@ -1,5 +1,6 @@
 package de.kuscheltiermafia.schoolwars.gameprep;
 
+import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
 import org.bukkit.Bukkit;
@@ -34,9 +35,12 @@ public class Sprachler {
         p.setPlayerListName(ChatColor.GOLD + "[Sprache] " + p.getName());
         p.setCustomName(ChatColor.GOLD + "[Sprache] " + p.getName());
 
-        p.getInventory().addItem(new ItemStack(Items.sprach_ranzen));
-        ranzenAmount.put(teamName, ranzenAmount.get(teamName) + 1);
-        p.getInventory().addItem(Items.schulbuch1);
+        if (!SchoolWars.gameStarted) {
+            p.getInventory().addItem(new ItemStack(Items.sprach_ranzen));
+            ranzenAmount.put(teamName, ranzenAmount.get(teamName) + 1);
+            p.getInventory().addItem(Items.schulbuch1);
+        }
+
 
         p.teleport(new Location(p.getWorld(), -20.5, 89, 146.5, -90, 0));
         p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 40, 1, false, false, false));

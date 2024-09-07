@@ -20,9 +20,6 @@
 package de.kuscheltiermafia.schoolwars.mechanics;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
-import de.kuscheltiermafia.schoolwars.gameprep.NWS;
-import de.kuscheltiermafia.schoolwars.gameprep.Sportler;
-import de.kuscheltiermafia.schoolwars.gameprep.Sprachler;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import org.bukkit.*;
 import org.bukkit.entity.BlockDisplay;

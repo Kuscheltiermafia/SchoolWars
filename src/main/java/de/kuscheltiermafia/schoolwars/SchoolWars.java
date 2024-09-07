@@ -27,13 +27,16 @@ import de.kuscheltiermafia.schoolwars.gameprep.Sprachler;
 import de.kuscheltiermafia.schoolwars.gameprep.Teams;
 import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.items.Items;
-import de.kuscheltiermafia.schoolwars.mechanics.Bereiche;
-import de.kuscheltiermafia.schoolwars.mechanics.LehrerHandler;
+import de.kuscheltiermafia.schoolwars.lehrer.Bereiche;
+import de.kuscheltiermafia.schoolwars.lehrer.LehrerQuests;
+import de.kuscheltiermafia.schoolwars.lehrer.LehrerHandler;
 import de.kuscheltiermafia.schoolwars.mechanics.PlayerStun;
 import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
 import de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
@@ -60,6 +63,8 @@ public final class SchoolWars extends JavaPlugin {
 
     public static HashMap<String, PlayerMirror> playerMirror = new HashMap<>();
 
+    public static World world = Bukkit.getWorld("schoolwars");
+
 
     @Override
     public void onEnable() {
@@ -80,10 +85,8 @@ public final class SchoolWars extends JavaPlugin {
         SchulbuchLevels.resetBookshelf();
         GenerateItems.generateItemLocations();
         Ranzen.generateRanzenCounter();
-        Lehrer.initLehrerAlgorithm();
+        LehrerQuests.initLehrerAlgorithm();
         LehrerHandler.initLehrerQuests();
-        Bereiche.initAreas();
-        LehrerHandler.initLehrer(4, 87, 190);
 
         PluginManager pluginManager = Bukkit.getPluginManager();
 
@@ -101,7 +104,7 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new Minasisierung(), this);
         pluginManager.registerEvents(new SchulbuchLevels(), this);
         pluginManager.registerEvents(new Generalschluessel(), this);
-        pluginManager.registerEvents(new Lehrer(), this);
+        pluginManager.registerEvents(new LehrerQuests(), this);
         pluginManager.registerEvents(new PlayerStun(), this);
 
         getCommand("start").setExecutor(new StartGame());
@@ -124,6 +127,11 @@ public final class SchoolWars extends JavaPlugin {
         for(Player p : Bukkit.getOnlinePlayers()) {
             if(!playerMirror.get(p.getName()).isAlive()) {
                 revivePlayer(p, p);
+            }
+        }
+        for (Villager currentLehrer : SchoolWars.world.getEntitiesByClass(Villager.class)) {
+            if(currentLehrer.getCustomName() != null) {
+                currentLehrer.remove();
             }
         }
 

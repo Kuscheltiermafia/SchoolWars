@@ -17,81 +17,21 @@
  *
  */
 
-package de.kuscheltiermafia.schoolwars.commands;
+package de.kuscheltiermafia.schoolwars.lehrer;
 
-import de.kuscheltiermafia.schoolwars.SchoolWars;
-import de.kuscheltiermafia.schoolwars.gameprep.Teams;
-import de.kuscheltiermafia.schoolwars.items.GenerateItems;
-import de.kuscheltiermafia.schoolwars.lehrer.Stundenplan;
-import de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer;
-import de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-import static de.kuscheltiermafia.schoolwars.SchoolWars.*;
+import static de.kuscheltiermafia.schoolwars.SchoolWars.playerMirror;
 
-public class StartGame implements CommandExecutor {
+public class Aufsicht implements Listener {
 
-    @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-
-        SchoolWars.gameStarted = false;
-
-//reset
-        playerMirror.clear();
-
-        try {
-            for (Item item : Bukkit.getWorld("schoolwars").getEntitiesByClass(Item.class)) {
-                item.remove();
-            }
-            for (Interaction interaction : Bukkit.getWorld("schoolwars").getEntitiesByClass(Interaction.class)) {
-                interaction.remove();
-            }
-            for (BlockDisplay blockdisplay : Bukkit.getWorld("schoolwars").getEntitiesByClass(BlockDisplay.class)) {
-                blockdisplay.remove();
-            }
-        } catch (Exception ignored) {}
-
-//prepare game
-
-        Stundenplan.updateStundenplan(true);
-
-//Set Playernames and ready them for battle
-        Teams.clearTeams();
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            Teams.resetPlayer(p);
-            p.getInventory().clear();
-            p.setGameMode(GameMode.SURVIVAL);
-            p.setHealth(20);
-            p.getActivePotionEffects().clear();
+    @EventHandler
+    public void onPlayerHit(EntityDamageByEntityEvent e) {
+        if(e.getDamager() instanceof Player) {
+            playerMirror.get(e.getDamager().getName()).setCombat(true);
         }
-
-        Teams.joinTeams();
-        nws.prepare();
-        sportler.prepare();
-        sprachler.prepare();
-
-        GenerateItems.summonItems();
-
-//prepare reputation
-        playerMirror.clear();
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            playerMirror.put(p.getName(), new PlayerMirror(p.getName()));
-        }
-
-//revive Player
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (!playerMirror.get(p.getName()).isAlive()) {
-                RevivePlayer.revivePlayer(p, p);
-            }
-        }
-
-        SchoolWars.gameStarted = true;
-
-        return false;
     }
 }

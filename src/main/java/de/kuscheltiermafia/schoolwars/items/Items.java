@@ -74,7 +74,7 @@ public class Items {
     public static ItemStack baar_kaffee;
     public static ItemStack cookie;
     public static ItemStack generalSchluessel;
-    public static ItemStack physikSchluessel;
+    public static ItemStack fachRaumSchrankSchluessel;
     public static ItemStack rollator;
     public static ItemStack no_page_down;
     public static ItemStack no_page_up;
@@ -86,6 +86,7 @@ public class Items {
     public static ItemStack script;
     public static ItemStack stroke_master;
     public static ItemStack strick;
+    public static ItemStack peilsender;
 
     public static ArrayList<ItemStack> itemList = new ArrayList<ItemStack>();
 
@@ -193,9 +194,9 @@ public class Items {
         itemList.add(generalSchluessel);
 
         ArrayList<String> physikSchlüssel_lore = new ArrayList<String>();
-        physikSchlüssel_lore.add(ChatColor.WHITE + "Öffnet die Schränke der Physik");
-        physikSchluessel = createItem(Material.TRIPWIRE_HOOK, ChatColor.GOLD + "Physikschlüssel", 1, 1, physikSchlüssel_lore, false, false, false);
-        itemList.add(physikSchluessel);
+        physikSchlüssel_lore.add(ChatColor.WHITE + "Öffnet die Schränke in Fachräumen");
+        fachRaumSchrankSchluessel = createItem(Material.TRIPWIRE_HOOK, ChatColor.GOLD + "Fachraumschrankschlüssel", 1, 1, physikSchlüssel_lore, false, false, false);
+        itemList.add(fachRaumSchrankSchluessel);
 
         rollator = createItem(Material.NETHER_BRICK_FENCE, ChatColor.GRAY + "Rollator", 1, 1, null, false, false, false);
         itemList.add(rollator);
@@ -222,6 +223,12 @@ public class Items {
 
         stroke_master = createItem(Material.ARMADILLO_SCUTE, ChatColor.DARK_PURPLE + "Stroke Master 3000", 1, 1, null, false, false, false);
         itemList.add(stroke_master);
+
+        ArrayList<String> peilsender_lore = new ArrayList<>();
+        peilsender_lore.add(ChatColor.DARK_GRAY + "Herr Fischer kann sich nicht länger verstecken!");
+
+        peilsender = createItem(Material.COMPASS, ChatColor.DARK_GRAY + "Peilsender", 1, 1, peilsender_lore, true, false, false);
+        itemList.add(peilsender);
 
 //Vapes
         vape_fruitberry = createItem(Material.PINK_CANDLE, ChatColor.LIGHT_PURPLE + "Vape Fruitberry Punch", 1, 1, null, false, false, false);

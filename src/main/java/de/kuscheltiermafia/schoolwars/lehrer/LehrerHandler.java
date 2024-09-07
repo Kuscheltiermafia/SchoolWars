@@ -17,7 +17,7 @@
  *
  */
 
-package de.kuscheltiermafia.schoolwars.mechanics;
+package de.kuscheltiermafia.schoolwars.lehrer;
 
 import de.kuscheltiermafia.schoolwars.items.Items;
 import org.bukkit.Bukkit;
@@ -31,50 +31,56 @@ import java.util.HashMap;
 
 public class LehrerHandler {
 
-    public static Villager blumpfi;
-    public static Villager schneider;
-    public static Villager fischer;
-    public static Villager floeter;
-    public static ArrayList<Villager> lehrerList = new ArrayList<>();
+    public static ArrayList<Lehrer> lehrerList = new ArrayList<>();
     public static ArrayList<Villager> questLehrerList = new ArrayList<>();
 
     public static HashMap<String, ItemStack> requieredLehrerItems = new HashMap<>();
     public static HashMap<String, ItemStack> rewardLehrerItems = new HashMap<>();
     public static HashMap<String, Double> repReward = new HashMap<>();
 
-    public static void initLehrer(double x, double y, double z) {
-        Location lehrerStorage = new Location(Bukkit.getWorld("schoolwars"),x, y, z);
-
-        blumpfi = createLehrer(lehrerStorage, "Blumpfi",Villager.Type.SWAMP, true, false, true);
-        lehrerList.add(blumpfi);
-    }
-
     public static void initLehrerQuests() {
         requieredLehrerItems.put("Fischer", Items.stroke_master);
         rewardLehrerItems.put("Fischer", Items.fischers_spiel);
-        repReward.put("Fischer", 1d);
+        repReward.put("Fischer", 1.0);
 
         requieredLehrerItems.put("Schneider", Items.kaputtes_ipad);
         rewardLehrerItems.put("Schneider", Items.rollator);
-        repReward.put("Schneider", 1d);
+        repReward.put("Schneider", 1.0);
+
+        requieredLehrerItems.put("Baar", Items.baar_kaffee);
+        rewardLehrerItems.put("Baar", Items.useless_uranium);
+        repReward.put("Baar", 1.0);
+
+        requieredLehrerItems.put("Kliem", Items.placeholder);
+        rewardLehrerItems.put("Kliem", Items.placeholder);
+        repReward.put("Kliem", 0.0);
+
+        requieredLehrerItems.put("Kesselring", Items.placeholder);
+        rewardLehrerItems.put("Kesselring", Items.placeholder);
+        repReward.put("Kesselring", 0.0);
     }
 
     public static void removeLehrer() {
         for (Villager currentLehrer : Bukkit.getWorld("schoolwars").getEntitiesByClass(Villager.class)) {
             if(currentLehrer.getCustomName() != null) {
-                lehrerList.remove(currentLehrer);
                 currentLehrer.remove();
             }
         }
+        lehrerList.clear();
     }
 
-    static Villager createLehrer(Location location, String name, Villager.Type type,boolean hasAI, boolean isBaby, boolean isSilent) {
+    static Villager createLehrer(Location location, String name, Villager.Type type, Villager.Profession profession, boolean hasAI, boolean isBaby, boolean isSilent, boolean isMale) {
 
         Villager currentLehrer = (Villager) Bukkit.getWorld("schoolwars").spawnEntity(location, EntityType.VILLAGER);
 
-        currentLehrer.setCustomName(name);
+        if(isMale) {
+            currentLehrer.setCustomName("Herr " + name);
+        }else{
+            currentLehrer.setCustomName("Herr " + name);
+        }
         currentLehrer.setCustomNameVisible(true);
         currentLehrer.setVillagerType(type);
+        currentLehrer.setProfession(profession);
         currentLehrer.setProfession(Villager.Profession.NITWIT);
         currentLehrer.setAI(hasAI);
         currentLehrer.setInvulnerable(true);
@@ -92,21 +98,13 @@ public class LehrerHandler {
         return currentLehrer;
     }
 
-    public static void createFrauSchneider(Location loc) {
-        schneider = createLehrer(loc, "Frau Schneider",Villager.Type.SWAMP, true, false, true);
-        lehrerList.add(schneider);
-        questLehrerList.add(schneider);
-    }
-
-    public static void createHerrFischer(Location loc) {
-        fischer = createLehrer(loc, "Herr Fischer",Villager.Type.PLAINS, true, false, true);
-        lehrerList.add(fischer);
-        questLehrerList.add(fischer);
-    }
-
-    public static void createHerrFloeter(Location loc) {
-        floeter = createLehrer(loc, "Herr Flöter",Villager.Type.PLAINS, true, false, true);
-        lehrerList.add(floeter);
+    public static Villager summonLehrer(Location loc, Lehrer lehrer){
+        Villager currentLehrer = createLehrer(loc, lehrer.name, lehrer.type, lehrer.profession, lehrer.hasAI, lehrer.isBaby, lehrer.isSilent, lehrer.isMale);
+        lehrerList.add(lehrer);
+        if (lehrer.hasQuest) {
+            questLehrerList.add(currentLehrer);
+        }
+        return currentLehrer;
     }
 
 }

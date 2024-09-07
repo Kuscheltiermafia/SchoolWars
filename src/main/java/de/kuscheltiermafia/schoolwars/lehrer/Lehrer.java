@@ -17,81 +17,50 @@
  *
  */
 
-package de.kuscheltiermafia.schoolwars.commands;
+package de.kuscheltiermafia.schoolwars.lehrer;
 
-import de.kuscheltiermafia.schoolwars.SchoolWars;
-import de.kuscheltiermafia.schoolwars.gameprep.Teams;
-import de.kuscheltiermafia.schoolwars.items.GenerateItems;
-import de.kuscheltiermafia.schoolwars.lehrer.Stundenplan;
-import de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer;
-import de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Villager;
 
-import static de.kuscheltiermafia.schoolwars.SchoolWars.*;
+public enum Lehrer {
 
-public class StartGame implements CommandExecutor {
+    SCHNEIDER("Schneider", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, true, false, null),
+    FISCHER("Fischer", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, true, true, null),
+    FLOETER("Floeter", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, true, null),
+    KLIEM("Kliem", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, true, true, Raum.PHYSIK),
+    GERLICH("Gerlich", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, true, null),
+    BAAR("Baar", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, true, true, Raum.CHEMIE),
+    KESSELRING("Kesselring", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, true, Raum.PHYSIK),
+    HERGET("Herget", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, true, null),
+    GREB("Greb", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, false, null),
+    GEITNER("Geitner", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, true, Raum.PHYSIK),
+    BLUMPFI("Blumpfingstl", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, false, Raum.KUNST),
+    KRAUS("Kraus", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, true, Raum.MUSIK),
+    METTENLEITER("Mettenleiter", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, false, false, false, Raum.MUSIK),
+    DEHNER("Dehner", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, false, null),
+    WEISS("Weiß", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, false, null),
+    OLTEAN("Oltean", Villager.Type.PLAINS, Villager.Profession.NONE, true, false, true, false, false, Raum.KUNST);
 
-    @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+    final String name;
+    final Villager.Type type;
+    final Villager.Profession profession;
+    final boolean hasAI;
+    final boolean isBaby;
+    final boolean isSilent;
+    final boolean hasQuest;
+    final boolean isMale;
+    final Raum raum;
 
-        SchoolWars.gameStarted = false;
-
-//reset
-        playerMirror.clear();
-
-        try {
-            for (Item item : Bukkit.getWorld("schoolwars").getEntitiesByClass(Item.class)) {
-                item.remove();
-            }
-            for (Interaction interaction : Bukkit.getWorld("schoolwars").getEntitiesByClass(Interaction.class)) {
-                interaction.remove();
-            }
-            for (BlockDisplay blockdisplay : Bukkit.getWorld("schoolwars").getEntitiesByClass(BlockDisplay.class)) {
-                blockdisplay.remove();
-            }
-        } catch (Exception ignored) {}
-
-//prepare game
-
-        Stundenplan.updateStundenplan(true);
-
-//Set Playernames and ready them for battle
-        Teams.clearTeams();
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            Teams.resetPlayer(p);
-            p.getInventory().clear();
-            p.setGameMode(GameMode.SURVIVAL);
-            p.setHealth(20);
-            p.getActivePotionEffects().clear();
-        }
-
-        Teams.joinTeams();
-        nws.prepare();
-        sportler.prepare();
-        sprachler.prepare();
-
-        GenerateItems.summonItems();
-
-//prepare reputation
-        playerMirror.clear();
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            playerMirror.put(p.getName(), new PlayerMirror(p.getName()));
-        }
-
-//revive Player
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (!playerMirror.get(p.getName()).isAlive()) {
-                RevivePlayer.revivePlayer(p, p);
-            }
-        }
-
-        SchoolWars.gameStarted = true;
-
-        return false;
+    Lehrer(String name, Villager.Type type, Villager.Profession profession, boolean hasAI, boolean isBaby, boolean isSilent, boolean hasQuest, boolean isMale, Raum raum) {
+        this.name = name;
+        this.type = type;
+        this.profession = profession;
+        this.hasAI = hasAI;
+        this.isBaby = isBaby;
+        this.isSilent = isSilent;
+        this.hasQuest = hasQuest;
+        this.isMale = isMale;
+        this.raum = raum;
     }
+
+
 }

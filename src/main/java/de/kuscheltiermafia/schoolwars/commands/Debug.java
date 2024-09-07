@@ -19,9 +19,9 @@
 
 package de.kuscheltiermafia.schoolwars.commands;
 
+import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.events.Minasisierung;
-import de.kuscheltiermafia.schoolwars.mechanics.Bereiche;
-import de.kuscheltiermafia.schoolwars.mechanics.LehrerHandler;
+import de.kuscheltiermafia.schoolwars.lehrer.*;
 import de.kuscheltiermafia.schoolwars.mechanics.PlayerStun;
 import de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -41,6 +41,7 @@ import static de.kuscheltiermafia.schoolwars.SchoolWars.playerMirror;
 public class Debug implements CommandExecutor {
 
     public static ArrayList<Player> joinMsg = new ArrayList<>();
+    public static ArrayList<Player> debugMode = new ArrayList<>();
     public String debugPrefix = ChatColor.DARK_RED + "[!] " + ChatColor.DARK_GRAY;
 
 
@@ -113,29 +114,35 @@ public class Debug implements CommandExecutor {
                     break;
                 case "lehrer":
                     if (args[1].equals("spawn")) {
-                        switch (args[2]) {
-                            case "schneider":
-                                LehrerHandler.createFrauSchneider(p.getLocation());
-                                p.sendMessage(debugPrefix + "Successfully spawned Frau Schneider at your location!");
-                                break;
-                            case "fischer":
-                                LehrerHandler.createHerrFischer(p.getLocation());
-                                p.sendMessage(debugPrefix + "Successfully spawned Herr Fischer at your location!");
-                                break;
-                            case "h_floeter":
-                                LehrerHandler.createHerrFloeter(p.getLocation());
-                                p.sendMessage(debugPrefix + "Successfully spawned Herr Flöter at your location!");
-                                break;
+
+                        for(Lehrer lehrer : Lehrer.values()) {
+                            if (args[2] == lehrer.name()){
+                                LehrerHandler.summonLehrer(p.getLocation(), lehrer);
+                                p.sendMessage(debugPrefix + "Spawned Lehrer: " + lehrer.name());
+                                return false;
+                            }
                         }
+                        p.sendMessage(debugPrefix + "Lehrer not found!");
+
                     }
                     break;
-                case "togglejoin":
-                    if (joinMsg.contains(p)) {
-                        p.sendMessage(debugPrefix + "You will no longer recieve join messages!");
-                        joinMsg.remove(p);
-                    } else {
-                        p.sendMessage(debugPrefix + "You will now recieve join messages!");
-                        joinMsg.add(p);
+                case "toggle":
+                    if(args[1].equals("join")) {
+                        if (joinMsg.contains(p)) {
+                            p.sendMessage(debugPrefix + "You will no longer recieve join messages!");
+                            joinMsg.remove(p);
+                        } else {
+                            p.sendMessage(debugPrefix + "You will now recieve join messages!");
+                            joinMsg.add(p);
+                        }
+                    }else if(args[1].equals("debug")) {
+                        if (debugMode.contains(p)) {
+                            p.sendMessage(debugPrefix + "You are now affected by /start again!!");
+                            debugMode.remove(p);
+                        } else {
+                            p.sendMessage(debugPrefix + "You will no longer be affected by /start!");
+                            debugMode.add(p);
+                        }
                     }
                     break;
                 case "stun":
@@ -150,7 +157,7 @@ public class Debug implements CommandExecutor {
                 case "area":
                     if (args[1].equals("check")) {
                         if (args.length == 2) {
-                            p.sendMessage(debugPrefix + "Your current area is: " + Bereiche.checkArea(p));
+                            p.sendMessage(debugPrefix + "The players: ");
                         }
                     }
                     break;
@@ -177,6 +184,23 @@ public class Debug implements CommandExecutor {
                         p.sendMessage(debugPrefix + "or /debug verweise <add> <amount>");
                         p.sendMessage(debugPrefix + "or /debug verweise <add> <player> <amount>!");
                         p.sendMessage(debugPrefix + "You can use negative numbers to remove Verweise");
+                    }
+                    break;
+                case "stundenplan":
+                    if(SchoolWars.gameStarted) {
+                        if (args[1].equals("get")) {
+                            p.sendMessage(debugPrefix + "Current Stundenplan: ");
+                            for (Lehrer lehrer : Stundenplan.studenplan.keySet()) {
+                                p.sendMessage(debugPrefix + lehrer.name() + " -> " + Stundenplan.studenplan.get(lehrer).name());
+                            }
+                        } else if (args[1].equals("reset")) {
+                            p.sendMessage(debugPrefix + "Sucessfully resetted Stundenplan!");
+                            Stundenplan.updateStundenplan(true);
+                        }else{
+                            p.sendMessage(debugPrefix + "Please use /debug stundenplan <get|reset>");
+                        }
+                    }else {
+                        p.sendMessage(debugPrefix + "Game has not started yet!");
                     }
                     break;
             }

@@ -17,7 +17,7 @@
  *
  */
 
-package de.kuscheltiermafia.schoolwars.mechanics;
+package de.kuscheltiermafia.schoolwars.lehrer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -34,23 +34,7 @@ public class Bereiche {
     public static HashMap<String, Location> lehrerSpawnPos = new HashMap<>();
     public static HashMap<Location, String> areaIdentifier = new HashMap<>();
 
-    static World world = Bukkit.getWorld("schoolwars");
-
     public static ArrayList<String> lehrerAufsichtAreas = new ArrayList<>();
-
-    public static void initAreas() {
-
-        Area lehrerzimmer = new Area(new Location(world, -35.0, 87.0, 200.0), new Location(world, 25.0, 91.0, 204.0), new Location(world, -7.0, 87.0, 201.0));
-
-        createArea("lehrerzimmer_gang", new Location(Bukkit.getWorld("schoolwars"), -35.0, 87.0, 200.0), new Location(Bukkit.getWorld("schoolwars"), 25.0, 91.0, 204.0), new Location(Bukkit.getWorld("schoolwars"), -7.0, 87.0, 201.0));
-        lehrerAufsichtAreas.add("lehrerzimmer_gang");
-    }
-    public static void createArea(String name, Location smallCoord, Location largeCoord, Location lehrerSpawn) {
-        minCoord.put(name, smallCoord);
-        maxCoord.put(name, largeCoord);
-        lehrerSpawnPos.put(name, lehrerSpawn);
-        areaIdentifier.put(largeCoord, name);
-    }
 
     public static String checkArea(Player p) {
         for(Location minLoc : minCoord.values()) {

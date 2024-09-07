@@ -1,5 +1,6 @@
 package de.kuscheltiermafia.schoolwars.gameprep;
 
+import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
 import org.bukkit.Bukkit;
@@ -33,9 +34,11 @@ public class Sportler {
         p.setPlayerListName(ChatColor.DARK_RED + "[Sport] " + p.getName());
         p.setCustomName(ChatColor.DARK_RED + "[Sport] " + p.getName());
 
-        p.getInventory().addItem(new ItemStack(Items.sport_ranzen));
-        ranzenAmount.put(teamName, ranzenAmount.get(teamName) + 1);
-        p.getInventory().addItem(Items.schulbuch1);
+        if (!SchoolWars.gameStarted) {
+            p.getInventory().addItem(new ItemStack(Items.sport_ranzen));
+            ranzenAmount.put(teamName, ranzenAmount.get(teamName) + 1);
+            p.getInventory().addItem(Items.schulbuch1);
+        }
 
         p.teleport(new Location(p.getWorld(), 70.5, 81, 167.5, 90, 0));
         p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 1, false, false, false));

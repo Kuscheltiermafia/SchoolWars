@@ -17,38 +17,62 @@
  *
  */
 
-package de.kuscheltiermafia.schoolwars.mechanics;
+package de.kuscheltiermafia.schoolwars.lehrer;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
+import de.kuscheltiermafia.schoolwars.SchoolWars;
+import org.bukkit.entity.Villager;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 
-public class Area {
+import static de.kuscheltiermafia.schoolwars.SchoolWars.world;
 
-    Location minCoord;
-    Location maxCoord;
-    Location lehrerSpawnPos;
+public class Stundenplan {
 
-    public Area(Location minCoord, Location maxCoord, Location lehrerSpawnPos) {
-        this.minCoord = minCoord;
-        this.maxCoord = maxCoord;
-        this.lehrerSpawnPos = lehrerSpawnPos;
+    public static HashMap<Lehrer, Area> studenplan = new HashMap<>();
+
+    public static void updateStundenplan(boolean instant) {
+
+        if(instant) {
+            initStundenplan();
+        }else{
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if(SchoolWars.gameStarted) {
+                        initStundenplan();
+                        updateStundenplan(false);
+                    }
+                }
+            }.runTaskLater(SchoolWars.getPlugin(), 20 * 60 * 3);
+        }
     }
 
-    public ArrayList<Player> getPlayersInArea() {
-        ArrayList<Player> playersInArea = new ArrayList<>();
-
-        for (Player player : Bukkit.getOnlinePlayers()){
-            if (player.getLocation().getX() >= minCoord.getX() && player.getLocation().getY() >= minCoord.getY() && player.getLocation().getZ() >= minCoord.getZ()) {
-                if (player.getLocation().getX() <= maxCoord.getX() && player.getLocation().getY() <= maxCoord.getY() && player.getLocation().getZ() <= maxCoord.getZ()) {
-                    playersInArea.add(player);
-                }
+    public static void initStundenplan() {
+        for (Villager currentLehrer : world.getEntitiesByClass(Villager.class)) {
+            if (currentLehrer.getCustomName() != null) {
+                currentLehrer.remove();
             }
         }
 
-        return playersInArea;
+        ArrayList<Lehrer> shuffledLehrer = new ArrayList<>(Arrays.asList(Lehrer.values()));
+        Collections.shuffle(shuffledLehrer);
+
+        for (Area area : Area.values()) {
+            for (int i = 0; i < area.maxLehrerAmount; i++) {
+                if (!shuffledLehrer.isEmpty()) {
+                    if(area.raum == null || shuffledLehrer.get(0).raum.equals(area.raum)) {
+                        LehrerHandler.summonLehrer(area.lehrerSpawnPos, shuffledLehrer.get(0));
+                        studenplan.put(shuffledLehrer.get(0), area);
+                        shuffledLehrer.remove(0);
+                    }else {
+                        shuffledLehrer.remove(0);
+                    }
+                }
+            }
+        }
     }
-    
 }

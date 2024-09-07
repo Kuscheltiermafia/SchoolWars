@@ -52,6 +52,7 @@ public class RevivePlayerEvent implements Listener {
                 RevivePlayer.revivePlayer(player, target);
 
                 player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
+                SchoolWars.playerMirror.get(player.getName()).setRevives(true);
 
             }
         }

@@ -19,14 +19,17 @@
 
 package de.kuscheltiermafia.schoolwars.player_mirror;
 
+import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
+
 import java.util.HashMap;
 
 public class PlayerMirror {
 
     String playerName;
-    HashMap<String, Double> rep = new HashMap<>();
+    HashMap<Lehrer, Double> rep = new HashMap<>();
 
     boolean inCombat;
+    boolean revives;
     boolean alive;
     Integer verweise;
 
@@ -42,11 +45,11 @@ public class PlayerMirror {
         return rep.get(lehrer);
     }
 
-    public void setReputation(String lehrer, Double reputation) {
+    public void setReputation(Lehrer lehrer, Double reputation) {
         rep.put(lehrer, reputation);
     }
 
-    public void addReputation(String lehrer, Double reputation) {
+    public void addReputation(Lehrer lehrer, Double reputation) {
         try{
             rep.put(lehrer, rep.get(lehrer) + reputation);
         } catch (NullPointerException e) {
@@ -83,6 +86,15 @@ public class PlayerMirror {
 
     public void addVerweis(int i) {
         this.verweise += i;
+    }
+
+//revives
+    public boolean revives() {
+        return revives;
+    }
+
+    public void setRevives(boolean revives) {
+        this.revives = revives;
     }
 
 }
