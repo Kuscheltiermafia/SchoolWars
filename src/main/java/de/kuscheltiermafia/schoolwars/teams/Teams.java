@@ -29,13 +29,15 @@ public class Teams {
 
     public static void joinTeams(){
 
+
+
         int i = Bukkit.getOnlinePlayers().size();
 
-        for(Player p : Bukkit.getOnlinePlayers()){
+        for (Player p : Bukkit.getOnlinePlayers()) {
 
-            if(i % 3 == 0){
+            if (i % 3 == 0) {
                 Team.SPRACHLER.mitglieder.add(p.getName());
-            } else if(i % 3 == 1){
+            } else if (i % 3 == 1) {
                 Team.NWS.mitglieder.add(p.getName());
             } else {
                 Team.SPORTLER.mitglieder.add(p.getName());
@@ -50,10 +52,11 @@ public class Teams {
 
 
     public static void clearTeams(){
-
-        Team.SPRACHLER.mitglieder.clear();
-        Team.NWS.mitglieder.clear();
-        Team.SPORTLER.mitglieder.clear();
+        if (Team.SPRACHLER.mitglieder != null) {
+            Team.SPRACHLER.mitglieder.clear();
+            Team.NWS.mitglieder.clear();
+            Team.SPORTLER.mitglieder.clear();
+        }
 
     }
 

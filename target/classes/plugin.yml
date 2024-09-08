@@ -1,5 +1,5 @@
 name: SchoolWars
-version: '0.0.1'
+version: '0.1.0'
 main: de.kuscheltiermafia.schoolwars.SchoolWars
 api-version: '1.21'
 commands:
