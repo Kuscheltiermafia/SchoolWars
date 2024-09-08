@@ -50,14 +50,7 @@ public class StartGame implements CommandExecutor {
                 for (Item item : Bukkit.getWorld("schoolwars").getEntitiesByClass(Item.class)) {
                     item.remove();
                 }
-                for (Interaction interaction : Bukkit.getWorld("schoolwars").getEntitiesByClass(Interaction.class)) {
-                    interaction.remove();
-                }
-                for (BlockDisplay blockdisplay : Bukkit.getWorld("schoolwars").getEntitiesByClass(BlockDisplay.class)) {
-                    blockdisplay.remove();
-                }
-            } catch (Exception ignored) {
-            }
+            } catch (Exception ignored) {}
 
 //prepare game
 
