@@ -18,12 +18,11 @@ de\kuscheltiermafia\schoolwars\mechanics\RevivePlayer.class
 de\kuscheltiermafia\schoolwars\events\Generalschluessel$1.class
 de\kuscheltiermafia\schoolwars\items\GenerateItems$1.class
 de\kuscheltiermafia\schoolwars\events\AtombombeEvents$1.class
-de\kuscheltiermafia\schoolwars\gameprep\NWS.class
 de\kuscheltiermafia\schoolwars\mechanics\Intro$1.class
 de\kuscheltiermafia\schoolwars\mechanics\Intro$4.class
 de\kuscheltiermafia\schoolwars\lehrer\Stundenplan.class
 de\kuscheltiermafia\schoolwars\commands\Debug.class
-de\kuscheltiermafia\schoolwars\gameprep\Sportler.class
+de\kuscheltiermafia\schoolwars\teams\Teams.class
 de\kuscheltiermafia\schoolwars\events\LeaveEvent.class
 de\kuscheltiermafia\schoolwars\events\Minasisierung.class
 de\kuscheltiermafia\schoolwars\lehrer\Area.class
@@ -36,13 +35,13 @@ de\kuscheltiermafia\schoolwars\events\KarlElixier$4.class
 de\kuscheltiermafia\schoolwars\events\RevivePlayerEvent.class
 de\kuscheltiermafia\schoolwars\lehrer\Stundenplan$1.class
 de\kuscheltiermafia\schoolwars\events\DeathEvent.class
+de\kuscheltiermafia\schoolwars\teams\Team.class
 de\kuscheltiermafia\schoolwars\events\Rolator$1.class
 de\kuscheltiermafia\schoolwars\events\Stuhl.class
 de\kuscheltiermafia\schoolwars\lehrer\Raum.class
 de\kuscheltiermafia\schoolwars\events\KarlElixier.class
 de\kuscheltiermafia\schoolwars\items\ItemIdentifier.class
 de\kuscheltiermafia\schoolwars\events\SchulbuchLevels.class
-de\kuscheltiermafia\schoolwars\gameprep\Sprachler.class
 de\kuscheltiermafia\schoolwars\commands\TeamList.class
 de\kuscheltiermafia\schoolwars\items\GenerateItems.class
 de\kuscheltiermafia\schoolwars\items\Items.class
@@ -54,7 +53,6 @@ de\kuscheltiermafia\schoolwars\mechanics\Intro$3.class
 de\kuscheltiermafia\schoolwars\mechanics\Intro.class
 de\kuscheltiermafia\schoolwars\mechanics\PlayerStun$2.class
 de\kuscheltiermafia\schoolwars\SchoolWars.class
-de\kuscheltiermafia\schoolwars\gameprep\Teams.class
 de\kuscheltiermafia\schoolwars\lehrer\LehrerQuests.class
 de\kuscheltiermafia\schoolwars\player_mirror\PlayerMirror.class
 de\kuscheltiermafia\schoolwars\lehrer\LehrerHandler.class

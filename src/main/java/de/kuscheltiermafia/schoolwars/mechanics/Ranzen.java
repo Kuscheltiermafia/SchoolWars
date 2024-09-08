@@ -21,6 +21,7 @@ package de.kuscheltiermafia.schoolwars.mechanics;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.items.Items;
+import de.kuscheltiermafia.schoolwars.teams.Team;
 import org.bukkit.*;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Interaction;
@@ -102,9 +103,9 @@ public class Ranzen implements Listener {
     public static HashMap<String, Integer> ranzenAmount = new HashMap<String, Integer>();
 
     public static void generateRanzenCounter(){
-        ranzenAmount.put(sportler.teamName, 0);
-        ranzenAmount.put(nws.teamName, 0);
-        ranzenAmount.put(sprachler.teamName, 0);
+        ranzenAmount.put(Team.SPORTLER.teamName, 0);
+        ranzenAmount.put(Team.NWS.teamName, 0);
+        ranzenAmount.put(Team.SPRACHLER.teamName, 0);
     }
 
     public static void destroyRanzen(Player p, String team, Location loc) {

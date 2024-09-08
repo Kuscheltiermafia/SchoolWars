@@ -1,0 +1,68 @@
+package de.kuscheltiermafia.schoolwars.teams;
+
+import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.items.Items;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+import java.util.ArrayList;
+
+import static de.kuscheltiermafia.schoolwars.mechanics.Ranzen.ranzenAmount;
+
+public enum Team {
+    SPORTLER(ChatColor.DARK_RED + "sportler", ChatColor.DARK_RED + "[Sport] ", ChatColor.DARK_RED + "Sportler", Items.sport_ranzen),
+    SPRACHLER(ChatColor.GOLD + "sprachler", ChatColor.GOLD + "[Sprache] ", ChatColor.GOLD + "Sprachler", Items.sprach_ranzen),
+    NWS(ChatColor.GREEN + "Naturwissenschaftler", ChatColor.GREEN + "[NWS] ", ChatColor.GREEN + "Naturwissenschaftler", Items.nws_ranzen);
+
+    public final String teamName;
+    public final String prefix;
+    public final String joinMessage;
+    public final ItemStack ranzen;
+
+    public ArrayList<String> mitglieder;
+    public static double sekiRisk;
+
+    Team(String teamName, String prefix, String joinMessage, ItemStack ranzen) {
+        this.teamName = teamName;
+        this.prefix = prefix;
+        this.joinMessage = joinMessage;
+        this.ranzen = ranzen;
+        mitglieder = new ArrayList<>();
+    }
+
+
+    public void readyPlayer(Player p){
+        p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist ein " + joinMessage);
+
+        p.setDisplayName(prefix + p.getName());
+        p.setPlayerListName(prefix + p.getName());
+        p.setCustomName(prefix + p.getName());
+
+        SchoolWars.playerMirror.get(p.getName()).setTeam(this);
+
+        if (!SchoolWars.gameStarted) {
+            p.getInventory().addItem(ranzen);
+            ranzenAmount.put(teamName, ranzenAmount.get(teamName) + 1);
+            p.getInventory().addItem(Items.schulbuch1);
+        }
+
+
+        p.teleport(new Location(p.getWorld(), -20.5, 89, 146.5, -90, 0));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 40, 1, false, false, false));
+    }
+
+
+    public void prepare(){
+        for(String s : mitglieder){
+            Player p = Bukkit.getPlayer(s);
+            readyPlayer(p);
+        }
+        sekiRisk = 0.0;
+    }
+
+}

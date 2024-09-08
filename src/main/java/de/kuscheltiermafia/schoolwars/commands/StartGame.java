@@ -20,7 +20,8 @@
 package de.kuscheltiermafia.schoolwars.commands;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
-import de.kuscheltiermafia.schoolwars.gameprep.Teams;
+import de.kuscheltiermafia.schoolwars.teams.Team;
+import de.kuscheltiermafia.schoolwars.teams.Teams;
 import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.lehrer.Stundenplan;
 import de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer;
@@ -73,18 +74,19 @@ public class StartGame implements CommandExecutor {
                 p.getActivePotionEffects().clear();
             }
 
-            Teams.joinTeams();
-            nws.prepare();
-            sportler.prepare();
-            sprachler.prepare();
-
             GenerateItems.summonItems();
 
-//prepare reputation
+//prepare player Mirrors
             playerMirror.clear();
             for (Player p : Bukkit.getOnlinePlayers()) {
                 playerMirror.put(p.getName(), new PlayerMirror(p.getName()));
             }
+
+//prepare Teams
+            Teams.joinTeams();
+            Team.NWS.prepare();
+            Team.SPORTLER.prepare();
+            Team.SPRACHLER.prepare();
 
 //revive Player
             for (Player p : Bukkit.getOnlinePlayers()) {

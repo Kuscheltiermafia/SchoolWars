@@ -22,6 +22,7 @@ package de.kuscheltiermafia.schoolwars.lehrer;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager;
 import org.bukkit.inventory.ItemStack;
@@ -69,7 +70,7 @@ public class LehrerHandler {
         lehrerList.clear();
     }
 
-    static Villager createLehrer(Location location, String name, Villager.Type type, Villager.Profession profession, boolean hasAI, boolean isBaby, boolean isSilent, boolean isMale) {
+    static Villager createLehrer(Location location, String name, Villager.Type type, Villager.Profession profession, boolean hasAI, double scale, boolean isSilent, boolean isMale) {
 
         Villager currentLehrer = (Villager) Bukkit.getWorld("schoolwars").spawnEntity(location, EntityType.VILLAGER);
 
@@ -90,16 +91,13 @@ public class LehrerHandler {
         currentLehrer.setRemoveWhenFarAway(false);
         currentLehrer.setPersistent(true);
         currentLehrer.setSilent(isSilent);
-
-        if (isBaby){
-            currentLehrer.setBaby();
-        }
+        currentLehrer.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(scale);
 
         return currentLehrer;
     }
 
     public static Villager summonLehrer(Location loc, Lehrer lehrer){
-        Villager currentLehrer = createLehrer(loc, lehrer.name, lehrer.type, lehrer.profession, lehrer.hasAI, lehrer.isBaby, lehrer.isSilent, lehrer.isMale);
+        Villager currentLehrer = createLehrer(loc, lehrer.name, lehrer.type, lehrer.profession, lehrer.hasAI, lehrer.scale, lehrer.isSilent, lehrer.isMale);
         lehrerList.add(lehrer);
         if (lehrer.hasQuest) {
             questLehrerList.add(currentLehrer);

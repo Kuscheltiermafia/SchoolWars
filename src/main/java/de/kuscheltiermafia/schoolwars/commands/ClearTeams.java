@@ -20,7 +20,7 @@
 package de.kuscheltiermafia.schoolwars.commands;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
-import de.kuscheltiermafia.schoolwars.gameprep.Teams;
+import de.kuscheltiermafia.schoolwars.teams.Teams;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

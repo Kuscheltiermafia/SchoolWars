@@ -20,6 +20,7 @@
 package de.kuscheltiermafia.schoolwars.player_mirror;
 
 import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
+import de.kuscheltiermafia.schoolwars.teams.Team;
 
 import java.util.HashMap;
 
@@ -32,6 +33,7 @@ public class PlayerMirror {
     boolean revives;
     boolean alive;
     Integer verweise;
+    Team team;
 
     public PlayerMirror(String playerName) {
         this.playerName = playerName;
@@ -55,6 +57,15 @@ public class PlayerMirror {
         } catch (NullPointerException e) {
             rep.put(lehrer, reputation);
         }
+    }
+
+//team
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
 //combat

@@ -17,15 +17,10 @@
  *
  */
 
-package de.kuscheltiermafia.schoolwars.gameprep;
+package de.kuscheltiermafia.schoolwars.teams;
 
-import de.kuscheltiermafia.schoolwars.items.Items;
-import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
 
 import static de.kuscheltiermafia.schoolwars.SchoolWars.*;
 
@@ -39,11 +34,11 @@ public class Teams {
         for(Player p : Bukkit.getOnlinePlayers()){
 
             if(i % 3 == 0){
-                sprachler.mitglieder.add(p.getName());
+                Team.SPRACHLER.mitglieder.add(p.getName());
             } else if(i % 3 == 1){
-                nws.mitglieder.add(p.getName());
+                Team.NWS.mitglieder.add(p.getName());
             } else {
-                sportler.mitglieder.add(p.getName());
+                Team.SPORTLER.mitglieder.add(p.getName());
             }
 
             i--;
@@ -55,9 +50,11 @@ public class Teams {
 
 
     public static void clearTeams(){
-        sprachler.mitglieder.clear();
-        nws.mitglieder.clear();
-        sportler.mitglieder.clear();
+
+        Team.SPRACHLER.mitglieder.clear();
+        Team.NWS.mitglieder.clear();
+        Team.SPORTLER.mitglieder.clear();
+
     }
 
     public static void resetPlayer(Player p){

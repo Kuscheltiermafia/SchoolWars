@@ -21,13 +21,9 @@ package de.kuscheltiermafia.schoolwars;
 
 import de.kuscheltiermafia.schoolwars.commands.*;
 import de.kuscheltiermafia.schoolwars.events.*;
-import de.kuscheltiermafia.schoolwars.gameprep.NWS;
-import de.kuscheltiermafia.schoolwars.gameprep.Sportler;
-import de.kuscheltiermafia.schoolwars.gameprep.Sprachler;
-import de.kuscheltiermafia.schoolwars.gameprep.Teams;
+import de.kuscheltiermafia.schoolwars.teams.Teams;
 import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.items.Items;
-import de.kuscheltiermafia.schoolwars.lehrer.Bereiche;
 import de.kuscheltiermafia.schoolwars.lehrer.LehrerQuests;
 import de.kuscheltiermafia.schoolwars.lehrer.LehrerHandler;
 import de.kuscheltiermafia.schoolwars.lehrer.SekretariatStundenplan;
@@ -56,10 +52,6 @@ public final class SchoolWars extends JavaPlugin {
 
     public static boolean gameStarted;
 
-    public static NWS nws = new NWS();
-    public static Sprachler sprachler = new Sprachler();
-    public static Sportler sportler = new Sportler();
-
     public static HashMap<String, PlayerMirror> playerMirror = new HashMap<>();
 
     public static World world = Bukkit.getWorld("schoolwars");
@@ -75,7 +67,7 @@ public final class SchoolWars extends JavaPlugin {
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             try {
-            playerMirror.put(p.getName(), new PlayerMirror(p.getName()));
+                playerMirror.put(p.getName(), new PlayerMirror(p.getName()));
             }catch (Exception ignored){}
         }
 
@@ -113,8 +105,10 @@ public final class SchoolWars extends JavaPlugin {
         getCommand("teamlist").setExecutor(new TeamList());
         getCommand("debug").setExecutor(new Debug());
 
+
         Teams.clearTeams();
         Ranzen.clearRanzen();
+
 
         for (Player p :Bukkit.getOnlinePlayers()) {
             Teams.resetPlayer(p);
