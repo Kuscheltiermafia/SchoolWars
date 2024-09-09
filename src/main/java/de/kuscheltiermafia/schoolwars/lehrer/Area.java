@@ -24,7 +24,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 import static de.kuscheltiermafia.schoolwars.SchoolWars.world;

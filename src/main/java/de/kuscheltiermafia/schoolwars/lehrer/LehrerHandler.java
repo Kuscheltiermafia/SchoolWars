@@ -81,8 +81,6 @@ public class LehrerHandler {
         }
         currentLehrer.setCustomNameVisible(true);
         currentLehrer.setVillagerType(type);
-        currentLehrer.setProfession(profession);
-        currentLehrer.setProfession(Villager.Profession.NITWIT);
         currentLehrer.setAI(hasAI);
         currentLehrer.setInvulnerable(true);
         currentLehrer.setSilent(false);
@@ -93,11 +91,14 @@ public class LehrerHandler {
         currentLehrer.setSilent(isSilent);
         currentLehrer.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(scale);
 
+        currentLehrer.setProfession(profession);
+
         return currentLehrer;
     }
 
     public static Villager summonLehrer(Location loc, Lehrer lehrer){
         Villager currentLehrer = createLehrer(loc, lehrer.name, lehrer.type, lehrer.profession, lehrer.hasAI, lehrer.scale, lehrer.isSilent, lehrer.isMale);
+        currentLehrer.setProfession(lehrer.profession);
         lehrerList.add(lehrer);
         if (lehrer.hasQuest) {
             questLehrerList.add(currentLehrer);

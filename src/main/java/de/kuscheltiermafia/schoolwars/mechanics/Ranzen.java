@@ -37,6 +37,7 @@ import static de.kuscheltiermafia.schoolwars.SchoolWars.*;
 public class Ranzen implements Listener {
 
     public static HashMap<Location, BlockDisplay> displayPositions = new HashMap<Location, BlockDisplay>();
+    public static HashMap<BlockDisplay, Interaction> placedRanzen = new HashMap<>();
 
     public static void createRanzen(String team, Location loc) {
 
@@ -59,6 +60,7 @@ public class Ranzen implements Listener {
 
             nws_ranzen_hb.setMetadata("naturwissenschaftler", new FixedMetadataValue(SchoolWars.getPlugin(), nws_ranzen.getCustomName()));
 
+            placedRanzen.put(nws_ranzen,nws_ranzen_hb);
         }
         if (team.equals("sprachler")) {
             Interaction sprach_ranzen_hb = Bukkit.getServer().getWorld("schoolwars").spawn(loc.add(0.5, 0, 0.5), Interaction.class);
@@ -78,6 +80,7 @@ public class Ranzen implements Listener {
 
             sprach_ranzen_hb.setMetadata("sprachler", new FixedMetadataValue(SchoolWars.getPlugin(), sprach_ranzen.getCustomName()));
 
+            placedRanzen.put(sprach_ranzen, sprach_ranzen_hb);
         }
         if (team.equals("sportler")) {
             Interaction sport_ranzen_hb = Bukkit.getServer().getWorld("schoolwars").spawn(loc.add(0.5, 0, 0.5), Interaction.class);
@@ -97,6 +100,7 @@ public class Ranzen implements Listener {
 
             sport_ranzen_hb.setMetadata("sportler", new FixedMetadataValue(SchoolWars.getPlugin(), sport_ranzen.getCustomName()));
 
+            placedRanzen.put(sport_ranzen, sport_ranzen_hb);
         }
     }
 

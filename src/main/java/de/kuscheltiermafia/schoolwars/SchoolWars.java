@@ -32,6 +32,7 @@ import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
 import de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.plugin.PluginManager;
@@ -98,6 +99,7 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new LehrerQuests(), this);
         pluginManager.registerEvents(new PlayerStun(), this);
         pluginManager.registerEvents(new SekretariatStundenplan(), this);
+        pluginManager.registerEvents(new FischersSpielzeug(), this);
 
         getCommand("start").setExecutor(new StartGame());
         getCommand("clearTeams").setExecutor(new ClearTeams());
@@ -123,10 +125,16 @@ public final class SchoolWars extends JavaPlugin {
                 revivePlayer(p, p);
             }
         }
+
         for (Villager currentLehrer : SchoolWars.world.getEntitiesByClass(Villager.class)) {
             if(currentLehrer.getCustomName() != null) {
                 currentLehrer.remove();
             }
+        }
+
+        for(BlockDisplay ranzen : Ranzen.placedRanzen.keySet()) {
+            Ranzen.placedRanzen.get(ranzen).remove();
+            ranzen.remove();
         }
 
         LehrerHandler.removeLehrer();

@@ -12,6 +12,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 
+import static de.kuscheltiermafia.schoolwars.SchoolWars.playerMirror;
 import static de.kuscheltiermafia.schoolwars.SchoolWars.world;
 import static de.kuscheltiermafia.schoolwars.mechanics.Ranzen.ranzenAmount;
 
@@ -56,7 +57,7 @@ public enum Team {
         }
 
 
-        p.teleport(new Location(p.getWorld(), -20.5, 89, 146.5, -90, 0));
+        p.teleport(spawn);
         p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 40, 1, false, false, false));
     }
 

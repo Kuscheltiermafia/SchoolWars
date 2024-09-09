@@ -50,6 +50,7 @@ public class RanzenEvents implements Listener {
                     Entity display = Ranzen.displayPositions.get(ranzen.getLocation().subtract(0.5, 0, 0.5));
                     display.remove();
                 }
+                Ranzen.placedRanzen.remove(ranzen);
                 ranzen.remove();
                 p.getInventory().addItem(new ItemStack(Items.nws_ranzen));
                 ranzenAmount.put(Team.NWS.teamName, ranzenAmount.get(Team.NWS.teamName) + 1);
@@ -70,6 +71,7 @@ public class RanzenEvents implements Listener {
                     Entity display = Ranzen.displayPositions.get(ranzen.getLocation().subtract(0.5, 0, 0.5));
                     display.remove();
                 }
+                Ranzen.placedRanzen.remove(ranzen);
                 ranzen.remove();
                 p.getInventory().addItem(new ItemStack(Items.sprach_ranzen));
                 ranzenAmount.put(Team.SPRACHLER.teamName, ranzenAmount.get(Team.SPRACHLER.teamName) + 1);
@@ -81,6 +83,7 @@ public class RanzenEvents implements Listener {
                     Entity display = Ranzen.displayPositions.get(ranzen.getLocation().subtract(0.5, 0, 0.5));
                     display.remove();
                 }
+                Ranzen.placedRanzen.remove(ranzen);
                 ranzen.remove();
             }
         }
@@ -90,6 +93,7 @@ public class RanzenEvents implements Listener {
                     BlockDisplay display = Ranzen.displayPositions.get(ranzen.getLocation().subtract(0.5, 0, 0.5));
                     display.remove();
                 }
+                Ranzen.placedRanzen.remove(ranzen);
                 ranzen.remove();
                 p.getInventory().addItem(new ItemStack(Items.sport_ranzen));
                 ranzenAmount.put(Team.SPORTLER.teamName, ranzenAmount.get(Team.SPORTLER.teamName) + 1);
@@ -101,6 +105,7 @@ public class RanzenEvents implements Listener {
                     Entity display = Ranzen.displayPositions.get(ranzen.getLocation().subtract(0.5, 0, 0.5));
                     display.remove();
                 }
+                Ranzen.placedRanzen.remove(ranzen);
                 ranzen.remove();
             }
         }
