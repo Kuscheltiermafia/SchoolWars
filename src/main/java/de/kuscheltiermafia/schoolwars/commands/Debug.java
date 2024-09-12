@@ -33,7 +33,9 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 
 import java.util.ArrayList;
 
@@ -115,16 +117,27 @@ public class Debug implements CommandExecutor {
                     break;
                 case "lehrer":
                     if (args[1].equals("spawn")) {
-
                         for(Lehrer lehrer : Lehrer.values()) {
-                            if (args[2] == lehrer.name()){
-                                LehrerHandler.summonLehrer(p.getLocation(), lehrer);
-                                p.sendMessage(debugPrefix + "Spawned Lehrer: " + lehrer.name());
-                                return false;
+                            Villager testLehrer = LehrerHandler.summonLehrer(p.getLocation(), lehrer);
+                            if(testLehrer.getCustomName().contains(args[2])) {
+                                Bukkit.broadcastMessage("Found lehrer");
+                                p.sendMessage(debugPrefix + "Spawned " + lehrer.name() + "!");
+                            }else{
+                                testLehrer.remove();
                             }
                         }
-                        p.sendMessage(debugPrefix + "Lehrer not found!");
-
+                    } else if (args[1].equals("kill")) {
+                        for(Villager lehrer : LehrerHandler.lehrerEntityList) {
+                            try {
+                                if(lehrer.getCustomName().contains(args[2])) {
+                                    lehrer.remove();
+                                } else if (args[2].equals("all")) {
+                                    lehrer.remove();
+                                }
+                            }catch (Exception ignored){}
+                        }
+                    } else {
+                        p.sendMessage(debugPrefix + "Ooops! Something went wrong!");
                     }
                     break;
                 case "toggle":

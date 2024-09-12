@@ -33,6 +33,7 @@ import java.util.HashMap;
 public class LehrerHandler {
 
     public static ArrayList<Lehrer> lehrerList = new ArrayList<>();
+    public static ArrayList<Villager> lehrerEntityList = new ArrayList<>();
     public static ArrayList<Villager> questLehrerList = new ArrayList<>();
 
     public static HashMap<String, ItemStack> requieredLehrerItems = new HashMap<>();
@@ -100,6 +101,7 @@ public class LehrerHandler {
         Villager currentLehrer = createLehrer(loc, lehrer.name, lehrer.type, lehrer.profession, lehrer.hasAI, lehrer.scale, lehrer.isSilent, lehrer.isMale);
         currentLehrer.setProfession(lehrer.profession);
         lehrerList.add(lehrer);
+        lehrerEntityList.add(currentLehrer);
         if (lehrer.hasQuest) {
             questLehrerList.add(currentLehrer);
         }
