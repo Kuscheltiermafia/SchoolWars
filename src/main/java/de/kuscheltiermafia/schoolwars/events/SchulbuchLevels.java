@@ -1,6 +1,7 @@
 package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.items.Items;
+import de.kuscheltiermafia.schoolwars.lehrer.Area;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -16,6 +17,8 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+
+import static de.kuscheltiermafia.schoolwars.SchoolWars.world;
 
 public class SchulbuchLevels implements Listener {
     public static HashMap<Player, Integer> knowledgeAquiered = new HashMap<Player, Integer>();
@@ -73,6 +76,21 @@ public class SchulbuchLevels implements Listener {
             if(b == 20) {
                 p.getInventory().setItemInMainHand(Items.schulbuch5);
                 p.sendMessage(ChatColor.DARK_GRAY + "Dein " + ChatColor.GREEN + Items.schulbuch4.getItemMeta().getDisplayName() + ChatColor.DARK_GRAY + " wurde zu einem " + ChatColor.DARK_RED + Items.schulbuch5.getItemMeta().getDisplayName() + ChatColor.DARK_GRAY + ".");
+            }
+        }
+    }
+
+    @EventHandler
+    public void onFindSchulbuch(PlayerInteractEvent e) {
+        if(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            if(e.getPlayer().getInventory().getItemInMainHand().equals(Items.ausleihschein)) {
+                try {
+                    if(Area.getAreaByLocation(bookshelfLoc.get(random)).name() != null) {
+                        e.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "-- Nächstes Schulbuch befindet sich in: " + ChatColor.RED + Area.getAreaByLocation(bookshelfLoc.get(random)).name() + ChatColor.GRAY + " --"));
+                    }else{
+                        e.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "-- Herr Vornberger hat dir wohl das falsche Papier gegeben... --"));
+                    }
+                }catch (Exception ignored){}
             }
         }
     }
