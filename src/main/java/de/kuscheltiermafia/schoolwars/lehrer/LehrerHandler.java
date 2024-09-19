@@ -60,6 +60,10 @@ public class LehrerHandler {
         requieredLehrerItems.put("Kesselring", Items.placeholder);
         rewardLehrerItems.put("Kesselring", Items.placeholder);
         repReward.put("Kesselring", 0.0);
+
+        requieredLehrerItems.put("Vornberger", Items.geschnittene_zwiebel);
+        rewardLehrerItems.put("Vornberger", Items.ausleihschein);
+        repReward.put("Vornberger", 1.0);
     }
 
     public static void removeLehrer() {

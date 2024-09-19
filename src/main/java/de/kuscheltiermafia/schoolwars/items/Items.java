@@ -87,6 +87,9 @@ public class Items {
     public static ItemStack stroke_master;
     public static ItemStack strick;
     public static ItemStack peilsender;
+    public static ItemStack zwiebel;
+    public static ItemStack geschnittene_zwiebel;
+    public static ItemStack ausleihschein;
 
     public static ArrayList<ItemStack> itemList = new ArrayList<ItemStack>();
 
@@ -173,6 +176,15 @@ public class Items {
 
         laptop = createItem(Material.HEAVY_WEIGHTED_PRESSURE_PLATE, "§8iFake Laptop", 1, 1, null, false, false, false);
         itemList.add(laptop);
+
+        zwiebel = createItem(Material.FERMENTED_SPIDER_EYE, ChatColor.LIGHT_PURPLE + "Zwiebel", 1, 16, null, false, false, false);
+        itemList.add(zwiebel);
+
+        geschnittene_zwiebel = createItem(Material.NETHER_WART, ChatColor.LIGHT_PURPLE + "Ziebelstücke", 1, 16, null, false, false, false);
+        itemList.add(geschnittene_zwiebel);
+
+        ausleihschein = createItem(Material.PAPER, ChatColor.GRAY + "Bücherei Ausleihe", 1, 16, null, false, false, false);
+        itemList.add(ausleihschein);
 
         fischers_spiel = createItem(Material.JUKEBOX, "§8Fischers Spielzeug", 1, 1, null, false, false, false);
         itemList.add(fischers_spiel);

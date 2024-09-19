@@ -8,5 +8,6 @@ public enum Raum {
     GENERAL,
     MUSIK,
     OS_SEKI,
+    VERWALTUNG,
     GLASKASTEN;
 }

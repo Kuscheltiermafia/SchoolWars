@@ -46,7 +46,8 @@ public enum Lehrer {
     SCHOEMIG("Schömig", Villager.Type.SNOW, Villager.Profession.NONE, true, 0.5, true, false, false, Raum.NORMAL),
     FORSTER("Forster", Villager.Type.SNOW, Villager.Profession.NONE, true, 1, true, false, false, Raum.NORMAL),
     BERGER("Berger", Villager.Type.SNOW, Villager.Profession.NONE, true, 1, true, false, true, Raum.PHYSIK),
-    AMON("Amon", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1.1, true, false, true, Raum.NORMAL),;
+    AMON("Amon", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1.1, true, false, true, Raum.NORMAL),
+    VORNBERGER("Vornberger", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, true, true, Raum.NORMAL),;
 
 
     final String name;
@@ -79,4 +80,5 @@ public enum Lehrer {
         }
         return null;
     }
+
 }
