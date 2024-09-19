@@ -19,22 +19,22 @@
 
 package de.kuscheltiermafia.schoolwars.teams;
 
+import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import static de.kuscheltiermafia.schoolwars.SchoolWars.*;
+import java.util.*;
 
 public class Teams {
 
-
     public static void joinTeams(){
-
-
 
         int i = Bukkit.getOnlinePlayers().size();
 
-        for (Player p : Bukkit.getOnlinePlayers()) {
+        List<Player> players = (List) Bukkit.getOnlinePlayers();
+        Collections.shuffle(players);
 
+        for (Player p : players) {
             if (i % 3 == 0) {
                 Team.SPRACHLER.mitglieder.add(p.getName());
             } else if (i % 3 == 1) {
@@ -42,14 +42,10 @@ public class Teams {
             } else {
                 Team.SPORTLER.mitglieder.add(p.getName());
             }
-
             i--;
-
-
         }
 
     }
-
 
     public static void clearTeams(){
         if (Team.SPRACHLER.mitglieder != null) {
@@ -57,12 +53,10 @@ public class Teams {
             Team.NWS.mitglieder.clear();
             Team.SPORTLER.mitglieder.clear();
         }
-
     }
 
     public static void resetPlayer(Player p){
         p.setDisplayName(p.getName());
         p.setPlayerListName(p.getName());
     }
-
 }
