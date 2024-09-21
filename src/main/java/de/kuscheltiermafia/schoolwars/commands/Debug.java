@@ -59,7 +59,7 @@ public class Debug implements CommandExecutor {
                 case "autism":
                     Minasisierung.onMinasisierung(p);
                     p.sendMessage(debugPrefix + "You now have autism!");
-                    break;
+                    return true;
 
                 case "revive":
                     if (args.length == 1) {
@@ -73,7 +73,7 @@ public class Debug implements CommandExecutor {
 
                         RevivePlayer.revivePlayer(p, target);
                     }
-                    break;
+                    return true;
 
                 case "scale":
                     if (args.length == 2) {
@@ -87,13 +87,13 @@ public class Debug implements CommandExecutor {
 
                         target.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(Double.parseDouble(args[1]));
                     }
-                    break;
+                    return true;
 
                 case "getloc":
                     TextComponent location = new TextComponent(debugPrefix + "Click to copy block location! " + p.getTargetBlockExact(4).getLocation().getX() + ", " + p.getTargetBlockExact(4).getLocation().getY() + ", " + p.getTargetBlockExact(4).getLocation().getZ());
                     location.setClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, "" + p.getTargetBlockExact(4).getLocation().getX() + ", " + p.getTargetBlockExact(4).getLocation().getY() + ", " + p.getTargetBlockExact(4).getLocation().getZ()));
                     p.spigot().sendMessage(location);
-                    break;
+                    return true;
 
                 case "rep":
 
@@ -114,7 +114,8 @@ public class Debug implements CommandExecutor {
                             p.sendMessage(debugPrefix + "Lehrer not found!");
                         }
                     }
-                    break;
+                    return true;
+
                 case "lehrer":
                     if (args[1].equals("spawn")) {
                         for(Lehrer lehrer : Lehrer.values()) {
@@ -139,7 +140,8 @@ public class Debug implements CommandExecutor {
                     } else {
                         p.sendMessage(debugPrefix + "Ooops! Something went wrong!");
                     }
-                    break;
+                    return true;
+
                 case "toggle":
                     if(args[1].equals("join")) {
                         if (joinMsg.contains(p)) {
@@ -158,7 +160,8 @@ public class Debug implements CommandExecutor {
                             startWorks = true;
                         }
                     }
-                    break;
+                    return true;
+
                 case "stun":
                     if (args.length == 4) {
                         PlayerStun.stunPlayer(Bukkit.getPlayer(args[1]), Integer.parseInt(args[2]), Boolean.getBoolean(args[3]));
@@ -167,14 +170,16 @@ public class Debug implements CommandExecutor {
                     } else {
                         p.sendMessage(debugPrefix + "Please use /debug stun <player> <duration in seconds>");
                     }
-                    break;
+                    return true;
+
                 case "area":
                     if (args[1].equals("check")) {
                         if (args.length == 2) {
                             p.sendMessage(debugPrefix + "The players: ");
                         }
                     }
-                    break;
+                    return true;
+
                 case "verweise":
                     try {
                         if (args[1].equals("add")) {
@@ -199,7 +204,8 @@ public class Debug implements CommandExecutor {
                         p.sendMessage(debugPrefix + "or /debug verweise <add> <player> <amount>!");
                         p.sendMessage(debugPrefix + "You can use negative numbers to remove Verweise");
                     }
-                    break;
+                    return true;
+
                 case "stundenplan":
                     if(SchoolWars.gameStarted) {
                         if (args[1].equals("get")) {
@@ -216,7 +222,8 @@ public class Debug implements CommandExecutor {
                     }else {
                         p.sendMessage(debugPrefix + "Game has not started yet!");
                     }
-                    break;
+                    return true;
+
                 case "intro":
                     if(args.length == 1) {
                         p.sendMessage(debugPrefix + "Started intro sequence!");
@@ -231,7 +238,8 @@ public class Debug implements CommandExecutor {
                             Intro.thirdSequence(p);
                         }
                     }
-                    break;
+                    return true;
+
                 case "fly":
                     if(args.length == 2) {
                         Player target = (Player) Bukkit.getPlayer(args[1]);
@@ -241,9 +249,11 @@ public class Debug implements CommandExecutor {
                             target.setAllowFlight(true);
                         }
                     }
+                    return true;
             }
         }
 
+        sender.sendMessage(debugPrefix + "This is not a valid argument!");
         return false;
 
     }
