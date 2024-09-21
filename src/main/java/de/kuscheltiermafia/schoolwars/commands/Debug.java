@@ -232,6 +232,15 @@ public class Debug implements CommandExecutor {
                         }
                     }
                     break;
+                case "fly":
+                    if(args.length == 2) {
+                        Player target = (Player) Bukkit.getPlayer(args[1]);
+                        if(target.getAllowFlight()){
+                            target.setAllowFlight(false);
+                        }else{
+                            target.setAllowFlight(true);
+                        }
+                    }
             }
         }
 
