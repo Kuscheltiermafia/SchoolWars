@@ -22,6 +22,7 @@ package de.kuscheltiermafia.schoolwars.player_mirror;
 import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
 import de.kuscheltiermafia.schoolwars.teams.Team;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PlayerMirror {
@@ -34,12 +35,16 @@ public class PlayerMirror {
     boolean alive;
     Integer verweise;
     Team team;
+    Integer currentDialogueStep;
+    ArrayList<String> currentDialogue;
 
     public PlayerMirror(String playerName) {
         this.playerName = playerName;
         inCombat = false;
         alive = true;
         verweise = 0;
+        currentDialogueStep = null;
+        currentDialogue = null;
     }
 
 //reputation
@@ -108,4 +113,25 @@ public class PlayerMirror {
         this.revives = revives;
     }
 
+//dialogue
+    public Integer getCurrentDialogueStep() {
+        return currentDialogueStep;
+    }
+
+    public ArrayList<String> getCurrentDialogue() {
+        return currentDialogue;
+    }
+
+    public void setCurrentDialogueStep(Integer currentDialogueStep) {
+        this.currentDialogueStep = currentDialogueStep;
+    }
+
+    public void setCurrentDialogue(ArrayList<String> currentDialogue) {
+        this.currentDialogue = currentDialogue;
+    }
+
+    public void clearDialogue() {
+        this.currentDialogue = null;
+        this.currentDialogueStep = null;
+    }
 }

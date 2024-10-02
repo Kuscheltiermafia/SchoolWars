@@ -21,6 +21,7 @@ package de.kuscheltiermafia.schoolwars;
 
 import de.kuscheltiermafia.schoolwars.commands.*;
 import de.kuscheltiermafia.schoolwars.events.*;
+import de.kuscheltiermafia.schoolwars.mechanics.DialogueHandler;
 import de.kuscheltiermafia.schoolwars.teams.Teams;
 import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.items.Items;
@@ -100,6 +101,7 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new PlayerStun(), this);
         pluginManager.registerEvents(new SekretariatStundenplan(), this);
         pluginManager.registerEvents(new FischersSpielzeug(), this);
+        pluginManager.registerEvents(new DialogueHandler(), this);
 
         getCommand("start").setExecutor(new StartGame());
         getCommand("clearTeams").setExecutor(new ClearTeams());
