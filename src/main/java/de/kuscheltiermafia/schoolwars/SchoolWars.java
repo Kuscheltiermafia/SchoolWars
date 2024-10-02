@@ -80,6 +80,7 @@ public final class SchoolWars extends JavaPlugin {
         Ranzen.generateRanzenCounter();
         //LehrerQuests.initLehrerAlgorithm();
         LehrerHandler.initLehrerQuests();
+        DialogueHandler.initDialogues();
 
         PluginManager pluginManager = Bukkit.getPluginManager();
 

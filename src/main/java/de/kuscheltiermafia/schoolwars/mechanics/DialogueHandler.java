@@ -2,19 +2,38 @@ package de.kuscheltiermafia.schoolwars.mechanics;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class DialogueHandler implements Listener {
 
     public static ArrayList<Entity> talkedEntities = new ArrayList<>();
+    public static HashMap<String, ArrayList<String>> lehrerDialogues = new HashMap<>();
+    
+    public static void initDialogues() {
+        ArrayList<String> fischer = new ArrayList<>();
+        fischer.add("Ja gut...");
+        fischer.add("Müssen wir mal schauen, wann das geht");
+        lehrerDialogues.put("Fischer", fischer);
 
-    public static void createDialogue(Player p, Entity e, ArrayList<String> dialogue) {
+        ArrayList<String> mettenleiter = new ArrayList<>();
+        mettenleiter.add("Seid bitte leise");
+        mettenleiter.add("Ich hab sehr feine Ohren.");
+        mettenleiter.add("Das tut mir weh...");
+        lehrerDialogues.put("Mettenleiter", mettenleiter);
+    }
+
+    public static void createDialogue(Player p, ArrayList<String> dialogue) {
         if(SchoolWars.playerMirror.get(p.getName()).getCurrentDialogueStep() != null) {
             SchoolWars.playerMirror.get(p.getName()).setCurrentDialogue(dialogue);
             SchoolWars.playerMirror.get(p.getName()).setCurrentDialogueStep(0);
@@ -43,10 +62,19 @@ public class DialogueHandler implements Listener {
         }
     }
 
+    @EventHandler
     public void onSneak(PlayerToggleSneakEvent e) {
         if(SchoolWars.playerMirror.get(e.getPlayer().getName()).getCurrentDialogueStep() != null) {
             e.setCancelled(true);
             sendDialogue(e.getPlayer());
+        }
+    }
+
+    @EventHandler
+    public void onLehrerKlick(PlayerInteractEntityEvent e) {
+        if(e.getRightClicked() instanceof Villager && e.getRightClicked().getCustomName() != null && !talkedEntities.contains(e.getRightClicked())) {
+            createDialogue(e.getPlayer(), lehrerDialogues.get(e.getRightClicked().getCustomName().substring(6)));
+            talkedEntities.add(e.getRightClicked());
         }
     }
 }

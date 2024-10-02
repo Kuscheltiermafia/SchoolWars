@@ -31,7 +31,7 @@ public class Teams {
 
         int i = Bukkit.getOnlinePlayers().size();
 
-        List<Player> players = (List) Bukkit.getOnlinePlayers();
+        List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
         Collections.shuffle(players);
 
         for (Player p : players) {
