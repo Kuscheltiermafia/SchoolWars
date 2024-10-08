@@ -16,9 +16,9 @@ import static de.kuscheltiermafia.schoolwars.SchoolWars.world;
 import static de.kuscheltiermafia.schoolwars.mechanics.Ranzen.ranzenAmount;
 
 public enum Team {
-    SPORTLER(ChatColor.DARK_RED + "sportler", ChatColor.DARK_RED + "[Sport] ", ChatColor.DARK_RED + "Sportler", Items.sport_ranzen, new Location(world, 68.5, 80.0, 167.0, 90, 0)),
-    SPRACHLER(ChatColor.GOLD + "sprachler", ChatColor.GOLD + "[Sprache] ", ChatColor.GOLD + "Sprachler", Items.sprach_ranzen, new Location(world, -21.5, 88.0, 146.0, -90, 0)),
-    NWS(ChatColor.GREEN + "Naturwissenschaftler", ChatColor.GREEN + "[NWS] ", ChatColor.GREEN + "Naturwissenschaftler", Items.nws_ranzen, new  Location(world, 4.5, 81.0, 191.5, -90, 0));
+    SPORTLER(ChatColor.DARK_RED + "sportler", ChatColor.DARK_RED + "[Sport] ", ChatColor.DARK_RED + "Sportler", Items.sport_ranzen, new Location(Bukkit.getWorld("schoolwars"), 68.5, 80.0, 167.0, 90, 0)),
+    SPRACHLER(ChatColor.GOLD + "sprachler", ChatColor.GOLD + "[Sprache] ", ChatColor.GOLD + "Sprachler", Items.sprach_ranzen, new Location(Bukkit.getWorld("schoolwars"), -21.5, 88.0, 146.0, -90, 0)),
+    NWS(ChatColor.GREEN + "Naturwissenschaftler", ChatColor.GREEN + "[NWS] ", ChatColor.GREEN + "Naturwissenschaftler", Items.nws_ranzen, new  Location(Bukkit.getWorld("schoolwars"), 4.5, 81.0, 191.5, 90, 0));
 
     public final String teamName;
     public final String prefix;
