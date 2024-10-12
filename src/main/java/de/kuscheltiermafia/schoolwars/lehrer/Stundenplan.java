@@ -54,11 +54,10 @@ public class Stundenplan {
 
     public static void initStundenplan() {
         try {
-            for (Villager currentLehrer : world.getEntitiesByClass(Villager.class)) {
-                if (currentLehrer.getCustomName() != null) {
-                    currentLehrer.remove();
-                }
+            for (Villager currentLehrer : world.getEntitiesByClass(Villager.class)){
+                currentLehrer.remove();
             }
+
         }catch (Exception ignored) {}
 
         ArrayList<Lehrer> shuffledLehrer = new ArrayList<>(Arrays.asList(Lehrer.values()));

@@ -70,7 +70,7 @@ public class InteractionEvent implements Listener {
     public void OnBreakBlock(BlockBreakEvent e){
         Player p = e.getPlayer();
         if (p.getGameMode() != GameMode.CREATIVE){
-            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§4Das darfst du nicht!"));
+            //p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§4Das darfst du nicht!"));
             e.setCancelled(true);
         }
     }
@@ -80,7 +80,7 @@ public class InteractionEvent implements Listener {
     public void OnPlaceBlock(BlockPlaceEvent e){
         Player p = e.getPlayer();
         if (p.getGameMode() != GameMode.CREATIVE){
-            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§4Das darfst du nicht!"));
+            //p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§4Das darfst du nicht!"));
             e.setCancelled(true);
         }
     }

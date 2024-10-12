@@ -3,17 +3,15 @@ package de.kuscheltiermafia.schoolwars.events;
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
-import de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror;
 import de.kuscheltiermafia.schoolwars.teams.Team;
-import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -22,69 +20,57 @@ import java.util.HashMap;
 
 public class FischersSpielzeug implements Listener {
 
-    public static HashMap<Shulker, BlockDisplay> fischers_spielzeuge = new HashMap<>();
-    public static HashMap<BlockDisplay, Team> fischers_team = new HashMap<>();
+    int fischerDauer = 60 * 20;
+
+    public static HashMap<Location, Integer> fischers_spielzeuge = new HashMap<>();
+    public static HashMap<Location, Team> fischers_team = new HashMap<>();
 
     @EventHandler
     public void onFischerPlace(BlockPlaceEvent e) {
-        if(e.getPlayer().getInventory().getItemInMainHand().equals(Items.fischers_spiel)) {
-            Player p = e.getPlayer();
-            e.setCancelled(true);
-            BlockDisplay box = p.getWorld().spawn(e.getBlockPlaced().getLocation(), BlockDisplay.class);
-            Shulker hitbox = p.getWorld().spawn(e.getBlockPlaced().getLocation(), Shulker.class);
-            hitbox.setAI(false);
-            hitbox.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
-            hitbox.setSilent(true);
-            hitbox.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(12);
-            box.setBlock(Bukkit.createBlockData(Material.JUKEBOX));
-            box.setDisplayHeight(1f);
-            box.setDisplayWidth(1f);
-
-            fischers_spielzeuge.put(hitbox, box);
-            fischers_team.put(box, SchoolWars.playerMirror.get(p.getName()).getTeam());
-
-            for(int i = 0; i < 20 * 60 * 2; i++) {
-                int finalI = i;
+        if(e.getItemInHand().equals(Items.fischers_spiel)) {
+            e.setCancelled(false);
+            fischers_spielzeuge.put(e.getBlockPlaced().getLocation(), 0);
+            fischers_team.put(e.getBlockPlaced().getLocation(), SchoolWars.playerMirror.get(e.getPlayer().getName()).getTeam());
+            for(int i = 0; i < fischerDauer; i++) {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        ParticleHandler.createParticles(box.getLocation(), Particle.NOTE, 2, 0, true, null);
-                        for(Entity e : box.getWorld().getNearbyEntities(box.getLocation(), 8, 8, 8)) {
-                            if(e instanceof Player) {
-                                Player a = (Player) e;
-                                if(!fischers_team.get(box).equals(SchoolWars.playerMirror.get(a).getTeam())) {
-                                    a.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 3, 1, false, false));
-                                    a.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 3, 1, false, false));
+                        for(Entity en : e.getPlayer().getNearbyEntities(4, 4, 4)) {
+                            if(en instanceof Player) {
+                                Player p = (Player) en;
+                                if(!SchoolWars.playerMirror.get(en.getName()).getTeam().equals(fischers_team.get(e.getBlockPlaced().getLocation()))) {
+                                    ((Player) en).addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 4, 1, false, false, false));
                                 }
                             }
                         }
                     }
-                }.runTaskLater(SchoolWars.getPlugin(), i);
+                }.runTaskLater(SchoolWars.plugin, i);
             }
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    try {
-                        hitbox.remove();
-                        box.remove();
-                        fischers_team.remove(box);
-                        fischers_spielzeuge.remove(hitbox);
-                    } catch (Exception ignored) {}
+                    if(fischers_spielzeuge.containsKey(e.getBlockPlaced().getLocation())) {
+                        e.getBlockPlaced().setType(Material.AIR);
+                        ParticleHandler.createParticles(e.getBlock().getLocation().add(0.5, 1, 0.5), Particle.CAMPFIRE_COSY_SMOKE, 4, 0, true, null);
+                        fischers_spielzeuge.remove(e.getBlockPlaced().getLocation());
+                        fischers_team.remove(e.getBlock().getLocation());
+                    }
                 }
-            }.runTaskLater(SchoolWars.getPlugin(), 20 * 60 * 2);
+            }.runTaskLater(SchoolWars.plugin, fischerDauer);
         }
     }
 
     @EventHandler
-    public void onFischerKill(EntityDamageByEntityEvent e) {
-        if(e.getEntity() instanceof Shulker && e.getDamager() instanceof Player) {
-            if(((Shulker) e.getEntity()).getHealth() == 0) {
-                if(fischers_spielzeuge.containsKey(e.getEntity())) {
-                    e.setCancelled(true);
-                    fischers_spielzeuge.get(e.getEntity()).remove();
-                    Item item = e.getEntity().getWorld().dropItem(e.getEntity().getLocation(), Items.fischers_spiel);
-                    e.getEntity().remove();
-                }
+    public void onFischerKill(BlockBreakEvent e) {
+        if(fischers_spielzeuge.containsKey(e.getBlock().getLocation())) {
+            if(fischers_spielzeuge.get(e.getBlock().getLocation()) < 3 ) {
+                fischers_spielzeuge.put(e.getBlock().getLocation(), fischers_spielzeuge.get(e.getBlock().getLocation()) + 1);
+                ParticleHandler.createParticles(e.getBlock().getLocation().add(0.5, 1.1, 0.5), Particle.CRIT, 20, 0, true, null);
+            }else{
+                ParticleHandler.createParticles(e.getBlock().getLocation(), Particle.EXPLOSION, 3, 0, true, null);
+                e.getBlock().setType(Material.AIR);
+                fischers_spielzeuge.remove(e.getBlock().getLocation());
+                fischers_team.remove(e.getBlock().getLocation());
             }
         }
     }
