@@ -17,27 +17,34 @@
  *
  */
 
-package de.kuscheltiermafia.schoolwars.events;
+package de.kuscheltiermafia.schoolwars.win_conditions;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.ProgressBarHandler;
+import de.kuscheltiermafia.schoolwars.teams.Team;
+import de.kuscheltiermafia.schoolwars.teams.Teams;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.UUID;
+
+import static de.kuscheltiermafia.schoolwars.SchoolWars.playerMirror;
 
 
 public class AtombombeEvents implements Listener {
@@ -125,6 +132,63 @@ public class AtombombeEvents implements Listener {
                     }
                 }.runTaskLater(SchoolWars.getPlugin(), finalI);
             }
+        }
+    }
+
+    @EventHandler
+    public static void onPlaceNuke(BlockPlaceEvent event) {
+        if(event.getItemInHand().equals(Items.nuke)) {
+
+            Player player = event.getPlayer();
+            Location loc = event.getBlock().getLocation();
+
+            Team team = playerMirror.get(player.getName()).getTeam();
+
+            event.setCancelled(true);
+            player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
+            BlockDisplay nuke = Bukkit.getServer().getWorld("schoolwars").spawn(loc, BlockDisplay.class);
+            nuke.setBlock(Bukkit.createBlockData(Material.TNT));
+
+            new BukkitRunnable() {
+
+                int timeSec = 0;
+
+                @Override
+                public void run() {
+
+                    if (timeSec == 0){
+                        Bukkit.broadcastMessage(ChatColor.RED + "Das Team der " + team + ChatColor.RED + " hat eine Atombombe platziert");
+                        Bukkit.broadcastMessage(ChatColor.RED + "Wird sie nicht innerhalb von 5 Minuten entschärft, wird sie explodieren und das Team der " + team + ChatColor.RED + " gewinnt");
+                        Bukkit.getOnlinePlayers().forEach(p -> p.sendTitle(ChatColor.RED + "Atombombe platziert", ""));
+                    }
+
+                    if (timeSec == 60){
+                        Bukkit.broadcastMessage(ChatColor.RED + "Die Atombombe detoniert in 4 Minuten");
+                    }
+
+                    if (timeSec == 3*60){
+                        Bukkit.broadcastMessage(ChatColor.RED + "Die Atombombe detoniert in 2 Minuten");
+                    }
+
+                    if (timeSec == 4*60){
+                        Bukkit.broadcastMessage(ChatColor.RED + "Die Atombombe detoniert in 1 Minute");
+                    }
+
+                    if (timeSec == 5*60){
+                        for (Player p : Bukkit.getOnlinePlayers()){
+                            p.sendTitle(ChatColor.RED + "Spielende", ChatColor.RED + "Die Atombombe ist explodiert");
+                            p.setGameMode(GameMode.SPECTATOR);
+                            p.setSpectatorTarget(Bukkit.getEntity(UUID.fromString("e060929a-7c8f-471d-a76d-6a34244bdcab")));
+                        }
+                        Bukkit.getScheduler().cancelTask(this.getTaskId());
+                        Teams.clearTeams();
+                        nuke.remove();
+                    }
+
+                    timeSec ++;
+                }
+            }.runTaskTimer(SchoolWars.plugin, 0, 20);
+
         }
     }
 }

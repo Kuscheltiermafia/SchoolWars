@@ -85,11 +85,8 @@ public class SchulbuchLevels implements Listener {
         if(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             if(e.getPlayer().getInventory().getItemInMainHand().equals(Items.ausleihschein)) {
                 try {
-                    if(Area.getAreaByLocation(bookshelfLoc.get(random)).name() != null) {
-                        e.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "-- Nächstes Schulbuch befindet sich in: " + ChatColor.RED + Area.getAreaByLocation(bookshelfLoc.get(random)).name() + ChatColor.GRAY + " --"));
-                    }else{
-                        e.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "-- Herr Vornberger hat dir wohl das falsche Papier gegeben... --"));
-                    }
+                    Area.getAreaByLocation(bookshelfLoc.get(random));
+                    e.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "-- Nächstes Schulbuch befindet sich in: " + ChatColor.RED + Area.getAreaByLocation(bookshelfLoc.get(random)).name() + ChatColor.GRAY + " --"));
                 }catch (Exception ignored){}
             }
         }

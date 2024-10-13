@@ -87,9 +87,12 @@ public class Items {
     public static ItemStack stroke_master;
     public static ItemStack strick;
     public static ItemStack peilsender;
+    public static ItemStack bound_peilsender;
     public static ItemStack zwiebel;
     public static ItemStack geschnittene_zwiebel;
     public static ItemStack ausleihschein;
+    public static ItemStack stairway_heaven;
+    public static ItemStack zehn_boehm_gutschein;
 
     public static ArrayList<ItemStack> itemList = new ArrayList<ItemStack>();
 
@@ -141,6 +144,9 @@ public class Items {
 
         cookie = createItem(Material.COOKIE, "§6Cookie", 1, 16, null, false, false, false);
         itemList.add(cookie);
+
+        stairway_heaven = createItem(Material.QUARTZ_STAIRS, ChatColor.LIGHT_PURPLE + "Stairway to heaven", 1, 1, null, true, false, false);
+        itemList.add(stairway_heaven);
 
 //Win condition
         //nukes
@@ -239,8 +245,14 @@ public class Items {
         ArrayList<String> peilsender_lore = new ArrayList<>();
         peilsender_lore.add(ChatColor.DARK_GRAY + "Herr Fischer kann sich nicht länger verstecken!");
 
-        peilsender = createItem(Material.COMPASS, ChatColor.DARK_GRAY + "Peilsender", 1, 1, peilsender_lore, true, false, false);
+        peilsender = createItem(Material.COMPASS, ChatColor.DARK_GRAY + "Peilsender", 1, 1, peilsender_lore, false, false, false);
         itemList.add(peilsender);
+
+        bound_peilsender = createItem(Material.COMPASS, ChatColor.DARK_GRAY + "Peilsender", 1, 1, peilsender_lore, true, false, false);
+        itemList.add(bound_peilsender);
+
+        zehn_boehm_gutschein = createItem(Material.PAPER, ChatColor.WHITE + "10€ Böhms Gutschein", 1, 96, null, false, false, false);
+        itemList.add(zehn_boehm_gutschein);
 
 //Vapes
         vape_fruitberry = createItem(Material.PINK_CANDLE, ChatColor.LIGHT_PURPLE + "Vape Fruitberry Punch", 1, 1, null, false, false, false);

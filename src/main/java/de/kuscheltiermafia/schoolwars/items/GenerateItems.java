@@ -68,17 +68,11 @@ public class GenerateItems {
         itemEntity.setVelocity(new Vector(0, 0, 0));
         itemEntity.setPickupDelay(Integer.MAX_VALUE);
 
-        new BukkitRunnable() {
-            public void run() {
-                itemEntity.teleport(loc);
+        Interaction itemHitbox = itemEntity.getWorld().spawn(itemEntity.getLocation(), Interaction.class);
+        itemHitbox.setInteractionHeight(1);
+        itemHitbox.setInteractionWidth(1);
 
-                Interaction itemHitbox = itemEntity.getWorld().spawn(itemEntity.getLocation(), Interaction.class);
-                itemHitbox.setInteractionHeight(0.25f);
-                itemHitbox.setInteractionWidth(0.25f);
-
-                itemHitboxes.put(itemHitbox, itemEntity);
-            }
-        }.runTaskLater(SchoolWars.getPlugin(), 20);
+        itemHitboxes.put(itemHitbox, itemEntity);
     }
 
     public static void spawnItem(int i1) {
