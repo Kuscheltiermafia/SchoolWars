@@ -19,11 +19,13 @@
 
 package de.kuscheltiermafia.schoolwars.events;
 
+import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
 import de.kuscheltiermafia.schoolwars.teams.Team;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -45,7 +47,6 @@ public class DeathEvent implements Listener {
             e.setCancelled(true);
 
             Player p = (Player) e.getEntity();
-            assert p != null;
             String playerName = p.getName();
 
             String killerName = "";
@@ -96,8 +97,23 @@ public class DeathEvent implements Listener {
             }
 
 ///set player to dead state
+
+            if (playerMirror.get(p.getName()).isInBossfight()) {
+                e.setCancelled(true);
+                p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 40, 1, false, false, false));
+                p.sendTitle("§4Du wurdest besiegt!", "Du wachst im Krankenzimmer wieder auf", 10, 70, 20);
+                p.playSound(p.getLocation(), "minecraft:block.beacon.deactivate", 1, 1);
+                p.teleport(new Location(p.getWorld(), -35.0, 88.0, 144.0, -90, 0));
+                p.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 60, 255, true, true, true));
+                playerMirror.get(p.getName()).setInBossfight(false);
+                return;
+            }
+
+            e.setCancelled(true);
+
             p.setHealth(20);
             p.sendTitle("§4Du wurdest besiegt!", "Dein Team muss dich wiederbeleben.", 10, 70, 20);
+            p.playSound(p.getLocation(), "minecraft:block.beacon.deactivate", 1, 1);
             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 999999, 255, false, false, false));
             p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 999999, 255, false, false, false));
 

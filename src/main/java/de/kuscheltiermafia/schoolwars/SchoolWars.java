@@ -106,7 +106,7 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new DialogueHandler(), this);
 
         getCommand("start").setExecutor(new StartGame());
-        getCommand("end").setExecutor(new EndCommand());
+//        getCommand("end").setExecutor(new EndCommand());
         getCommand("itemlist").setExecutor(new ItemList());
         getCommand("teamlist").setExecutor(new TeamList());
         getCommand("debug").setExecutor(new Debug());

@@ -21,6 +21,8 @@ package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.commands.Debug;
+import de.kuscheltiermafia.schoolwars.lehrer.Stundenplan;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -36,6 +38,11 @@ public class LeaveEvent implements Listener {
         for(Player a : Debug.joinMsg) {
             a.sendMessage(ChatColor.DARK_RED + "[!] " + ChatColor.YELLOW + "" + e.getPlayer().getName() + ChatColor.DARK_GRAY + " left SchoolWars.");
         }
+
+        if(Bukkit.getOnlinePlayers().size() == 0){
+            SchoolWars.gameStarted = false;
+        }
+
     }
 
 }

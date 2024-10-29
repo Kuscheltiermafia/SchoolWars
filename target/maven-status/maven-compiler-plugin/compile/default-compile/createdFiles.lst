@@ -1,10 +1,12 @@
 de\kuscheltiermafia\schoolwars\events\Generalschluessel.class
 de\kuscheltiermafia\schoolwars\events\KarlElixier$2$1.class
 de\kuscheltiermafia\schoolwars\events\KarlElixier$2.class
+de\kuscheltiermafia\schoolwars\mechanics\EndGame.class
 de\kuscheltiermafia\schoolwars\lehrer\Aufsicht.class
 de\kuscheltiermafia\schoolwars\commands\StartGame.class
 de\kuscheltiermafia\schoolwars\events\Rolator.class
 de\kuscheltiermafia\schoolwars\lehrer\Lehrer.class
+de\kuscheltiermafia\schoolwars\commands\EndCommand.class
 de\kuscheltiermafia\schoolwars\events\HandleKuehlpack.class
 de\kuscheltiermafia\schoolwars\events\InteractionEvent.class
 de\kuscheltiermafia\schoolwars\commands\ItemList.class
@@ -12,7 +14,6 @@ de\kuscheltiermafia\schoolwars\events\RanzenEvents.class
 de\kuscheltiermafia\schoolwars\mechanics\Intro$2.class
 de\kuscheltiermafia\schoolwars\mechanics\PlayerStun$1.class
 de\kuscheltiermafia\schoolwars\mechanics\DialogueHandler$1.class
-de\kuscheltiermafia\schoolwars\commands\ClearTeams.class
 de\kuscheltiermafia\schoolwars\mechanics\RevivePlayer.class
 de\kuscheltiermafia\schoolwars\win_conditions\AtombombeEvents$1.class
 de\kuscheltiermafia\schoolwars\events\Generalschluessel$1.class

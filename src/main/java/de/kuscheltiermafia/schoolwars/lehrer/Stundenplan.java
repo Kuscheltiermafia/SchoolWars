@@ -23,6 +23,7 @@ import de.kuscheltiermafia.schoolwars.SchoolWars;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Villager;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.Arrays;

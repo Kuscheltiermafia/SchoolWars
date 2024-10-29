@@ -96,6 +96,7 @@ public class FischersSpielzeug implements Listener {
             }
         }
     }
+
     /**
     @EventHandler
     public void onPeilsender(PlayerInteractEntityEvent e) {

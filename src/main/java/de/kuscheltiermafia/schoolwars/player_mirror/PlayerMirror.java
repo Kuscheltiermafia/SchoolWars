@@ -33,6 +33,7 @@ public class PlayerMirror {
     boolean inCombat;
     boolean revives;
     boolean alive;
+    boolean inBossfight;
     Integer verweise;
     Team team;
     Integer currentDialogueStep;
@@ -133,5 +134,14 @@ public class PlayerMirror {
     public void clearDialogue() {
         this.currentDialogue = null;
         this.currentDialogueStep = null;
+    }
+
+//bossfight
+    public boolean isInBossfight() {
+        return inBossfight;
+    }
+
+    public void setInBossfight(boolean inBossfight) {
+        this.inBossfight = inBossfight;
     }
 }

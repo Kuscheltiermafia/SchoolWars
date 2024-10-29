@@ -28,6 +28,7 @@ import de.kuscheltiermafia.schoolwars.teams.Teams;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Entity;
@@ -51,6 +52,10 @@ public class AtombombeEvents implements Listener {
 
     ArrayList<ItemStack> zentrifugeInventory = new ArrayList<ItemStack>();
     public static boolean zentrifugeActive;
+
+    static boolean nukePlaced = false;
+
+    static Location nukeLoc;
 
     static int duration = 20 * 30;
 
@@ -138,16 +143,26 @@ public class AtombombeEvents implements Listener {
     @EventHandler
     public static void onPlaceNuke(BlockPlaceEvent event) {
         if(event.getItemInHand().equals(Items.nuke)) {
+            if (nukePlaced) {
+                event.setCancelled(true);
+                event.getPlayer().sendMessage(ChatColor.RED + "Es kann nur eine Atombox platziert werden");
+                return;
+            }
 
             Player player = event.getPlayer();
-            Location loc = event.getBlock().getLocation();
+            nukeLoc = event.getBlock().getLocation();
 
             Team team = playerMirror.get(player.getName()).getTeam();
 
             event.setCancelled(true);
             player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
-            BlockDisplay nuke = Bukkit.getServer().getWorld("schoolwars").spawn(loc, BlockDisplay.class);
+            BlockDisplay nuke = Bukkit.getServer().getWorld("schoolwars").spawn(nukeLoc, BlockDisplay.class);
             nuke.setBlock(Bukkit.createBlockData(Material.TNT));
+            nuke.setGlowing(true);
+            nuke.setGlowColorOverride(Color.RED);
+
+            nukePlaced = true;
+
 
             new BukkitRunnable() {
 
@@ -179,10 +194,29 @@ public class AtombombeEvents implements Listener {
                             p.sendTitle(ChatColor.RED + "Spielende", ChatColor.RED + "Die Atombombe ist explodiert");
                             p.setGameMode(GameMode.SPECTATOR);
                             p.setSpectatorTarget(Bukkit.getEntity(UUID.fromString("e060929a-7c8f-471d-a76d-6a34244bdcab")));
+                            p.playSound(p.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 1);
                         }
                         Bukkit.getScheduler().cancelTask(this.getTaskId());
                         Teams.clearTeams();
                         nuke.remove();
+                        nukePlaced = false;
+                        SchoolWars.gameStarted = false;
+                    }
+
+                    for (Player p : Bukkit.getOnlinePlayers()){
+                        p.playSound(nukeLoc, Sound.ENTITY_TNT_PRIMED, 1, 1);
+                    }
+
+
+                    for (Entity entity : nukeLoc.getWorld().getNearbyEntities(nukeLoc, 2, 1, 2)) {
+                        if (entity instanceof Player) {
+                            Player player = (Player) entity;
+                            if (player.getAttribute(Attribute.GENERIC_SCALE).getBaseValue() < 0.6) {
+                                player.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(1);
+                                player.teleport(new Location(player.getWorld(), 14.0, 32.0, 179.0));
+                                playerMirror.get(player.getName()).setInBossfight(true);
+                            }
+                        }
                     }
 
                     timeSec ++;

@@ -59,8 +59,10 @@ public class KarlElixier implements Listener {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            double calcProgress = (double) finalI / karlDauer * 100;
-                            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "-- Dauer: " + ProgressBarHandler.progressBarsUpdate(calcProgress, ChatColor.DARK_GREEN) + ChatColor.GRAY + " --"));
+                            if (p.getAttribute(Attribute.GENERIC_SCALE).getBaseValue() < 1) {
+                                double calcProgress = (double) finalI / karlDauer * 100;
+                                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "-- Dauer: " + ProgressBarHandler.progressBarsUpdate(calcProgress, ChatColor.DARK_GREEN) + ChatColor.GRAY + " --"));
+                            }
                         }
                     }.runTaskLater(SchoolWars.getPlugin(), i);
 
