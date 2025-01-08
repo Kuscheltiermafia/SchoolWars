@@ -64,12 +64,12 @@ public class Generalschluessel implements Listener {
                 int randomInt = random.nextInt(100);
 
                 if (randomInt <= sekiRisk){
-                    world.getNearbyEntities(block.getLocation(), 5, 5, 5).forEach(entity -> {
+                    for (Entity entity : world.getNearbyEntities(block.getLocation(), 5, 5, 5)) {
                         if (entity instanceof Player) {
                             Player player = (Player) entity;
                             player.sendMessage("Die Sekritärin hat dich erwischt!");
                         }
-                    });
+                    }
 
                     summonSekritaerin(block.getLocation());
 

@@ -32,6 +32,7 @@ import de.kuscheltiermafia.schoolwars.mechanics.PlayerStun;
 import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
 import de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror;
 import de.kuscheltiermafia.schoolwars.win_conditions.AtombombeEvents;
+import io.github.realMorgon.sunriseLib.SunriseLib;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.BlockDisplay;
@@ -62,6 +63,8 @@ public final class SchoolWars extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
+        SunriseLib.setPlugin(this);
 
         gameStarted = false;
 
@@ -106,7 +109,7 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new DialogueHandler(), this);
 
         getCommand("start").setExecutor(new StartGame());
-//        getCommand("end").setExecutor(new EndCommand());
+        getCommand("end").setExecutor(new EndCommand());
         getCommand("itemlist").setExecutor(new ItemList());
         getCommand("teamlist").setExecutor(new TeamList());
         getCommand("debug").setExecutor(new Debug());

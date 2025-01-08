@@ -20,7 +20,9 @@
 package de.kuscheltiermafia.schoolwars.lehrer;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import io.github.realMorgon.sunriseLib.Sounds;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Villager;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -54,12 +56,12 @@ public class Stundenplan {
     }
 
     public static void initStundenplan() {
-        try {
-            for (Villager currentLehrer : world.getEntitiesByClass(Villager.class)){
-                currentLehrer.remove();
-            }
 
-        }catch (Exception ignored) {}
+        Sounds.playForAll(Sound.BLOCK_NOTE_BLOCK_BELL, 1.0f, 1.0f, 1.5, 0.5);
+
+        for (Villager lehrer : LehrerHandler.lehrerEntityList) {
+            lehrer.remove();
+        }
 
         ArrayList<Lehrer> shuffledLehrer = new ArrayList<>(Arrays.asList(Lehrer.values()));
         Collections.shuffle(shuffledLehrer);

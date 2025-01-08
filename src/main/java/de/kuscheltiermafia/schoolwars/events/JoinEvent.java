@@ -47,6 +47,7 @@ public class JoinEvent implements Listener {
 
         p.teleport(new Location(p.getWorld(), -24, 80.5, 176, 90, 0));
         p.setRespawnLocation(new Location(p.getWorld(), -33.5, 88, 145.5, -90, 0));
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "effect give " + p.getName() + " minecraft:saturation infinite 255 true");
 
 //Spawn particles
         for (Player pl : Bukkit.getOnlinePlayers()){

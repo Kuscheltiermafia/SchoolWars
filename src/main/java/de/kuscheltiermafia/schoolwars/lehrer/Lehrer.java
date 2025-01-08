@@ -94,9 +94,9 @@ public enum Lehrer {
     }
 
     public static Lehrer getLehrerByEntity(Entity e) {
-            for(Lehrer l : Lehrer.values()) {
-                if(e.getCustomName().substring(6).equals(l.name())) {
-                    return l;
+            for(Lehrer lehrer : Lehrer.values()) {
+                if(e.getCustomName().substring(6).equals(lehrer.name())) {
+                    return lehrer;
                 }
             }
         return null;
