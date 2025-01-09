@@ -40,6 +40,7 @@ import org.bukkit.entity.Villager;
 import java.util.ArrayList;
 
 import static de.kuscheltiermafia.schoolwars.SchoolWars.playerMirror;
+import static de.kuscheltiermafia.schoolwars.lehrer.LehrerHandler.lehrerEntityList;
 
 public class Debug implements CommandExecutor {
 
@@ -128,12 +129,13 @@ public class Debug implements CommandExecutor {
                             }
                         }
                     } else if (args[1].equals("kill")) {
-                        for(Villager lehrer : LehrerHandler.lehrerEntityList) {
+                        for(Villager lehrer : lehrerEntityList) {
                             try {
                                 if(lehrer.getCustomName().contains(args[2])) {
                                     lehrer.remove();
                                 } else if (args[2].equals("all")) {
                                     lehrer.remove();
+                                    lehrerEntityList.clear();
                                 }
                             }catch (Exception ignored){}
                         }

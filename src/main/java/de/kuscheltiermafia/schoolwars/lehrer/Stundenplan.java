@@ -33,6 +33,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import static de.kuscheltiermafia.schoolwars.SchoolWars.world;
+import static de.kuscheltiermafia.schoolwars.lehrer.LehrerHandler.lehrerEntityList;
 
 public class Stundenplan {
 
@@ -59,9 +60,10 @@ public class Stundenplan {
 
         Sounds.playForAll(Sound.BLOCK_NOTE_BLOCK_BELL, 1.0f, 1.0f, 1.5, 0.5);
 
-        for (Villager lehrer : LehrerHandler.lehrerEntityList) {
+        for (Villager lehrer : lehrerEntityList) {
             lehrer.remove();
         }
+        lehrerEntityList.clear();
 
         ArrayList<Lehrer> shuffledLehrer = new ArrayList<>(Arrays.asList(Lehrer.values()));
         Collections.shuffle(shuffledLehrer);

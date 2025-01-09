@@ -67,12 +67,11 @@ public class LehrerHandler {
     }
 
     public static void removeLehrer() {
-        for (Villager currentLehrer : Bukkit.getWorld("schoolwars").getEntitiesByClass(Villager.class)) {
-            if(currentLehrer.getCustomName() != null) {
-                currentLehrer.remove();
-            }
+        for (Villager currentLehrer : lehrerEntityList) {
+            currentLehrer.remove();
         }
         lehrerList.clear();
+        lehrerEntityList.clear();
     }
 
     static Villager createLehrer(Location location, String name, Villager.Type type, Villager.Profession profession, boolean hasAI, double scale, boolean isSilent, boolean isMale) {

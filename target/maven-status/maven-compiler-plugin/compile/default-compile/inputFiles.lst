@@ -6,6 +6,7 @@ C:\Users\morit\IdeaProjects\MCPlugins\SchoolWars\src\main\java\de\kuscheltiermaf
 C:\Users\morit\IdeaProjects\MCPlugins\SchoolWars\src\main\java\de\kuscheltiermafia\schoolwars\teams\Teams.java
 C:\Users\morit\IdeaProjects\MCPlugins\SchoolWars\src\main\java\de\kuscheltiermafia\schoolwars\lehrer\LehrerHandler.java
 C:\Users\morit\IdeaProjects\MCPlugins\SchoolWars\src\main\java\de\kuscheltiermafia\schoolwars\win_conditions\AtombombeEvents.java
+C:\Users\morit\IdeaProjects\MCPlugins\SchoolWars\src\main\java\de\kuscheltiermafia\schoolwars\commands\EndCommand.java
 C:\Users\morit\IdeaProjects\MCPlugins\SchoolWars\src\main\java\de\kuscheltiermafia\schoolwars\lehrer\Raum.java
 C:\Users\morit\IdeaProjects\MCPlugins\SchoolWars\src\main\java\de\kuscheltiermafia\schoolwars\events\DeathEvent.java
 C:\Users\morit\IdeaProjects\MCPlugins\SchoolWars\src\main\java\de\kuscheltiermafia\schoolwars\player_mirror\PlayerMirror.java
@@ -27,12 +28,12 @@ C:\Users\morit\IdeaProjects\MCPlugins\SchoolWars\src\main\java\de\kuscheltiermaf
 C:\Users\morit\IdeaProjects\MCPlugins\SchoolWars\src\main\java\de\kuscheltiermafia\schoolwars\events\JoinEvent.java
 C:\Users\morit\IdeaProjects\MCPlugins\SchoolWars\src\main\java\de\kuscheltiermafia\schoolwars\lehrer\Area.java
 C:\Users\morit\IdeaProjects\MCPlugins\SchoolWars\src\main\java\de\kuscheltiermafia\schoolwars\events\Minasisierung.java
+C:\Users\morit\IdeaProjects\MCPlugins\SchoolWars\src\main\java\de\kuscheltiermafia\schoolwars\mechanics\EndGame.java
 C:\Users\morit\IdeaProjects\MCPlugins\SchoolWars\src\main\java\de\kuscheltiermafia\schoolwars\commands\Debug.java
 C:\Users\morit\IdeaProjects\MCPlugins\SchoolWars\src\main\java\de\kuscheltiermafia\schoolwars\events\Stuhl.java
 C:\Users\morit\IdeaProjects\MCPlugins\SchoolWars\src\main\java\de\kuscheltiermafia\schoolwars\mechanics\ProgressBarHandler.java
 C:\Users\morit\IdeaProjects\MCPlugins\SchoolWars\src\main\java\de\kuscheltiermafia\schoolwars\SchoolWars.java
 C:\Users\morit\IdeaProjects\MCPlugins\SchoolWars\src\main\java\de\kuscheltiermafia\schoolwars\commands\TeamList.java
-C:\Users\morit\IdeaProjects\MCPlugins\SchoolWars\src\main\java\de\kuscheltiermafia\schoolwars\commands\ClearTeams.java
 C:\Users\morit\IdeaProjects\MCPlugins\SchoolWars\src\main\java\de\kuscheltiermafia\schoolwars\teams\Team.java
 C:\Users\morit\IdeaProjects\MCPlugins\SchoolWars\src\main\java\de\kuscheltiermafia\schoolwars\mechanics\Intro.java
 C:\Users\morit\IdeaProjects\MCPlugins\SchoolWars\src\main\java\de\kuscheltiermafia\schoolwars\commands\StartGame.java

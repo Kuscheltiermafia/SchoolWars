@@ -44,6 +44,7 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.HashMap;
 
+import static de.kuscheltiermafia.schoolwars.lehrer.LehrerHandler.lehrerEntityList;
 import static de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer.revivePlayer;
 
 
@@ -130,12 +131,6 @@ public final class SchoolWars extends JavaPlugin {
         for(Player p : Bukkit.getOnlinePlayers()) {
             if(!playerMirror.get(p.getName()).isAlive()) {
                 revivePlayer(p, p);
-            }
-        }
-
-        for (Villager currentLehrer : SchoolWars.world.getEntitiesByClass(Villager.class)) {
-            if(currentLehrer.getCustomName() != null) {
-                currentLehrer.remove();
             }
         }
 
