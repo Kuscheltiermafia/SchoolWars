@@ -1,4 +1,4 @@
-/**
+/*
  * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
  * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
  * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
@@ -33,7 +33,6 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 
@@ -52,7 +51,7 @@ public class Debug implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
 
-        if (sender instanceof Player && ((Player) sender).isOp()) {
+        if (sender instanceof Player && sender.isOp()) {
 
             Player p = (Player) sender;
 
@@ -65,30 +64,15 @@ public class Debug implements CommandExecutor {
                 case "revive":
                     if (args.length == 1) {
                         Player target = p;
-
                         RevivePlayer.revivePlayer(p, target);
-                    }
-
-                    if (args.length == 2) {
-                        Player target = (Player) Bukkit.getPlayer(args[1]);
-
+                    }else if (args.length == 2) {
+                        Player target = Bukkit.getPlayer(args[1]);
                         RevivePlayer.revivePlayer(p, target);
+                    }else {
+                        p.sendMessage(debugPrefix + "Please use /debug revive [<player>]");
                     }
                     return true;
 
-                case "scale":
-                    if (args.length == 2) {
-                        Player target = (Player) sender;
-
-                        target.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(Double.parseDouble(args[1]));
-                    }
-
-                    if (args.length == 3) {
-                        Player target = (Player) Bukkit.getPlayer(args[2]);
-
-                        target.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(Double.parseDouble(args[1]));
-                    }
-                    return true;
 
                 case "getloc":
                     TextComponent location = new TextComponent(debugPrefix + "Click to copy block location! " + p.getTargetBlockExact(4).getLocation().getX() + ", " + p.getTargetBlockExact(4).getLocation().getY() + ", " + p.getTargetBlockExact(4).getLocation().getZ());
@@ -98,10 +82,7 @@ public class Debug implements CommandExecutor {
 
                 case "rep":
 
-                    if (args.length == 1) {
-                        p.sendMessage(debugPrefix + "Please use: /debug rep <Lehrer> (Groß- und Kleinschreibung beachten!)");
-                        p.sendMessage(debugPrefix + "Or use /debug rep <Player> <Lehrer> (Groß- und Kleinschreibung beachten!)");
-                    } else if (args.length == 2) {
+                    if (args.length == 2) {
                         try {
                             p.sendMessage(debugPrefix + "Reputation: " + ChatColor.RED + playerMirror.get(p.getName()).getReputation(Lehrer.getLehrerByName(args[1])));
                         } catch (Exception faultyInput) {
@@ -114,9 +95,14 @@ public class Debug implements CommandExecutor {
                         } catch (Exception faultyInput) {
                             p.sendMessage(debugPrefix + "Lehrer not found!");
                         }
+                    }else {
+                        p.sendMessage(debugPrefix + "Please use: /debug rep <Lehrer> (Case sensitive!)");
+                        p.sendMessage(debugPrefix + "Or use /debug rep <Player> <Lehrer> (Case sensitive!)");
                     }
                     return true;
 
+
+                    //TODO: Rework this after reworking the lehrer handler
                 case "lehrer":
                     if (args[1].equals("spawn")) {
                         for(Lehrer lehrer : Lehrer.values()) {
@@ -170,36 +156,39 @@ public class Debug implements CommandExecutor {
                         p.sendMessage(debugPrefix + "You stunned " + args[1] + " for " + args[2] + " seconds.");
                         p.sendMessage(debugPrefix + "inGround: " + args[3]);
                     } else {
-                        p.sendMessage(debugPrefix + "Please use /debug stun <player> <duration in seconds>");
-                    }
-                    return true;
-
-                case "area":
-                    if (args[1].equals("check")) {
-                        if (args.length == 2) {
-                            p.sendMessage(debugPrefix + "The players: ");
-                        }
+                        p.sendMessage(debugPrefix + "Please use /debug stun <player> <duration in seconds> <in Ground>");
                     }
                     return true;
 
                 case "verweise":
-                    try {
-                        if (args[1].equals("add")) {
-                            if (args.length == 3) {
-                                playerMirror.get(p.getName()).addVerweis(Integer.parseInt(args[2]));
-                                p.sendMessage(debugPrefix + "Added Verweis: " + args[2]);
-                            } else if (args.length == 4) {
-                                playerMirror.get(args[2]).addVerweis(Integer.parseInt(args[3]));
-                                p.sendMessage(debugPrefix + "Added Verweis: " + args[3] + " to " + args[2]);
-                            }
-                        } else if (args[1].equals("get")) {
-                            if (args.length == 2) {
-                                p.sendMessage(debugPrefix + "Your current Verweise: " + playerMirror.get(p.getName()).getVerweise());
-                            } else if (args.length == 3) {
-                                p.sendMessage(debugPrefix + args[2] + "'s current Verweise: " + playerMirror.get(args[2]).getVerweise());
-                            }
+
+                    if (args[1].equals("add")) {
+                        if (args.length == 3) {
+                            playerMirror.get(p.getName()).addVerweis(Integer.parseInt(args[2]));
+                            p.sendMessage(debugPrefix + "Added Verweis: " + args[2]);
+                        } else if (args.length == 4) {
+                            playerMirror.get(args[2]).addVerweis(Integer.parseInt(args[3]));
+                            p.sendMessage(debugPrefix + "Added Verweis: " + args[3] + " to " + args[2]);
+                        }else {
+                            p.sendMessage(debugPrefix + "Please use /debug verweise <get>");
+                            p.sendMessage(debugPrefix + "or /debug verweise <get> <player>");
+                            p.sendMessage(debugPrefix + "or /debug verweise <add> <amount>");
+                            p.sendMessage(debugPrefix + "or /debug verweise <add> <player> <amount>!");
+                            p.sendMessage(debugPrefix + "You can use negative numbers to remove Verweise");
                         }
-                    } catch (Exception e) {
+                    } else if (args[1].equals("get")) {
+                        if (args.length == 2) {
+                            p.sendMessage(debugPrefix + "Your current Verweise: " + playerMirror.get(p.getName()).getVerweise());
+                        } else if (args.length == 3) {
+                            p.sendMessage(debugPrefix + args[2] + "'s current Verweise: " + playerMirror.get(args[2]).getVerweise());
+                        }else {
+                            p.sendMessage(debugPrefix + "Please use /debug verweise <get>");
+                            p.sendMessage(debugPrefix + "or /debug verweise <get> <player>");
+                            p.sendMessage(debugPrefix + "or /debug verweise <add> <amount>");
+                            p.sendMessage(debugPrefix + "or /debug verweise <add> <player> <amount>!");
+                            p.sendMessage(debugPrefix + "You can use negative numbers to remove Verweise");
+                        }
+                    }else {
                         p.sendMessage(debugPrefix + "Please use /debug verweise <get>");
                         p.sendMessage(debugPrefix + "or /debug verweise <get> <player>");
                         p.sendMessage(debugPrefix + "or /debug verweise <add> <amount>");
@@ -215,11 +204,11 @@ public class Debug implements CommandExecutor {
                             for (Lehrer lehrer : Stundenplan.studenplan.keySet()) {
                                 p.sendMessage(debugPrefix + lehrer.name() + " -> " + Stundenplan.studenplan.get(lehrer).name());
                             }
-                        } else if (args[1].equals("reset")) {
-                            p.sendMessage(debugPrefix + "Sucessfully resetted Stundenplan!");
+                        } else if (args[1].equals("update")) {
                             Stundenplan.updateStundenplan(true);
+                            p.sendMessage(debugPrefix + "Sucessfully updated Stundenplan!");
                         }else{
-                            p.sendMessage(debugPrefix + "Please use /debug stundenplan <get|reset>");
+                            p.sendMessage(debugPrefix + "Please use /debug stundenplan <get|update>");
                         }
                     }else {
                         p.sendMessage(debugPrefix + "Game has not started yet!");
@@ -228,8 +217,8 @@ public class Debug implements CommandExecutor {
 
                 case "intro":
                     if(args.length == 1) {
-                        p.sendMessage(debugPrefix + "Started intro sequence!");
                         Intro.introScene(p);
+                        p.sendMessage(debugPrefix + "Started intro sequence!");
                     } else if (args.length == 2) {
                         if(args[1].equals("2")) {
                             p.sendMessage(debugPrefix + "Started intro sequence at 2. stage!");
@@ -239,20 +228,20 @@ public class Debug implements CommandExecutor {
                             p.sendMessage(debugPrefix + "Started intro sequence at 3. stage!");
                             Intro.thirdSequence(p);
                         }
+                    }else{
+                        p.sendMessage(debugPrefix + "Please use /debug intro [<phase>]!");
                     }
                     return true;
 
                 case "fly":
                     if(args.length == 2) {
-                        Player target = (Player) Bukkit.getPlayer(args[1]);
-                        if(target.getAllowFlight()){
-                            target.setAllowFlight(false);
-                        }else{
-                            target.setAllowFlight(true);
-                        }
+                        Player target = Bukkit.getPlayer(args[1]);
+                        target.setAllowFlight(!target.getAllowFlight());
                     }
                     return true;
             }
+        }else{
+            sender.sendMessage(debugPrefix + "You are not allowed to use this command!");
         }
 
         sender.sendMessage(debugPrefix + "This is not a valid argument!");

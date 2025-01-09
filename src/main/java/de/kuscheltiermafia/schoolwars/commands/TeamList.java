@@ -1,4 +1,4 @@
-/**
+/*
  * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
  * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
  * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
@@ -25,8 +25,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import static de.kuscheltiermafia.schoolwars.SchoolWars.*;
-
 public class TeamList implements CommandExecutor {
 
     @Override
@@ -45,6 +43,6 @@ public class TeamList implements CommandExecutor {
             commandSender.sendMessage(ChatColor.DARK_RED + playerName);
         }
 
-        return false;
+        return true;
     }
 }

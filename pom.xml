@@ -70,7 +70,7 @@
         <dependency>
             <groupId>io.github.realMorgon</groupId>
             <artifactId>sunriseLib</artifactId>
-            <version>0.0.2</version>
+            <version>0.0.5</version>
         </dependency>
   </dependencies>
 </project>

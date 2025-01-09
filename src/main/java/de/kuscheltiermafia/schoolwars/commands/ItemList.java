@@ -1,4 +1,4 @@
-/**
+/*
  * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
  * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
  * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
@@ -42,8 +42,6 @@ public class ItemList implements CommandExecutor{
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
 
         if(sender instanceof Player) {
-
-
             Player p = (Player) sender;
 
             Inventory itemList = Bukkit.createInventory(null, 9*6, "§4Itemlist");
@@ -54,7 +52,7 @@ public class ItemList implements CommandExecutor{
 
             p.openInventory(itemList);
         }
-        return false;
+        return true;
     }
 
     public static void fillItemlist(Inventory itemList, int currentPage, Player user) {

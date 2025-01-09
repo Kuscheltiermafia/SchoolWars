@@ -1,4 +1,4 @@
-/**
+/*
  * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
  * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
  * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
@@ -22,11 +22,12 @@ package de.kuscheltiermafia.schoolwars.events;
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.ProgressBarHandler;
+import io.github.realMorgon.sunriseLib.Sounds;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
@@ -102,7 +103,7 @@ public class KarlElixier implements Listener {
                 @Override
                 public void run() {
                     p.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(p.getAttribute(Attribute.GENERIC_SCALE).getBaseValue() - 0.1);
-                    playSound("entity.generic.drink", p);
+                    Sounds.playInArea(org.bukkit.Sound.ENTITY_GENERIC_DRINK, 20, 1, 0, 0, p.getLocation(), 3, 3, 3);
                 }
             }.runTaskLater(SchoolWars.getPlugin(), i * 10);
         }
@@ -115,7 +116,7 @@ public class KarlElixier implements Listener {
                     @Override
                     public void run() {
                         p.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(p.getAttribute(Attribute.GENERIC_SCALE).getBaseValue() + 0.1);
-                        playSound("block.sponge.absorb", p);
+                        Sounds.playInArea(Sound.BLOCK_SPONGE_ABSORB, 20, 1, 0, 0, p.getLocation(), 3, 3, 3);
                     }
                 }.runTaskLater(SchoolWars.getPlugin(), i * 10);
             }
@@ -127,14 +128,6 @@ public class KarlElixier implements Listener {
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "-- Dauer: " + ProgressBarHandler.progressBarsUpdate(100, ChatColor.DARK_RED) + ChatColor.GRAY + " --"));
         } else if (timer % 2 != 0) {
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "-- Dauer: " + ProgressBarHandler.progressBarsUpdate(100, ChatColor.DARK_GRAY) + ChatColor.GRAY + " --"));
-        }
-    }
-
-    public static void playSound(String name, Player p) {
-        for(Entity e: p.getWorld().getNearbyEntities(p.getLocation(), 3, 3, 3)) {
-            if(e instanceof Player) {
-                ((Player) e).playSound(p.getLocation(), name, SoundCategory.PLAYERS, 20, 1);
-            }
         }
     }
 

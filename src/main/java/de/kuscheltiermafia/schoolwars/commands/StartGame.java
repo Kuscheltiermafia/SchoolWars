@@ -1,4 +1,4 @@
-/**
+/*
  * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
  * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
  * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
@@ -31,65 +31,68 @@ import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
 
-import static de.kuscheltiermafia.schoolwars.SchoolWars.*;
+import static de.kuscheltiermafia.schoolwars.SchoolWars.playerMirror;
+
 
 public class StartGame implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 
-        if (Debug.startWorks) {
-            SchoolWars.gameStarted = false;
+        if (!Debug.startWorks) {
+            return false;
+        }
+        SchoolWars.gameStarted = false;
 
 //reset
-            playerMirror.clear();
+        playerMirror.clear();
 
-            try {
-                for (Item item : Bukkit.getWorld("schoolwars").getEntitiesByClass(Item.class)) {
-                    item.remove();
-                }
-            } catch (Exception ignored) {}
+        try {
+            for (Item item : Bukkit.getWorld("schoolwars").getEntitiesByClass(Item.class)) {
+                item.remove();
+            }
+        } catch (Exception ignored) {}
 
 //prepare game
 
-            Stundenplan.updateStundenplan(true);
-            Stundenplan.updateStundenplan(false);
+        Stundenplan.updateStundenplan(true);
+        Stundenplan.updateStundenplan(false);
 
 //Set Playernames and ready them for battle
-            Teams.clearTeams();
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                Teams.resetPlayer(p);
-                p.getInventory().clear();
-                p.setGameMode(GameMode.SURVIVAL);
-                p.setHealth(20);
-                p.getActivePotionEffects().clear();
-            }
+        Teams.clearTeams();
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            Teams.resetPlayer(p);
+            p.getInventory().clear();
+            p.setGameMode(GameMode.SURVIVAL);
+            p.setHealth(20);
+            p.getActivePotionEffects().clear();
+        }
 
-            GenerateItems.summonItems();
+        GenerateItems.summonItems();
 
 //prepare player Mirrors
-            playerMirror.clear();
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                playerMirror.put(p.getName(), new PlayerMirror(p.getName()));
-            }
+        playerMirror.clear();
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            playerMirror.put(p.getName(), new PlayerMirror(p.getName()));
+        }
 
 //prepare Teams
-            Teams.joinTeams();
-            Team.NWS.prepare();
-            Team.SPORTLER.prepare();
-            Team.SPRACHLER.prepare();
+        Teams.joinTeams();
+        Team.NWS.prepare();
+        Team.SPORTLER.prepare();
+        Team.SPRACHLER.prepare();
 
 //revive Player
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                if (!playerMirror.get(p.getName()).isAlive()) {
-                    RevivePlayer.revivePlayer(p, p);
-                }
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (!playerMirror.get(p.getName()).isAlive()) {
+                RevivePlayer.revivePlayer(p, p);
             }
-
-            SchoolWars.gameStarted = true;
         }
-        return false;
+
+        SchoolWars.gameStarted = true;
+        return true;
     }
 }

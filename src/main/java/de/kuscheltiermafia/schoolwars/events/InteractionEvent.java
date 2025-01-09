@@ -1,4 +1,4 @@
-/**
+/*
  * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
  * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
  * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
@@ -21,12 +21,15 @@ package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.commands.ItemList;
 import de.kuscheltiermafia.schoolwars.items.Items;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
+import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
+import de.kuscheltiermafia.schoolwars.mechanics.PlayerStun;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.entity.*;
+import org.bukkit.Particle;
+import org.bukkit.entity.Bat;
+import org.bukkit.entity.ItemFrame;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -34,7 +37,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDismountEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.*;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import static de.kuscheltiermafia.schoolwars.SchoolWars.playerMirror;
@@ -122,6 +125,21 @@ public class InteractionEvent implements Listener {
     public void onDamageItemFrame(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof ItemFrame) {
             e.setCancelled(true);
+        }
+    }
+
+    //Minas Stuhl hit
+    @EventHandler
+    public void OnStuhlHit(EntityDamageByEntityEvent e) {
+        if(e.getDamager() instanceof Player hitter && e.getEntity() instanceof Player hit) {
+
+            if(hitter.getInventory().getItemInMainHand().equals(Items.buffed_stuhl) && hitter.getCooldown(Material.OAK_STAIRS) < 2) {
+                hitter.setCooldown(Material.OAK_STAIRS, 20 * 6);
+
+                ParticleHandler.createParticles(hit.getLocation().add(0, 1, 0), Particle.CRIT, 20, 0.2, true, null);
+                ParticleHandler.createParticles(hit.getLocation().add(0, 1, 0), Particle.CLOUD, 30, 0.2, true, null);
+                PlayerStun.stunPlayer(hit, 3, true);
+            }
         }
     }
 

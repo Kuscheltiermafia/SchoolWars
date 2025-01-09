@@ -27,7 +27,7 @@ public enum Team {
     public final Location spawn;
 
     public ArrayList<String> mitglieder;
-    public static double sekiRisk;
+    public double sekiRisk;
 
     Team(String teamName, String prefix, String joinMessage, ItemStack ranzen, Location spawn) {
         this.teamName = teamName;

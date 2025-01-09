@@ -1,4 +1,4 @@
-/**
+/*
  * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
  * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
  * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
@@ -34,8 +34,9 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
-import static de.kuscheltiermafia.schoolwars.SchoolWars.*;
 import static de.kuscheltiermafia.schoolwars.mechanics.Ranzen.ranzenAmount;
+
+//TODO: Simplify this class by using the Team Enum
 
 public class RanzenEvents implements Listener {
 

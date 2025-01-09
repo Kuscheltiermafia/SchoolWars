@@ -1,4 +1,4 @@
-/**
+/*
  * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
  * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
  * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
@@ -24,6 +24,7 @@ import de.kuscheltiermafia.schoolwars.commands.Debug;
 import de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror;
 import de.kuscheltiermafia.schoolwars.teams.Team;
 import de.kuscheltiermafia.schoolwars.teams.Teams;
+import io.github.realMorgon.sunriseLib.Particles;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -50,13 +51,10 @@ public class JoinEvent implements Listener {
         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "effect give " + p.getName() + " minecraft:saturation infinite 255 true");
 
 //Spawn particles
-        for (Player pl : Bukkit.getOnlinePlayers()){
 
-            pl.spawnParticle(Particle.LAVA, p.getLocation(), 40, 0, 0.2, 0);
-            pl.spawnParticle(Particle.EXPLOSION, p.getLocation(), 10, 0, 0.2, 0);
-            pl.spawnParticle(Particle.PORTAL, p.getLocation(), 100, 0, 0.2, 0);
-
-        }
+        Particles.showForAll(Particle.LAVA, p.getLocation(), 40, 0, 0.2, 0, 0, 0);
+        Particles.showForAll(Particle.EXPLOSION, p.getLocation(), 10, 0, 0.2, 0, 0, 0);
+        Particles.showForAll(Particle.PORTAL, p.getLocation(), 100, 0, 0.2, 0, 0, 0);
 
 //Send Welcome Message
         p.sendMessage( ChatColor.YELLOW + "---------------SCHOOL WARS---------------");
@@ -98,5 +96,4 @@ public class JoinEvent implements Listener {
         }
 
     }
-
 }

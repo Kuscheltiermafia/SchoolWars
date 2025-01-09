@@ -1,3 +1,22 @@
+/*
+ * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
+ * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
+ * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
+ * ██║╚██╔╝██║██╔══██║██║  ██║██╔══╝      ██╔══██╗  ╚██╔╝
+ * ██║ ╚═╝ ██║██║  ██║██████╔╝███████╗    ██████╔╝   ██║
+ * ╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝ ╚══════╝    ╚═════╝    ╚═╝
+ *
+ * ██╗  ██╗██╗   ██╗███████╗ ██████╗██╗  ██╗███████╗██╗  ████████╗██╗███████╗██████╗ ███╗   ███╗ █████╗ ███████╗██╗ █████╗
+ * ██║ ██╔╝██║   ██║██╔════╝██╔════╝██║  ██║██╔════╝██║  ╚══██╔══╝██║██╔════╝██╔══██╗████╗ ████║██╔══██╗██╔════╝██║██╔══██╗
+ * █████╔╝ ██║   ██║███████╗██║     ███████║█████╗  ██║     ██║   ██║█████╗  ██████╔╝██╔████╔██║███████║█████╗  ██║███████║
+ * ██╔═██╗ ██║   ██║╚════██║██║     ██╔══██║██╔══╝  ██║     ██║   ██║██╔══╝  ██╔══██╗██║╚██╔╝██║██╔══██║██╔══╝  ██║██╔══██║
+ * ██║  ██╗╚██████╔╝███████║╚██████╗██║  ██║███████╗███████╗██║   ██║███████╗██║  ██║██║ ╚═╝ ██║██║  ██║██║     ██║██║  ██║
+ * ╚═╝  ╚═╝ ╚═════╝ ╚══════╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝   ╚═╝╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝
+ *
+ * This is a plugin from Morgon and CrAzyA22 - Unless explicitly stated otherwise you are not permitted to use any of the given code!
+ *
+ */
+
 package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.items.Items;
@@ -12,15 +31,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-import static de.kuscheltiermafia.schoolwars.SchoolWars.world;
-
 public class SchulbuchLevels implements Listener {
+
     public static HashMap<Player, Integer> knowledgeAquiered = new HashMap<Player, Integer>();
     public static ArrayList<Location> bookshelfLoc = new ArrayList<Location>();
     public static int random;
@@ -84,10 +101,7 @@ public class SchulbuchLevels implements Listener {
     public void onFindSchulbuch(PlayerInteractEvent e) {
         if(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             if(e.getPlayer().getInventory().getItemInMainHand().equals(Items.ausleihschein)) {
-                try {
-                    Area.getAreaByLocation(bookshelfLoc.get(random));
-                    e.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "-- Nächstes Schulbuch befindet sich in: " + ChatColor.RED + Area.getAreaByLocation(bookshelfLoc.get(random)).name() + ChatColor.GRAY + " --"));
-                }catch (Exception ignored){}
+                e.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "-- Nächstes Schulbuch befindet sich in: " + ChatColor.RED + Area.getAreaByLocation(bookshelfLoc.get(random)).name() + ChatColor.GRAY + " --"));
             }
         }
     }

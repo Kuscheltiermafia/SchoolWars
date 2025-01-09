@@ -1,11 +1,30 @@
+/*
+ * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
+ * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
+ * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
+ * ██║╚██╔╝██║██╔══██║██║  ██║██╔══╝      ██╔══██╗  ╚██╔╝
+ * ██║ ╚═╝ ██║██║  ██║██████╔╝███████╗    ██████╔╝   ██║
+ * ╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝ ╚══════╝    ╚═════╝    ╚═╝
+ *
+ * ██╗  ██╗██╗   ██╗███████╗ ██████╗██╗  ██╗███████╗██╗  ████████╗██╗███████╗██████╗ ███╗   ███╗ █████╗ ███████╗██╗ █████╗
+ * ██║ ██╔╝██║   ██║██╔════╝██╔════╝██║  ██║██╔════╝██║  ╚══██╔══╝██║██╔════╝██╔══██╗████╗ ████║██╔══██╗██╔════╝██║██╔══██╗
+ * █████╔╝ ██║   ██║███████╗██║     ███████║█████╗  ██║     ██║   ██║█████╗  ██████╔╝██╔████╔██║███████║█████╗  ██║███████║
+ * ██╔═██╗ ██║   ██║╚════██║██║     ██╔══██║██╔══╝  ██║     ██║   ██║██╔══╝  ██╔══██╗██║╚██╔╝██║██╔══██║██╔══╝  ██║██╔══██║
+ * ██║  ██╗╚██████╔╝███████║╚██████╗██║  ██║███████╗███████╗██║   ██║███████╗██║  ██║██║ ╚═╝ ██║██║  ██║██║     ██║██║  ██║
+ * ╚═╝  ╚═╝ ╚═════╝ ╚══════╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝   ╚═╝╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝
+ *
+ * This is a plugin from Morgon and CrAzyA22 - Unless explicitly stated otherwise you are not permitted to use any of the given code!
+ *
+ */
+
 package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.items.Items;
+import io.github.realMorgon.sunriseLib.Message;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -13,7 +32,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Locale;
 import java.util.Random;
 
 import static de.kuscheltiermafia.schoolwars.SchoolWars.world;
@@ -39,8 +57,6 @@ public class Generalschluessel implements Listener {
 
             if (e.getItem().equals(Items.generalSchluessel) && block.getType() == Material.IRON_DOOR) {
 
-                double sekiRisk = SchoolWars.playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk;
-
                 e.setCancelled(true);
 
                 Door door = (Door) block.getBlockData();
@@ -58,27 +74,22 @@ public class Generalschluessel implements Listener {
                     }
                 }.runTaskLater(SchoolWars.getPlugin(), 20 * 5);
 
-                 sekiRisk += 5;
+                SchoolWars.playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk += 5;
 
                 Random random = new Random();
-                int randomInt = random.nextInt(100);
+                int randomRisk = random.nextInt(100);
 
-                if (randomInt <= sekiRisk){
-                    for (Entity entity : world.getNearbyEntities(block.getLocation(), 5, 5, 5)) {
-                        if (entity instanceof Player) {
-                            Player player = (Player) entity;
-                            player.sendMessage("Die Sekritärin hat dich erwischt!");
-                        }
+                if (randomRisk <= SchoolWars.playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk){
+                    int randomMessage = random.nextInt(10);
+                    if (randomMessage == 1){
+                        Message.sendInArea("§4Die Kollegin von der Seki-Frau hat dich erwischt!", block.getLocation(), 5, 3, 5);
+                    }else {
+                        Message.sendInArea("§4Die Seki-Frau hat dich erwischt!", block.getLocation(), 5, 3, 5);
                     }
-
                     summonSekritaerin(block.getLocation());
-
                 }
-
 
             }
         }catch (Exception ignored){}
-
     }
-
 }
