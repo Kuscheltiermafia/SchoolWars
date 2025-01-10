@@ -23,13 +23,23 @@ import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
 import de.kuscheltiermafia.schoolwars.Team;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
+
+import static de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer.revivePlayer;
+import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
 
 public class EndGame {
 
     public static void end(){
         SchoolWars.gameStarted = false;
+
+        for(Player p : Bukkit.getOnlinePlayers()) {
+            if(!playerMirror.get(p.getName()).isAlive()) {
+                revivePlayer(p, p);
+            }
+        }
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             Team.resetPlayer(p);
@@ -39,5 +49,13 @@ public class EndGame {
         for (Villager lehrer : Lehrer.lehrerEntityList) {
             lehrer.remove();
         }
+
+        for(BlockDisplay ranzen : Ranzen.placedRanzen.keySet()) {
+            Ranzen.placedRanzen.get(ranzen).remove();
+            ranzen.remove();
+        }
+
+        Lehrer.removeAllLehrer();
+        playerMirror.clear();
     }
 }

@@ -22,14 +22,11 @@ package de.kuscheltiermafia.schoolwars;
 import de.kuscheltiermafia.schoolwars.commands.*;
 import de.kuscheltiermafia.schoolwars.events.*;
 import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
-import de.kuscheltiermafia.schoolwars.mechanics.PlayerDeath;
-import de.kuscheltiermafia.schoolwars.mechanics.DialogueHandler;
+import de.kuscheltiermafia.schoolwars.mechanics.*;
 import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.lehrer.LehrerQuests;
 import de.kuscheltiermafia.schoolwars.lehrer.SekretariatStundenplan;
-import de.kuscheltiermafia.schoolwars.mechanics.PlayerStun;
-import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
 import de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror;
 import de.kuscheltiermafia.schoolwars.win_conditions.AtombombeEvents;
 import io.github.realMorgon.sunriseLib.SunriseLib;
@@ -39,8 +36,6 @@ import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.HashMap;
 
 import static de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer.revivePlayer;
 import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
@@ -121,19 +116,7 @@ public final class SchoolWars extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        for(Player p : Bukkit.getOnlinePlayers()) {
-            if(!playerMirror.get(p.getName()).isAlive()) {
-                revivePlayer(p, p);
-            }
-        }
-
-        for(BlockDisplay ranzen : Ranzen.placedRanzen.keySet()) {
-            Ranzen.placedRanzen.get(ranzen).remove();
-            ranzen.remove();
-        }
-
-        Lehrer.removeAllLehrer();
-        playerMirror.clear();
+        EndGame.end();
     }
 
     public static SchoolWars getPlugin(){
