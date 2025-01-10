@@ -36,27 +36,25 @@ import static de.kuscheltiermafia.schoolwars.mechanics.Ranzen.ranzenAmount;
 import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
 
 public enum Team {
-    SPORTLER(ChatColor.DARK_RED + "sportler", ChatColor.DARK_RED + "[Sport] ", ChatColor.DARK_RED + "Sportler", Items.sport_ranzen, new Location(Bukkit.getWorld("schoolwars"), 68.5, 80.0, 167.0, 90, 0)),
-    SPRACHLER(ChatColor.GOLD + "sprachler", ChatColor.GOLD + "[Sprache] ", ChatColor.GOLD + "Sprachler", Items.sprach_ranzen, new Location(Bukkit.getWorld("schoolwars"), -21.5, 88.0, 146.0, -90, 0)),
-    NWS(ChatColor.GREEN + "naturwissenschaftler", ChatColor.GREEN + "[NWS] ", ChatColor.GREEN + "Naturwissenschaftler", Items.nws_ranzen, new  Location(Bukkit.getWorld("schoolwars"), 4.5, 81.0, 191.5, 90, 0));
+    SPORTLER(ChatColor.DARK_RED + "sportler", ChatColor.DARK_RED + "[Sport] ", ChatColor.DARK_RED + "Sportler", new Location(Bukkit.getWorld("schoolwars"), 68.5, 80.0, 167.0, 90, 0)),
+    SPRACHLER(ChatColor.GOLD + "sprachler", ChatColor.GOLD + "[Sprache] ", ChatColor.GOLD + "Sprachler", new Location(Bukkit.getWorld("schoolwars"), -21.5, 88.0, 146.0, -90, 0)),
+    NWS(ChatColor.GREEN + "naturwissenschaftler", ChatColor.GREEN + "[NWS] ", ChatColor.GREEN + "Naturwissenschaftler", new Location(Bukkit.getWorld("schoolwars"), 4.5, 81.0, 191.5, 90, 0));
 
     public final String teamName;
     public final String prefix;
     public final String joinMessage;
-    public final ItemStack ranzen;
     public final Location spawn;
 
-    public ArrayList<String> mitglieder;
+    public ItemStack ranzen;
+
+    public final ArrayList<String> mitglieder = new ArrayList<>();
     public double sekiRisk;
 
-    Team(String teamName, String prefix, String joinMessage, ItemStack ranzen, Location spawn) {
+    Team(String teamName, String prefix, String joinMessage, Location spawn) {
         this.teamName = teamName;
         this.prefix = prefix;
         this.joinMessage = joinMessage;
-        this.ranzen = ranzen;
         this.spawn = spawn;
-
-        mitglieder = new ArrayList<>();
     }
 
 
@@ -71,7 +69,7 @@ public enum Team {
 
         if (!SchoolWars.gameStarted) {
             p.getInventory().addItem(ranzen);
-            ranzenAmount.put(this, ranzenAmount.get(teamName) + 1);
+            ranzenAmount.put(this, ranzenAmount.get(this) + 1);
             p.getInventory().addItem(Items.schulbuch1);
         }
 

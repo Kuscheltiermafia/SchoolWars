@@ -19,6 +19,7 @@
 
 package de.kuscheltiermafia.schoolwars.items;
 
+import de.kuscheltiermafia.schoolwars.Team;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -302,6 +303,11 @@ public class Items {
         itemList.add(sprach_ranzen);
         sport_ranzen = createItem(Material.RED_WOOL, "§4Roter Ranzen", 1, 1, ranzen_lore, false, false, false);
         itemList.add(sport_ranzen);
+
+        Team.SPORTLER.ranzen = Items.sport_ranzen;
+        Team.SPRACHLER.ranzen = Items.sprach_ranzen;
+        Team.NWS.ranzen = Items.nws_ranzen;
+
     }
 
 //Create item method

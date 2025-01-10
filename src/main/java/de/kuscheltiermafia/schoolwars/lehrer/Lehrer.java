@@ -103,12 +103,7 @@ public enum Lehrer {
     }
 
     public static Lehrer getLehrerByEntity(Entity e) {
-            for(Lehrer lehrer : Lehrer.values()) {
-                if(e.getCustomName().substring(6).equals(lehrer.name())) {
-                    return lehrer;
-                }
-            }
-        return null;
+        return getLehrerByName(e.getCustomName().substring(5));
     }
 
     public static void removeAllLehrer() {

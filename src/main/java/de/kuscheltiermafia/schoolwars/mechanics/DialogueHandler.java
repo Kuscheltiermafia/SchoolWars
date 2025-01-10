@@ -82,6 +82,7 @@ public class DialogueHandler implements Listener {
         }
     }
 
+    /*
     @EventHandler
     public void onSneak(PlayerToggleSneakEvent e) {
         if(playerMirror.get(e.getPlayer().getName()).getCurrentDialogueStep() != null) {
@@ -89,6 +90,8 @@ public class DialogueHandler implements Listener {
             sendDialogue(e.getPlayer());
         }
     }
+
+     */
 
     @EventHandler
     public void onLehrerKlick(PlayerInteractEntityEvent e) {

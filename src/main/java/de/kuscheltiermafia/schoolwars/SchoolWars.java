@@ -21,7 +21,6 @@ package de.kuscheltiermafia.schoolwars;
 
 import de.kuscheltiermafia.schoolwars.commands.*;
 import de.kuscheltiermafia.schoolwars.events.*;
-import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
 import de.kuscheltiermafia.schoolwars.mechanics.*;
 import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.items.Items;
@@ -32,12 +31,11 @@ import de.kuscheltiermafia.schoolwars.win_conditions.AtombombeEvents;
 import io.github.realMorgon.sunriseLib.SunriseLib;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import static de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer.revivePlayer;
+import static de.kuscheltiermafia.schoolwars.mechanics.Ranzen.ranzenAmount;
 import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
 
 
@@ -111,6 +109,8 @@ public final class SchoolWars extends JavaPlugin {
         for (Player p : Bukkit.getOnlinePlayers()) {
             Team.resetPlayer(p);
         }
+
+        getLogger().info("SchoolWars has been enabled!");
 
     }
 
