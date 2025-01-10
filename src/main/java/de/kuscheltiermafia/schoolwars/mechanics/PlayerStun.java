@@ -1,4 +1,4 @@
-/**
+/*
  * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
  * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
  * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
@@ -36,7 +36,7 @@ import java.util.HashMap;
 
 public class PlayerStun implements Listener {
 
-    public static ArrayList<Player> stunned = new ArrayList<Player>();
+    public static ArrayList<Player> stunned = new ArrayList<>();
     public static HashMap<Player, ItemStack[]> playerInvsave = new HashMap<>();
 
 
@@ -76,7 +76,7 @@ public class PlayerStun implements Listener {
                     p.teleport(p.getLocation().add(0, 2, 0));
                 }
             }
-        }.runTaskLater(SchoolWars.getPlugin(), duration * 20);
+        }.runTaskLater(SchoolWars.getPlugin(), duration * 20L);
 
     }
 

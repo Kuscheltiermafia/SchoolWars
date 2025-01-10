@@ -1,4 +1,4 @@
-/**
+/*
  * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
  * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
  * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
@@ -99,34 +99,34 @@ public class Items {
     public static void initItems() {
 
 //Waffen
-        minas_flasche = weaponiseItem(createItem(Material.GLASS_BOTTLE, "§4Minas' Flasche", 1, 1, null, false, false, false), 3, 1, EquipmentSlot.HAND);
+        minas_flasche = weaponizeItem(createItem(Material.GLASS_BOTTLE, "§4Minas' Flasche", 1, 1, null, false, false, false), 3, 1, EquipmentSlot.HAND);
         itemList.add(minas_flasche);
 
-        buffed_minas_flasche = weaponiseItem(createItem(Material.GLASS_BOTTLE, "§5§l§kA§r§4 Minas' Flasche §r§5§l§kA", 1, 1, null, true, false, false), 10, 0.95, EquipmentSlot.HAND);
+        buffed_minas_flasche = weaponizeItem(createItem(Material.GLASS_BOTTLE, "§5§l§kA§r§4 Minas' Flasche §r§5§l§kA", 1, 1, null, true, false, false), 10, 0.95, EquipmentSlot.HAND);
         itemList.add(buffed_minas_flasche);
 
-        schulbuch1 = weaponiseItem(createItem(Material.KNOWLEDGE_BOOK, ChatColor.BLUE + "Fokus Kampfkunst", 1, 1, null, false, false, false), 3, 1, EquipmentSlot.HAND);
+        schulbuch1 = weaponizeItem(createItem(Material.KNOWLEDGE_BOOK, ChatColor.BLUE + "Fokus Kampfkunst", 1, 1, null, false, false, false), 3, 1, EquipmentSlot.HAND);
         itemList.add(schulbuch1);
 
-        schulbuch2 = weaponiseItem(createItem(Material.KNOWLEDGE_BOOK, ChatColor.DARK_BLUE + "Diercke Slam", 1, 1, null, false, false, false), 6, 1.1, EquipmentSlot.HAND);
+        schulbuch2 = weaponizeItem(createItem(Material.KNOWLEDGE_BOOK, ChatColor.DARK_BLUE + "Diercke Slam", 1, 1, null, false, false, false), 6, 1.1, EquipmentSlot.HAND);
         itemList.add(schulbuch2);
 
-        schulbuch3 = weaponiseItem(createItem(Material.KNOWLEDGE_BOOK, ChatColor.RED + "Dornbader Schlag", 1, 1, null, false, false, false), 9, 1.2, EquipmentSlot.HAND);
+        schulbuch3 = weaponizeItem(createItem(Material.KNOWLEDGE_BOOK, ChatColor.RED + "Dornbader Schlag", 1, 1, null, false, false, false), 9, 1.2, EquipmentSlot.HAND);
         itemList.add(schulbuch3);
 
-        schulbuch4 = weaponiseItem(createItem(Material.KNOWLEDGE_BOOK, ChatColor.GREEN + "Green Line to Hell", 1, 1, null, false, false, false), 12, 1.3, EquipmentSlot.HAND);
+        schulbuch4 = weaponizeItem(createItem(Material.KNOWLEDGE_BOOK, ChatColor.GREEN + "Green Line to Hell", 1, 1, null, false, false, false), 12, 1.3, EquipmentSlot.HAND);
         itemList.add(schulbuch4);
 
-        schulbuch5 = weaponiseItem(createItem(Material.KNOWLEDGE_BOOK, ChatColor.DARK_RED + "C.C.Buchner CHAOS", 1, 1, null, false, false, false), 15, 1.4, EquipmentSlot.HAND);
+        schulbuch5 = weaponizeItem(createItem(Material.KNOWLEDGE_BOOK, ChatColor.DARK_RED + "C.C.Buchner CHAOS", 1, 1, null, false, false, false), 15, 1.4, EquipmentSlot.HAND);
         itemList.add(schulbuch5);
 
         xlr_kabel = createItem(Material.LEAD, ChatColor.DARK_GRAY + "XLR Kabel", 1, 16, null, false, false, false);
         itemList.add(xlr_kabel);
 
-        attack_stuhl = weaponiseItem(createItem(Material.OAK_STAIRS, ChatColor.WHITE + "Stuhl", 1, 1, null, false, false, false), 2, 0.5, EquipmentSlot.HAND);
+        attack_stuhl = weaponizeItem(createItem(Material.OAK_STAIRS, ChatColor.WHITE + "Stuhl", 1, 1, null, false, false, false), 2, 0.5, EquipmentSlot.HAND);
         itemList.add(attack_stuhl);
 
-        buffed_stuhl = weaponiseItem(createItem(Material.OAK_STAIRS, "§5§l§kA§r§f Stuhl §r§5§l§kA", 1, 1, null, true, false, false), 1, 0.5, EquipmentSlot.HAND);
+        buffed_stuhl = weaponizeItem(createItem(Material.OAK_STAIRS, "§5§l§kA§r§f Stuhl §r§5§l§kA", 1, 1, null, true, false, false), 1, 0.5, EquipmentSlot.HAND);
         itemList.add(buffed_stuhl);
 
         strick = createItem(Material.LEAD, ChatColor.BOLD + "" + ChatColor.DARK_RED + "Du bist momentan nicht in der Lage dich zu bewegen!", 1, 1, null, true, false, false);
@@ -318,16 +318,15 @@ public class Items {
         meta.setEnchantmentGlintOverride(glint);
         meta.setHideTooltip(hideTooltip);
 
-        if (hideAdditionalTooltip) {
-            meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
-        }
+        if (hideAdditionalTooltip) meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+
 
         genItem.setItemMeta(meta);
 
         return genItem;
     }
 
-    public static ItemStack weaponiseItem(ItemStack item, double damage, double attackSpeed, EquipmentSlot slot) {
+    public static ItemStack weaponizeItem(ItemStack item, double damage, double attackSpeed, EquipmentSlot slot) {
 
         ItemMeta meta = item.getItemMeta();
         AttributeModifier damageModifier = new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", damage, AttributeModifier.Operation.ADD_NUMBER, slot);

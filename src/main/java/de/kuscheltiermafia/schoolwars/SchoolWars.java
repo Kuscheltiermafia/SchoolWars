@@ -1,4 +1,4 @@
-/**
+/*
  * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
  * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
  * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
@@ -21,12 +21,12 @@ package de.kuscheltiermafia.schoolwars;
 
 import de.kuscheltiermafia.schoolwars.commands.*;
 import de.kuscheltiermafia.schoolwars.events.*;
+import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
+import de.kuscheltiermafia.schoolwars.mechanics.PlayerDeath;
 import de.kuscheltiermafia.schoolwars.mechanics.DialogueHandler;
-import de.kuscheltiermafia.schoolwars.teams.Teams;
 import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.lehrer.LehrerQuests;
-import de.kuscheltiermafia.schoolwars.lehrer.LehrerHandler;
 import de.kuscheltiermafia.schoolwars.lehrer.SekretariatStundenplan;
 import de.kuscheltiermafia.schoolwars.mechanics.PlayerStun;
 import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
@@ -37,14 +37,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.HashMap;
 
-import static de.kuscheltiermafia.schoolwars.lehrer.LehrerHandler.lehrerEntityList;
 import static de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer.revivePlayer;
 
 
@@ -53,7 +50,6 @@ public final class SchoolWars extends JavaPlugin {
     public static SchoolWars plugin;
 
     private static int playerCount = 0;
-    static Scoreboard board;
 
     public static boolean gameStarted;
 
@@ -70,7 +66,6 @@ public final class SchoolWars extends JavaPlugin {
         gameStarted = false;
 
         plugin = this;
-        board = Bukkit.getScoreboardManager().getNewScoreboard();
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             try {
@@ -84,7 +79,7 @@ public final class SchoolWars extends JavaPlugin {
         GenerateItems.generateItemLocations();
         Ranzen.generateRanzenCounter();
         //LehrerQuests.initLehrerAlgorithm();
-        LehrerHandler.initLehrerQuests();
+        LehrerQuests.initLehrerQuests();
         DialogueHandler.initDialogues();
 
         PluginManager pluginManager = Bukkit.getPluginManager();
@@ -92,9 +87,8 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new JoinEvent(), this);
         pluginManager.registerEvents(new LeaveEvent(), this);
         pluginManager.registerEvents(new InteractionEvent(), this);
-        pluginManager.registerEvents(new DeathEvent(), this);
+        pluginManager.registerEvents(new PlayerDeath(), this);
         pluginManager.registerEvents(new RevivePlayerEvent(), this);
-        pluginManager.registerEvents(new RanzenEvents(), this);
         pluginManager.registerEvents(new HandleKuehlpack(), this);
         pluginManager.registerEvents(new PickupDrops(), this);
         pluginManager.registerEvents(new AtombombeEvents(), this);
@@ -116,12 +110,12 @@ public final class SchoolWars extends JavaPlugin {
         getCommand("debug").setExecutor(new Debug());
 
 
-        Teams.clearTeams();
+        Team.clearTeams();
         Ranzen.clearRanzen();
 
 
-        for (Player p :Bukkit.getOnlinePlayers()) {
-            Teams.resetPlayer(p);
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            Team.resetPlayer(p);
         }
 
     }
@@ -139,7 +133,7 @@ public final class SchoolWars extends JavaPlugin {
             ranzen.remove();
         }
 
-        LehrerHandler.removeLehrer();
+        Lehrer.removeAllLehrer();
         playerMirror.clear();
     }
 

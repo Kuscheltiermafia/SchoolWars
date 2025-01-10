@@ -43,6 +43,8 @@ public class LeaveEvent implements Listener {
             SchoolWars.gameStarted = false;
         }
 
+        SchoolWars.playerMirror.remove(e.getPlayer().getName());
+
     }
 
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
  * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
  * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
@@ -33,12 +33,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.ArrayList;
 
 public class Minasisierung implements Listener {
 
@@ -46,18 +42,17 @@ public class Minasisierung implements Listener {
 
     public static void onMinasisierung(Player p) {
         for(ItemStack item : p.getInventory().getContents()) {
-            try {
-                if(!item.equals(null)) {
-                    if (item.equals(Items.minas_flasche)) {
-                        item.setType(Items.buffed_minas_flasche.getType());
-                        item.setItemMeta(Items.buffed_minas_flasche.getItemMeta());
-                    }
-                    if (item.equals(Items.attack_stuhl)) {
-                        item.setType(Items.buffed_stuhl.getType());
-                        item.setItemMeta(Items.buffed_stuhl.getItemMeta());
-                    }
+
+            if(item != null) {
+                if (item.equals(Items.minas_flasche)) {
+                    item.setType(Items.buffed_minas_flasche.getType());
+                    item.setItemMeta(Items.buffed_minas_flasche.getItemMeta());
                 }
-            } catch (Exception ignored){}
+                if (item.equals(Items.attack_stuhl)) {
+                    item.setType(Items.buffed_stuhl.getType());
+                    item.setItemMeta(Items.buffed_stuhl.getItemMeta());
+                }
+            }
         }
 
 
@@ -83,22 +78,6 @@ public class Minasisierung implements Listener {
                     }
                 }
             }.runTaskLater(SchoolWars.getPlugin(), i);
-        }
-    }
-
-    @EventHandler
-    public void OnStuhlHit(EntityDamageByEntityEvent e) {
-        if(e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
-            Player hitter = (Player) e.getDamager();
-            Player hitted = (Player) e.getEntity();
-
-            if(hitter.getInventory().getItemInMainHand().equals(Items.buffed_stuhl) && hitter.getCooldown(Material.OAK_STAIRS) < 2) {
-                hitter.setCooldown(Material.OAK_STAIRS, 20 * 6);
-
-                ParticleHandler.createParticles(hitted.getLocation().add(0, 1, 0), Particle.CRIT, 20, 0.2, true, null);
-                ParticleHandler.createParticles(hitted.getLocation().add(0, 1, 0), Particle.CLOUD, 30, 0.2, true, null);
-                PlayerStun.stunPlayer(hitted, 3, true);
-            }
         }
     }
 }

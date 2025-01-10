@@ -1,10 +1,27 @@
+/*
+ * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
+ * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
+ * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
+ * ██║╚██╔╝██║██╔══██║██║  ██║██╔══╝      ██╔══██╗  ╚██╔╝
+ * ██║ ╚═╝ ██║██║  ██║██████╔╝███████╗    ██████╔╝   ██║
+ * ╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝ ╚══════╝    ╚═════╝    ╚═╝
+ *
+ * ██╗  ██╗██╗   ██╗███████╗ ██████╗██╗  ██╗███████╗██╗  ████████╗██╗███████╗██████╗ ███╗   ███╗ █████╗ ███████╗██╗ █████╗
+ * ██║ ██╔╝██║   ██║██╔════╝██╔════╝██║  ██║██╔════╝██║  ╚══██╔══╝██║██╔════╝██╔══██╗████╗ ████║██╔══██╗██╔════╝██║██╔══██╗
+ * █████╔╝ ██║   ██║███████╗██║     ███████║█████╗  ██║     ██║   ██║█████╗  ██████╔╝██╔████╔██║███████║█████╗  ██║███████║
+ * ██╔═██╗ ██║   ██║╚════██║██║     ██╔══██║██╔══╝  ██║     ██║   ██║██╔══╝  ██╔══██╗██║╚██╔╝██║██╔══██║██╔══╝  ██║██╔══██║
+ * ██║  ██╗╚██████╔╝███████║╚██████╗██║  ██║███████╗███████╗██║   ██║███████╗██║  ██║██║ ╚═╝ ██║██║  ██║██║     ██║██║  ██║
+ * ╚═╝  ╚═╝ ╚═════╝ ╚══════╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝   ╚═╝╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝
+ *
+ * This is a plugin from Morgon and CrAzyA22 - Unless explicitly stated otherwise you are not permitted to use any of the given code!
+ *
+ */
+
 package de.kuscheltiermafia.schoolwars.mechanics;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
-import de.kuscheltiermafia.schoolwars.lehrer.LehrerHandler;
-import de.kuscheltiermafia.schoolwars.lehrer.Stundenplan;
-import de.kuscheltiermafia.schoolwars.teams.Teams;
+import de.kuscheltiermafia.schoolwars.Team;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -15,13 +32,12 @@ public class EndGame {
         SchoolWars.gameStarted = false;
 
         for (Player p : Bukkit.getOnlinePlayers()) {
-            Teams.resetPlayer(p);
+            Team.resetPlayer(p);
         }
-        Teams.clearTeams();
+        Team.clearTeams();
 
-        for (Villager lehrer : LehrerHandler.lehrerEntityList) {
+        for (Villager lehrer : Lehrer.lehrerEntityList) {
             lehrer.remove();
         }
     }
-
 }

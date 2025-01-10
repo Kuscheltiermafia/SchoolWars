@@ -1,4 +1,4 @@
-/**
+/*
  * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
  * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
  * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
@@ -21,19 +21,16 @@ package de.kuscheltiermafia.schoolwars.lehrer;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import io.github.realMorgon.sunriseLib.Sounds;
-import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Villager;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
-import static de.kuscheltiermafia.schoolwars.SchoolWars.world;
-import static de.kuscheltiermafia.schoolwars.lehrer.LehrerHandler.lehrerEntityList;
+import static de.kuscheltiermafia.schoolwars.lehrer.Lehrer.lehrerEntityList;
 
 public class Stundenplan {
 
@@ -76,7 +73,7 @@ public class Stundenplan {
                 if (!shuffledLehrer.isEmpty()) {
                     if (area.raum == Raum.GENERAL || shuffledLehrer.get(0).raum.equals(area.raum)) {
 
-                        LehrerHandler.summonLehrer(area.lehrerSpawnPos, shuffledLehrer.get(0));
+                        Lehrer.summonLehrer(area.lehrerSpawnPos, shuffledLehrer.get(0));
                         studenplan.put(shuffledLehrer.get(0), area);
                         shuffledLehrer.remove(0);
                         lehrerAmount++;
@@ -89,7 +86,6 @@ public class Stundenplan {
                 }
                 i++;
             } while (i < Area.values().length * 2 && !shuffledLehrer.isEmpty() && lehrerAmount < area.maxLehrerAmount);
-
         }
     }
 }

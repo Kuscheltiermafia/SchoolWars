@@ -1,4 +1,4 @@
-/**
+/*
  * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
  * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
  * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
@@ -39,7 +39,6 @@ public class HandleKuehlpack implements Listener {
 
             Player p = e.getPlayer();
             ItemFrame itemFrame = (ItemFrame) e.getRightClicked();
-            Location loc = itemFrame.getLocation();
 
             if (itemFrame.getItem().equals(Items.kuehlpack)) {
                 e.setCancelled(true);
@@ -47,7 +46,6 @@ public class HandleKuehlpack implements Listener {
                     p.getInventory().addItem(new ItemStack(Items.kuehlpack));
                 }
             }
-
         }
     }
 
@@ -58,5 +56,4 @@ public class HandleKuehlpack implements Listener {
             e.setCancelled(true);
         }
     }
-
 }

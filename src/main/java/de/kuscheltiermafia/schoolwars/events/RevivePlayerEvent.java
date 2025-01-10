@@ -1,4 +1,4 @@
-/**
+/*
  * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
  * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
  * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
@@ -22,30 +22,19 @@ package de.kuscheltiermafia.schoolwars.events;
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-
-import java.util.HashMap;
-import java.util.UUID;
 
 public class RevivePlayerEvent implements Listener {
-
 
     @EventHandler
     public static void onClickPlayer(PlayerInteractAtEntityEvent e) {
 
-        if (e.getRightClicked() instanceof Player) {
+        if (e.getRightClicked() instanceof Player target) {
 
             Player player = e.getPlayer();
-            Player target = (Player) e.getRightClicked();
 
             if (target.getLocation().distance(player.getLocation()) <= 3 && SchoolWars.playerMirror.get(target.getName()).isAlive() && player.getInventory().getItemInMainHand().equals(Items.kuehlpack) && !SchoolWars.playerMirror.get(player.getName()).isInCombat()) {
 
