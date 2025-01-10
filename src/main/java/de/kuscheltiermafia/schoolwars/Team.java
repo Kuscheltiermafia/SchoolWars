@@ -1,4 +1,4 @@
-/**
+/*
  * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
  * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
  * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
@@ -17,15 +17,76 @@
  *
  */
 
-package de.kuscheltiermafia.schoolwars.teams;
+package de.kuscheltiermafia.schoolwars;
 
-import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
+import de.kuscheltiermafia.schoolwars.items.Items;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class Teams {
+import static de.kuscheltiermafia.schoolwars.mechanics.Ranzen.ranzenAmount;
+
+public enum Team {
+    SPORTLER(ChatColor.DARK_RED + "sportler", ChatColor.DARK_RED + "[Sport] ", ChatColor.DARK_RED + "Sportler", Items.sport_ranzen, new Location(Bukkit.getWorld("schoolwars"), 68.5, 80.0, 167.0, 90, 0)),
+    SPRACHLER(ChatColor.GOLD + "sprachler", ChatColor.GOLD + "[Sprache] ", ChatColor.GOLD + "Sprachler", Items.sprach_ranzen, new Location(Bukkit.getWorld("schoolwars"), -21.5, 88.0, 146.0, -90, 0)),
+    NWS(ChatColor.GREEN + "naturwissenschaftler", ChatColor.GREEN + "[NWS] ", ChatColor.GREEN + "Naturwissenschaftler", Items.nws_ranzen, new  Location(Bukkit.getWorld("schoolwars"), 4.5, 81.0, 191.5, 90, 0));
+
+    public final String teamName;
+    public final String prefix;
+    public final String joinMessage;
+    public final ItemStack ranzen;
+    public final Location spawn;
+
+    public ArrayList<String> mitglieder;
+    public double sekiRisk;
+
+    Team(String teamName, String prefix, String joinMessage, ItemStack ranzen, Location spawn) {
+        this.teamName = teamName;
+        this.prefix = prefix;
+        this.joinMessage = joinMessage;
+        this.ranzen = ranzen;
+        this.spawn = spawn;
+
+        mitglieder = new ArrayList<>();
+    }
+
+
+    public void readyPlayer(Player p){
+        p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist ein " + joinMessage);
+
+        p.setDisplayName(prefix + p.getName());
+        p.setPlayerListName(prefix + p.getName());
+        p.setCustomName(prefix + p.getName());
+
+        SchoolWars.playerMirror.get(p.getName()).setTeam(this);
+
+        if (!SchoolWars.gameStarted) {
+            p.getInventory().addItem(ranzen);
+            ranzenAmount.put(this, ranzenAmount.get(teamName) + 1);
+            p.getInventory().addItem(Items.schulbuch1);
+        }
+
+
+        p.teleport(spawn);
+        p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 40, 1, false, false, false));
+    }
+
+
+    public void prepare(){
+        for(String s : mitglieder){
+            Player p = Bukkit.getPlayer(s);
+            readyPlayer(p);
+        }
+        sekiRisk = 0.0;
+    }
 
     public static void joinTeams(){
 
@@ -36,11 +97,11 @@ public class Teams {
 
         for (Player p : players) {
             if (i % 3 == 0) {
-                Team.SPRACHLER.mitglieder.add(p.getName());
+                SPRACHLER.mitglieder.add(p.getName());
             } else if (i % 3 == 1) {
-                Team.NWS.mitglieder.add(p.getName());
+                NWS.mitglieder.add(p.getName());
             } else {
-                Team.SPORTLER.mitglieder.add(p.getName());
+                SPORTLER.mitglieder.add(p.getName());
             }
             i--;
         }
@@ -48,10 +109,10 @@ public class Teams {
     }
 
     public static void clearTeams(){
-        if (Team.SPRACHLER.mitglieder != null) {
-            Team.SPRACHLER.mitglieder.clear();
-            Team.NWS.mitglieder.clear();
-            Team.SPORTLER.mitglieder.clear();
+        if (SPRACHLER.mitglieder != null) {
+            SPRACHLER.mitglieder.clear();
+            NWS.mitglieder.clear();
+            SPORTLER.mitglieder.clear();
         }
     }
 
@@ -59,4 +120,15 @@ public class Teams {
         p.setDisplayName(p.getName());
         p.setPlayerListName(p.getName());
     }
+
+    public static Team getByName(String name){
+        for(Team team : Team.values()){
+            if(team.teamName.equals(name)){
+                return team;
+            }
+        }
+        return null;
+    }
+
 }
+

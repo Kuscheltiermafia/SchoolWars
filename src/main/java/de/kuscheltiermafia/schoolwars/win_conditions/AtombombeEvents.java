@@ -1,4 +1,4 @@
-/**
+/*
  * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
  * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
  * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
@@ -23,8 +23,7 @@ import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.ProgressBarHandler;
-import de.kuscheltiermafia.schoolwars.teams.Team;
-import de.kuscheltiermafia.schoolwars.teams.Teams;
+import de.kuscheltiermafia.schoolwars.Team;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
@@ -50,8 +49,7 @@ import static de.kuscheltiermafia.schoolwars.SchoolWars.playerMirror;
 
 public class AtombombeEvents implements Listener {
 
-    ArrayList<ItemStack> zentrifugeInventory = new ArrayList<ItemStack>();
-    public static boolean zentrifugeActive;
+    ArrayList<ItemStack> zentrifugeInventory = new ArrayList<>();
 
     static boolean nukePlaced = false;
 
@@ -102,9 +100,8 @@ public class AtombombeEvents implements Listener {
     }
 
     public static int i = 0;
-    public static String progress;
 
-    public static void onZentrifugeVoll(ArrayList inv, Block b) {
+    public static void onZentrifugeVoll(ArrayList<ItemStack> inv, Block b) {
         if (inv.contains(Items.fluor) && inv.contains(Items.useless_uranium)) {
 
             new BukkitRunnable() {
@@ -197,7 +194,7 @@ public class AtombombeEvents implements Listener {
                             p.playSound(p.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 1);
                         }
                         Bukkit.getScheduler().cancelTask(this.getTaskId());
-                        Teams.clearTeams();
+                        Team.clearTeams();
                         nuke.remove();
                         nukePlaced = false;
                         SchoolWars.gameStarted = false;

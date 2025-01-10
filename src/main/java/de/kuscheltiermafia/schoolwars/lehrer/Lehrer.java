@@ -1,4 +1,4 @@
-/**
+/*
  * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
  * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
  * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
@@ -19,11 +19,17 @@
 
 package de.kuscheltiermafia.schoolwars.lehrer;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+
+import static de.kuscheltiermafia.schoolwars.lehrer.LehrerQuests.questLehrerList;
 
 public enum Lehrer {
 
@@ -71,6 +77,9 @@ public enum Lehrer {
     final Raum raum;
     final ArrayList<String> dialogue;
 
+    public static ArrayList<Lehrer> lehrerList = new ArrayList<>();
+    public static ArrayList<Villager> lehrerEntityList = new ArrayList<>();
+
     Lehrer(String name, Villager.Type type, Villager.Profession profession, boolean hasAI, double scale, boolean isSilent, boolean hasQuest, boolean isMale, Raum raum, @Nullable ArrayList<String> dialogue) {
         this.name = name;
         this.type = type;
@@ -100,6 +109,51 @@ public enum Lehrer {
                 }
             }
         return null;
+    }
+
+    public static void removeAllLehrer() {
+        for (Villager currentLehrer : lehrerEntityList) {
+            currentLehrer.remove();
+        }
+        lehrerList.clear();
+        lehrerEntityList.clear();
+    }
+
+    static Villager createLehrer(Location location, String name, Villager.Type type, Villager.Profession profession, boolean hasAI, double scale, boolean isSilent, boolean isMale) {
+
+        Villager currentLehrer = (Villager) Bukkit.getWorld("schoolwars").spawnEntity(location, EntityType.VILLAGER);
+
+        if(isMale) {
+            currentLehrer.setCustomName("Herr " + name);
+        }else{
+            currentLehrer.setCustomName("Frau " + name);
+        }
+        currentLehrer.setCustomNameVisible(true);
+        currentLehrer.setVillagerType(type);
+        currentLehrer.setAI(hasAI);
+        currentLehrer.setInvulnerable(true);
+        currentLehrer.setSilent(false);
+        currentLehrer.setCanPickupItems(false);
+        currentLehrer.setCollidable(true);
+        currentLehrer.setRemoveWhenFarAway(false);
+        currentLehrer.setPersistent(true);
+        currentLehrer.setSilent(isSilent);
+        currentLehrer.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(scale);
+
+        currentLehrer.setProfession(profession);
+
+        return currentLehrer;
+    }
+
+    public static Villager summonLehrer(Location loc, Lehrer lehrer) {
+        Villager currentLehrer = createLehrer(loc, lehrer.name, lehrer.type, lehrer.profession, lehrer.hasAI, lehrer.scale, lehrer.isSilent, lehrer.isMale);
+        currentLehrer.setProfession(lehrer.profession);
+        lehrerList.add(lehrer);
+        lehrerEntityList.add(currentLehrer);
+        if (lehrer.hasQuest) {
+            questLehrerList.add(currentLehrer);
+        }
+        return currentLehrer;
     }
 
     public ArrayList<String> getDialogue() {

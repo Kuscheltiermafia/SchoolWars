@@ -39,7 +39,7 @@ import org.bukkit.entity.Villager;
 import java.util.ArrayList;
 
 import static de.kuscheltiermafia.schoolwars.SchoolWars.playerMirror;
-import static de.kuscheltiermafia.schoolwars.lehrer.LehrerHandler.lehrerEntityList;
+import static de.kuscheltiermafia.schoolwars.lehrer.Lehrer.lehrerEntityList;
 
 public class Debug implements CommandExecutor {
 
@@ -106,7 +106,7 @@ public class Debug implements CommandExecutor {
                 case "lehrer":
                     if (args[1].equals("spawn")) {
                         for(Lehrer lehrer : Lehrer.values()) {
-                            Villager testLehrer = LehrerHandler.summonLehrer(p.getLocation(), lehrer);
+                            Villager testLehrer = Lehrer.summonLehrer(p.getLocation(), lehrer);
                             if(testLehrer.getCustomName().contains(args[2])) {
                                 Bukkit.broadcastMessage("Found lehrer");
                                 p.sendMessage(debugPrefix + "Spawned " + lehrer.name() + "!");
