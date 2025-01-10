@@ -22,8 +22,7 @@ package de.kuscheltiermafia.schoolwars.events;
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.commands.Debug;
 import de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror;
-import de.kuscheltiermafia.schoolwars.teams.Team;
-import de.kuscheltiermafia.schoolwars.teams.Teams;
+import de.kuscheltiermafia.schoolwars.Team;
 import io.github.realMorgon.sunriseLib.Particles;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -86,7 +85,7 @@ public class JoinEvent implements Listener {
             e.getPlayer().sendMessage(ChatColor.YELLOW + "[SchoolWars] Das Spiel hat noch nicht begonnen.");
             p.setGameMode(GameMode.SURVIVAL);
 
-            Teams.resetPlayer(p);
+            Team.resetPlayer(p);
         }
 
         e.setJoinMessage("");

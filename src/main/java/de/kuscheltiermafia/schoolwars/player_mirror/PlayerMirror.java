@@ -1,4 +1,4 @@
-/**
+/*
  * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
  * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
  * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
@@ -20,7 +20,7 @@
 package de.kuscheltiermafia.schoolwars.player_mirror;
 
 import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
-import de.kuscheltiermafia.schoolwars.teams.Team;
+import de.kuscheltiermafia.schoolwars.Team;
 
 import java.util.ArrayList;
 import java.util.HashMap;

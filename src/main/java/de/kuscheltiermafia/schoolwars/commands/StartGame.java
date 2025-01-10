@@ -20,8 +20,7 @@
 package de.kuscheltiermafia.schoolwars.commands;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
-import de.kuscheltiermafia.schoolwars.teams.Team;
-import de.kuscheltiermafia.schoolwars.teams.Teams;
+import de.kuscheltiermafia.schoolwars.Team;
 import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.lehrer.Stundenplan;
 import de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer;
@@ -62,9 +61,9 @@ public class StartGame implements CommandExecutor {
         Stundenplan.updateStundenplan(false);
 
 //Set Playernames and ready them for battle
-        Teams.clearTeams();
+        Team.clearTeams();
         for (Player p : Bukkit.getOnlinePlayers()) {
-            Teams.resetPlayer(p);
+            Team.resetPlayer(p);
             p.getInventory().clear();
             p.setGameMode(GameMode.SURVIVAL);
             p.setHealth(20);
@@ -80,7 +79,7 @@ public class StartGame implements CommandExecutor {
         }
 
 //prepare Teams
-        Teams.joinTeams();
+        Team.joinTeams();
         Team.NWS.prepare();
         Team.SPORTLER.prepare();
         Team.SPRACHLER.prepare();

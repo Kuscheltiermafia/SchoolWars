@@ -88,38 +88,6 @@ public class InteractionEvent implements Listener {
         }
     }
 
-
-//Prevent dead Players from standing up
-    @EventHandler
-    public void onDismount(EntityDismountEvent e){
-        if (e.getEntity() instanceof Player){
-            if (e.getDismounted() instanceof Bat){
-                e.setCancelled(true);
-            }
-        }
-    }
-
-
-//Prevent dead Players from interacting
-    @EventHandler
-    public void onInteract(PlayerInteractEvent e) {
-        if (!playerMirror.get(e.getPlayer().getName()).isAlive()) {
-            e.setCancelled(true);
-        }
-
-    }
-
-//Prevent dead Players from hitting
-    @EventHandler
-    public void onPunch(EntityDamageByEntityEvent e) {
-        if (e.getDamager() instanceof Player) {
-            if (!playerMirror.get(e.getDamager().getName()).isAlive()) {
-                e.setCancelled(true);
-            }
-        }
-    }
-
-
     //Prevent Itemframe from being destroyed
     @EventHandler
     public void onDamageItemFrame(EntityDamageByEntityEvent e) {

@@ -17,19 +17,19 @@
  *
  */
 
-package de.kuscheltiermafia.schoolwars.events;
+package de.kuscheltiermafia.schoolwars.mechanics;
 
-import de.kuscheltiermafia.schoolwars.SchoolWars;
-import de.kuscheltiermafia.schoolwars.items.Items;
-import de.kuscheltiermafia.schoolwars.mechanics.Ranzen;
-import de.kuscheltiermafia.schoolwars.teams.Team;
+import de.kuscheltiermafia.schoolwars.Team;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDismountEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -37,7 +37,7 @@ import org.bukkit.potion.PotionEffectType;
 import static de.kuscheltiermafia.schoolwars.SchoolWars.*;
 import static de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer.playerBatMap;
 
-public class DeathEvent implements Listener {
+public class PlayerDeath implements Listener {
 
     @EventHandler
     public void onPlayerDeath(EntityDamageEvent e){
@@ -55,7 +55,7 @@ public class DeathEvent implements Listener {
 //destroy Ranzen
 
             if(player.getKiller() != null && player.getInventory().contains(team.ranzen)) {
-                Ranzen.destroyRanzen(player.getKiller(), team.teamName, player.getLocation());
+                Ranzen.destroyRanzen(player.getKiller(), team, player.getLocation());
                 player.getInventory().remove(new ItemStack(team.ranzen));
             }
 
@@ -104,6 +104,36 @@ public class DeathEvent implements Listener {
             mount.setPassenger(player);
 
             playerBatMap.put(player.getName(), mount.getUniqueId());
+        }
+    }
+
+    //Prevent dead Players from standing up
+    @EventHandler
+    public void onDismount(EntityDismountEvent e){
+        if (e.getEntity() instanceof Player){
+            if (e.getDismounted() instanceof Bat){
+                e.setCancelled(true);
+            }
+        }
+    }
+
+
+    //Prevent dead Players from interacting
+    @EventHandler
+    public void onInteract(PlayerInteractEvent e) {
+        if (!playerMirror.get(e.getPlayer().getName()).isAlive()) {
+            e.setCancelled(true);
+        }
+
+    }
+
+    //Prevent dead Players from hitting
+    @EventHandler
+    public void onPunch(EntityDamageByEntityEvent e) {
+        if (e.getDamager() instanceof Player) {
+            if (!playerMirror.get(e.getDamager().getName()).isAlive()) {
+                e.setCancelled(true);
+            }
         }
     }
 }

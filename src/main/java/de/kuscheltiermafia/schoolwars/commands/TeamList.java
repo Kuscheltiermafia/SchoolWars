@@ -19,7 +19,7 @@
 
 package de.kuscheltiermafia.schoolwars.commands;
 
-import de.kuscheltiermafia.schoolwars.teams.Team;
+import de.kuscheltiermafia.schoolwars.Team;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
