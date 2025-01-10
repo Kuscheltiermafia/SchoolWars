@@ -43,6 +43,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.HashMap;
 
 import static de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer.revivePlayer;
+import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
 
 
 public final class SchoolWars extends JavaPlugin {
@@ -52,8 +53,6 @@ public final class SchoolWars extends JavaPlugin {
     private static int playerCount = 0;
 
     public static boolean gameStarted;
-
-    public static HashMap<String, PlayerMirror> playerMirror = new HashMap<>();
 
     public static World world = Bukkit.getWorld("schoolwars");
 

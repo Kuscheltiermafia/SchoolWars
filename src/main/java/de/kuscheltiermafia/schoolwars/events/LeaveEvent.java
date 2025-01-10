@@ -29,6 +29,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
+
 public class LeaveEvent implements Listener {
 
     @EventHandler
@@ -43,7 +45,7 @@ public class LeaveEvent implements Listener {
             SchoolWars.gameStarted = false;
         }
 
-        SchoolWars.playerMirror.remove(e.getPlayer().getName());
+        playerMirror.remove(e.getPlayer().getName());
 
     }
 

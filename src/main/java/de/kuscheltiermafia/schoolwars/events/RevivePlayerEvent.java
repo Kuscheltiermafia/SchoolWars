@@ -27,6 +27,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
+import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
+
 public class RevivePlayerEvent implements Listener {
 
     @EventHandler
@@ -36,12 +38,12 @@ public class RevivePlayerEvent implements Listener {
 
             Player player = e.getPlayer();
 
-            if (target.getLocation().distance(player.getLocation()) <= 3 && SchoolWars.playerMirror.get(target.getName()).isAlive() && player.getInventory().getItemInMainHand().equals(Items.kuehlpack) && !SchoolWars.playerMirror.get(player.getName()).isInCombat()) {
+            if (target.getLocation().distance(player.getLocation()) <= 3 && playerMirror.get(target.getName()).isAlive() && player.getInventory().getItemInMainHand().equals(Items.kuehlpack) && !playerMirror.get(player.getName()).isInCombat()) {
 
                 RevivePlayer.revivePlayer(player, target);
 
                 player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
-                SchoolWars.playerMirror.get(player.getName()).setRevives(true);
+                playerMirror.get(player.getName()).setRevives(true);
 
             }
         }

@@ -35,6 +35,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Random;
 
 import static de.kuscheltiermafia.schoolwars.SchoolWars.world;
+import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
 
 public class Generalschluessel implements Listener {
 
@@ -74,12 +75,12 @@ public class Generalschluessel implements Listener {
                     }
                 }.runTaskLater(SchoolWars.getPlugin(), 20 * 5);
 
-                SchoolWars.playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk += 5;
+                playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk += 5;
 
                 Random random = new Random();
                 int randomRisk = random.nextInt(100);
 
-                if (randomRisk <= SchoolWars.playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk){
+                if (randomRisk <= playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk){
                     int randomMessage = random.nextInt(10);
                     if (randomMessage == 1){
                         Message.sendInArea("§4Die Kollegin von der Seki-Frau hat dich erwischt!", block.getLocation(), 5, 3, 5);

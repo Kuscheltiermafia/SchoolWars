@@ -24,7 +24,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-import static de.kuscheltiermafia.schoolwars.SchoolWars.playerMirror;
+import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
+
 
 public class Aufsicht implements Listener {
 

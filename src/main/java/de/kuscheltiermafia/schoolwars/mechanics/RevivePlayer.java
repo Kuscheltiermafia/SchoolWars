@@ -31,6 +31,8 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.HashMap;
 import java.util.UUID;
 
+import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
+
 public class RevivePlayer {
 
     public static HashMap<String, UUID> playerBatMap = new HashMap<>();
@@ -48,7 +50,7 @@ public class RevivePlayer {
 
         playerBatMap.remove(target.getName());
 
-        SchoolWars.playerMirror.get(target.getName()).setAlive(true);
+        playerMirror.get(target.getName()).setAlive(true);
 
         target.sendTitle("§aDu wurdest wiederbelebt!", player.getDisplayName() + ChatColor.GRAY + " hat dir geholfen", 10, 70, 20);
     }

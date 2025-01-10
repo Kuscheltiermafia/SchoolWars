@@ -33,7 +33,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 
-import static de.kuscheltiermafia.schoolwars.SchoolWars.playerMirror;
+import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
 
 
 public class StartGame implements CommandExecutor {

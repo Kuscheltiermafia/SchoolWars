@@ -33,6 +33,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
+
 public class DialogueHandler implements Listener {
 
     public static ArrayList<Entity> talkedEntities = new ArrayList<>();
@@ -52,19 +54,19 @@ public class DialogueHandler implements Listener {
     }
 
     public static void createDialogue(Player p, ArrayList<String> dialogue) {
-        if(SchoolWars.playerMirror.get(p.getName()).getCurrentDialogueStep() != null) {
-            SchoolWars.playerMirror.get(p.getName()).setCurrentDialogue(dialogue);
-            SchoolWars.playerMirror.get(p.getName()).setCurrentDialogueStep(0);
+        if(playerMirror.get(p.getName()).getCurrentDialogueStep() != null) {
+            playerMirror.get(p.getName()).setCurrentDialogue(dialogue);
+            playerMirror.get(p.getName()).setCurrentDialogueStep(0);
             sendDialogue(p);
         }
     }
 
     public static void sendDialogue(Player p) {
-        if(SchoolWars.playerMirror.get(p.getName()).getCurrentDialogueStep() != null && SchoolWars.playerMirror.get(p.getName()).getCurrentDialogueStep() <= SchoolWars.playerMirror.get(p.getName()).getCurrentDialogue().size()) {
-           splitDialogue(p, SchoolWars.playerMirror.get(p.getName()).getCurrentDialogue().get(SchoolWars.playerMirror.get(p.getName()).getCurrentDialogueStep()));
-           SchoolWars.playerMirror.get(p.getName()).setCurrentDialogueStep(SchoolWars.playerMirror.get(p.getName()).getCurrentDialogueStep() + 1);
+        if(playerMirror.get(p.getName()).getCurrentDialogueStep() != null && playerMirror.get(p.getName()).getCurrentDialogueStep() <= playerMirror.get(p.getName()).getCurrentDialogue().size()) {
+           splitDialogue(p, playerMirror.get(p.getName()).getCurrentDialogue().get(playerMirror.get(p.getName()).getCurrentDialogueStep()));
+           playerMirror.get(p.getName()).setCurrentDialogueStep(playerMirror.get(p.getName()).getCurrentDialogueStep() + 1);
         }else{
-            SchoolWars.playerMirror.get(p.getName()).clearDialogue();
+            playerMirror.get(p.getName()).clearDialogue();
         }
     }
 
@@ -82,7 +84,7 @@ public class DialogueHandler implements Listener {
 
     @EventHandler
     public void onSneak(PlayerToggleSneakEvent e) {
-        if(SchoolWars.playerMirror.get(e.getPlayer().getName()).getCurrentDialogueStep() != null) {
+        if(playerMirror.get(e.getPlayer().getName()).getCurrentDialogueStep() != null) {
             e.setCancelled(true);
             sendDialogue(e.getPlayer());
         }

@@ -38,6 +38,8 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.HashMap;
 
+import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
+
 
 public class Ranzen implements Listener {
 
@@ -145,7 +147,7 @@ public class Ranzen implements Listener {
 
     private static void ranzenPickup(Player player, BlockDisplay ranzen, PlayerInteractEntityEvent event){
 
-        Team team = SchoolWars.playerMirror.get(player.getName()).getTeam();
+        Team team = playerMirror.get(player.getName()).getTeam();
 
         if(ranzen.hasMetadata(team.teamName)) {
             if (Ranzen.displayPositions.containsKey(ranzen.getLocation().subtract(0.5, 0, 0.5))) {

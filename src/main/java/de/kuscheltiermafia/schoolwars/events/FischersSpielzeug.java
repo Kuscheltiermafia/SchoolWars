@@ -35,6 +35,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 
+import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
+
 public class FischersSpielzeug implements Listener {
 
     int fischerDauer = 60 * 20;
@@ -49,7 +51,7 @@ public class FischersSpielzeug implements Listener {
         if(e.getItemInHand().equals(Items.fischers_spiel)) {
             e.setCancelled(false);
             fischers_spielzeuge.put(e.getBlockPlaced().getLocation(), 0);
-            fischers_team.put(e.getBlockPlaced().getLocation(), SchoolWars.playerMirror.get(e.getPlayer().getName()).getTeam());
+            fischers_team.put(e.getBlockPlaced().getLocation(), playerMirror.get(e.getPlayer().getName()).getTeam());
             for(int i = 0; i < fischerDauer; i++) {
                 int finalI = i;
                 new BukkitRunnable() {
@@ -61,10 +63,10 @@ public class FischersSpielzeug implements Listener {
                                 Player p = (Player) en;
 
                                 if(finalI % 5 == 0) {
-                                    if (SchoolWars.playerMirror.get(e.getPlayer().getName()).getTeam().equals(Team.SPRACHLER)) {
+                                    if (playerMirror.get(e.getPlayer().getName()).getTeam().equals(Team.SPRACHLER)) {
                                         Particle.DustOptions color = new Particle.DustOptions(Color.fromRGB(255, 170, 0), 5);
                                         p.spawnParticle(Particle.NOTE, e.getBlockPlaced().getLocation().add(0.5, 1.1, 0.5), 1, color);
-                                    } else if (SchoolWars.playerMirror.get(e.getPlayer().getName()).getTeam().equals(Team.NWS)) {
+                                    } else if (playerMirror.get(e.getPlayer().getName()).getTeam().equals(Team.NWS)) {
                                         Particle.DustOptions color = new Particle.DustOptions(Color.fromRGB(85, 255, 85), 5);
                                         p.spawnParticle(Particle.NOTE, e.getBlockPlaced().getLocation().add(0.5, 1.1, 0.5), 1, color);
                                     } else {
@@ -73,7 +75,7 @@ public class FischersSpielzeug implements Listener {
                                     }
                                 }
 
-                                if(!SchoolWars.playerMirror.get(en.getName()).getTeam().equals(fischers_team.get(e.getBlockPlaced().getLocation())) && fischers_team.containsKey(e.getBlockPlaced().getLocation())) {
+                                if(!playerMirror.get(en.getName()).getTeam().equals(fischers_team.get(e.getBlockPlaced().getLocation())) && fischers_team.containsKey(e.getBlockPlaced().getLocation())) {
                                     ((Player) en).addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 4 * 20, 1, false, false, false));
                                 }
                             }

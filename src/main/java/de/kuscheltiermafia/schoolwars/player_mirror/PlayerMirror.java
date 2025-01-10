@@ -27,6 +27,8 @@ import java.util.HashMap;
 
 public class PlayerMirror {
 
+    public static HashMap<String, PlayerMirror> playerMirror = new HashMap<>();
+
     String playerName;
     HashMap<Lehrer, Double> rep = new HashMap<>();
 

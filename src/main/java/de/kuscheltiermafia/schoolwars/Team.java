@@ -33,6 +33,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static de.kuscheltiermafia.schoolwars.mechanics.Ranzen.ranzenAmount;
+import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
 
 public enum Team {
     SPORTLER(ChatColor.DARK_RED + "sportler", ChatColor.DARK_RED + "[Sport] ", ChatColor.DARK_RED + "Sportler", Items.sport_ranzen, new Location(Bukkit.getWorld("schoolwars"), 68.5, 80.0, 167.0, 90, 0)),
@@ -66,7 +67,7 @@ public enum Team {
         p.setPlayerListName(prefix + p.getName());
         p.setCustomName(prefix + p.getName());
 
-        SchoolWars.playerMirror.get(p.getName()).setTeam(this);
+        playerMirror.get(p.getName()).setTeam(this);
 
         if (!SchoolWars.gameStarted) {
             p.getInventory().addItem(ranzen);

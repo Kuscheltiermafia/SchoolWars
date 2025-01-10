@@ -34,8 +34,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import static de.kuscheltiermafia.schoolwars.SchoolWars.*;
 import static de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer.playerBatMap;
+import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
 
 public class PlayerDeath implements Listener {
 

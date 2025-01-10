@@ -38,8 +38,8 @@ import org.bukkit.entity.Villager;
 
 import java.util.ArrayList;
 
-import static de.kuscheltiermafia.schoolwars.SchoolWars.playerMirror;
 import static de.kuscheltiermafia.schoolwars.lehrer.Lehrer.lehrerEntityList;
+import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
 
 public class Debug implements CommandExecutor {
 
