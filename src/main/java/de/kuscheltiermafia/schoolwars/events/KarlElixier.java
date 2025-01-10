@@ -103,7 +103,7 @@ public class KarlElixier implements Listener {
                 @Override
                 public void run() {
                     p.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(p.getAttribute(Attribute.GENERIC_SCALE).getBaseValue() - 0.1);
-                    Sounds.playInArea(org.bukkit.Sound.ENTITY_GENERIC_DRINK, 20, 1, 0, 0, p.getLocation(), 3, 3, 3);
+                    Sounds.playInArea(org.bukkit.Sound.ENTITY_GENERIC_DRINK, 20, 1, 1, 10, p.getLocation(), 3, 3, 3);
                 }
             }.runTaskLater(SchoolWars.getPlugin(), i * 10);
         }
@@ -116,7 +116,7 @@ public class KarlElixier implements Listener {
                     @Override
                     public void run() {
                         p.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(p.getAttribute(Attribute.GENERIC_SCALE).getBaseValue() + 0.1);
-                        Sounds.playInArea(Sound.BLOCK_SPONGE_ABSORB, 20, 1, 0, 0, p.getLocation(), 3, 3, 3);
+                        Sounds.playInArea(Sound.BLOCK_SPONGE_ABSORB, 20, 1, 1, 10, p.getLocation(), 3, 3, 3);
                     }
                 }.runTaskLater(SchoolWars.getPlugin(), i * 10);
             }

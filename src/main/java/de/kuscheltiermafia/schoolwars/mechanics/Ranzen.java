@@ -20,8 +20,8 @@
 package de.kuscheltiermafia.schoolwars.mechanics;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
-import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.Team;
+import de.kuscheltiermafia.schoolwars.items.Items;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
