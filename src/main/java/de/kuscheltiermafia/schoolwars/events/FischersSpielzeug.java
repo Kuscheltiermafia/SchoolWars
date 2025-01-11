@@ -49,6 +49,13 @@ public class FischersSpielzeug implements Listener {
     @EventHandler
     public void onFischerPlace(BlockPlaceEvent e) {
         if(e.getItemInHand().equals(Items.fischers_spiel)) {
+
+            if(!SchoolWars.gameStarted) {
+                e.setCancelled(true);
+                e.getPlayer().sendMessage(ChatColor.RED + "Das Spiel hat noch nicht begonnen!");
+                return;
+            }
+
             e.setCancelled(false);
             fischers_spielzeuge.put(e.getBlockPlaced().getLocation(), 0);
             fischers_team.put(e.getBlockPlaced().getLocation(), playerMirror.get(e.getPlayer().getName()).getTeam());
