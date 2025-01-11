@@ -135,6 +135,7 @@ public enum Lehrer {
         currentLehrer.setPersistent(true);
         currentLehrer.setSilent(isSilent);
         currentLehrer.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(scale);
+        currentLehrer.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.25);
 
         currentLehrer.setProfession(profession);
 
@@ -168,7 +169,7 @@ public enum Lehrer {
                         updateLehrerPosition(false);
                     }
                 }
-            }.runTaskLater(SchoolWars.getPlugin(), 20 * 5);
+            }.runTaskLater(SchoolWars.getPlugin(), 20 * 15);
         }
     }
 
