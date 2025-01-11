@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import static de.kuscheltiermafia.schoolwars.lehrer.Lehrer.lehrerEntityList;
+import static de.kuscheltiermafia.schoolwars.lehrer.Lehrer.lehrerList;
 
 public class Stundenplan {
 
@@ -61,6 +62,7 @@ public class Stundenplan {
             lehrer.remove();
         }
         lehrerEntityList.clear();
+        lehrerList.clear();
 
         ArrayList<Lehrer> shuffledLehrer = new ArrayList<>(Arrays.asList(Lehrer.values()));
         Collections.shuffle(shuffledLehrer);

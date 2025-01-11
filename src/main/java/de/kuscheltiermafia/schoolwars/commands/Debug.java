@@ -39,6 +39,7 @@ import org.bukkit.entity.Villager;
 import java.util.ArrayList;
 
 import static de.kuscheltiermafia.schoolwars.lehrer.Lehrer.lehrerEntityList;
+import static de.kuscheltiermafia.schoolwars.lehrer.Lehrer.lehrerList;
 import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
 
 public class Debug implements CommandExecutor {
@@ -102,7 +103,6 @@ public class Debug implements CommandExecutor {
                     return true;
 
 
-                    //TODO: Rework this after reworking the lehrer handler
                 case "lehrer":
                     if (args[1].equals("spawn")) {
                         for(Lehrer lehrer : Lehrer.values()) {
@@ -115,18 +115,24 @@ public class Debug implements CommandExecutor {
                             }
                         }
                     } else if (args[1].equals("kill")) {
-                        for(Villager lehrer : lehrerEntityList) {
+                        for (Villager lehrer : lehrerEntityList) {
                             try {
-                                if(lehrer.getCustomName().contains(args[2])) {
+                                if (lehrer.getCustomName().contains(args[2])) {
                                     lehrer.remove();
                                 } else if (args[2].equals("all")) {
                                     lehrer.remove();
                                     lehrerEntityList.clear();
+                                    lehrerList.clear();
                                 }
-                            }catch (Exception ignored){}
+                            } catch (Exception ignored) {
+                            }
                         }
+                    } else if (args[1].equals("position")) {
+
+                        Lehrer.updateLehrerPosition(true);
+
                     } else {
-                        p.sendMessage(debugPrefix + "Ooops! Something went wrong!");
+                        p.sendMessage(debugPrefix + "Please use /debug lehrer <spawn|kill|position>!");
                     }
                     return true;
 
