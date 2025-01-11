@@ -21,8 +21,7 @@ package de.kuscheltiermafia.schoolwars.lehrer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
+import org.bukkit.entity.*;
 
 import java.util.ArrayList;
 
@@ -60,7 +59,7 @@ public enum Area {
     SEKRETARIAT("Sekretariat", new Location(world, -56.0, 86.0, 167.0), new Location(world, -45.0, 91.0, 175.0), new Location(world, -49.0, 86.0, 168.0), 1, Raum.VERWALTUNG),
     LEHRERZIMMER("Lehrerzimmer", new Location(world, -35.0, 87.0, 200.0), new Location(world, 25.0, 91.0, 204.0), new Location(world, 4.0, 87.0, 191.0), 4, Raum.GENERAL),
     HINTERER_PAUSENHOF("Hinterer Pausenhof", new Location(world, 43.0, 79.0, 130.0), new Location(world, 84.0, 85.0, 184.0), new Location(world, 43.0, 80.0, 177.0), 2, Raum.GENERAL),
-    LINKER_FLUEGEL_GANG_ERSTER_STOCK("Linker Flügel erstes Obergeschoss", new Location(world, -45.0, 87.0, 152.0), new Location(world, 40.0, 91.0, 158.0), new Location(world, -22.0, 87.0, 189.0), 0, Raum.GENERAL),
+    LINKER_FLUEGEL_GANG_ERSTER_STOCK("Linker Flügel erstes Obergeschoss", new Location(world, -45.0, 87.0, 152.0), new Location(world, 40.0, 91.0, 158.0), new Location(world, -10.0, 87.0, 202.0), 0, Raum.GENERAL),
     PAUSENHOF("Pausenhof", new Location(world, -34.0, 77.0, 160.0), new Location(world, 42.0, 84.0, 185.0), new Location(world, -15.0, 80, 175.0), 1, Raum.GENERAL);
 
 
@@ -70,8 +69,6 @@ public enum Area {
     final Location lehrerSpawnPos;
     final int maxLehrerAmount;
     final Raum raum;
-
-    Villager lehrer;
 
     Area(String name, Location minCoord, Location maxCoord, Location lehrerSpawnPos, int maxLehrerAmount, Raum raum) {
         this.name = name;

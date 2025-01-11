@@ -22,6 +22,7 @@ package de.kuscheltiermafia.schoolwars.commands;
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.Team;
 import de.kuscheltiermafia.schoolwars.items.GenerateItems;
+import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
 import de.kuscheltiermafia.schoolwars.lehrer.Stundenplan;
 import de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer;
 import de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror;
@@ -59,6 +60,8 @@ public class StartGame implements CommandExecutor {
 
         Stundenplan.updateStundenplan(true);
         Stundenplan.updateStundenplan(false);
+
+        Lehrer.updateLehrerPosition(false);
 
 //Set Playernames and ready them for battle
         Team.clearTeams();

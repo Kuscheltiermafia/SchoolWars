@@ -19,17 +19,18 @@
 
 package de.kuscheltiermafia.schoolwars.lehrer;
 
+import de.kuscheltiermafia.schoolwars.SchoolWars;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Villager;
+import org.bukkit.entity.*;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 import static de.kuscheltiermafia.schoolwars.lehrer.LehrerQuests.questLehrerList;
+import static de.kuscheltiermafia.schoolwars.lehrer.Stundenplan.studenplan;
 
 public enum Lehrer {
 
@@ -154,4 +155,31 @@ public enum Lehrer {
     public ArrayList<String> getDialogue() {
         return this.dialogue;
     }
+
+    public static void updateLehrerPosition(boolean instant) {
+        if(instant) {
+            initLehrerPosition();
+        }else{
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if(SchoolWars.gameStarted) {
+                        initLehrerPosition();
+                        updateLehrerPosition(false);
+                    }
+                }
+            }.runTaskLater(SchoolWars.getPlugin(), 20 * 5);
+        }
+    }
+
+    private static void initLehrerPosition() {
+        for (Lehrer lehrer : lehrerList) {
+
+            Villager villager = lehrerEntityList.get(lehrerList.indexOf(lehrer));
+
+            villager.getPathfinder().moveTo(studenplan.get(lehrer).lehrerSpawnPos);
+        }
+
+    }
+
 }

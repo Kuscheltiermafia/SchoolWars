@@ -35,7 +35,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import static de.kuscheltiermafia.schoolwars.mechanics.Ranzen.ranzenAmount;
 import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
 
 

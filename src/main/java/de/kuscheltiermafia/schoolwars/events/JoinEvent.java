@@ -41,9 +41,7 @@ public class JoinEvent implements Listener {
 
         Player p = e.getPlayer();
 
-        try {
-            playerMirror.put(p.getName(), new PlayerMirror(p.getName()));
-        }catch (Exception ignored){}
+        playerMirror.put(p.getName(), new PlayerMirror(p.getName()));
 
         p.teleport(new Location(p.getWorld(), -24, 80.5, 176, 90, 0));
         p.setRespawnLocation(new Location(p.getWorld(), -33.5, 88, 145.5, -90, 0));
