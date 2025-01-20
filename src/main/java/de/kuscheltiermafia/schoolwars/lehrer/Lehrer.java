@@ -44,7 +44,7 @@ public enum Lehrer {
     HERGET("Herget", Villager.Type.TAIGA, Villager.Profession.MASON, true, 1.04, true, false, true, Raum.NORMAL, null),
     GREB("Greb", Villager.Type.PLAINS, Villager.Profession.CARTOGRAPHER, true, 0.7, true, false, false, Raum.NORMAL, null),
     GEITNER("Geitner", Villager.Type.SAVANNA, Villager.Profession.FISHERMAN, true, 1, true, false, true, Raum.PHYSIK, null),
-    BLUMPFI("Blumpfingstl", Villager.Type.JUNGLE, Villager.Profession.LEATHERWORKER, true, 0.9, true, false, false, Raum.KUNST, null),
+    BLUMPFI("Blumpfingstl", Villager.Type.JUNGLE, Villager.Profession.LEATHERWORKER, true, 0.9, false, false, false, Raum.KUNST, null),
     KRAUS("Kraus", Villager.Type.SWAMP, Villager.Profession.FARMER, true, 1, true, false, true, Raum.MUSIK, null),
     METTENLEITER("Mettenleiter", Villager.Type.SNOW, Villager.Profession.FLETCHER, true, 0.6, false, false, false, Raum.MUSIK, null),
     DEHNER("Dehner", Villager.Type.DESERT, Villager.Profession.LIBRARIAN, true, 1, true, false, false, Raum.NORMAL, null),
@@ -59,13 +59,13 @@ public enum Lehrer {
     BERGER("Berger", Villager.Type.SNOW, Villager.Profession.NONE, true, 1, true, false, true, Raum.PHYSIK, null),
     AMON("Amon", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, false, true, Raum.NORMAL, null),
     VORNBERGER("Vornberger", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, true, true, Raum.NORMAL, null),
-    MEDING("Meding", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, true, false, Raum.NORMAL, null),
-    SCHAIBLE("Schaible", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, true, false, Raum.GLASKASTEN, null),
-    JOHA("Joha", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, true, false, Raum.NORMAL, null),
-    ERSETZBAR_07("Ersetzbarer Referendar #07", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, true, false, Raum.GLASKASTEN, null),
-    ERSETZBAR_38("Ersetzbarer Referendar #38", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, true, false, Raum.GLASKASTEN, null),
-    ERSETZBAR_69("Ersetzbarer Referendar #69", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, true, true, Raum.GLASKASTEN, null),
-    ERSETZBAR_96("Ersetzbarer Referendar #96", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, true, true, Raum.GLASKASTEN, null),;
+    MEDING("Meding", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, false, false, Raum.NORMAL, null),
+    SCHAIBLE("Schaible", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, false, false, Raum.GLASKASTEN, null),
+    JOHA("Joha", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, false, false, Raum.NORMAL, null),
+    ERSETZBAR_07("Ersetzbarer Referendar #07", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, false, false, Raum.GLASKASTEN, null),
+    ERSETZBAR_38("Ersetzbarer Referendar #38", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, false, false, Raum.GLASKASTEN, null),
+    ERSETZBAR_69("Ersetzbarer Referendar #69", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, false, true, Raum.GLASKASTEN, null),
+    ERSETZBAR_96("Ersetzbarer Referendar #96", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, false, true, Raum.GLASKASTEN, null),;
 
     final String name;
     final Villager.Type type;

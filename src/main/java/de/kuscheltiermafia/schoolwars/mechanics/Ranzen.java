@@ -112,7 +112,7 @@ public class Ranzen implements Listener {
         ranzen_hb.setInteractionHeight(1);
         ranzen_hb.setInteractionWidth(1);
 
-        ranzen_hb.setMetadata(team.name(), new FixedMetadataValue(SchoolWars.getPlugin(), ranzen.getCustomName()));
+        ranzen_hb.setMetadata(team.teamName, new FixedMetadataValue(SchoolWars.getPlugin(), "dummyValue"));
 
         placedRanzen.put(ranzen, ranzen_hb);
 
@@ -120,9 +120,11 @@ public class Ranzen implements Listener {
 
     @EventHandler
     public void onRanzenPickup(PlayerInteractEntityEvent e) {
+
         Player p = e.getPlayer();
 
-        if (!(e.getRightClicked() instanceof BlockDisplay ranzen)) return;
+        if (!(e.getRightClicked() instanceof Interaction ranzen)) return;
+
 
         if (ranzen.hasMetadata(Team.NWS.teamName) || ranzen.hasMetadata(Team.SPORTLER.teamName) || ranzen.hasMetadata(Team.SPRACHLER.teamName)) {
             ranzenPickup(p, ranzen, e);
@@ -134,18 +136,23 @@ public class Ranzen implements Listener {
     public void onRanzenPlace(BlockPlaceEvent e) {
         Player p = e.getPlayer();
         ItemStack ranzen = e.getItemInHand();
-        if(ranzen.equals(Items.nws_ranzen)) {
-            ranzenPlace(e, p, Team.NWS);
-        }
-        if(ranzen.equals(Items.sprach_ranzen)) {
-            ranzenPlace(e, p, Team.SPRACHLER);
-        }
-        if(ranzen.equals(Items.sport_ranzen)) {
-            ranzenPlace(e, p, Team.SPORTLER);
+        if (ranzen.equals(Items.nws_ranzen) || ranzen.equals(Items.sprach_ranzen) || ranzen.equals(Items.sport_ranzen)) {
+            if (!SchoolWars.gameStarted) {
+                p.sendMessage(ChatColor.RED + "Ranzen können nur während dem Spiel platziert werden!");
+                e.setCancelled(true);
+                return;
+            }
+            if (ranzen.equals(Items.nws_ranzen)) {
+                ranzenPlace(e, p, Team.NWS);
+            } else if (ranzen.equals(Items.sprach_ranzen)) {
+                ranzenPlace(e, p, Team.SPRACHLER);
+            } else if (ranzen.equals(Items.sport_ranzen)) {
+                ranzenPlace(e, p, Team.SPORTLER);
+            }
         }
     }
 
-    private static void ranzenPickup(Player player, BlockDisplay ranzen, PlayerInteractEntityEvent event){
+    private static void ranzenPickup(Player player, Interaction ranzen, PlayerInteractEntityEvent event) {
 
         Team team = playerMirror.get(player.getName()).getTeam();
 
@@ -156,7 +163,7 @@ public class Ranzen implements Listener {
             }
             Ranzen.placedRanzen.remove(ranzen);
             ranzen.remove();
-            player.getInventory().addItem(new ItemStack(Items.nws_ranzen));
+            player.getInventory().addItem(new ItemStack(team.ranzen));
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§2Du hast deinen Ranzen aufgehoben!"));
             event.setCancelled(true);
         }else{
@@ -165,8 +172,10 @@ public class Ranzen implements Listener {
                 Entity display = Ranzen.displayPositions.get(ranzen.getLocation().subtract(0.5, 0, 0.5));
                 display.remove();
             }
+            Ranzen.placedRanzen.remove(ranzen);
             ranzen.remove();
         }
+
     }
 
     private static void ranzenPlace(BlockPlaceEvent e, Player p, Team team){

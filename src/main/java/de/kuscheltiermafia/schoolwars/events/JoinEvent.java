@@ -65,19 +65,10 @@ public class JoinEvent implements Listener {
 
             p.sendMessage("Das Spiel hat bereits begonnen.");
 
-            if (Team.NWS.mitglieder.contains(p.getName()) ){
-                Team.NWS.readyPlayer(p);
+            if (playerMirror.get(p.getName()).getTeam() != null){
+                playerMirror.get(p.getName()).getTeam().readyPlayer(p);
                 p.setGameMode(GameMode.SURVIVAL);
-            } else if (Team.SPORTLER.mitglieder.contains(p.getName())){
-                Team.SPORTLER.readyPlayer(p);
-                p.setGameMode(GameMode.SURVIVAL);
-            } else if (Team.SPRACHLER.mitglieder.contains(p.getName())){
-                Team.SPRACHLER.readyPlayer(p);
-                p.setGameMode(GameMode.SURVIVAL);
-            } else {
-                p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist keinem Team zugeordnet.");
-                p.setGameMode(GameMode.SPECTATOR);
-            }
+            }else p.sendMessage("Du bist keinem Team mehr zugeordnet.");
 
         }else {
             e.getPlayer().sendMessage(ChatColor.YELLOW + "[SchoolWars] Das Spiel hat noch nicht begonnen.");
