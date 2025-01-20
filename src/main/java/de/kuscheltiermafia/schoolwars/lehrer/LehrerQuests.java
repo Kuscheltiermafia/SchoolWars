@@ -68,10 +68,6 @@ public class LehrerQuests implements Listener {
         rewardLehrerItems.put(Lehrer.KLIEM, Items.placeholder);
         repReward.put(Lehrer.KLIEM, 0.0);
 
-        requieredLehrerItems.put(Lehrer.KESSELRING, Items.placeholder);
-        rewardLehrerItems.put(Lehrer.KESSELRING, Items.placeholder);
-        repReward.put(Lehrer.KESSELRING, 0.0);
-
         requieredLehrerItems.put(Lehrer.VORNBERGER, Items.geschnittene_zwiebel);
         rewardLehrerItems.put(Lehrer.VORNBERGER, Items.ausleihschein);
         repReward.put(Lehrer.VORNBERGER, 1.0);

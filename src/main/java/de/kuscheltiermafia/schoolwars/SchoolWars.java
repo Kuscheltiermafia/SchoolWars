@@ -93,6 +93,7 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new SekretariatStundenplan(), this);
         pluginManager.registerEvents(new FischersSpielzeug(), this);
         pluginManager.registerEvents(new DialogueHandler(), this);
+        pluginManager.registerEvents(new Ranzen(), this);
 
         getCommand("start").setExecutor(new StartGame());
         getCommand("end").setExecutor(new EndCommand());

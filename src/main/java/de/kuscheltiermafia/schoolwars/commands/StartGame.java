@@ -42,10 +42,9 @@ public class StartGame implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 
-        if (!Debug.startWorks) {
+        if (!Debug.startWorks || SchoolWars.gameStarted) {
             return false;
         }
-        SchoolWars.gameStarted = false;
 
 //reset
         playerMirror.clear();
