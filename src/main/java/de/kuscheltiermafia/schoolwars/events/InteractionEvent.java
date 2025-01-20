@@ -23,11 +23,9 @@ import de.kuscheltiermafia.schoolwars.commands.ItemList;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
 import de.kuscheltiermafia.schoolwars.mechanics.PlayerStun;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.entity.ItemFrame;
+import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -84,10 +82,12 @@ public class InteractionEvent implements Listener {
         }
     }
 
-    //Prevent Itemframe from being destroyed
+    //Prevent Item frame from being destroyed
     @EventHandler
     public void onDamageItemFrame(EntityDamageByEntityEvent e) {
+        Bukkit.broadcastMessage("EntityDamageByEntityEvent");
         if (e.getEntity() instanceof ItemFrame) {
+            Bukkit.broadcastMessage("ItemFrame");
             e.setCancelled(true);
         }
     }
