@@ -32,6 +32,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -67,7 +68,6 @@ public class InteractionEvent implements Listener {
     public void OnBreakBlock(BlockBreakEvent e){
         Player p = e.getPlayer();
         if (p.getGameMode() != GameMode.CREATIVE){
-            //p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§4Das darfst du nicht!"));
             e.setCancelled(true);
         }
     }
@@ -77,17 +77,30 @@ public class InteractionEvent implements Listener {
     public void OnPlaceBlock(BlockPlaceEvent e){
         Player p = e.getPlayer();
         if (p.getGameMode() != GameMode.CREATIVE){
-            //p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§4Das darfst du nicht!"));
             e.setCancelled(true);
         }
     }
 
     //Prevent Item frame from being destroyed
     @EventHandler
+    public void onBreakItemFrame(HangingBreakByEntityEvent e) {
+        if (e.getEntity() instanceof ItemFrame && ((Player) e.getRemover()).getGameMode() != GameMode.CREATIVE) {
+            e.setCancelled(true);
+        }
+    }
+
+    //Prevent players from taking items out of item frames
+    @EventHandler
     public void onDamageItemFrame(EntityDamageByEntityEvent e) {
-        Bukkit.broadcastMessage("EntityDamageByEntityEvent");
-        if (e.getEntity() instanceof ItemFrame) {
-            Bukkit.broadcastMessage("ItemFrame");
+        if (e.getEntity() instanceof ItemFrame && ((Player) e.getDamager()).getGameMode() != GameMode.CREATIVE) {
+            e.setCancelled(true);
+        }
+    }
+
+    //Prevent Paintings from being destroyed
+    @EventHandler
+    public void onBreakPainting(HangingBreakByEntityEvent e) {
+        if (e.getEntity() instanceof Painting && ((Player) e.getRemover()).getGameMode() != GameMode.CREATIVE) {
             e.setCancelled(true);
         }
     }
