@@ -35,7 +35,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Random;
 
 import static de.kuscheltiermafia.schoolwars.SchoolWars.world;
-import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
 public class Generalschluessel implements Listener {
 

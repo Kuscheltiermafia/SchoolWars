@@ -21,7 +21,7 @@ package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.commands.Debug;
-import de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror;
+import de.kuscheltiermafia.schoolwars.PlayerMirror;
 import de.kuscheltiermafia.schoolwars.Team;
 import io.github.realMorgon.sunriseLib.Particles;
 import org.bukkit.*;
@@ -30,7 +30,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
 public class JoinEvent implements Listener {
 
