@@ -27,10 +27,13 @@ import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.lehrer.LehrerQuests;
 import de.kuscheltiermafia.schoolwars.lehrer.SekretariatStundenplan;
 import de.kuscheltiermafia.schoolwars.win_conditions.AtombombeEvents;
+import de.kuscheltiermafia.schoolwars.win_conditions.Ranzen;
 import io.github.realMorgon.sunriseLib.SunriseLib;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -45,7 +48,7 @@ public final class SchoolWars extends JavaPlugin {
 
     public static boolean gameStarted;
 
-    public static World world = Bukkit.getWorld("schoolwars");
+    public static final World WORLD = Bukkit.getWorld("schoolwars");
 
 
     @Override
@@ -93,12 +96,15 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new FischersSpielzeug(), this);
         pluginManager.registerEvents(new DialogueHandler(), this);
         pluginManager.registerEvents(new Ranzen(), this);
+        pluginManager.registerEvents(new DisableProfessions(), this);
+        pluginManager.registerEvents(new FachraumSchluessel(), this);
 
         getCommand("start").setExecutor(new StartGame());
         getCommand("end").setExecutor(new EndCommand());
         getCommand("itemlist").setExecutor(new ItemList());
         getCommand("teamlist").setExecutor(new TeamList());
         getCommand("debug").setExecutor(new Debug());
+        getCommand("rechtsklick").setExecutor(new SläschRechtsklick());
 
 
         Team.clearTeams();
@@ -109,6 +115,12 @@ public final class SchoolWars extends JavaPlugin {
             Team.resetPlayer(p);
         }
 
+        for (Entity entity : WORLD.getEntities()) {
+            if (entity instanceof Villager){
+                entity.remove();
+            }
+        }
+
         getLogger().info("SchoolWars has been enabled!");
 
     }
@@ -116,6 +128,11 @@ public final class SchoolWars extends JavaPlugin {
     @Override
     public void onDisable() {
         EndGame.end();
+        for (Entity entity : WORLD.getEntities()) {
+            if (entity instanceof Villager){
+                entity.remove();
+            }
+        }
     }
 
     public static SchoolWars getPlugin(){

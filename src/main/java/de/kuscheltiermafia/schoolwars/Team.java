@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static de.kuscheltiermafia.schoolwars.mechanics.Ranzen.ranzenAmount;
+import static de.kuscheltiermafia.schoolwars.win_conditions.Ranzen.ranzenAmount;
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
 public enum Team {

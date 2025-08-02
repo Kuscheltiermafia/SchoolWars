@@ -66,8 +66,7 @@ public class FischersSpielzeug implements Listener {
                     public void run() {
                         for(Entity en : e.getBlockPlaced().getWorld().getNearbyEntities(e.getBlockPlaced().getLocation(), 4, 4, 4)) {
 
-                            if(en instanceof Player) {
-                                Player p = (Player) en;
+                            if(en instanceof Player p) {
 
                                 if(finalI % 5 == 0) {
                                     if (playerMirror.get(e.getPlayer().getName()).getTeam().equals(Team.SPRACHLER)) {
@@ -82,8 +81,8 @@ public class FischersSpielzeug implements Listener {
                                     }
                                 }
 
-                                if(!playerMirror.get(en.getName()).getTeam().equals(fischers_team.get(e.getBlockPlaced().getLocation())) && fischers_team.containsKey(e.getBlockPlaced().getLocation())) {
-                                    ((Player) en).addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 4 * 20, 1, false, false, false));
+                                if(!playerMirror.get(p.getName()).getTeam().equals(fischers_team.get(e.getBlockPlaced().getLocation())) && fischers_team.containsKey(e.getBlockPlaced().getLocation())) {
+                                    p.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 4 * 20, 1, false, false, false));
                                 }
                             }
                         }
@@ -119,7 +118,7 @@ public class FischersSpielzeug implements Listener {
         }
     }
 
-    /**
+    /*
     @EventHandler
     public void onPeilsender(PlayerInteractEntityEvent e) {
         if(e.getRightClicked().getCustomName().equals("Herr Fischer") && e.getPlayer().getInventory().getItemInMainHand().equals(Items.peilsender)) {

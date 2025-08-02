@@ -30,9 +30,10 @@ import org.bukkit.util.Vector;
 import java.util.HashMap;
 import java.util.Random;
 
+import static de.kuscheltiermafia.schoolwars.items.Items.createItemsEntity;
+
 public class GenerateItems {
 
-    public static HashMap<Interaction, Item> itemHitboxes = new HashMap<>();
     static ItemIdentifier[][] spawnItems;
 
     public static void generateItemLocations() {
@@ -57,22 +58,6 @@ public class GenerateItems {
         }
     }
 
-    public static void createItemsEntity(ItemStack item, Location loc) {
-        Block b = loc.getBlock();
-
-        Item itemEntity = b.getWorld().dropItem(loc.add(0, 0.2, 0), item);
-        itemEntity.setPersistent(true);
-        itemEntity.setInvulnerable(true);
-        itemEntity.setVelocity(new Vector(0, 0, 0));
-        itemEntity.setPickupDelay(Integer.MAX_VALUE);
-
-        Interaction itemHitbox = itemEntity.getWorld().spawn(itemEntity.getLocation(), Interaction.class);
-        itemHitbox.setInteractionHeight(1);
-        itemHitbox.setInteractionWidth(1);
-
-        itemHitboxes.put(itemHitbox, itemEntity);
-    }
-
     public static void spawnItem(int i1) {
 
         Random rand = new Random();
@@ -87,7 +72,7 @@ public class GenerateItems {
 
             if (random + 1 == randID) {
 
-                createItemsEntity(item, loc.add(0.5, 0, 0.5));
+                Items.createItemsEntity(item, loc.add(0.5, 0, 0.5));
                 return;
 
             }

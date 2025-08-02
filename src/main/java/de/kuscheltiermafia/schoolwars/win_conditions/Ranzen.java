@@ -17,7 +17,7 @@
  *
  */
 
-package de.kuscheltiermafia.schoolwars.mechanics;
+package de.kuscheltiermafia.schoolwars.win_conditions;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.Team;

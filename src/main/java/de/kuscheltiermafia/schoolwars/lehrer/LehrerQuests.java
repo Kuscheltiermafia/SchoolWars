@@ -71,6 +71,10 @@ public class LehrerQuests implements Listener {
         requieredLehrerItems.put(Lehrer.VORNBERGER, Items.geschnittene_zwiebel);
         rewardLehrerItems.put(Lehrer.VORNBERGER, Items.ausleihschein);
         repReward.put(Lehrer.VORNBERGER, 1.0);
+
+        requieredLehrerItems.put(Lehrer.DICKERT, Items.emilia_ausland_brief);
+        rewardLehrerItems.put(Lehrer.DICKERT, Items.fachraum_schrank_schluessel);
+        repReward.put(Lehrer.DICKERT, 1.0);
     }
 
     @EventHandler

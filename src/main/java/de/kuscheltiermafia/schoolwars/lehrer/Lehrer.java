@@ -62,6 +62,7 @@ public enum Lehrer {
     MEDING("Meding", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, false, false, Raum.NORMAL, null),
     SCHAIBLE("Schaible", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, false, false, Raum.GLASKASTEN, null),
     JOHA("Joha", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, false, false, Raum.NORMAL, null),
+    DICKERT("Dickert", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, true, true, Raum.CHEMIE, null),
     ERSETZBAR_07("Ersetzbarer Referendar #07", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, false, false, Raum.GLASKASTEN, null),
     ERSETZBAR_38("Ersetzbarer Referendar #38", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, false, false, Raum.GLASKASTEN, null),
     ERSETZBAR_69("Ersetzbarer Referendar #69", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, false, true, Raum.GLASKASTEN, null),
@@ -105,6 +106,15 @@ public enum Lehrer {
 
     public static Lehrer getLehrerByEntity(Entity e) {
         return getLehrerByName(e.getCustomName().substring(5));
+    }
+
+    public static Entity getLehrerEntity(Lehrer lehrer) {
+        for (Villager villager : lehrerEntityList) {
+            if (villager.getCustomName().equals("Herr " + lehrer.name) || villager.getCustomName().equals("Frau " + lehrer.name)) {
+                return villager;
+            }
+        }
+        return null;
     }
 
     public static void removeAllLehrer() {

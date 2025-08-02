@@ -89,5 +89,6 @@ public class Stundenplan {
                 i++;
             } while (i < Area.values().length * 2 && !shuffledLehrer.isEmpty() && lehrerAmount < area.maxLehrerAmount);
         }
+        StundenplanDrops.rollDrops();
     }
 }
