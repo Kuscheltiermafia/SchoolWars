@@ -17,7 +17,7 @@
  *
  */
 
-package de.kuscheltiermafia.schoolwars.mechanics;
+package de.kuscheltiermafia.schoolwars.win_conditions;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.Team;
@@ -38,7 +38,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.HashMap;
 
-import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
 
 public class Ranzen implements Listener {

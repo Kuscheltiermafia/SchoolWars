@@ -34,13 +34,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Random;
 
-import static de.kuscheltiermafia.schoolwars.SchoolWars.world;
-import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.SchoolWars.WORLD;
+import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
 public class Generalschluessel implements Listener {
 
     void summonSekritaerin(Location loc) {
-        Illusioner sekritaerin = world.spawn(loc.add(0.5, -1, 0.5), Illusioner.class);
+        Illusioner sekritaerin = WORLD.spawn(loc.add(0.5, -1, 0.5), Illusioner.class);
 
         sekritaerin.setCustomName("Sekritärin");
         sekritaerin.setCustomNameVisible(true);
@@ -56,40 +56,41 @@ public class Generalschluessel implements Listener {
 
             Block block = e.getClickedBlock();
 
-            if (e.getItem().equals(Items.generalSchluessel) && block.getType() == Material.IRON_DOOR) {
-
+            if (e.getItem().equals(Items.general_schluessel) && block.getType() == Material.IRON_DOOR) {
                 e.setCancelled(true);
 
                 Door door = (Door) block.getBlockData();
-                boolean doorOpen = door.isOpen();
+                if(door.isOpen() == false) {
 
+                    door.setOpen(true);
+                    block.setBlockData(door);
 
-                door.setOpen(!doorOpen);
-                block.setBlockData(door);
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            door.setOpen(false);
+                            block.setBlockData(door);
+                        }
+                    }.runTaskLater(SchoolWars.getPlugin(), 20 * 5);
 
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        door.setOpen(doorOpen);
-                        block.setBlockData(door);
+                    playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk += 5;
+
+                    Random random = new Random();
+                    int randomRisk = random.nextInt(100);
+
+                    if (randomRisk <= playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk) {
+                        int randomMessage = random.nextInt(10);
+                        if (randomMessage == 1) {
+                            Message.sendInArea("§4Die Kollegin von der Seki-Frau hat dich erwischt!", block.getLocation(), 5, 3, 5);
+                        } else {
+                            Message.sendInArea("§4Die Seki-Frau hat dich erwischt!", block.getLocation(), 5, 3, 5);
+                        }
+                        summonSekritaerin(block.getLocation());
                     }
-                }.runTaskLater(SchoolWars.getPlugin(), 20 * 5);
 
-                playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk += 5;
-
-                Random random = new Random();
-                int randomRisk = random.nextInt(100);
-
-                if (randomRisk <= playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk){
-                    int randomMessage = random.nextInt(10);
-                    if (randomMessage == 1){
-                        Message.sendInArea("§4Die Kollegin von der Seki-Frau hat dich erwischt!", block.getLocation(), 5, 3, 5);
-                    }else {
-                        Message.sendInArea("§4Die Seki-Frau hat dich erwischt!", block.getLocation(), 5, 3, 5);
-                    }
-                    summonSekritaerin(block.getLocation());
+                }else{
+                    e.getPlayer().sendActionBar("Dein Schlüssel hat nicht funktioniert!");
                 }
-
             }
         }catch (Exception ignored){}
     }

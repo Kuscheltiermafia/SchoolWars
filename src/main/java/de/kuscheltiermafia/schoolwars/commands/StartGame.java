@@ -25,16 +25,19 @@ import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
 import de.kuscheltiermafia.schoolwars.lehrer.Stundenplan;
 import de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer;
-import de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror;
+import de.kuscheltiermafia.schoolwars.PlayerMirror;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 
-import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.SchoolWars.WORLD;
 
 
 public class StartGame implements CommandExecutor {
@@ -54,6 +57,12 @@ public class StartGame implements CommandExecutor {
                 item.remove();
             }
         } catch (Exception ignored) {}
+
+        for (Entity entity : WORLD.getEntities()) {
+            if (entity instanceof Villager){
+                entity.remove();
+            }
+        }
 
 //prepare game
 

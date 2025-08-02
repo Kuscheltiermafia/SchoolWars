@@ -39,7 +39,7 @@ public class SekretariatStundenplan implements Listener {
 
     @EventHandler
     public void onStundenplanView(PlayerInteractEvent e) {
-        if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && e.getClickedBlock().getLocation().equals(new Location(SchoolWars.world, -49.0, 88.0, 173.0))) {
+        if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && e.getClickedBlock().getLocation().getX() == -49 && e.getClickedBlock().getLocation().getY() == 88 && e.getClickedBlock().getLocation().getZ() ==  173) {
             e.setCancelled(true);
 
             Inventory stundenplan = Bukkit.createInventory(null, 9*6, "§4Momentaner Stundenplan");

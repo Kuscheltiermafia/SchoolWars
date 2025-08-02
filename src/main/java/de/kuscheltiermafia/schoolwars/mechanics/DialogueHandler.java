@@ -27,13 +27,12 @@ import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
 public class DialogueHandler implements Listener {
 
