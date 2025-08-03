@@ -37,16 +37,12 @@ public enum StundenplanDrops {
     }
 
     public static void rollDrops() {
-        Bukkit.broadcastMessage("Rolling drops for Stundenplan...");
         for (StundenplanDrops drop : values()){
-            Bukkit.broadcastMessage("Rolling drop: " + drop.name());
             if (Math.random() > drop.chance) continue;
             if (drop.raum == null || drop.lehrer == null) {
                 Items.createItemsEntity(drop.item, drop.location);
-                Bukkit.broadcastMessage("Dropped item: " + drop.item.getType() + " at " + drop.location);
             }else if (Area.getAreaByLocation(Lehrer.getLehrerEntity(drop.lehrer).getLocation()).raum == drop.raum){
                 Items.createItemsEntity(drop.item, drop.location);
-                Bukkit.broadcastMessage("Dropped item: " + drop.item.getType() + " for teacher: " + drop.lehrer.name() + " at " + drop.location);
             }
         }
     }

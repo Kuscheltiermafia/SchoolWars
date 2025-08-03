@@ -17,14 +17,14 @@
  *
  */
 
-package de.kuscheltiermafia.schoolwars.win_conditions;
+package de.kuscheltiermafia.schoolwars.win_conditions.events_atombombe;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
-import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.EndGame;
 import de.kuscheltiermafia.schoolwars.mechanics.ProgressBarHandler;
 import de.kuscheltiermafia.schoolwars.Team;
+import de.kuscheltiermafia.schoolwars.win_conditions.Ranzen;
 import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -49,13 +49,10 @@ import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
 public class AtombombeEvents implements Listener {
 
-    ArrayList<ItemStack> zentrifugeInventory = new ArrayList<>();
-
     static boolean nukePlaced = false;
     static Location nukeLoc;
     private static BukkitRunnable timer;
 
-    static int duration = 20 * 30;
 
     @EventHandler
     public void onVersuch(PlayerInteractEvent e) {
@@ -78,64 +75,6 @@ public class AtombombeEvents implements Listener {
         }
     }
 
-    @EventHandler
-    public void onZentrifugeUse(PlayerInteractEvent e) {
-        if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && e.getClickedBlock().getType().equals(Material.DISPENSER)) {
-            Block b = e.getClickedBlock();
-            Player p = e.getPlayer();
-            if(b.getLocation().add(0, 1, 0).getBlock().getType().equals(Material.POLISHED_TUFF_WALL) && b.getLocation().add(0, 2, 0).getBlock().getType().equals(Material.STONE_BUTTON)) {
-                if(p.getInventory().getItemInMainHand().getItemMeta().equals(Items.useless_uranium.getItemMeta())) {
-                    p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount() - 1);
-                    zentrifugeInventory.add(Items.useless_uranium);
-                    onZentrifugeVoll(zentrifugeInventory, b);
-                    e.setCancelled(true);
-                } else if(p.getInventory().getItemInMainHand().getItemMeta().equals(Items.fluor.getItemMeta())) {
-                    p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount() - 1);
-                    zentrifugeInventory.add(Items.fluor);
-                    onZentrifugeVoll(zentrifugeInventory, b);
-                    e.setCancelled(true);
-                }
-            }
-        }
-    }
-
-    public static int i = 0;
-
-    public static void onZentrifugeVoll(ArrayList<ItemStack> inv, Block b) {
-        if (inv.contains(Items.fluor) && inv.contains(Items.useless_uranium)) {
-
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    Items.createItemsEntity(new ItemStack(Items.uranium), b.getLocation().add(0.5, 2.75, 0.5));
-                }
-            }.runTaskLater(SchoolWars.getPlugin(), duration);
-
-            Location loc = b.getLocation();
-
-
-            for(int i = 0; i < duration; i++) {
-                int finalI = i;
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        double calcProgress = (double) finalI / duration * 100;
-
-                        Collection<Entity> nearbyPlayers = loc.getWorld().getNearbyEntities(loc, 5, 5, 5);
-
-                        for(Entity p: nearbyPlayers) {
-                            if (p instanceof Player) {
-                                ((Player) p).spigot().sendMessage (ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "-- Zentrifugenfortschritt: " + ProgressBarHandler.progressBarsUpdate(calcProgress, ChatColor.DARK_GREEN) + ChatColor.GRAY + " --"));
-                                if (finalI % 30 == 0) {
-                                    ((Player) p).playSound(loc, "entity.minecart.riding", SoundCategory.BLOCKS, 100, 1);
-                                }
-                            }
-                        }
-                    }
-                }.runTaskLater(SchoolWars.getPlugin(), finalI);
-            }
-        }
-    }
 
     @EventHandler
     public static void onPlaceNuke(BlockPlaceEvent event) {

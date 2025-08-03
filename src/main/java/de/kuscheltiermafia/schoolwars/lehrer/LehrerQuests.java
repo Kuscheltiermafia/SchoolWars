@@ -24,6 +24,7 @@ import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
@@ -72,15 +73,19 @@ public class LehrerQuests implements Listener {
         rewardLehrerItems.put(Lehrer.VORNBERGER, Items.ausleihschein);
         repReward.put(Lehrer.VORNBERGER, 1.0);
 
+        requieredLehrerItems.put(Lehrer.GEITNER, Items.keks);
+        rewardLehrerItems.put(Lehrer.GEITNER, Items.fachraum_schrank_schluessel);
+        repReward.put(Lehrer.GEITNER, 1.0);
+
         requieredLehrerItems.put(Lehrer.DICKERT, Items.emilia_ausland_brief);
-        rewardLehrerItems.put(Lehrer.DICKERT, Items.fachraum_schrank_schluessel);
+        rewardLehrerItems.put(Lehrer.DICKERT, Items.natrium_fluorid);
         repReward.put(Lehrer.DICKERT, 1.0);
     }
 
     @EventHandler
     public void onLehrerClick(PlayerInteractEntityEvent e) {
+        e.setCancelled(true);
         if(e.getRightClicked() instanceof Villager && questLehrerList.contains(e.getRightClicked())) {
-            e.setCancelled(true);
             Player p = e.getPlayer();
             Villager l = (Villager) e.getRightClicked();
             Lehrer lehrer = Lehrer.getLehrerByEntity(l);

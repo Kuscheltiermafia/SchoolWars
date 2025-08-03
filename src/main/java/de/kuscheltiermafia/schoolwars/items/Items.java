@@ -39,7 +39,6 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 public class Items {
 
@@ -111,6 +110,8 @@ public class Items {
     public static ItemStack emilia_ausland_brief;
     public static ItemStack keks;
     public static ItemStack ipad;
+    public static ItemStack aquatisiertes_fluor;
+    public static ItemStack natrium_fluorid;
 
     public static void initItems() {
 
@@ -192,6 +193,12 @@ public class Items {
         keks_lore.add(ChatColor.WHITE + "Herr Geitners lieblings Snack");
         keks = createItem(Material.COOKIE, ChatColor.GOLD + "Keks", 1, 1, keks_lore, false, false, false);
         itemList.add(keks);
+
+        aquatisiertes_fluor = createItem(Material.MILK_BUCKET, ChatColor.WHITE + "Aquatisiertes Fluor", 1, 1, null, false, false, false);
+        itemList.add(aquatisiertes_fluor);
+
+        natrium_fluorid = createItem(Material.CLAY_BALL, ChatColor.GRAY + "Natriumfluorid", 1, 1, null, false, false, false);
+        itemList.add(natrium_fluorid);
 
 
 //Miscellaneous

@@ -43,7 +43,7 @@ public enum Lehrer {
     KESSELRING("Keßelring", Villager.Type.SWAMP, Villager.Profession.BUTCHER, true, 1.1, true, false, true, Raum.PHYSIK, null),
     HERGET("Herget", Villager.Type.TAIGA, Villager.Profession.MASON, true, 1.04, true, false, true, Raum.NORMAL, null),
     GREB("Greb", Villager.Type.PLAINS, Villager.Profession.CARTOGRAPHER, true, 0.7, true, false, false, Raum.NORMAL, null),
-    GEITNER("Geitner", Villager.Type.SAVANNA, Villager.Profession.FISHERMAN, true, 1, true, false, true, Raum.PHYSIK, null),
+    GEITNER("Geitner", Villager.Type.SAVANNA, Villager.Profession.FISHERMAN, true, 1, true, true, true, Raum.PHYSIK, null),
     BLUMPFI("Blumpfingstl", Villager.Type.JUNGLE, Villager.Profession.LEATHERWORKER, true, 0.9, false, false, false, Raum.KUNST, null),
     KRAUS("Kraus", Villager.Type.SWAMP, Villager.Profession.FARMER, true, 1, true, false, true, Raum.MUSIK, null),
     METTENLEITER("Mettenleiter", Villager.Type.SNOW, Villager.Profession.FLETCHER, true, 0.6, false, false, false, Raum.MUSIK, null),
