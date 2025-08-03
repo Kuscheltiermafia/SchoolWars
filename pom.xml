@@ -63,6 +63,10 @@
           <name>Minecraft Libraries</name>
           <url>https://libraries.minecraft.net</url>
       </repository>
+      <repository>
+          <id>jitpack.io</id>
+          <url>https://jitpack.io</url>
+      </repository>
   </repositories>
 
   <dependencies>
@@ -78,9 +82,9 @@
           <scope>provided</scope>
       </dependency>
       <dependency>
-          <groupId>io.github.realMorgon</groupId>
-          <artifactId>sunriselib</artifactId>
-          <version>0.0.6</version>
+          <groupId>com.github.realMorgon</groupId>
+          <artifactId>SunriseLib</artifactId>
+          <version>0.0.1</version>
       </dependency>
   </dependencies>
 </project>

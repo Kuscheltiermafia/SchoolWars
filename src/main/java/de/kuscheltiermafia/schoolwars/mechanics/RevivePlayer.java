@@ -19,7 +19,6 @@
 
 package de.kuscheltiermafia.schoolwars.mechanics;
 
-import de.kuscheltiermafia.schoolwars.SchoolWars;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -31,7 +30,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.HashMap;
 import java.util.UUID;
 
-import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
 public class RevivePlayer {
 

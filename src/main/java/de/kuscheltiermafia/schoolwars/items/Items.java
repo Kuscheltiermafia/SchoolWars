@@ -22,20 +22,29 @@ package de.kuscheltiermafia.schoolwars.items;
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.Team;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Interaction;
+import org.bukkit.entity.Item;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 public class Items {
+
+    public static ArrayList<ItemStack> itemList = new ArrayList<ItemStack>();
+    public static HashMap<Interaction, Item> itemHitboxes = new HashMap<>();
 
     public static ItemStack minas_flasche;
     public static ItemStack laptop;
@@ -76,8 +85,8 @@ public class Items {
     public static ItemStack karls_elexier;
     public static ItemStack baar_kaffee;
     public static ItemStack cookie;
-    public static ItemStack generalSchluessel;
-    public static ItemStack fachRaumSchrankSchluessel;
+    public static ItemStack general_schluessel;
+    public static ItemStack fachraum_schrank_schluessel;
     public static ItemStack rollator;
     public static ItemStack no_page_down;
     public static ItemStack no_page_up;
@@ -96,6 +105,8 @@ public class Items {
     public static ItemStack ausleihschein;
     public static ItemStack stairway_heaven;
     public static ItemStack zehn_boehm_gutschein;
+    public static ItemStack emilia_ausland_brief;
+    public static ItemStack keks;
     public static ItemStack ipad;
 
     public static ArrayList<ItemStack> itemList = new ArrayList<ItemStack>();
@@ -171,6 +182,17 @@ public class Items {
         versuch = createItem(Material.HEAVY_CORE, ChatColor.DARK_GRAY + "Taktischer Versuchsaufbau", 1, 16, null, false, false, false);
         itemList.add(versuch);
 
+        emilia_ausland_brief = createItem(Material.PAPER, ChatColor.WHITE + "(Arbeitstitel)Emilia Ausland Brief", 1, 1, null, true, false, false);
+        itemList.add(emilia_ausland_brief);
+
+        baar_kaffee = createItem(Material.FLOWER_POT, ChatColor.GRAY + "Baars Kaffee", 1, 1, null, false, false, false);
+        itemList.add(baar_kaffee);
+
+        ArrayList<String> keks_lore = new ArrayList<String>();
+        keks_lore.add(ChatColor.WHITE + "Keks von Herr Kesselring");
+        keks_lore.add(ChatColor.WHITE + "Herr Geitners lieblings Snack");
+        keks = createItem(Material.COOKIE, ChatColor.GOLD + "Keks", 1, 1, keks_lore, false, false, false);
+        itemList.add(keks);
 
 
 //Miscellaneous
@@ -204,9 +226,6 @@ public class Items {
         fischers_spiel = createItem(Material.JUKEBOX, "§8Fischers Spielzeug", 1, 1, null, false, false, false);
         itemList.add(fischers_spiel);
 
-        baar_kaffee = createItem(Material.FLOWER_POT, ChatColor.GRAY + "Baars Kaffee", 1, 1, null, false, false, false);
-        itemList.add(baar_kaffee);
-
         leere_tasse = createItem(Material.FLOWER_POT, ChatColor.WHITE + "Leere Tasse", 1, 1, null, false, false, false);
         itemList.add(leere_tasse);
 
@@ -217,13 +236,13 @@ public class Items {
         karls_elexier = createItem(Material.POTION,ChatColor.LIGHT_PURPLE + "Elexir Karls des Kleinen", 1, 1, karls_elexir_lore, false, false, true);
         itemList.add(karls_elexier);
 
-        generalSchluessel = createItem(Material.TRIPWIRE_HOOK, ChatColor.GOLD + "Generalschlüssel", 1, 1, null, false, false, false);
-        itemList.add(generalSchluessel);
+        general_schluessel = createItem(Material.TRIPWIRE_HOOK, ChatColor.GOLD + "Generalschlüssel", 1, 1, null, false, false, false);
+        itemList.add(general_schluessel);
 
         ArrayList<String> physikSchlüssel_lore = new ArrayList<String>();
-        physikSchlüssel_lore.add(ChatColor.WHITE + "Öffnet die Schränke in Fachräumen");
-        fachRaumSchrankSchluessel = createItem(Material.TRIPWIRE_HOOK, ChatColor.GOLD + "Fachraumschrankschlüssel", 1, 1, physikSchlüssel_lore, false, false, false);
-        itemList.add(fachRaumSchrankSchluessel);
+        physikSchlüssel_lore.add(ChatColor.WHITE + "Öffnet die Blaue Box in der Physik Vorbereitung");
+        fachraum_schrank_schluessel = createItem(Material.TRIPWIRE_HOOK, ChatColor.GOLD + "Fachraumschrankschlüssel", 1, 1, physikSchlüssel_lore, false, false, false);
+        itemList.add(fachraum_schrank_schluessel);
 
         rollator = createItem(Material.NETHER_BRICK_FENCE, ChatColor.GRAY + "Rollator", 1, 1, null, false, false, false);
         itemList.add(rollator);
@@ -235,7 +254,6 @@ public class Items {
         focken_lore.add("§7- " + ChatColor.LIGHT_PURPLE + "Fantastisches orientiertes cooles kurioses entanguliertes Neutron" + "§7 -");
         focken_lore.add("§7oder kurz, FOCKEN!");
         focken_lore.add("§7Keine Ahnung was das ist...");
-
         focken = createItem(Material.DARK_OAK_BUTTON, ChatColor.LIGHT_PURPLE + "Focken", 1, 1, focken_lore, true, false, false);
         itemList.add(focken);
 
@@ -253,7 +271,6 @@ public class Items {
 
         ArrayList<String> peilsender_lore = new ArrayList<>();
         peilsender_lore.add(ChatColor.DARK_GRAY + "Herr Fischer kann sich nicht länger verstecken!");
-
         peilsender = createItem(Material.COMPASS, ChatColor.DARK_GRAY + "Peilsender", 1, 1, peilsender_lore, false, false, false);
         itemList.add(peilsender);
 
@@ -270,10 +287,10 @@ public class Items {
         vape_arschwasser = createItem(Material.LIME_CANDLE , ChatColor.GREEN + "Vape Tropical Arschwasser", 1, 1, null, false, false, false);
         itemList.add(vape_arschwasser);
 
-        vape_strawberry = createItem(Material.RED_CANDLE, ChatColor.RED + "Vape Strawberry Burst ", 1, 1, null, false, false, false);
+        vape_strawberry = createItem(Material.RED_CANDLE, ChatColor.RED + "Vape Strawberry Burst", 1, 1, null, false, false, false);
         itemList.add(vape_strawberry);
 
-        vape_mango = createItem(Material.ORANGE_CANDLE, ChatColor.YELLOW + "Vape Chewy Mango ", 1, 1, null, false, false, false);
+        vape_mango = createItem(Material.ORANGE_CANDLE, ChatColor.YELLOW + "Vape Chewy Mango", 1, 1, null, false, false, false);
         itemList.add(vape_mango);
 
         vape_triple = createItem(Material.BLUE_CANDLE, ChatColor.BLUE + "Vape Triple Fruit Combo", 1, 1, null, false, false, false);
@@ -352,5 +369,21 @@ public class Items {
         item.setItemMeta(meta);
 
         return item;
+    }
+
+    public static void createItemsEntity(ItemStack item, Location loc) {
+        Block b = loc.getBlock();
+
+        Item itemEntity = b.getWorld().dropItem(loc.add(0, 0.2, 0), item);
+        itemEntity.setPersistent(true);
+        itemEntity.setInvulnerable(true);
+        itemEntity.setVelocity(new Vector(0, 0, 0));
+        itemEntity.setPickupDelay(Integer.MAX_VALUE);
+
+        Interaction itemHitbox = itemEntity.getWorld().spawn(itemEntity.getLocation(), Interaction.class);
+        itemHitbox.setInteractionHeight(1);
+        itemHitbox.setInteractionWidth(1);
+
+        itemHitboxes.put(itemHitbox, itemEntity);
     }
 }

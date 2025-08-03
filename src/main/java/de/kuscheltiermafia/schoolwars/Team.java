@@ -32,8 +32,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static de.kuscheltiermafia.schoolwars.mechanics.Ranzen.ranzenAmount;
-import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.win_conditions.Ranzen.ranzenAmount;
+import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
 public enum Team {
     SPORTLER(ChatColor.DARK_RED + "sportler", ChatColor.DARK_RED + "[Sport] ", ChatColor.DARK_RED + "Sportler", new Location(Bukkit.getWorld("schoolwars"), 68.5, 80.0, 167.0, 90, 0)),

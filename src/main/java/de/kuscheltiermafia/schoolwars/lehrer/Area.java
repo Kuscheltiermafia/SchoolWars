@@ -25,11 +25,10 @@ import org.bukkit.entity.*;
 
 import java.util.ArrayList;
 
-import static de.kuscheltiermafia.schoolwars.SchoolWars.world;
+import static de.kuscheltiermafia.schoolwars.SchoolWars.WORLD;
 
 
 public enum Area {
-
     NEUER_MUSIKSAAL("Neuer Musiksaal", new Location(world, 43.0, 79.0, 187.0), new Location(world, 57.0, 85.0, 200.0), new Location(world, 46.0, 80.0, 199.0), 1, Raum.MUSIK),
     PHYSIKSAAL("Physiksaal", new Location(world, -33.0, 79.0, 187.0), new Location(world, -21.0, 85.0, 197.0), new Location(world, -21.0, 80.0, 192.0), 1, Raum.PHYSIK),
     RAUM_E04("Raum E04", new Location(world, -40.0, 79.0, 142.0), new Location(world, -28.0, 84.0, 150.0), new Location(world, -28.0, 80.0, 143.0), 1, Raum.NORMAL),

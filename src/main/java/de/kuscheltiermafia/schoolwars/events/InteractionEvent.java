@@ -23,17 +23,16 @@ import de.kuscheltiermafia.schoolwars.commands.ItemList;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
 import de.kuscheltiermafia.schoolwars.mechanics.PlayerStun;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.entity.ItemFrame;
+import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -69,7 +68,6 @@ public class InteractionEvent implements Listener {
     public void OnBreakBlock(BlockBreakEvent e){
         Player p = e.getPlayer();
         if (p.getGameMode() != GameMode.CREATIVE){
-            //p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§4Das darfst du nicht!"));
             e.setCancelled(true);
         }
     }
@@ -79,15 +77,30 @@ public class InteractionEvent implements Listener {
     public void OnPlaceBlock(BlockPlaceEvent e){
         Player p = e.getPlayer();
         if (p.getGameMode() != GameMode.CREATIVE){
-            //p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§4Das darfst du nicht!"));
             e.setCancelled(true);
         }
     }
 
-    //Prevent Itemframe from being destroyed
+    //Prevent Item frame from being destroyed
+    @EventHandler
+    public void onBreakItemFrame(HangingBreakByEntityEvent e) {
+        if (e.getEntity() instanceof ItemFrame && ((Player) e.getRemover()).getGameMode() != GameMode.CREATIVE) {
+            e.setCancelled(true);
+        }
+    }
+
+    //Prevent players from taking items out of item frames
     @EventHandler
     public void onDamageItemFrame(EntityDamageByEntityEvent e) {
-        if (e.getEntity() instanceof ItemFrame) {
+        if (e.getEntity() instanceof ItemFrame && ((Player) e.getDamager()).getGameMode() != GameMode.CREATIVE) {
+            e.setCancelled(true);
+        }
+    }
+
+    //Prevent Paintings from being destroyed
+    @EventHandler
+    public void onBreakPainting(HangingBreakByEntityEvent e) {
+        if (e.getEntity() instanceof Painting && ((Player) e.getRemover()).getGameMode() != GameMode.CREATIVE) {
             e.setCancelled(true);
         }
     }

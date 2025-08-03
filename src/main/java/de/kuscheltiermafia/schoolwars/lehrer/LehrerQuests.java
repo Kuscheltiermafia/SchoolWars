@@ -37,7 +37,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
 public class LehrerQuests implements Listener {
 
@@ -68,13 +68,13 @@ public class LehrerQuests implements Listener {
         rewardLehrerItems.put(Lehrer.KLIEM, Items.placeholder);
         repReward.put(Lehrer.KLIEM, 0.0);
 
-        requieredLehrerItems.put(Lehrer.KESSELRING, Items.placeholder);
-        rewardLehrerItems.put(Lehrer.KESSELRING, Items.placeholder);
-        repReward.put(Lehrer.KESSELRING, 0.0);
-
         requieredLehrerItems.put(Lehrer.VORNBERGER, Items.geschnittene_zwiebel);
         rewardLehrerItems.put(Lehrer.VORNBERGER, Items.ausleihschein);
         repReward.put(Lehrer.VORNBERGER, 1.0);
+
+        requieredLehrerItems.put(Lehrer.DICKERT, Items.emilia_ausland_brief);
+        rewardLehrerItems.put(Lehrer.DICKERT, Items.fachraum_schrank_schluessel);
+        repReward.put(Lehrer.DICKERT, 1.0);
     }
 
     @EventHandler

@@ -33,7 +33,7 @@ public class Intro {
 
     public static void introScene(Player p) {
         p.setGameMode(GameMode.SPECTATOR);
-        ArmorStand cam = p.getWorld().spawn(new Location(SchoolWars.world, -100.0, 73.0, 145.0, -51.4f, -9.6f), ArmorStand.class);
+        ArmorStand cam = p.getWorld().spawn(new Location(SchoolWars.WORLD, -100.0, 73.0, 145.0, -51.4f, -9.6f), ArmorStand.class);
         cam.setInvisible(true);
         cam.setGravity(false);
 
@@ -60,7 +60,7 @@ public class Intro {
     }
 
     public static void secondSequence(Player p) {
-        ArmorStand cam = p.getWorld().spawn(new Location(SchoolWars.world, -13.4, 80.0, 176.0, 90f, 9.6f), ArmorStand.class);
+        ArmorStand cam = p.getWorld().spawn(new Location(SchoolWars.WORLD, -13.4, 80.0, 176.0, 90f, 9.6f), ArmorStand.class);
         cam.setInvisible(true);
         cam.setGravity(false);
         Location loc = cam.getLocation();
@@ -92,7 +92,7 @@ public class Intro {
     }
 
     public static void thirdSequence(Player p) {
-        ArmorStand cam = p.getWorld().spawn(new Location(SchoolWars.world, 27.0, 81.0, 146.0, -90f, 0f), ArmorStand.class);
+        ArmorStand cam = p.getWorld().spawn(new Location(SchoolWars.WORLD, 27.0, 81.0, 146.0, -90f, 0f), ArmorStand.class);
         cam.setInvisible(true);
         cam.setGravity(false);
         Location loc = cam.getLocation();
@@ -122,7 +122,7 @@ public class Intro {
     }
 
     public static void fourthSequence(Player p) {
-        ArmorStand cam = p.getWorld().spawn(new Location(SchoolWars.world, -65, 80.0, 178.0, -90f, 0f), ArmorStand.class);
+        ArmorStand cam = p.getWorld().spawn(new Location(SchoolWars.WORLD, -65, 80.0, 178.0, -90f, 0f), ArmorStand.class);
         cam.setInvisible(true);
         cam.setGravity(false);
         Location loc = cam.getLocation();

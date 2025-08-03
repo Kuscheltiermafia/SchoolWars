@@ -21,7 +21,6 @@ package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.commands.Debug;
-import de.kuscheltiermafia.schoolwars.lehrer.Stundenplan;
 import de.kuscheltiermafia.schoolwars.mechanics.EndGame;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -30,7 +29,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import static de.kuscheltiermafia.schoolwars.player_mirror.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
 public class LeaveEvent implements Listener {
 
