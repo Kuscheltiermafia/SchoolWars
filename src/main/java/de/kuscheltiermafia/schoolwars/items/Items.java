@@ -111,6 +111,8 @@ public class Items {
     public static ItemStack emilia_ausland_brief;
     public static ItemStack keks;
     public static ItemStack ipad;
+    public static ItemStack machete;
+    public static ItemStack geschimmelte_zwiebel;
 
     public static void initItems() {
 
@@ -147,6 +149,9 @@ public class Items {
 
         strick = createItem(Material.LEAD, ChatColor.BOLD + "" + ChatColor.DARK_RED + "Du bist momentan nicht in der Lage dich zu bewegen!", 1, 1, null, true, false, false);
         itemList.add(strick);
+
+        machete = weaponizeItem(createItem(Material.IRON_SWORD, ChatColor.GRAY + "Pazifisten-Machete", 1, 1, null, true, false, false), 4, 0.1, EquipmentSlot.HAND);
+        itemList.add(machete);
 
 //Support
         ArrayList<String> kuehlpack_lore = new ArrayList<String>();
@@ -215,6 +220,9 @@ public class Items {
 
         zwiebel = createItem(Material.FERMENTED_SPIDER_EYE, ChatColor.LIGHT_PURPLE + "Zwiebel", 1, 16, null, false, false, false);
         itemList.add(zwiebel);
+
+        geschimmelte_zwiebel = createItem(Material.FERMENTED_SPIDER_EYE, ChatColor.GREEN + "geschimmelte Zwiebel", 1, 16, null, false, false, false);
+        itemList.add(geschimmelte_zwiebel);
 
         geschnittene_zwiebel = createItem(Material.NETHER_WART, ChatColor.LIGHT_PURPLE + "Ziebelstücke", 1, 16, null, false, false, false);
         itemList.add(geschnittene_zwiebel);
