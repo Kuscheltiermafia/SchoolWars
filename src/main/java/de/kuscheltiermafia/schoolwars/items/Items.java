@@ -46,6 +46,9 @@ public class Items {
     public static ArrayList<ItemStack> itemList = new ArrayList<ItemStack>();
     public static HashMap<Interaction, Item> itemHitboxes = new HashMap<>();
 
+    public static NamespacedKey dmgAttributeKey = new NamespacedKey(SchoolWars.getPlugin(), "attribute_key_dmg");
+    public static NamespacedKey spdAttributeKey = new NamespacedKey(SchoolWars.getPlugin(), "attribute_key_spd");
+
     public static ItemStack minas_flasche;
     public static ItemStack laptop;
     public static ItemStack buffed_minas_flasche;
@@ -108,10 +111,6 @@ public class Items {
     public static ItemStack emilia_ausland_brief;
     public static ItemStack keks;
     public static ItemStack ipad;
-
-    public static ArrayList<ItemStack> itemList = new ArrayList<ItemStack>();
-    public static NamespacedKey dmgAttributeKey = new NamespacedKey(SchoolWars.getPlugin(), "attribute_key_dmg");
-    public static NamespacedKey spdAttributeKey = new NamespacedKey(SchoolWars.getPlugin(), "attribute_key_spd");
 
     public static void initItems() {
 

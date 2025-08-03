@@ -21,14 +21,14 @@ public class BossWaves implements Listener {
         raithHealth.setTitle(ChatColor.DARK_RED + "Raith Shadow Legends");
         raithHealth.setProgress(1.0);
 
-        BossEntity.createRaithShadowLegends(new Location(SchoolWars.world, 15.0, 31.0, 182.0));
+        BossEntity.createRaithShadowLegends(new Location(SchoolWars.WORLD, 15.0, 31.0, 182.0));
 
         Arrays.stream(fighters).forEach(fighter -> {raithHealth.addPlayer(fighter);});
 
         new BukkitRunnable() {
             @Override
             public void run() {
-                Arrays.stream(SchoolWars.world.getNearbyEntities(BossEntity.RaithShadowLegends.getLocation(), 4, 4, 4).toArray()).forEach(entity -> {
+                Arrays.stream(SchoolWars.WORLD.getNearbyEntities(BossEntity.RaithShadowLegends.getLocation(), 4, 4, 4).toArray()).forEach(entity -> {
                     if(entity instanceof Player) {
                         ((Player) entity).damage(3);
                     }
