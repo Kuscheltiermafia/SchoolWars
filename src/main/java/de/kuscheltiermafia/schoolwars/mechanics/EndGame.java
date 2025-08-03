@@ -21,6 +21,7 @@ package de.kuscheltiermafia.schoolwars.mechanics;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.Team;
+import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
 import de.kuscheltiermafia.schoolwars.win_conditions.Ranzen;
 import org.bukkit.Bukkit;
@@ -55,6 +56,8 @@ public class EndGame {
             Ranzen.placedRanzen.get(ranzen).remove();
             ranzen.remove();
         }
+
+        Items.clearSpawnedItems();
 
         Lehrer.removeAllLehrer();
         playerMirror.clear();

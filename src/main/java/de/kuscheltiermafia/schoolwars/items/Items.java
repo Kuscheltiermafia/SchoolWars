@@ -393,4 +393,15 @@ public class Items {
 
         itemHitboxes.put(itemHitbox, itemEntity);
     }
+
+    public static void clearSpawnedItems() {
+        for (Interaction interaction : itemHitboxes.keySet()) {
+            Item itemEntity = itemHitboxes.get(interaction);
+            if (itemEntity != null) {
+                itemEntity.remove();
+            }
+            interaction.remove();
+        }
+        itemHitboxes.clear();
+    }
 }
