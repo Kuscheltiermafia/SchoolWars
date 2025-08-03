@@ -27,6 +27,7 @@ import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.lehrer.LehrerQuests;
 import de.kuscheltiermafia.schoolwars.lehrer.SekretariatStundenplan;
 import de.kuscheltiermafia.schoolwars.win_conditions.AtombombeEvents;
+import de.kuscheltiermafia.schoolwars.win_conditions.BossWaves;
 import de.kuscheltiermafia.schoolwars.win_conditions.Ranzen;
 import io.github.realMorgon.sunriseLib.SunriseLib;
 import org.bukkit.Bukkit;
@@ -95,10 +96,11 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new SekretariatStundenplan(), this);
         pluginManager.registerEvents(new FischersSpielzeug(), this);
         pluginManager.registerEvents(new DialogueHandler(), this);
+        pluginManager.registerEvents(new BossWaves(), this);
         pluginManager.registerEvents(new Ranzen(), this);
         pluginManager.registerEvents(new DisableProfessions(), this);
         pluginManager.registerEvents(new FachraumSchluessel(), this);
-
+      
         getCommand("start").setExecutor(new StartGame());
         getCommand("end").setExecutor(new EndCommand());
         getCommand("itemlist").setExecutor(new ItemList());

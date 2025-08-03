@@ -81,9 +81,6 @@ public class Intro {
                     if (finalI == 20 * 4) {
                         p.sendTitle(ChatColor.DARK_RED + " ", ChatColor.YELLOW + "Moritz", 1 * 20, 2 * 20, 1 * 20);
                     }
-                    if (finalI == 20 * 8) {
-                        p.sendTitle(ChatColor.DARK_RED + " ", ChatColor.YELLOW + "und Erich", 1 * 20, 2 * 20, 1 * 20);
-                    }
 
                     if (finalI == 20 * 10 - 1) {
                         cam.remove();

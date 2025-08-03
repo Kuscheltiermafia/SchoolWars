@@ -42,6 +42,8 @@ public class SchulbuchLevels implements Listener {
     public static ArrayList<Location> bookshelfLoc = new ArrayList<Location>();
     public static int random;
 
+    public static Location currentBookshelfLoc;
+
     public static void initShelfLocations() {
         bookshelfLoc.add(new Location(Bukkit.getWorld("schoolwars"), 23, 89, 190));
         bookshelfLoc.add(new Location(Bukkit.getWorld("schoolwars"), 43, 89, 191));
@@ -58,7 +60,7 @@ public class SchulbuchLevels implements Listener {
             Player p = e.getPlayer();
             if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                 for(int i = 0; i < bookshelfLoc.size(); i++) {
-                    if(e.getClickedBlock().getLocation().equals(bookshelfLoc.get(random))) {
+                    if(e.getClickedBlock().getLocation().equals(currentBookshelfLoc)) {
                         if(knowledgeAquiered.containsKey(p)) {
                             knowledgeAquiered.put(p, knowledgeAquiered.get(p) + 1);
                             checkSchulbuchUpgrade(p, knowledgeAquiered.get(p));
@@ -98,10 +100,10 @@ public class SchulbuchLevels implements Listener {
     }
 
     @EventHandler
-    public void onFindSchulbuch(PlayerInteractEvent e) {
+    public void onAusleiheUse(PlayerInteractEvent e) {
         if(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             if(e.getPlayer().getInventory().getItemInMainHand().equals(Items.ausleihschein)) {
-                e.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "-- Nächstes Schulbuch befindet sich in: " + ChatColor.RED + Area.getAreaByLocation(bookshelfLoc.get(random)).name() + ChatColor.GRAY + " --"));
+                e.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "-- Nächstes Schulbuch befindet sich in: " + ChatColor.RED + Area.getAreaByLocation(currentBookshelfLoc).getName() + ChatColor.GRAY + " --"));
             }
         }
     }
@@ -109,5 +111,6 @@ public class SchulbuchLevels implements Listener {
     public static void resetBookshelf() {
         Random rand = new Random();
         random = rand.nextInt(bookshelfLoc.size());
+        currentBookshelfLoc = bookshelfLoc.get(random);
     }
 }
