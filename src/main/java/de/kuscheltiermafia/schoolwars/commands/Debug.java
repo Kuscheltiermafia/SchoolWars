@@ -21,6 +21,7 @@ package de.kuscheltiermafia.schoolwars.commands;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.events.Minasisierung;
+import de.kuscheltiermafia.schoolwars.events.SchulbuchLevels;
 import de.kuscheltiermafia.schoolwars.lehrer.*;
 import de.kuscheltiermafia.schoolwars.mechanics.Intro;
 import de.kuscheltiermafia.schoolwars.mechanics.PlayerStun;
@@ -244,6 +245,10 @@ public class Debug implements CommandExecutor {
                         Player target = Bukkit.getPlayer(args[1]);
                         target.setAllowFlight(!target.getAllowFlight());
                     }
+                    return true;
+
+                case "schulbuch":
+                    p.sendMessage(debugPrefix + "Next book location: " + SchulbuchLevels.currentBookshelfLoc.getX() + ", " + SchulbuchLevels.currentBookshelfLoc.getY() + ", " + SchulbuchLevels.currentBookshelfLoc.getZ());
                     return true;
             }
         }else{

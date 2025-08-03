@@ -60,6 +60,11 @@ public enum Area {
     LEHRERZIMMER("Lehrerzimmer", new Location(world, -35.0, 87.0, 200.0), new Location(world, 25.0, 91.0, 204.0), new Location(world, 4.0, 87.0, 191.0), 4, Raum.GENERAL),
     HINTERER_PAUSENHOF("Hinterer Pausenhof", new Location(world, 43.0, 79.0, 130.0), new Location(world, 84.0, 85.0, 184.0), new Location(world, 43.0, 80.0, 177.0), 2, Raum.GENERAL),
     LINKER_FLUEGEL_GANG_ERSTER_STOCK("Linker Flügel erstes Obergeschoss", new Location(world, -45.0, 87.0, 152.0), new Location(world, 40.0, 91.0, 158.0), new Location(world, -10.0, 87.0, 202.0), 0, Raum.GENERAL),
+    NEUE_BUECHEREI("Neue Bücherei", new Location(world, 37.0, 87.0, 188.0), new Location(world, 50.0, 91.0, 202.0), new Location(world, -10.0, 87.0, 202.0), 0, Raum.GENERAL),
+    SILENZIUMRAUM("Silenziumraum", new Location(world, 14.0, 87.0, 187.0), new Location(world, 23.0, 91.0, 197.0), new Location(world, -10.0, 87.0, 202.0), 0, Raum.GLASKASTEN),
+    SCHULKIOSK("Kisok", new Location(world, -55.0, 79.0, 194.0), new Location(world, -53.0, 83.0, 203.0), new Location(world, -10.0, 87.0, 202.0), 0, Raum.GENERAL),
+    JORDAN_BUERO("Frau Jordans Büro", new Location(world, -56.0, 87.0, 177.0), new Location(world, -49.0, 91.0, 183.0), new Location(world, -10.0, 87.0, 202.0), 0, Raum.VERWALTUNG),
+    HAUSMEISTER("Hausmeister Kabuff", new Location(world, -56.0, 80.0, 172.0), new Location(world, -53.0, 83.0, 203.0), new Location(world, -54.0, 85.0, 174.0), 0, Raum.GENERAL),
     PAUSENHOF("Pausenhof", new Location(world, -34.0, 77.0, 160.0), new Location(world, 42.0, 84.0, 185.0), new Location(world, -15.0, 80, 175.0), 1, Raum.GENERAL);
 
 
@@ -102,5 +107,9 @@ public enum Area {
             }
         }
         return null;
+    }
+
+    public String getName() {
+        return name;
     }
 }

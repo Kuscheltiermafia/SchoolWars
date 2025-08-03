@@ -19,9 +19,11 @@
 
 package de.kuscheltiermafia.schoolwars.items;
 
+import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.Team;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.EquipmentSlot;
@@ -94,8 +96,11 @@ public class Items {
     public static ItemStack ausleihschein;
     public static ItemStack stairway_heaven;
     public static ItemStack zehn_boehm_gutschein;
+    public static ItemStack ipad;
 
     public static ArrayList<ItemStack> itemList = new ArrayList<ItemStack>();
+    public static NamespacedKey dmgAttributeKey = new NamespacedKey(SchoolWars.getPlugin(), "attribute_key_dmg");
+    public static NamespacedKey spdAttributeKey = new NamespacedKey(SchoolWars.getPlugin(), "attribute_key_spd");
 
     public static void initItems() {
 
@@ -180,6 +185,9 @@ public class Items {
 
         kaputtes_ipad = createItem(Material.NETHERITE_SCRAP, ChatColor.WHITE + "Kaputtes iPad", 1, 1, null, false, false, false);
         itemList.add(kaputtes_ipad);
+
+        ipad = createItem(Material.IRON_INGOT, ChatColor.WHITE + "iPad", 1, 1, null, false, false, false);
+        itemList.add(ipad);
 
         laptop = createItem(Material.HEAVY_WEIGHTED_PRESSURE_PLATE, "§8iFake Laptop", 1, 1, null, false, false, false);
         itemList.add(laptop);
@@ -335,8 +343,8 @@ public class Items {
     public static ItemStack weaponizeItem(ItemStack item, double damage, double attackSpeed, EquipmentSlot slot) {
 
         ItemMeta meta = item.getItemMeta();
-        AttributeModifier damageModifier = new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", damage, AttributeModifier.Operation.ADD_NUMBER, slot);
-        AttributeModifier speedModifier = new AttributeModifier(UUID.randomUUID(), "generic.attackSpeed", attackSpeed, AttributeModifier.Operation.ADD_NUMBER, slot);
+        AttributeModifier damageModifier = new AttributeModifier(dmgAttributeKey, damage, AttributeModifier.Operation.ADD_NUMBER);
+        AttributeModifier speedModifier = new AttributeModifier(spdAttributeKey, attackSpeed, AttributeModifier.Operation.ADD_NUMBER);
 
         meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, damageModifier);
         meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, speedModifier);
