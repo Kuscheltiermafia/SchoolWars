@@ -66,7 +66,7 @@ public class AtombombeEvents implements Listener {
 
                     p.getInventory().remove(Items.versuch);
                     p.getInventory().remove(Items.uranium);
-                    Items.createItemsEntity(new ItemStack(Items.nuke), b.getLocation().add(0, 0.5, 0));
+                    Items.createItemsEntity(new ItemStack(Items.nuke), b.getLocation().add(0.5, 1, 0.5));
 
                     e.setCancelled(true);
 

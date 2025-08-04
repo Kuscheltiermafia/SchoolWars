@@ -112,6 +112,8 @@ public class Items {
     public static ItemStack ipad;
     public static ItemStack aquatisiertes_fluor;
     public static ItemStack natrium_fluorid;
+    public static ItemStack kaffeebohnen;
+    public static ItemStack verbrannte_bohnen;
 
     public static void initItems() {
 
@@ -187,6 +189,12 @@ public class Items {
 
         baar_kaffee = createItem(Material.FLOWER_POT, ChatColor.GRAY + "Baars Kaffee", 1, 1, null, false, false, false);
         itemList.add(baar_kaffee);
+
+        kaffeebohnen = createItem(Material.COCOA_BEANS, ChatColor.WHITE + "Kaffeebohnen", 1, 16, null, false, false, false);
+        itemList.add(kaffeebohnen);
+
+        verbrannte_bohnen = createItem(Material.BLACK_DYE, ChatColor.WHITE + "Verbrannte Kaffeebohnen", 1, 16, null, false, false, false);
+        itemList.add(verbrannte_bohnen);
 
         ArrayList<String> keks_lore = new ArrayList<String>();
         keks_lore.add(ChatColor.WHITE + "Keks von Herr Kesselring");
@@ -380,13 +388,13 @@ public class Items {
     public static void createItemsEntity(ItemStack item, Location loc) {
         Block b = loc.getBlock();
 
-        Item itemEntity = b.getWorld().dropItem(loc.add(0, 0.2, 0), item);
+        Item itemEntity = b.getWorld().dropItem(loc.add(0, 0.5, 0), item);
         itemEntity.setPersistent(true);
         itemEntity.setInvulnerable(true);
         itemEntity.setVelocity(new Vector(0, 0, 0));
         itemEntity.setPickupDelay(Integer.MAX_VALUE);
 
-        Interaction itemHitbox = itemEntity.getWorld().spawn(itemEntity.getLocation(), Interaction.class);
+        Interaction itemHitbox = itemEntity.getWorld().spawn(itemEntity.getLocation().add(0, -0.3, 0), Interaction.class);
         itemHitbox.setInteractionHeight(1);
         itemHitbox.setInteractionWidth(1);
 
