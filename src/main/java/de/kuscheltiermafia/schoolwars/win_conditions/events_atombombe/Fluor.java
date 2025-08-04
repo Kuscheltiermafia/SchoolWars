@@ -60,6 +60,7 @@ public class Fluor implements Listener {
 
     }
 
+    private static boolean amVerdampfen = false;
 
     @EventHandler
     public static void onVerdampfen(PlayerInteractEvent e) {
@@ -68,7 +69,8 @@ public class Fluor implements Listener {
             Block b = e.getClickedBlock();
             if (b.getLocation().equals(ofen)) {
                 e.setCancelled(true);
-                if (e.getPlayer().getInventory().getItemInMainHand().equals(Items.aquatisiertes_fluor)) {
+                if (e.getPlayer().getInventory().getItemInMainHand().equals(Items.aquatisiertes_fluor) && !amVerdampfen) {
+                    amVerdampfen = true;
 
                     Furnace furnace = (Furnace) b.getState();
                     furnace.setBurnTime((short) duration);
@@ -79,6 +81,7 @@ public class Fluor implements Listener {
                         @Override
                         public void run() {
                             Items.createItemsEntity(new ItemStack(Items.fluor), b.getLocation().add(0.5, 0.8, 0.5));
+                            amVerdampfen = false;
                         }
                     }.runTaskLater(SchoolWars.getPlugin(), duration);
 

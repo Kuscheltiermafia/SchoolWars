@@ -41,6 +41,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.*;
 
@@ -51,7 +52,7 @@ public class AtombombeEvents implements Listener {
 
     static boolean nukePlaced = false;
     static Location nukeLoc;
-    private static BukkitRunnable timer;
+    private static BukkitTask timer;
 
 
     @EventHandler
@@ -100,7 +101,7 @@ public class AtombombeEvents implements Listener {
             nukePlaced = true;
 
 
-            timer = (BukkitRunnable) new BukkitRunnable() {
+            timer = new BukkitRunnable() {
 
                 int timeSec = 0;
 
@@ -130,15 +131,13 @@ public class AtombombeEvents implements Listener {
                             if (entry.getKey() != team && entry.getValue() > 0){
                                 nukeExplode(nuke);
                                 Bukkit.broadcast(Component.text(ChatColor.RED + "Die Atombombe explodiert und zerstört alles. In dieser Runde gibt es keinen Gewinner!"));
+                                Bukkit.getScheduler().cancelTask(this.getTaskId());
                                 return;
                             }
                         }
                         nukeExplode(nuke);
                         Bukkit.broadcast(Component.text(ChatColor.YELLOW + "Die Atombombe ist explodiert! Das Team der " + team + ChatColor.YELLOW + " hat gewonnen!"));
-                    }
-
-                    if (timeSec == -1){
-                        stopNuke(nuke);
+                        Bukkit.getScheduler().cancelTask(this.getTaskId());
                         return;
                     }
 
@@ -167,7 +166,7 @@ public class AtombombeEvents implements Listener {
 
     private static void stopNuke(BlockDisplay nuke) {
         if (nukePlaced) {
-            timer.cancel();
+            Bukkit.getScheduler().cancelTask(timer.getTaskId());
             nuke.remove();
             nukePlaced = false;
             Bukkit.broadcastMessage(ChatColor.RED + "Die Atombombe wurde entschärft");
@@ -183,15 +182,17 @@ public class AtombombeEvents implements Listener {
     }
 
     private static void nukeExplode(BlockDisplay nuke) {
+        if (!nukePlaced) return;
+
+        nukePlaced = false;
         for (Player p : Bukkit.getOnlinePlayers()){
             p.sendTitle(ChatColor.RED + "Spielende", ChatColor.RED + "Die Atombombe ist explodiert");
             p.setGameMode(GameMode.SPECTATOR);
             p.setSpectatorTarget(Bukkit.getEntity(UUID.fromString("e060929a-7c8f-471d-a76d-6a34244bdcab")));
             p.playSound(p.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 1);
         }
-        timer.cancel();
+        Bukkit.getScheduler().cancelTask(timer.getTaskId());
         nuke.remove();
-        nukePlaced = false;
         EndGame.end();
     }
 

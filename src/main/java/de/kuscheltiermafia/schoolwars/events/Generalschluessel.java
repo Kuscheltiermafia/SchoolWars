@@ -29,7 +29,9 @@ import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Random;
@@ -94,4 +96,20 @@ public class Generalschluessel implements Listener {
             }
         }catch (Exception ignored){}
     }
+
+    @EventHandler
+    public void onClickItemframe(PlayerInteractEntityEvent e){
+
+        if (e.getRightClicked() instanceof ItemFrame) {
+
+            Player p = e.getPlayer();
+            ItemFrame itemFrame = (ItemFrame) e.getRightClicked();
+
+            if (itemFrame.getItem().equals(Items.general_schluessel)) {
+                e.setCancelled(true);
+                p.getInventory().addItem(new ItemStack(Items.general_schluessel));
+            }
+        }
+    }
+
 }

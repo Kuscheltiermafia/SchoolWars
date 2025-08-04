@@ -2,6 +2,8 @@ package de.kuscheltiermafia.schoolwars.win_conditions.events_atombombe;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.items.Items;
+import de.kuscheltiermafia.schoolwars.mechanics.BlockInteraction;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -14,6 +16,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Random;
 
@@ -54,6 +57,42 @@ public class BaarsKaffee implements Listener {
                 }
 
                 p.openInventory(kaffeeKiste);
+            }
+        }
+    }
+
+    private static final int duration = 20 * 60;
+    private static boolean amBrauen = false;
+
+    @EventHandler
+    public void onKaffeeBrauen(PlayerInteractEvent e) {
+        if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            if (e.getClickedBlock().getLocation().equals(new Location(SchoolWars.WORLD, -3.0, 88.0, 197.0))){
+                e.setCancelled(true);
+
+                if (amBrauen) {
+                    e.getPlayer().sendActionBar(Component.text(ChatColor.RED + "Du kannst nur einen Kaffee gleichzeitig brauen!"));
+                    return;
+                }
+
+                Player p = e.getPlayer();
+                if (p.getInventory().contains(Items.leere_tasse) && p.getInventory().contains(Items.kaffeebohnen)) {
+                    amBrauen = true;
+                    p.getInventory().removeItem(Items.leere_tasse);
+                    p.getInventory().removeItem(Items.kaffeebohnen);
+
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            Items.createItemsEntity(new ItemStack(Items.baar_kaffee), e.getClickedBlock().getLocation().add(0.5, 0, -0.5));
+                            amBrauen = false;
+                        }
+                    }.runTaskLater(SchoolWars.getPlugin(), duration);
+                    BlockInteraction.progressBlock(e.getClickedBlock(), 20 * 60, "Kaffee kochen", "entity.cow.milk", 20 * 3);
+
+                } else {
+                    p.sendActionBar(Component.text( ChatColor.RED + "Du hast nicht die richtigen Zutaten, um Kaffee zu brauen!"));
+                }
             }
         }
     }
