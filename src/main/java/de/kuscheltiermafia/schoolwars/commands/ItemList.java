@@ -19,6 +19,11 @@
 
 package de.kuscheltiermafia.schoolwars.commands;
 
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandCompletion;
+import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Default;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,14 +37,16 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
-public class ItemList implements CommandExecutor{
+@CommandAlias("itemlist")
+public class ItemList extends BaseCommand {
 
     public static HashMap<Player, Integer> itemListPage = new HashMap<Player, Integer>();
 
     public static int[] spacers = new int[]{3, 4, 5, 6, 7, 8, 9, 18, 27, 36, 45, 17, 26, 35, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53};
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+    @Default
+    @CommandPermission("schoolwars.itemlist")
+    public void onCommand(CommandSender sender) {
 
         if(sender instanceof Player) {
             Player p = (Player) sender;
@@ -52,7 +59,6 @@ public class ItemList implements CommandExecutor{
 
             p.openInventory(itemList);
         }
-        return true;
     }
 
     public static void fillItemlist(Inventory itemList, int currentPage, Player user) {

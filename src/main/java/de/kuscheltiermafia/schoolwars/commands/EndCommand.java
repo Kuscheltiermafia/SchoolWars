@@ -19,16 +19,15 @@
 
 package de.kuscheltiermafia.schoolwars.commands;
 
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.Default;
 import de.kuscheltiermafia.schoolwars.mechanics.EndGame;
-import io.github.realMorgon.sunriseLib.Message;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 
-public class EndCommand implements CommandExecutor {
-    @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+@CommandAlias("end")
+public class EndCommand extends BaseCommand {
+    @Default
+    public void onCommand() {
         EndGame.end();
-        return true;
     }
 }

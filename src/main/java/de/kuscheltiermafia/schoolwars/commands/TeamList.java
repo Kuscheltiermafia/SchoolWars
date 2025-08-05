@@ -19,16 +19,20 @@
 
 package de.kuscheltiermafia.schoolwars.commands;
 
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.Default;
 import de.kuscheltiermafia.schoolwars.Team;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class TeamList implements CommandExecutor {
+@CommandAlias("teamlist")
+public class TeamList extends BaseCommand {
 
-    @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+    @Default
+    public void onTeamListCommand(CommandSender commandSender) {
 
         commandSender.sendMessage(ChatColor.GOLD + "§lSprachler:");
         for (String playerName : Team.SPRACHLER.mitglieder) {
@@ -42,7 +46,5 @@ public class TeamList implements CommandExecutor {
         for (String playerName : Team.SPORTLER.mitglieder) {
             commandSender.sendMessage(ChatColor.DARK_RED + playerName);
         }
-
-        return true;
     }
 }
