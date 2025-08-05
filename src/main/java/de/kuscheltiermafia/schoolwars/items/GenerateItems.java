@@ -46,7 +46,7 @@ public class GenerateItems {
                     new ItemIdentifier("minas_flasche", 4, Items.minas_flasche, new Location(Bukkit.getWorld("schoolwars"), 23.0, 81.0, 195.0))
                 },
                 {
-                    new ItemIdentifier("bens_vape", 1, Items.vape_fruitberry, new Location(Bukkit.getWorld("schoolwars"), 43, 88, 143)),
+                    new ItemIdentifier("bens_vape", 1, Items.vape_fruitberry, new Location(Bukkit.getWorld("schoolwars"), 43, 87, 143)),
                 }
         };
 

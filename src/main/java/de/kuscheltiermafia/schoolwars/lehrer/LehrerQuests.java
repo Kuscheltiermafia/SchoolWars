@@ -80,6 +80,10 @@ public class LehrerQuests implements Listener {
         requieredLehrerItems.put(Lehrer.DICKERT, Items.emilia_ausland_brief);
         rewardLehrerItems.put(Lehrer.DICKERT, Items.natrium_fluorid);
         repReward.put(Lehrer.DICKERT, 1.0);
+
+        requieredLehrerItems.put(Lehrer.BIEBER, Items.kuehlpack);
+        rewardLehrerItems.put(Lehrer.BIEBER, Items.machete);
+        repReward.put(Lehrer.BIEBER, 1.0);
     }
 
     @EventHandler
