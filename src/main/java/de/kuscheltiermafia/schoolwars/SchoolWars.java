@@ -26,9 +26,12 @@ import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.lehrer.LehrerQuests;
 import de.kuscheltiermafia.schoolwars.lehrer.SekretariatStundenplan;
-import de.kuscheltiermafia.schoolwars.win_conditions.AtombombeEvents;
+import de.kuscheltiermafia.schoolwars.win_conditions.events_atombombe.AtombombeEvents;
 import de.kuscheltiermafia.schoolwars.win_conditions.BossWaves;
 import de.kuscheltiermafia.schoolwars.win_conditions.Ranzen;
+import de.kuscheltiermafia.schoolwars.win_conditions.events_atombombe.BaarsKaffee;
+import de.kuscheltiermafia.schoolwars.win_conditions.events_atombombe.Fluor;
+import de.kuscheltiermafia.schoolwars.win_conditions.events_atombombe.Zentrifuge;
 import io.github.realMorgon.sunriseLib.SunriseLib;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -101,7 +104,10 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new DisableProfessions(), this);
         pluginManager.registerEvents(new FachraumSchluessel(), this);
         pluginManager.registerEvents(new VornbergerEvents(), this);
-      
+        pluginManager.registerEvents(new Fluor(), this);
+        pluginManager.registerEvents(new Zentrifuge(), this);
+        pluginManager.registerEvents(new BaarsKaffee(), this);
+
         getCommand("start").setExecutor(new StartGame());
         getCommand("end").setExecutor(new EndCommand());
         getCommand("itemlist").setExecutor(new ItemList());

@@ -32,6 +32,11 @@ public enum Area {
 
     NEUER_MUSIKSAAL("Neuer Musiksaal", new Location(WORLD, 43.0, 79.0, 187.0), new Location(WORLD, 57.0, 85.0, 200.0), new Location(WORLD, 46.0, 80.0, 199.0), 1, Raum.MUSIK),
     PHYSIKSAAL("Physiksaal", new Location(WORLD, -33.0, 79.0, 187.0), new Location(WORLD, -21.0, 85.0, 197.0), new Location(WORLD, -21.0, 80.0, 192.0), 1, Raum.PHYSIK),
+    CHEMIESAAL("Chemiesaal", new Location(WORLD, -33.0, 94.0, 187.0), new Location(WORLD, -20.0, 97.0, 197.0), new Location(WORLD, -22.0, 94.0, 192.0), 1, Raum.CHEMIE),
+    CHIEMIE_VORBEREITUNG_1("Chemie Vorbereitung", new Location(WORLD, -19.0, 94.0, 187.0), new Location(WORLD, -13.0, 98.0, 197.0), new Location(WORLD, -16.0, 95.0, 187.0), 1, Raum.CHEMIE),
+    CHIEMIE_VORBEREITUNG_2("Chemie Vorbereitung", new Location(WORLD, -11.0, 94.0, 187.0), new Location(WORLD, -5.0, 98.0, 197.0), new Location(WORLD, -8.0, 95.0, 187.0), 1, Raum.CHEMIE),
+    CHEMIE_UEBUNG("Chemie Übung", new Location(WORLD, -3.0, 94.0, 187.0), new Location(WORLD, 12.0, 98.0, 197.0), new Location(WORLD, -2.0, 95.0, 192.0), 1, Raum.CHEMIE),
+    KOMISCHER_BIORAUM("Komischer Bio Raum", new Location(WORLD, 14.0, 94.0, 187.0), new Location(WORLD, 24.0, 98.0, 197.0), new Location(WORLD, 23.0, 94.0, 188.0), 1, Raum.CHEMIE),
     RAUM_E04("Raum E04", new Location(WORLD, -40.0, 79.0, 142.0), new Location(WORLD, -28.0, 84.0, 150.0), new Location(WORLD, -28.0, 80.0, 143.0), 1, Raum.NORMAL),
     RAUM_E05("Raum E05", new Location(WORLD, -25.0, 79.0, 142.0), new Location(WORLD, -13.0, 84.0, 150.0), new Location(WORLD, -13.0, 80.0, 143.0), 1, Raum.NORMAL),
     RAUM_E06("Raum E06", new Location(WORLD, -10.0, 79.0, 142.0), new Location(WORLD, 2.0, 84.0, 150.0), new Location(WORLD, 2.0, 80.0, 143.0), 1, Raum.NORMAL),
