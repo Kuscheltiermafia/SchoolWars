@@ -41,7 +41,7 @@ public class JoinEvent implements Listener {
 
         Player p = e.getPlayer();
 
-        playerMirror.put(p.getName(), new PlayerMirror(p.getName()));
+        if(!playerMirror.containsKey(p.getName())) playerMirror.put(p.getName(), new PlayerMirror(p.getName()));
 
         p.teleport(new Location(p.getWorld(), -24, 80.5, 176, 90, 0));
         p.setRespawnLocation(new Location(p.getWorld(), -33.5, 88, 145.5, -90, 0));
@@ -63,12 +63,15 @@ public class JoinEvent implements Listener {
 //Put Player back in Team after Disconnect
         if (SchoolWars.gameStarted){
 
-            p.sendMessage("Das Spiel hat bereits begonnen.");
+            p.sendMessage("§e[SchoolWars] Das Spiel hat bereits begonnen.");
 
             if (playerMirror.get(p.getName()).getTeam() != null){
                 playerMirror.get(p.getName()).getTeam().readyPlayer(p);
                 p.setGameMode(GameMode.SURVIVAL);
-            }else p.sendMessage("Du bist keinem Team mehr zugeordnet.");
+            }else{
+                p.sendMessage("§e[SchoolWars] Du bist keinem Team mehr zugeordnet.");
+                p.setGameMode(GameMode.SPECTATOR);
+            }
 
         }else {
             e.getPlayer().sendMessage(ChatColor.YELLOW + "[SchoolWars] Das Spiel hat noch nicht begonnen.");

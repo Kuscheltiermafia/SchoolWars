@@ -68,6 +68,7 @@ public final class SchoolWars extends JavaPlugin {
             try {
                 playerMirror.put(p.getName(), new PlayerMirror(p.getName()));
             }catch (Exception ignored){}
+            playerCount++;
         }
 
         Items.initItems();

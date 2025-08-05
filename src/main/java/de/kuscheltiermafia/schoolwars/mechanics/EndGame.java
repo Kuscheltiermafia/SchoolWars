@@ -24,6 +24,7 @@ import de.kuscheltiermafia.schoolwars.Team;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
 import de.kuscheltiermafia.schoolwars.win_conditions.Ranzen;
+import io.github.realMorgon.sunriseLib.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Player;
@@ -61,5 +62,7 @@ public class EndGame {
 
         Lehrer.removeAllLehrer();
         playerMirror.clear();
+
+        Message.sendToAllPlayers("§e[SchoolWars] Das Spiel wurde beendet!");
     }
 }

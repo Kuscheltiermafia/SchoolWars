@@ -29,7 +29,6 @@ public class EndCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         EndGame.end();
-        Message.sendToAllPlayers("&cDas Spiel wurde beendet!");
         return true;
     }
 }

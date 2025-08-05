@@ -43,11 +43,9 @@ public class LeaveEvent implements Listener {
 
 
         //TODO: This does not work
-        if(Bukkit.getOnlinePlayers().isEmpty()){
+        if(SchoolWars.getPlayerCount() <= 0 && SchoolWars.gameStarted) {
             EndGame.end();
         }
-
-        playerMirror.remove(e.getPlayer().getName());
 
     }
 
