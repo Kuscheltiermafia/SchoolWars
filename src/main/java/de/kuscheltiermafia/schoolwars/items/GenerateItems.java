@@ -46,7 +46,30 @@ public class GenerateItems {
                     new ItemIdentifier("minas_flasche", 4, Items.minas_flasche, new Location(Bukkit.getWorld("schoolwars"), 23.0, 81.0, 195.0))
                 },
                 {
-                    new ItemIdentifier("bens_vape", 1, Items.vape_fruitberry, new Location(Bukkit.getWorld("schoolwars"), 43, 87, 143)),
+                    new ItemIdentifier("bens_vape_fruitberry", 1, Items.vape_fruitberry, new Location(Bukkit.getWorld("schoolwars"), 43, 87, 143))
+                },
+                {
+                    new ItemIdentifier("bens_vape_arschwasser", 1, Items.vape_arschwasser, new Location(Bukkit.getWorld("schoolwars"), -54.0, 82.0, 155.0))
+                },
+                {
+                    new ItemIdentifier("bens_vape_strawberry", 1, Items.vape_strawberry, new Location(Bukkit.getWorld("schoolwars"), -11.0, 73.0, 152.0))
+                },
+                {
+                    new ItemIdentifier("bens_vape_mango", 1, Items.vape_mango, new Location(Bukkit.getWorld("schoolwars"), -50.0, 80.0, 203.0))
+                },
+                {
+                    new ItemIdentifier("bens_vape_triple", 1, Items.vape_triple, new Location(Bukkit.getWorld("schoolwars"), 31.0, 87.0, 160.0))
+                },
+                {
+                    new ItemIdentifier("bens_vape_arabics", 1, Items.vape_arabics, new Location(Bukkit.getWorld("schoolwars"), 2.0, 74.0, 197.0))
+                },
+                {
+                    new ItemIdentifier("bens_vape_air", 1, Items.vape_air, new Location(Bukkit.getWorld("schoolwars"), -31.0, 80.0, 172.0))
+                },
+                {
+                    new ItemIdentifier("bens_vape_leer", 1, Items.vape_empty, new Location(Bukkit.getWorld("schoolwars"), 6.0, 79.0, 184.0)),
+                    new ItemIdentifier("bens_vape_leer", 1, Items.vape_empty, new Location(Bukkit.getWorld("schoolwars"), -2.0, 78.0, 161.0)),
+                    new ItemIdentifier("bens_vape_leer", 1, Items.vape_empty, new Location(Bukkit.getWorld("schoolwars"), 16.0, 80.0, 161.0))
                 }
         };
 

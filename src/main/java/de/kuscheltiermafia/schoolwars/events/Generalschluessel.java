@@ -34,6 +34,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import static de.kuscheltiermafia.schoolwars.SchoolWars.WORLD;
@@ -42,9 +44,15 @@ import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 public class Generalschluessel implements Listener {
 
     void summonSekritaerin(Location loc) {
-        Illusioner sekritaerin = WORLD.spawn(loc.add(0.5, -1, 0.5), Illusioner.class);
+        Evoker sekritaerin = WORLD.spawn(loc.add(0.5, -1, 0.5), Evoker.class);
 
-        sekritaerin.setCustomName("Sekritärin");
+        ArrayList<String> names = new ArrayList<>();
+        names.add("Frau Wacker");
+        names.add("Frau Blümel");
+        names.add("Frau Schranck-Teichmann");
+        Collections.shuffle(names);
+
+        sekritaerin.setCustomName(names.get(0));
         sekritaerin.setCustomNameVisible(true);
         sekritaerin.setCanPickupItems(false);
         sekritaerin.setRemoveWhenFarAway(false);
@@ -111,5 +119,4 @@ public class Generalschluessel implements Listener {
             }
         }
     }
-
 }
