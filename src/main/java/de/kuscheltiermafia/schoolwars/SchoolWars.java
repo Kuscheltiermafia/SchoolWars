@@ -109,6 +109,7 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new Fluor(), this);
         pluginManager.registerEvents(new Zentrifuge(), this);
         pluginManager.registerEvents(new BaarsKaffee(), this);
+        pluginManager.registerEvents(new Vapes(), this);
 
         PaperCommandManager manager = new PaperCommandManager(this);
         manager.registerCommand(new Debug());
