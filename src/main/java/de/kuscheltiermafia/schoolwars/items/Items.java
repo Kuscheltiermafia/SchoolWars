@@ -198,7 +198,7 @@ public class Items {
         kaffeebohnen = createItem(Material.COCOA_BEANS, ChatColor.WHITE + "Kaffeebohnen", 1, 16, null, false, false, false);
         itemList.add(kaffeebohnen);
 
-        verbrannte_bohnen = createItem(Material.BLACK_DYE, ChatColor.WHITE + "Verbrannte Kaffeebohnen", 1, 16, null, false, false, false);
+        verbrannte_bohnen = createItem(Material.COCOA_BEANS, ChatColor.WHITE + "Verbrannte Kaffeebohnen", 1, 16, null, false, false, false);
         itemList.add(verbrannte_bohnen);
 
         ArrayList<String> keks_lore = new ArrayList<String>();
