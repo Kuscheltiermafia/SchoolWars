@@ -126,12 +126,18 @@ public class LehrerQuests implements Listener {
             if(e.getSlot() == 24) {
                 if(p.getOpenInventory().getItem(10).equals(Items.available_item)) {
 
-                    String sub1 = p.getOpenInventory().getTitle().substring(7);
-                    String lehrerName = sub1.replaceAll("'s Aufgabe:", "");
+                    String stringOhneFarbe = p.getOpenInventory().getTitle().replaceAll(ChatColor.DARK_RED.toString(), "");
+                    String lehrerName = stringOhneFarbe.replaceAll("'s Aufgabe:", "");
+                    Lehrer lehrer = Lehrer.getLehrerByName(lehrerName);
 
-                    Lehrer lehrer = null;
+                    String lehrerNamePre;
+                    if (lehrer.isMale){
+                        lehrerNamePre = "Herr ";
+                    }else {
+                        lehrerNamePre = "Frau ";
+                    }
 
-                    p.sendMessage(ChatColor.GREEN + "Du hast die Aufgabe von " + lehrerName + " erledigt!");
+                    p.sendMessage(ChatColor.GREEN + "Du hast die Aufgabe von " + ChatColor.DARK_RED + lehrerNamePre + lehrerName + ChatColor.GREEN +  " erledigt!");
 
                     p.getInventory().remove(p.getOpenInventory().getItem(20));
                     p.getInventory().addItem(p.getOpenInventory().getItem(24));
