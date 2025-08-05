@@ -67,6 +67,10 @@
           <id>jitpack.io</id>
           <url>https://jitpack.io</url>
       </repository>
+      <repository>
+          <id>aikar</id>
+          <url>https://repo.aikar.co/content/groups/aikar/</url>
+      </repository>
   </repositories>
 
   <dependencies>
@@ -85,6 +89,11 @@
           <groupId>com.github.realMorgon</groupId>
           <artifactId>SunriseLib</artifactId>
           <version>0.0.1.1</version>
+      </dependency>
+      <dependency>
+          <groupId>co.aikar</groupId>
+          <artifactId>acf-paper</artifactId>
+          <version>0.5.1-SNAPSHOT</version>
       </dependency>
   </dependencies>
 </project>

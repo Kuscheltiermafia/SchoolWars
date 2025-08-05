@@ -19,6 +19,9 @@
 
 package de.kuscheltiermafia.schoolwars.commands;
 
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.Default;
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.Team;
 import de.kuscheltiermafia.schoolwars.items.GenerateItems;
@@ -40,13 +43,11 @@ import org.bukkit.entity.Villager;
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 import static de.kuscheltiermafia.schoolwars.SchoolWars.WORLD;
 
+@CommandAlias("start")
+public class StartCommand extends BaseCommand {
 
-public class StartCommand implements CommandExecutor {
-
-    @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-
+    @Default
+    public void onStartCommand() {
         StartGame.start();
-        return true;
     }
 }

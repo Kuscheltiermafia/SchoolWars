@@ -19,6 +19,7 @@
 
 package de.kuscheltiermafia.schoolwars;
 
+import co.aikar.commands.PaperCommandManager;
 import de.kuscheltiermafia.schoolwars.commands.*;
 import de.kuscheltiermafia.schoolwars.events.*;
 import de.kuscheltiermafia.schoolwars.mechanics.*;
@@ -109,12 +110,12 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new Zentrifuge(), this);
         pluginManager.registerEvents(new BaarsKaffee(), this);
 
-        getCommand("start").setExecutor(new StartGame());
-        getCommand("end").setExecutor(new EndCommand());
-        getCommand("itemlist").setExecutor(new ItemList());
-        getCommand("teamlist").setExecutor(new TeamList());
-        getCommand("debug").setExecutor(new Debug());
-        getCommand("rechtsklick").setExecutor(new SläschRechtsklick());
+        PaperCommandManager manager = new PaperCommandManager(this);
+        manager.registerCommand(new Debug());
+        manager.registerCommand(new EndCommand());
+        manager.registerCommand(new ItemList());
+        manager.registerCommand(new SläschRechtsklick());
+        manager.registerCommand(new StartCommand());
 
 
         Team.clearTeams();
