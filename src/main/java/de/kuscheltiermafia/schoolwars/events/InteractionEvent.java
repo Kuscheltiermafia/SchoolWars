@@ -21,9 +21,11 @@ package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.commands.ItemList;
 import de.kuscheltiermafia.schoolwars.items.Items;
+import de.kuscheltiermafia.schoolwars.lehrer.Raum;
 import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
 import de.kuscheltiermafia.schoolwars.mechanics.PlayerStun;
 import org.bukkit.*;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
@@ -36,6 +38,7 @@ import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import javax.management.openmbean.OpenMBeanInfoSupport;
 
 
 public class InteractionEvent implements Listener {
@@ -105,6 +108,8 @@ public class InteractionEvent implements Listener {
         }
     }
 
+
+
     //Minas Stuhl hit
     @EventHandler
     public void OnStuhlHit(EntityDamageByEntityEvent e) {
@@ -120,38 +125,39 @@ public class InteractionEvent implements Listener {
         }
     }
 
-//Brot hier, willkommen zu einem neuem GROOVETUBE VIDEO. Heute BROTEN WIR mein riesiges Brot, man könnte es auch *****, das wäre aber etwas brot (aka gay)
-// Mein Bro heißt BERND das Brot, was ein ziemlich schöner Name ist. Aber ich heiße ANTON VIVALDI KLEMMT IM BROT™, ich weiß, ein viel schöneren Namen.
-// **** KiKa, ich bin viel cooler und grooovicker, warum haben die diesen blöden narzasistischen Bernd genommen.
-// Also leute, wenn ihr mik supporten wollt, folgt mir einfach ma auf Forza, dann können ma auch ma zusammen ein groovickes Rennen fahren.
-// Aber ihr werdet nie gewinnen, weil wie alle kennen bin ich ANTON VIVALDI KLEMMT IM BROT™ der beste im KLATSCHEN! Oder war es CLUTCHEN? Ach egal, ich brotshippe jetzt.
-// Denn alle 11 Minuten verbrennt ein Brot wegen Bernd, also lasst uns alle zusammenhalten und ANTON VIVALDI KLEMMT IM BROT supporten.
-// OH! Na sie mal einer an! Das ist ja ein schönes Dinkelbrot!😏 Für das würde ich verbrennen ... Aber meine Mama hat mich immer gelehrt. Brenne nie für ein Dinkelbrot.
-//Aber wenn ich mir so die Bilder von diesem Dinkelbrot anschaue, bemerkte ich, dass sie einen 10/10 BRAYT HAT! Also brottete ich sie, bis ich nicht mehr konnte.
-// Und so kamen ANTON VIVALDI KLEMMT IM BROT und das liebe Dinkelbrot zusammen. Happy End!
-// Bis die Nutella kam ... TO BE BROTINUED
-    //
-//*nebenstory folgt also so übergang hahahahahahahahahar*
-//YO LEUTE, TOMATE HIER! Heute hier auf meinem Podcast auf Spotomat hab ich meinen Brod ANTON VIVALDI KLEMMT IM BROT™, heute reden wir über CAPREEEEEESE!!!!
-//Wir ihr alle wissen ist es der Traum von jeder Tomate einmal mit einem nassen😏 Mozarella zusammenzukummen und gegessen zu werden. In Fachsprache heißt dies CAPRESEEEEEE!!!
-//
-    // Die Nutella betratt den Raum... Nutella: "Ich werde dich beschmieren👿" Sofort warf die Nutella ihr braunes Goo auf das Brot!
-    // ABA im letzten Moment betratt die WINDOWS DEFENSE MECHANISM FIREWALL DEFENDER
-//https://youtu.be/FuCvyB1FvF4
-//
-//@EventHandler
-//public void JulisuCapped(JuliusCapEvent e) { //<--- Ik bin nik Julisu
-//    e.setCancelled(true);
-//    Bukkit.broadcastMessage("Julius wollte capen, aber er wurde gecappt");}
-////
-//ANTON HAT EINEN KLEINEN OpenMBeanInfoSupport#
-//ICH BIN EIN KRASSER JavaxSecurityAuthKerberosAccess
-//warum ist mein cursor ein fucking lightbulb huhuhuhu
+    /*
+Brot hier, willkommen zu einem neuem GROOVETUBE VIDEO. Heute BROTEN WIR mein riesiges Brot, man könnte es auch *****, das wäre aber etwas brot (aka gay)
+ Mein Bro heißt BERND das Brot, was ein ziemlich schöner Name ist. Aber ich heiße ANTON VIVALDI KLEMMT IM BROT™, ich weiß, ein viel schöneren Namen.
+ **** KiKa, ich bin viel cooler und grooovicker, warum haben die diesen blöden narzasistischen Bernd genommen.
+ Also leute, wenn ihr mik supporten wollt, folgt mir einfach ma auf Forza, dann können ma auch ma zusammen ein groovickes Rennen fahren.
+ Aber ihr werdet nie gewinnen, weil wie alle kennen bin ich ANTON VIVALDI KLEMMT IM BROT™ der beste im KLATSCHEN! Oder war es CLUTCHEN? Ach egal, ich brotshippe jetzt.
+ Denn alle 11 Minuten verbrennt ein Brot wegen Bernd, also lasst uns alle zusammenhalten und ANTON VIVALDI KLEMMT IM BROT supporten.
+ OH! Na sie mal einer an! Das ist ja ein schönes Dinkelbrot!😏 Für das würde ich verbrennen ... Aber meine Mama hat mich immer gelehrt. Brenne nie für ein Dinkelbrot.
+Aber wenn ich mir so die Bilder von diesem Dinkelbrot anschaue, bemerkte ich, dass sie einen 10/10 BRAYT HAT! Also brottete ich sie, bis ich nicht mehr konnte.
+ Und so kamen ANTON VIVALDI KLEMMT IM BROT und das liebe Dinkelbrot zusammen. Happy End!
+ Bis die Nutella kam ... TO BE BROTINUED
 
-//Es war einmal ein Julius in einem Teich!
-//Er fiel in den Teich!
-//Er starb!
+*nebenstory folgt also so übergang hahahahahahahahahar*
+YO LEUTE, TOMATE HIER! Heute hier auf meinem Podcast auf Spotomat hab ich meinen Brod ANTON VIVALDI KLEMMT IM BROT™, heute reden wir über CAPREEEEEESE!!!!
+Wir ihr alle wissen ist es der Traum von jeder Tomate einmal mit einem nassen😏 Mozarella zusammenzukummen und gegessen zu werden. In Fachsprache heißt dies CAPRESEEEEEE!!!
 
+     Die Nutella betratt den Raum... Nutella: "Ich werde dich beschmieren👿" Sofort warf die Nutella ihr braunes Goo auf das Brot!
+     ABA im letzten Moment betratt die WINDOWS DEFENSE MECHANISM FIREWALL DEFENDER
+https://youtu.be/FuCvyB1FvF4
+
+@EventHandler
+public void JulisuCapped(JuliusCapEvent e) { //<--- Ik bin nik Julisu
+    e.setCancelled(true);
+    Bukkit.broadcastMessage("Julius wollte capen, aber er wurde gecappt");}
+
+ANTON HAT EINEN KLEINEN OpenMBeanInfoSupport#
+ICH BIN EIN KRASSER JavaxSecurityAuthKerberosAccess
+warum ist mein cursor ein fucking lightbulb huhuhuhu
+
+Es war einmal ein Julius in einem Teich!
+Er fiel in den Teich!
+Er starb!
+*/
 
 
     
