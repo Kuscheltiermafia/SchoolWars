@@ -396,13 +396,13 @@ public class Items {
     public static void createItemsEntity(ItemStack item, Location loc) {
         Block b = loc.getBlock();
 
-        Item itemEntity = b.getWorld().dropItem(loc.add(0, 0.5, 0), item);
+        Item itemEntity = b.getWorld().dropItem(loc, item);
         itemEntity.setPersistent(true);
         itemEntity.setInvulnerable(true);
         itemEntity.setVelocity(new Vector(0, 0, 0));
         itemEntity.setPickupDelay(Integer.MAX_VALUE);
 
-        Interaction itemHitbox = itemEntity.getWorld().spawn(itemEntity.getLocation().add(0, -0.3, 0), Interaction.class);
+        Interaction itemHitbox = itemEntity.getWorld().spawn(itemEntity.getLocation(), Interaction.class);
         itemHitbox.setInteractionHeight(1);
         itemHitbox.setInteractionWidth(1);
 

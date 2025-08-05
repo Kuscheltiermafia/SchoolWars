@@ -3,6 +3,7 @@ package de.kuscheltiermafia.schoolwars.lehrer;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nullable;
@@ -12,7 +13,7 @@ import static de.kuscheltiermafia.schoolwars.SchoolWars.WORLD;
 public enum StundenplanDrops {
 
     KEKS(Lehrer.KESSELRING, Items.keks, 0.4, Raum.PHYSIK),
-    EMILIAS_BRIEF(new Location(WORLD, -2.0, 87.0, 201.0), Items.emilia_ausland_brief, 0.2, null);
+    EMILIAS_BRIEF(new Location(WORLD, -2.0, 87.0, 201.0), Items.emilia_ausland_brief, 1, null);
 
     private final Lehrer lehrer;
     private final Location location;
@@ -37,8 +38,14 @@ public enum StundenplanDrops {
     }
 
     public static void rollDrops() {
+        outer:
         for (StundenplanDrops drop : values()){
             if (Math.random() > drop.chance) continue;
+            for (Item item : Items.itemHitboxes.values()){
+                if (item.getItemStack().equals(drop.item)) continue outer;
+
+            }
+
             if (drop.raum == null || drop.lehrer == null) {
                 Items.createItemsEntity(drop.item, drop.location);
             }else if (Area.getAreaByLocation(Lehrer.getLehrerEntity(drop.lehrer).getLocation()).raum == drop.raum){

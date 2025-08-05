@@ -80,7 +80,7 @@ public class Fluor implements Listener {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            Items.createItemsEntity(new ItemStack(Items.fluor), b.getLocation().add(0.5, 0.8, 0.5));
+                            Items.createItemsEntity(new ItemStack(Items.fluor), b.getLocation().add(0.5, 1, 0.5));
                             amVerdampfen = false;
                         }
                     }.runTaskLater(SchoolWars.getPlugin(), duration);

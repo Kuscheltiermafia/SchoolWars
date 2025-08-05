@@ -25,6 +25,7 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.ItemDespawnEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -40,8 +41,14 @@ public class PickupDrops implements Listener {
                 p.getInventory().addItem(new ItemStack(item.getItemStack()));
                 item.remove();
                 e.getRightClicked().remove();
+                Items.itemHitboxes.remove(e.getRightClicked());
             }
         }catch (Exception ignored){}
+    }
+
+    @EventHandler
+    public void onItemDespawn(ItemDespawnEvent e){
+        e.setCancelled(true);
     }
 
 }
