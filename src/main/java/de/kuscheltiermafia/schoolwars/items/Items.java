@@ -116,6 +116,7 @@ public class Items {
     public static ItemStack verbrannte_bohnen;
     public static ItemStack machete;
     public static ItemStack geschimmelte_zwiebel;
+    public static ItemStack kerze;
 
     public static void initItems() {
 
@@ -298,6 +299,9 @@ public class Items {
 
         bound_peilsender = createItem(Material.COMPASS, ChatColor.DARK_GRAY + "Peilsender", 1, 1, peilsender_lore, true, false, false);
         itemList.add(bound_peilsender);
+
+        kerze = createItem(Material.RED_CANDLE, ChatColor.RED + "Kerze", 1, 16, null, false, false, false);
+        itemList.add(kerze);
 
         zehn_boehm_gutschein = createItem(Material.PAPER, ChatColor.WHITE + "10€ Böhms Gutschein", 1, 96, null, false, false, false);
         itemList.add(zehn_boehm_gutschein);

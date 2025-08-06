@@ -27,22 +27,28 @@ import de.kuscheltiermafia.schoolwars.mechanics.ProgressBarHandler;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
+
 public class Minasisierung implements Listener {
+
+    private static HashMap<Player, Integer> currentAutism = new HashMap<>();
 
     public static int minasDauer = 20 * 30;
 
     public static void onMinasisierung(Player p) {
         for(ItemStack item : p.getInventory().getContents()) {
-
             if(item != null) {
                 if (item.equals(Items.minas_flasche)) {
                     item.setType(Items.buffed_minas_flasche.getType());
@@ -54,7 +60,6 @@ public class Minasisierung implements Listener {
                 }
             }
         }
-
 
         for(int i = 0; i < minasDauer; i++) {
             int finalI = i;
@@ -73,11 +78,37 @@ public class Minasisierung implements Listener {
                                 if (item.equals(Items.buffed_stuhl)) {
                                     item.setItemMeta(Items.attack_stuhl.getItemMeta());
                                 }
+                                currentAutism.remove(p);
                             }
                         }
                     }
                 }
             }.runTaskLater(SchoolWars.getPlugin(), i);
+        }
+    }
+
+    @EventHandler
+    public void onStartSacrifice(PlayerInteractEvent e) {
+        if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && e.getClickedBlock().getLocation().equals(new Location(SchoolWars.WORLD, -63, 80, 197))) {
+            Player p = e.getPlayer();
+
+            try {
+                if (e.getItem().equals(Items.kerze)) {
+                    e.setCancelled(true);
+                    if(!currentAutism.containsKey(p)) {
+                        currentAutism.put(p, 0);
+                    }
+                    if (currentAutism.get(p) < 3) {
+                        currentAutism.put(p, currentAutism.get(p) + 1);
+                        p.getInventory().removeItem(new ItemStack(Material.CANDLE, 1));
+                        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "-- " + currentAutism.get(p) + "/3 --"));
+                    }
+                    if (currentAutism.get(p) == 3) {
+                        onMinasisierung(p);
+                        currentAutism.put(p, 4);
+                    }
+                }
+            }catch (Exception ignored) {}
         }
     }
 }
