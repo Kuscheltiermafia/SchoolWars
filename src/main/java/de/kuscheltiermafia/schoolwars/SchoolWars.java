@@ -23,7 +23,6 @@ import co.aikar.commands.PaperCommandManager;
 import de.kuscheltiermafia.schoolwars.commands.*;
 import de.kuscheltiermafia.schoolwars.events.*;
 import de.kuscheltiermafia.schoolwars.mechanics.*;
-import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.lehrer.LehrerQuests;
 import de.kuscheltiermafia.schoolwars.lehrer.SekretariatStundenplan;
@@ -75,7 +74,6 @@ public final class SchoolWars extends JavaPlugin {
         Items.initItems();
         SchulbuchLevels.initShelfLocations();
         SchulbuchLevels.resetBookshelf();
-        GenerateItems.generateItemLocations();
         Ranzen.generateRanzenCounter();
         //LehrerQuests.initLehrerAlgorithm();
         LehrerQuests.initLehrerQuests();

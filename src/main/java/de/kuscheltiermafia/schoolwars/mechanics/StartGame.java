@@ -4,7 +4,6 @@ import de.kuscheltiermafia.schoolwars.PlayerMirror;
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.Team;
 import de.kuscheltiermafia.schoolwars.commands.Debug;
-import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
 import de.kuscheltiermafia.schoolwars.lehrer.Stundenplan;
 import org.bukkit.Bukkit;
@@ -56,8 +55,6 @@ public class StartGame {
             p.setHealth(20);
             p.getActivePotionEffects().clear();
         }
-
-        GenerateItems.summonItems();
 
 //prepare player Mirrors
         playerMirror.clear();

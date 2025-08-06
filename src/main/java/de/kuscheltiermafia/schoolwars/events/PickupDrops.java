@@ -19,7 +19,6 @@
 
 package de.kuscheltiermafia.schoolwars.events;
 
-import de.kuscheltiermafia.schoolwars.items.GenerateItems;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;

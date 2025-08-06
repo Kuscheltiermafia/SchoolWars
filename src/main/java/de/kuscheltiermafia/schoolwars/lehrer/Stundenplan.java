@@ -20,6 +20,7 @@
 package de.kuscheltiermafia.schoolwars.lehrer;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.items.ItemDrops;
 import io.github.realMorgon.sunriseLib.Sounds;
 import org.bukkit.Sound;
 import org.bukkit.entity.Villager;
@@ -89,6 +90,6 @@ public class Stundenplan {
                 i++;
             } while (i < Area.values().length * 2 && !shuffledLehrer.isEmpty() && lehrerAmount < area.maxLehrerAmount);
         }
-        StundenplanDrops.rollDrops();
+        ItemDrops.rollDrops();
     }
 }

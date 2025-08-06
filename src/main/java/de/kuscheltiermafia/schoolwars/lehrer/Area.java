@@ -78,7 +78,7 @@ public enum Area {
     final Location maxCoord;
     final Location lehrerSpawnPos;
     final int maxLehrerAmount;
-    final Raum raum;
+    public final Raum raum;
 
     Area(String name, Location minCoord, Location maxCoord, Location lehrerSpawnPos, int maxLehrerAmount, Raum raum) {
         this.name = name;
