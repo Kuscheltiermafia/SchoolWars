@@ -66,6 +66,7 @@ public enum Lehrer {
     MOLL("Moll", Villager.Type.PLAINS, Villager.Profession.NONE, true, 0.7, true, false, false, Raum.CHEMIE, null),
     REISS("Reiß", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, false, false, Raum.CHEMIE, null),
     BIEBER("Bieber", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, true, true, Raum.NORMAL, null),
+    RAITH("Raith", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, true, true, Raum.VERWALTUNG, null),
     ERSETZBAR_07("Ersetzbarer Referendar #07", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, false, false, Raum.GLASKASTEN, null),
     ERSETZBAR_38("Ersetzbarer Referendar #38", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, false, false, Raum.GLASKASTEN, null),
     ERSETZBAR_69("Ersetzbarer Referendar #69", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, false, true, Raum.GLASKASTEN, null),

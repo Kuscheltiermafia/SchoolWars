@@ -261,8 +261,13 @@ public class Debug extends BaseCommand {
     @CommandPermission("schoolwars.debug.fly")
     public static void onFlyCommand(CommandSender sender, @Name("player") @Optional String player) {
 
-        Player target = Bukkit.getPlayer(player);
-        target.setAllowFlight(!target.getAllowFlight());
+        if (player == null || player.isEmpty()) {
+            Player target = (Player) sender;
+            target.setAllowFlight(!target.getAllowFlight());
+        }else {
+            Player target = Bukkit.getPlayer(player);
+            target.setAllowFlight(!target.getAllowFlight());
+        }
     }
 
     @Subcommand("schulbuch")

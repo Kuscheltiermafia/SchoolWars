@@ -57,8 +57,8 @@ public class LehrerQuests implements Listener {
         rewardLehrerItems.put(Lehrer.FISCHER, Items.fischers_spiel);
         repReward.put(Lehrer.FISCHER, 1.0);
 
-        requieredLehrerItems.put(Lehrer.SCHNEIDER, Items.kaputtes_ipad);
-        rewardLehrerItems.put(Lehrer.SCHNEIDER, Items.rollator);
+        requieredLehrerItems.put(Lehrer.SCHNEIDER, Items.ipad);
+        rewardLehrerItems.put(Lehrer.SCHNEIDER, Items.kaputtes_ipad);
         repReward.put(Lehrer.SCHNEIDER, 1.0);
 
         requieredLehrerItems.put(Lehrer.BAAR, Items.baar_kaffee);
@@ -84,6 +84,10 @@ public class LehrerQuests implements Listener {
         requieredLehrerItems.put(Lehrer.BIEBER, Items.kuehlpack);
         rewardLehrerItems.put(Lehrer.BIEBER, Items.machete);
         repReward.put(Lehrer.BIEBER, 1.0);
+
+        requieredLehrerItems.put(Lehrer.RAITH, Items.kaputtes_ipad);
+        rewardLehrerItems.put(Lehrer.RAITH, Items.rollator);
+        repReward.put(Lehrer.RAITH, 1.0);
     }
 
     @EventHandler

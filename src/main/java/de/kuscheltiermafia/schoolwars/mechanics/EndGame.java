@@ -36,6 +36,11 @@ import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 public class EndGame {
 
     public static void end(){
+
+        if(!SchoolWars.gameStarted) {
+            return;
+        }
+
         SchoolWars.gameStarted = false;
 
         for(Player p : Bukkit.getOnlinePlayers()) {
