@@ -104,8 +104,16 @@ public class Minasisierung implements Listener {
                         p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "-- " + currentAutism.get(p) + "/3 --"));
                     }
                     if (currentAutism.get(p) == 3) {
-                        onMinasisierung(p);
-                        currentAutism.put(p, 4);
+
+                        ParticleHandler.createParticleCircle(p.getLocation().add(0, 1, 0), Particle.END_ROD, 1, 45);
+
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                onMinasisierung(p);
+                                currentAutism.put(p, 4);
+                            }
+                        }.runTaskLater(SchoolWars.getPlugin(), 20 * 2);
                     }
                 }
             }catch (Exception ignored) {}
