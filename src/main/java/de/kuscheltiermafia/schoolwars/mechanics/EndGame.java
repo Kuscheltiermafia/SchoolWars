@@ -29,6 +29,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
 
 import static de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer.revivePlayer;
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
@@ -67,6 +70,11 @@ public class EndGame {
 
         Lehrer.removeAllLehrer();
         playerMirror.clear();
+
+        Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+        for (org.bukkit.scoreboard.Team team  : scoreboard.getTeams()) {
+            team.unregister();
+        }
 
         Message.sendToAllPlayers("§e[SchoolWars] Das Spiel wurde beendet!");
     }

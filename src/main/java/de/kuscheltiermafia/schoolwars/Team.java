@@ -27,6 +27,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scoreboard.Scoreboard;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,9 +63,13 @@ public enum Team {
     public void readyPlayer(Player p){
         p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist ein " + joinMessage);
 
-        p.setDisplayName(prefix + p.getName());
-        p.setPlayerListName(prefix + p.getName());
-        p.setCustomName(prefix + p.getName());
+        // Beispiel: Spieler einem Scoreboard-Team mit Prefix hinzufügen
+        Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+        org.bukkit.scoreboard.Team team = scoreboard.getTeam(this.teamName);
+        if (team == null) team = scoreboard.registerNewTeam(this.teamName);
+        team.setPrefix(ChatColor.DARK_RED + this.prefix);
+        team.addEntry(p.getName());
+        p.setScoreboard(scoreboard);
 
         playerMirror.get(p.getName()).setTeam(this);
 
