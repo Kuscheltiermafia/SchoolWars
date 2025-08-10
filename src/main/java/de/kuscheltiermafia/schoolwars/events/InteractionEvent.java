@@ -50,12 +50,12 @@ public class InteractionEvent implements Listener {
         try {
             if (e.getCurrentItem().equals(Items.spacer)) {
                 e.setCancelled(true);
-            }else if(e.getCurrentItem().equals(Items.page_up)) {
+            }else if(e.getCurrentItem().equals(Items.page_up) && e.getWhoClicked().getOpenInventory().getTitle().equals("§4Itemlist")) {
                 e.setCancelled(true);
                 p.getInventory().remove(Items.page_up);
                 ItemList.itemListPage.put(p, ItemList.itemListPage.get(p) + 1);
                 ItemList.fillItemlist(e.getInventory(), ItemList.itemListPage.get(p), p);
-            }else if(e.getCurrentItem().equals(Items.page_down)) {
+            }else if(e.getCurrentItem().equals(Items.page_down) && e.getWhoClicked().getOpenInventory().getTitle().equals("§4Itemlist")) {
                 e.setCancelled(true);
                 p.getInventory().remove(Items.page_down);
                 ItemList.itemListPage.put(p, ItemList.itemListPage.get(p) - 1);
