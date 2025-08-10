@@ -73,7 +73,7 @@ public class Stundenplan {
             int i = 0;
 
             do {
-                if (!shuffledLehrer.isEmpty()) {
+                if (!shuffledLehrer.isEmpty() && Math.random() > 0.1) {
                     if (area.raum == Raum.GENERAL || shuffledLehrer.get(0).raum.equals(area.raum)) {
 
                         Lehrer.summonLehrer(area.lehrerSpawnPos, shuffledLehrer.get(0));
