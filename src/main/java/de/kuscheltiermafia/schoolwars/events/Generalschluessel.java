@@ -21,9 +21,11 @@ package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.items.Items;
+import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
 import io.github.realMorgon.sunriseLib.Message;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.*;
@@ -44,7 +46,7 @@ import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 public class Generalschluessel implements Listener {
 
     void summonSekritaerin(Location loc) {
-        Evoker sekritaerin = WORLD.spawn(loc.add(0.5, -1, 0.5), Evoker.class);
+        Vindicator sekritaerin = WORLD.spawn(loc.add(0.5, 0, 0.5), Vindicator.class);
 
         ArrayList<String> names = new ArrayList<>();
         names.add("Frau Wacker");
@@ -52,10 +54,15 @@ public class Generalschluessel implements Listener {
         names.add("Frau Schranck-Teichmann");
         Collections.shuffle(names);
 
-        sekritaerin.setCustomName(names.get(0));
+        sekritaerin.setCustomName(names.getFirst());
         sekritaerin.setCustomNameVisible(true);
         sekritaerin.setCanPickupItems(false);
         sekritaerin.setRemoveWhenFarAway(false);
+
+        sekritaerin.setLootTable(null);
+
+        ParticleHandler.createParticles(loc, Particle.EXPLOSION, 2, 0, true, null);
+        ParticleHandler.createParticleCircle(loc, Particle.ANGRY_VILLAGER, 1.2, 20);
     }
 
 

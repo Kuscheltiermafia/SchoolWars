@@ -40,4 +40,31 @@ public class ParticleHandler {
             }
         }
     }
+
+    public static void createParticleCircle(Location center, Particle particle, double radius, int points) {
+        for (int i = 0; i < points; i++) {
+            double angle = 2 * Math.PI * i / points;
+            double x = center.getX() + radius * Math.cos(angle);
+            double z = center.getZ() + radius * Math.sin(angle);
+            Location particleLoc = new Location(center.getWorld(), x, center.getY(), z);
+            for(Player p : Bukkit.getOnlinePlayers()) {
+                p.spawnParticle(particle, particleLoc, 1, 0, 0, 0, 0);
+            }
+        }
+    }
+
+    public void drawParticleLine(Location start, Location end, Particle particle, double spacing) {
+        double distance = start.distance(end);
+        int points = (int) (distance / spacing);
+        double dx = (end.getX() - start.getX()) / points;
+        double dy = (end.getY() - start.getY()) / points;
+        double dz = (end.getZ() - start.getZ()) / points;
+
+        for (int i = 0; i <= points; i++) {
+            Location point = start.clone().add(dx * i, dy * i, dz * i);
+            for(Player p : Bukkit.getOnlinePlayers()) {
+                p.spawnParticle(particle, point, 1, 0, 0, 0, 0);
+            }
+        }
+    }
 }
