@@ -45,6 +45,7 @@ public class Ranzen implements Listener {
 
     public static HashMap<Location, BlockDisplay> displayPositions = new HashMap<>();
     public static HashMap<BlockDisplay, Interaction> placedRanzen = new HashMap<>();
+    public static HashMap<Interaction, Team> ranzenTeam = new HashMap<>();
     public static HashMap<Team, Integer> ranzenAmount = new HashMap<>();
 
 
@@ -115,6 +116,7 @@ public class Ranzen implements Listener {
         ranzen_hb.setMetadata(team.teamName, new FixedMetadataValue(SchoolWars.getPlugin(), "dummyValue"));
 
         placedRanzen.put(ranzen, ranzen_hb);
+        ranzenTeam.put(ranzen_hb, team);
 
     }
 
@@ -167,7 +169,7 @@ public class Ranzen implements Listener {
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§2Du hast deinen Ranzen aufgehoben!"));
             event.setCancelled(true);
         }else{
-            Ranzen.destroyRanzen(player, team, ranzen.getLocation());
+            Ranzen.destroyRanzen(player, ranzenTeam.get(ranzen), ranzen.getLocation());
             if (Ranzen.displayPositions.containsKey(ranzen.getLocation().subtract(0.5, 0, 0.5))) {
                 Entity display = Ranzen.displayPositions.get(ranzen.getLocation().subtract(0.5, 0, 0.5));
                 display.remove();
