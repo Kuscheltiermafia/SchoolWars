@@ -64,7 +64,12 @@ public enum ItemDrops {
 
     EMILIAS_BRIEF(new Location[]{
         new Location(WORLD, -2.0, 87.0, 201.0)
-    }, Items.emilia_ausland_brief, 0.2)
+    }, Items.emilia_ausland_brief, 0.2),
+
+    KERZE(new Location[]{
+        new Location(WORLD, -56.0, 81.0, 164.0),
+        new Location(WORLD, 12.0, 88.0, 187.0),
+    }, Items.kerze, 0.4)
     ;
 
     private final Lehrer lehrer;

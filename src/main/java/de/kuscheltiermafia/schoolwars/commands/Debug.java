@@ -248,6 +248,17 @@ public class Debug extends BaseCommand {
                 p.sendMessage(debugPrefix + "Game has not started yet!");
             }
         }
+
+        @Subcommand("view")
+        public static void onStundenplanViewCommand(CommandSender sender) {
+            Player p = (Player) sender;
+            if (SchoolWars.gameStarted) {
+                p.openInventory(SekretariatStundenplan.createStundenplan(0));
+                p.sendMessage(debugPrefix + "Opened Stundenplan!");
+            }else  {
+                p.sendMessage(debugPrefix + "Game has not started yet!");
+            }
+        }
     }
 
     @Subcommand("intro")
