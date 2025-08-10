@@ -25,6 +25,7 @@ import de.kuscheltiermafia.schoolwars.items.Items;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Interaction;
@@ -142,6 +143,12 @@ public class Ranzen implements Listener {
             if (!SchoolWars.gameStarted) {
                 p.sendMessage(ChatColor.RED + "Ranzen können nur während dem Spiel platziert werden!");
                 e.setCancelled(true);
+                return;
+            }
+            BlockState replcaedState =  e.getBlockReplacedState();
+            if(replcaedState.getType() != Material.AIR && replcaedState.getType() != Material.CAVE_AIR && replcaedState.getType() != Material.VOID_AIR) {
+                e.setCancelled(true);
+                e.getPlayer().sendMessage(ChatColor.RED + "Du kannst hier nichts platzieren!");
                 return;
             }
             if (ranzen.equals(Items.nws_ranzen)) {
