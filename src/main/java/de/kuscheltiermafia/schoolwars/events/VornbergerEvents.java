@@ -25,10 +25,9 @@ public class VornbergerEvents implements Listener {
     public void onVornbergerEvent(PlayerInteractEvent event) {
         if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             if( event.getPlayer().getInventory().getItemInMainHand().equals(Items.machete) && event.getPlayer().getInventory().getItemInOffHand().equals(Items.zwiebel)) {
-                Random rand = new Random();
-                int random = rand.nextInt(ProbabilityConfig.getInteger("vornberger.onion_cutting_options", 3));
-
-                if (random == ProbabilityConfig.getInteger("vornberger.onion_cutting_success_value", 1)) {
+                
+                // Check for success based on probability (33% chance)
+                if (Math.random() < ProbabilityConfig.getProbability("vornberger.onion_cutting_success_chance", 0.33)) {
                     event.getPlayer().getInventory().setItemInOffHand(Items.geschnittene_zwiebel);
                 } else {
                     PlayerStun.stunPlayer(event.getPlayer(), 4, false);
