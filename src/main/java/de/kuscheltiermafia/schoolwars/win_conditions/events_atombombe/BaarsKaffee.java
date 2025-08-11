@@ -1,6 +1,7 @@
 package de.kuscheltiermafia.schoolwars.win_conditions.events_atombombe;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.BlockInteraction;
 import net.kyori.adventure.text.Component;
@@ -46,7 +47,7 @@ public class BaarsKaffee implements Listener {
                 Inventory kaffeeKiste = Bukkit.createInventory(null, 9 * 3, "Kaffeekiste");
                 for(int i = 0; i < 3; i++) {
                     Random rand = new Random();
-                    int random = rand.nextInt(27);
+                    int random = rand.nextInt(ProbabilityConfig.getInteger("random.inventory_slots", 27));
 
                     kaffeeKiste.setItem(random, Items.kaffeebohnen);
                 }

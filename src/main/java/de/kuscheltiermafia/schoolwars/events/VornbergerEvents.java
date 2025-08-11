@@ -1,6 +1,7 @@
 package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.PlayerStun;
 import net.md_5.bungee.api.ChatMessageType;
@@ -25,9 +26,9 @@ public class VornbergerEvents implements Listener {
         if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             if( event.getPlayer().getInventory().getItemInMainHand().equals(Items.machete) && event.getPlayer().getInventory().getItemInOffHand().equals(Items.zwiebel)) {
                 Random rand = new Random();
-                int random = rand.nextInt(3);
+                int random = rand.nextInt(ProbabilityConfig.getInteger("vornberger.onion_cutting_options", 3));
 
-                if (random == 1) {
+                if (random == ProbabilityConfig.getInteger("vornberger.onion_cutting_success_value", 1)) {
                     event.getPlayer().getInventory().setItemInOffHand(Items.geschnittene_zwiebel);
                 } else {
                     PlayerStun.stunPlayer(event.getPlayer(), 4, false);
@@ -47,7 +48,7 @@ public class VornbergerEvents implements Listener {
                 Inventory zwiebelKiste = Bukkit.createInventory(null, 9 * 3, ChatColor.DARK_RED + "Zwiebelkiste");
                 for(int i = 0; i < 3; i++) {
                     Random rand = new Random();
-                    int random = rand.nextInt(27);
+                    int random = rand.nextInt(ProbabilityConfig.getInteger("vornberger.inventory_slots", 27));
 
                     zwiebelKiste.setItem(random, Items.zwiebel);
                 }
