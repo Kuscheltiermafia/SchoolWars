@@ -45,6 +45,8 @@ import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
 public class Generalschluessel implements Listener {
 
+    private static final int riskIncrease = 5;
+
     void summonSekritaerin(Location loc) {
         Vindicator sekritaerin = WORLD.spawn(loc.add(0.5, 0, 0.5), Vindicator.class);
 
@@ -90,7 +92,7 @@ public class Generalschluessel implements Listener {
                         }
                     }.runTaskLater(SchoolWars.getPlugin(), 20 * 5);
 
-                    playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk += 5;
+                    playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk += riskIncrease;
 
                     Random random = new Random();
                     int randomRisk = random.nextInt(100);
