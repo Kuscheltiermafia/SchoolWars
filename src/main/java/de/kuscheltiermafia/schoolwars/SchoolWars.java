@@ -21,6 +21,7 @@ package de.kuscheltiermafia.schoolwars;
 
 import co.aikar.commands.PaperCommandManager;
 import de.kuscheltiermafia.schoolwars.commands.*;
+import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
 import de.kuscheltiermafia.schoolwars.events.*;
 import de.kuscheltiermafia.schoolwars.mechanics.*;
 import de.kuscheltiermafia.schoolwars.items.Items;
@@ -63,6 +64,9 @@ public final class SchoolWars extends JavaPlugin {
         gameStarted = false;
 
         plugin = this;
+
+        // Initialize probability configuration
+        ProbabilityConfig.initialize(this);
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             try {

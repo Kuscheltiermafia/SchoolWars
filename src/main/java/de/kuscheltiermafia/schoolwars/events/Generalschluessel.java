@@ -20,6 +20,7 @@
 package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
 import io.github.realMorgon.sunriseLib.Message;
@@ -38,14 +39,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
 import static de.kuscheltiermafia.schoolwars.SchoolWars.WORLD;
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
 public class Generalschluessel implements Listener {
 
-    private static final int riskIncrease = 5;
+    private static final double riskIncrease = ProbabilityConfig.getProbability("generalschluessel.risk_increase", 0.05);
 
     void summonSekritaerin(Location loc) {
         Vindicator sekritaerin = WORLD.spawn(loc.add(0.5, 0, 0.5), Vindicator.class);
@@ -94,12 +94,10 @@ public class Generalschluessel implements Listener {
 
                     playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk += riskIncrease;
 
-                    Random random = new Random();
-                    int randomRisk = random.nextInt(100);
-
-                    if (randomRisk <= playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk) {
-                        int randomMessage = random.nextInt(10);
-                        if (randomMessage == 1) {
+                    // Check if seki appears based on risk probability
+                    if (Math.random() <= playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk) {
+                        // Check for message variant (10% chance for alternate message)
+                        if (Math.random() < ProbabilityConfig.getProbability("generalschluessel.message_variant_chance", 0.1)) {
                             Message.sendInArea("§4Die Kollegin von der Seki-Frau hat dich erwischt!", block.getLocation(), 5, 3, 5);
                         } else {
                             Message.sendInArea("§4Die Seki-Frau hat dich erwischt!", block.getLocation(), 5, 3, 5);

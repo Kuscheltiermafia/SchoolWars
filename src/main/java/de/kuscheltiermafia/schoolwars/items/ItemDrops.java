@@ -1,5 +1,6 @@
 package de.kuscheltiermafia.schoolwars.items;
 
+import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
 import de.kuscheltiermafia.schoolwars.lehrer.Area;
 import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
 import de.kuscheltiermafia.schoolwars.lehrer.Raum;
@@ -20,56 +21,56 @@ public enum ItemDrops {
         new Location(WORLD, -64, 81, 193),
         new Location(WORLD, 31, 88, 161),
         new Location(WORLD, 23, 81, 195)
-    }, Items.minas_flasche, 1),
+    }, Items.minas_flasche, ProbabilityConfig.getProbability("drops.minas_flasche", 1.0)),
 
     BENS_VAPE_FRUITBERRY(new Location[]{
         new Location(WORLD, 43, 87, 143)
-    }, Items.vape_fruitberry, 0.1),
+    }, Items.vape_fruitberry, ProbabilityConfig.getProbability("drops.vape_fruitberry", 0.1)),
 
     BENS_VAPE_ARSCHWASSER(new Location[]{
         new Location(WORLD, -54, 82, 155)
-    }, Items.vape_arschwasser, 0.1),
+    }, Items.vape_arschwasser, ProbabilityConfig.getProbability("drops.vape_arschwasser", 0.1)),
 
     BENS_VAPE_STRAWBERRY(new Location[]{
         new Location(WORLD, -11, 73, 152)
-    }, Items.vape_strawberry, 0.1),
+    }, Items.vape_strawberry, ProbabilityConfig.getProbability("drops.vape_strawberry", 0.1)),
 
     BENS_VAPE_MANGO(new Location[]{
         new Location(WORLD, -50, 80, 203)
-    }, Items.vape_mango, 0.1),
+    }, Items.vape_mango, ProbabilityConfig.getProbability("drops.vape_mango", 0.1)),
 
     BENS_VAPE_TRIPLE(new Location[]{
         new Location(WORLD, 31, 87, 160)
-    }, Items.vape_triple, 0.1),
+    }, Items.vape_triple, ProbabilityConfig.getProbability("drops.vape_triple", 0.1)),
 
     BENS_VAPE_ARABICS(new Location[]{
         new Location(WORLD, 2, 74, 197)
-    }, Items.vape_arabics, 0.1),
+    }, Items.vape_arabics, ProbabilityConfig.getProbability("drops.vape_arabics", 0.1)),
 
     BENS_VAPE_AIR(new Location[]{
         new Location(WORLD, -31, 80, 172)
-    }, Items.vape_air, 0.1),
+    }, Items.vape_air, ProbabilityConfig.getProbability("drops.vape_air", 0.1)),
 
     BENS_VAPE_LEER(new Location[]{
         new Location(WORLD, 6, 79, 184),
         new Location(WORLD, -2, 78, 161),
         new Location(WORLD, 16, 80, 161)
-    }, Items.vape_empty, 0.1),
+    }, Items.vape_empty, ProbabilityConfig.getProbability("drops.vape_leer", 0.1)),
 
-    KEKS(Lehrer.KESSELRING, Items.keks, 0.4, Raum.PHYSIK),
+    KEKS(Lehrer.KESSELRING, Items.keks, ProbabilityConfig.getProbability("drops.keks", 0.4), Raum.PHYSIK),
 
     VASILIS_IPAD(new Location[]{
         new Location(WORLD, 22.0, 88.0, 143.0)
-    }, Items.ipad, 0.1),
+    }, Items.ipad, ProbabilityConfig.getProbability("drops.vasilis_ipad", 0.1)),
 
     EMILIAS_BRIEF(new Location[]{
         new Location(WORLD, -2.0, 87.0, 201.0)
-    }, Items.emilia_ausland_brief, 0.2),
+    }, Items.emilia_ausland_brief, ProbabilityConfig.getProbability("drops.emilias_brief", 0.2)),
 
     KERZE(new Location[]{
         new Location(WORLD, -56.0, 81.0, 164.0),
         new Location(WORLD, 12.0, 88.0, 187.0),
-    }, Items.kerze, 0.4)
+    }, Items.kerze, ProbabilityConfig.getProbability("drops.kerze", 0.4))
     ;
 
     private final Lehrer lehrer;
