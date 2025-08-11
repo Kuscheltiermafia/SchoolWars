@@ -45,9 +45,9 @@ public class VornbergerEvents implements Listener {
                 Player p = e.getPlayer();
 
                 Inventory zwiebelKiste = Bukkit.createInventory(null, 9 * 3, ChatColor.DARK_RED + "Zwiebelkiste");
-                for(int i = 0; i < 3; i++) {
+                for(int i = 0; i < ProbabilityConfig.getInteger("vornberger.zwiebel_count", 3); i++) {
                     Random rand = new Random();
-                    int random = rand.nextInt(ProbabilityConfig.getInteger("vornberger.inventory_slots", 27));
+                    int random = rand.nextInt(27);
 
                     zwiebelKiste.setItem(random, Items.zwiebel);
                 }
