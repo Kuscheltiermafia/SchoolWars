@@ -45,7 +45,7 @@ public class BaarsKaffee implements Listener {
                 Player p = e.getPlayer();
 
                 Inventory kaffeeKiste = Bukkit.createInventory(null, 9 * 3, "Kaffeekiste");
-                for(int i = 0; i < ProbabilityConfig.getInteger("random.inventory_slots", 3); i++) {
+                for(int i = 0; i < ProbabilityConfig.getInteger("baar.coffee_count", 3); i++) {
                     Random rand = new Random();
                     int random = rand.nextInt(27);
 
