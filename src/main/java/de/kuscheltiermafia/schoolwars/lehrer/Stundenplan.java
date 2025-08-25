@@ -74,7 +74,7 @@ public class Stundenplan {
             int i = 0;
 
             do {
-                if (!shuffledLehrer.isEmpty() && Math.random() > ProbabilityConfig.getProbability("teacher.spawn_probability", 0.1)) {
+                if (!shuffledLehrer.isEmpty() && Math.random() < ProbabilityConfig.getProbability("teacher.spawn_probability", 0.9)) {
                     if (area.raum == Raum.GENERAL || shuffledLehrer.get(0).raum.equals(area.raum)) {
 
                         Lehrer.summonLehrer(area.lehrerSpawnPos, shuffledLehrer.get(0));
