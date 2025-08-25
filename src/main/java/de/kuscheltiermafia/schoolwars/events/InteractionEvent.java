@@ -40,51 +40,84 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.management.openmbean.OpenMBeanInfoSupport;
 
-
+/**
+ * Handles various player interaction events to maintain game integrity.
+ * Prevents unauthorized block manipulation, inventory interactions,
+ * and protects decorative elements like item frames and paintings.
+ */
 public class InteractionEvent implements Listener {
 
-//Prevent players from clicking spacers, allow moving between UI pages
+    /**
+     * Prevents players from clicking spacer items in inventories and handles pagination
+     * for the item list GUI. Allows navigation between different pages of items.
+     * 
+     * @param e The InventoryClickEvent triggered when a player clicks in an inventory
+     */
     @EventHandler
     public void clickSpacer(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
         try {
+            // Cancel interaction with spacer items (UI filler items)
             if (e.getCurrentItem().equals(Items.spacer)) {
                 e.setCancelled(true);
+                
+            // Handle page up navigation in item list
             }else if(e.getCurrentItem().equals(Items.page_up) && e.getWhoClicked().getOpenInventory().getTitle().equals("§4Itemlist")) {
                 e.setCancelled(true);
                 p.getInventory().remove(Items.page_up);
                 ItemList.itemListPage.put(p, ItemList.itemListPage.get(p) + 1);
                 ItemList.fillItemlist(e.getInventory(), ItemList.itemListPage.get(p), p);
+                
+            // Handle page down navigation in item list
             }else if(e.getCurrentItem().equals(Items.page_down) && e.getWhoClicked().getOpenInventory().getTitle().equals("§4Itemlist")) {
                 e.setCancelled(true);
                 p.getInventory().remove(Items.page_down);
                 ItemList.itemListPage.put(p, ItemList.itemListPage.get(p) - 1);
                 ItemList.fillItemlist(e.getInventory(), ItemList.itemListPage.get(p), p);
+                
+            // Prevent interaction with disabled navigation buttons and page indicators
             }else if(e.getCurrentItem().equals(Items.no_page_down) || e.getCurrentItem().equals(Items.no_page_up) || e.getCurrentItem().equals(new ItemStack(Items.createItem(Material.BOOK, ChatColor.DARK_RED + "Current Page: " + ItemList.itemListPage.get(p), 20, 1, null, false, false, false)))) {
                 e.setCancelled(true);
             }
         }catch (Exception ignored){}
     }
 
-//Prevent Players from breaking Blocks
+    /**
+     * Prevents players from breaking blocks unless they are in creative mode.
+     * This maintains the integrity of the game world and prevents griefing.
+     * 
+     * @param e The BlockBreakEvent triggered when a player tries to break a block
+     */
     @EventHandler
     public void OnBreakBlock(BlockBreakEvent e){
         Player p = e.getPlayer();
+        // Only allow block breaking for creative mode players (admins/builders)
         if (p.getGameMode() != GameMode.CREATIVE){
             e.setCancelled(true);
         }
     }
 
-//Prevent Players from placing Blocks
+    /**
+     * Prevents players from placing blocks unless they are in creative mode.
+     * This maintains the integrity of the game world and prevents unauthorized building.
+     * 
+     * @param e The BlockPlaceEvent triggered when a player tries to place a block
+     */
     @EventHandler
     public void OnPlaceBlock(BlockPlaceEvent e){
         Player p = e.getPlayer();
+        // Only allow block placing for creative mode players (admins/builders)
         if (p.getGameMode() != GameMode.CREATIVE){
             e.setCancelled(true);
         }
     }
 
-    //Prevent Item frame from being destroyed
+    /**
+     * Prevents item frames from being destroyed by players unless they are in creative mode.
+     * Item frames are used for decoration and game functionality.
+     * 
+     * @param e The HangingBreakByEntityEvent triggered when an entity tries to break a hanging entity
+     */
     @EventHandler
     public void onBreakItemFrame(HangingBreakByEntityEvent e) {
         if (e.getEntity() instanceof ItemFrame && ((Player) e.getRemover()).getGameMode() != GameMode.CREATIVE) {

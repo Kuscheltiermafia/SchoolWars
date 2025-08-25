@@ -43,45 +43,84 @@ import static de.kuscheltiermafia.schoolwars.lehrer.Lehrer.lehrerEntityList;
 import static de.kuscheltiermafia.schoolwars.lehrer.Lehrer.lehrerList;
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
+/**
+ * Debug command system for SchoolWars administrators and developers.
+ * Provides various debugging and testing utilities including player manipulation,
+ * location tools, reputation management, and game state controls.
+ */
 @CommandAlias("debug")
 public class Debug extends BaseCommand {
 
+    /** List of players who receive join/leave notifications */
     public static ArrayList<Player> joinMsg = new ArrayList<>();
+    
+    /** Flag controlling whether the start command works */
     public static Boolean startWorks = true;
+    
+    /** Consistent prefix for all debug messages */
     public static String debugPrefix = ChatColor.DARK_RED + "[!] " + ChatColor.GRAY;
 
+    /**
+     * Instantly applies the Minasisierung (autism) effect to the command sender.
+     * Used for testing the autism mechanics without needing to perform the ritual.
+     */
     @Subcommand("autism")
     @CommandPermission("schoolwars.debug.autism")
     @CommandCompletion("autism")
     public static void onAutismCommand(CommandSender sender){
+        // Apply the Minasisierung effect directly to the command sender
         Minasisierung.onMinasisierung((Player) sender);
         sender.sendMessage(debugPrefix + "You now have autism!");
     }
 
+    /**
+     * Revives a player who has been stunned or incapacitated.
+     * Can target the command sender or another specified player.
+     * 
+     * @param sender The player executing the command
+     * @param playerName Optional target player name, defaults to command sender if not provided
+     */
     @Subcommand("revive")
     @CommandPermission("schoolwars.debug.revive")
     public static void onReviveCommand(CommandSender sender, @Name("player") @Optional String playerName){
         if (playerName == null || playerName.isEmpty()) {
+            // No target specified, revive the command sender
             Player target = (Player) sender;
             RevivePlayer.revivePlayer((Player) sender, target);
         }else if (playerName != null && !playerName.isEmpty()) {
+            // Target specified, revive the named player
             Player target = Bukkit.getPlayer(playerName);
             RevivePlayer.revivePlayer((Player) sender, target);
         }else {
+            // This branch should never be reached, but included for completeness
             sender.sendMessage(debugPrefix + "Please use /debug revive [<player>]");
         }
     }
 
+    /**
+     * Gets the coordinates of the block the player is looking at.
+     * Provides a clickable message that copies the coordinates to clipboard.
+     */
     @Subcommand("getloc")
     @CommandCompletion("getloc")
     public static void onGetLocCommand(CommandSender sender){
         Player p = (Player) sender;
 
+        // Get the coordinates of the block the player is looking at (within 4 block range)
         TextComponent location = new TextComponent(debugPrefix + "Click to copy block location! " + p.getTargetBlockExact(4).getLocation().getX() + ", " + p.getTargetBlockExact(4).getLocation().getY() + ", " + p.getTargetBlockExact(4).getLocation().getZ());
+        // Make the message clickable to copy coordinates to clipboard
         location.setClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, "" + p.getTargetBlockExact(4).getLocation().getX() + ", " + p.getTargetBlockExact(4).getLocation().getY() + ", " + p.getTargetBlockExact(4).getLocation().getZ()));
         p.spigot().sendMessage(location);
     }
 
+    /**
+     * Displays reputation values between players and teacher NPCs.
+     * Can check your own reputation or another player's reputation with a specific teacher.
+     * 
+     * @param sender The player executing the command
+     * @param lehrerName The name of the teacher to check reputation with
+     * @param playerName Optional target player name, defaults to command sender if not provided
+     */
     @Subcommand("rep")
     @CommandPermission("schoolwars.debug.rep")
     public static void onRepCommand(CommandSender sender, @Name("lehrer") String lehrerName, @Name("player") @Optional String playerName) {

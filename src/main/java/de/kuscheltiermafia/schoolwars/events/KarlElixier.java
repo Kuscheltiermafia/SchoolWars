@@ -41,12 +41,26 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 
-
+/**
+ * Handles Karl's Elixir mechanics in SchoolWars.
+ * The elixir shrinks players significantly and tracks when they can safely grow back.
+ * Players must be careful not to be stuck in tight spaces when the effect wears off.
+ */
 public class KarlElixier implements Listener {
 
+    /** Duration of the Karl elixir effect in ticks (60 seconds * 20 ticks/second) */
     public int karlDauer = 60 * 20;
+    
+    /** Tracks which players can safely increase in size (not stuck in blocks) */
     static HashMap<String, Boolean> increase = new HashMap<>();
 
+    /**
+     * Handles the use of Karl's Elixir item.
+     * Shrinks the player and manages the duration with safety checks
+     * to prevent players from being crushed when growing back.
+     * 
+     * @param e The PlayerInteractEvent triggered when using the elixir
+     */
     @EventHandler
     public void onKarlEvent(PlayerInteractEvent e) {
         if(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
