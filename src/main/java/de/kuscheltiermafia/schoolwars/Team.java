@@ -28,8 +28,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
-import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -41,6 +41,9 @@ public enum Team {
     SPORTLER(ChatColor.DARK_RED + "sportler", ChatColor.DARK_RED + "[Sport] ", ChatColor.DARK_RED + "Sportler", new Location(Bukkit.getWorld("schoolwars"), 68.5, 80.0, 167.0, 90, 0)),
     SPRACHLER(ChatColor.GOLD + "sprachler", ChatColor.GOLD + "[Sprache] ", ChatColor.GOLD + "Sprachler", new Location(Bukkit.getWorld("schoolwars"), -21.5, 88.0, 146.0, -90, 0)),
     NWS(ChatColor.GREEN + "naturwissenschaftler", ChatColor.GREEN + "[NWS] ", ChatColor.GREEN + "Naturwissenschaftler", new Location(Bukkit.getWorld("schoolwars"), 4.5, 81.0, 191.5, 90, 0));
+
+    public static int teamCount = 2;
+    public static boolean randomTeams = true;
 
     public final String teamName;
     public final String prefix;
@@ -60,10 +63,44 @@ public enum Team {
     }
 
 
-    public void readyPlayer(Player p){
-        p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist ein " + joinMessage);
+    public static void joinTeams(){
 
-        // Beispiel: Spieler einem Scoreboard-Team mit Prefix hinzufügen
+        int i = Bukkit.getOnlinePlayers().size();
+
+        List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
+        Collections.shuffle(players);
+
+        List<Integer> teamChoices = new ArrayList<>();
+        if(randomTeams) {   //Logic for random team choice; note that this is not the player assigning but the choice which teams will be played
+            for (int j = 0; j < Team.values().length; j++) {
+                teamChoices.add(j);
+            }
+            Collections.shuffle(teamChoices);
+        }else{}  //Logic for manual team choice
+
+        Bukkit.broadcastMessage("Team Choices: " + teamChoices);
+
+        for (Player p : players) {
+            Team.values()[teamChoices.get(i % teamCount)].mitglieder.add(p.getName());
+            i--;
+        }
+
+
+    }
+
+    public static void prepare(){
+        for(Team team : Team.values()) {
+            for (String playerName : team.mitglieder) {
+                Player player = Bukkit.getPlayer(playerName);
+                team.readyPlayer(player);
+            }
+            team.sekiRisk = 0.0;
+        }
+    }
+
+    public void readyPlayer(Player p){
+        p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist ein " + joinMessage + ", " + ChatColor.YELLOW + p.getName() + "!");
+
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
         org.bukkit.scoreboard.Team team = scoreboard.getTeam(this.teamName);
         if (team == null) team = scoreboard.registerNewTeam(this.teamName);
@@ -84,34 +121,6 @@ public enum Team {
         p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 40, 1, false, false, false));
     }
 
-
-    public void prepare(){
-        for(String s : mitglieder){
-            Player p = Bukkit.getPlayer(s);
-            readyPlayer(p);
-        }
-        sekiRisk = 0.0;
-    }
-
-    public static void joinTeams(){
-
-        int i = Bukkit.getOnlinePlayers().size();
-
-        List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
-        Collections.shuffle(players);
-
-        for (Player p : players) {
-            if (i % 3 == 0) {
-                SPRACHLER.mitglieder.add(p.getName());
-            } else if (i % 3 == 1) {
-                NWS.mitglieder.add(p.getName());
-            } else {
-                SPORTLER.mitglieder.add(p.getName());
-            }
-            i--;
-        }
-
-    }
 
     public static void clearTeams(){
         if (SPRACHLER.mitglieder != null) {

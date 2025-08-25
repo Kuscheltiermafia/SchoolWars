@@ -4,16 +4,105 @@ import de.kuscheltiermafia.schoolwars.PlayerMirror;
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.Team;
 import de.kuscheltiermafia.schoolwars.commands.Debug;
+import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
 import de.kuscheltiermafia.schoolwars.lehrer.Stundenplan;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.*;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 import static de.kuscheltiermafia.schoolwars.SchoolWars.WORLD;
 
-public class StartGame {
+public class StartGame implements Listener {
+
+    public static boolean menuOpen = false;
+    public static Player menuOpener;
+
+    public static void openGUI(Player p, boolean triggerByLeaveEvent) {
+
+        if(menuOpen && p != menuOpener) {
+            p.sendMessage("Es ist bereits ein Spieler dabei das Spiel zu starten.");
+            return;
+        }
+
+        menuOpen = true;
+        menuOpener = p;
+
+        ItemStack player_count = Items.player_count_display;
+        if (triggerByLeaveEvent) {
+            player_count.setAmount(52);
+        }else {
+            player_count.setAmount(Bukkit.getOnlinePlayers().size());
+        }
+
+        ItemStack team_count = Items.team_count;
+        team_count.setAmount(Team.teamCount);
+
+        Inventory startGUI = Bukkit.createInventory(null, 9 * 3, "Spiel starten");
+        startGUI.setItem(10, player_count);
+        startGUI.setItem(12, Items.gamemode_classic);
+        startGUI.setItem(14, Items.team_count);
+        startGUI.setItem(16, Items.start_game);
+        startGUI.setItem(23, Items.choose_teams);
+
+        for (int i = 0; i < 27; i++) {
+            if (startGUI.getItem(i) == null) {
+                startGUI.setItem(i, Items.spacer);
+            }
+        }
+
+        p.openInventory(startGUI);
+
+    }
+
+    @EventHandler
+    public static void onCloseMenu(InventoryCloseEvent e){
+        menuOpen = false;
+        menuOpener = null;
+    }
+
+    @EventHandler
+    public static void onClickTeamCount(InventoryClickEvent e) {
+        if (e.getView().getTitle() .equals("Spiel starten")) {
+            e.setCancelled(true);
+            if (e.getCurrentItem() == null) return;
+            if (!e.getCurrentItem().equals(Items.team_count)) return;
+
+            if(e.getClick().isLeftClick()) {
+                if (Team.teamCount < Team.values().length) {
+                    Team.teamCount++;
+                }
+            } else if (e.getClick().isRightClick()) {
+                if (Team.teamCount > 2) {
+                    Team.teamCount--;
+                }
+            }
+
+            ItemStack team_count = Items.team_count;
+            team_count.setAmount(Team.teamCount);
+            e.getInventory().setItem(14, team_count);
+
+
+        }
+    }
+
+    @EventHandler
+    public static void onClickStart(InventoryClickEvent e) {
+        if (e.getView().getTitle().equals("Spiel starten")) {
+            e.setCancelled(true);
+            if (e.getCurrentItem() == null) return;
+            if (!e.getCurrentItem().equals(Items.start_game)) return;
+            start();
+            e.getWhoClicked().closeInventory();
+        }
+    }
 
     public static boolean start() {
 

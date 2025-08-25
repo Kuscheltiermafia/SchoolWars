@@ -23,6 +23,7 @@ import co.aikar.commands.PaperCommandManager;
 import de.kuscheltiermafia.schoolwars.commands.*;
 import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
 import de.kuscheltiermafia.schoolwars.events.*;
+import de.kuscheltiermafia.schoolwars.lehrer.Stundenplan;
 import de.kuscheltiermafia.schoolwars.mechanics.*;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.lehrer.LehrerQuests;
@@ -112,6 +113,7 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new Zentrifuge(), this);
         pluginManager.registerEvents(new BaarsKaffee(), this);
         pluginManager.registerEvents(new Vapes(), this);
+        pluginManager.registerEvents(new StartGame(), this);
 
         PaperCommandManager manager = new PaperCommandManager(this);
         manager.registerCommand(new Debug());

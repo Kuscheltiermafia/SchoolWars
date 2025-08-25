@@ -22,6 +22,7 @@ package de.kuscheltiermafia.schoolwars.events;
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.commands.Debug;
 import de.kuscheltiermafia.schoolwars.mechanics.EndGame;
+import de.kuscheltiermafia.schoolwars.mechanics.StartGame;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -42,9 +43,13 @@ public class LeaveEvent implements Listener {
         }
 
 
-        //TODO: This does not work
         if(SchoolWars.getPlayerCount() <= 0 && SchoolWars.gameStarted) {
             EndGame.end();
+        }
+
+        if(StartGame.menuOpen){
+            StartGame.openGUI(StartGame.menuOpener, true);
+            Bukkit.broadcastMessage("Opening start menu");
         }
 
     }
