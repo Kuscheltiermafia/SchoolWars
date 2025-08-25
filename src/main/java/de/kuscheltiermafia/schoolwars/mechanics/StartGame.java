@@ -8,10 +8,7 @@ import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
 import de.kuscheltiermafia.schoolwars.lehrer.Stundenplan;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
+import org.bukkit.entity.*;
 
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 import static de.kuscheltiermafia.schoolwars.SchoolWars.WORLD;

@@ -10,7 +10,9 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nullable;
 
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import static de.kuscheltiermafia.schoolwars.SchoolWars.WORLD;
 
@@ -96,6 +98,10 @@ public enum ItemDrops {
         this.probabilityKey = probabilityKey;
         this.defaultChance = defaultChance;
         this.raum = null;
+
+        for (Location loc : this.locations) {
+            loc.add(0.5, 0, 0.5); // Center in the block
+        }
     }
 
     /**
@@ -116,9 +122,9 @@ public enum ItemDrops {
             int random = new Random().nextInt(drop.locations.length);
 
             if (drop.raum == null || drop.lehrer == null) {
-                Items.createItemsEntity(drop.item, drop.locations[random].add(0.5, 0, 0.5));
+                Items.createItemsEntity(drop.item, drop.locations[random]);
             }else if (Area.getAreaByLocation(Lehrer.getLehrerEntity(drop.lehrer).getLocation()).raum == drop.raum){
-                Items.createItemsEntity(drop.item, drop.locations[random].add(0.5, 0, 0.5));
+                Items.createItemsEntity(drop.item, drop.locations[random]);
             }
         }
     }
