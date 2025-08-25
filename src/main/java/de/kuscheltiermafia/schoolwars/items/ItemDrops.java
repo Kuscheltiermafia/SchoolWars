@@ -59,7 +59,7 @@ public enum ItemDrops {
     KEKS(Lehrer.KESSELRING, Items.keks, 0.4, Raum.PHYSIK),
 
     VASILIS_IPAD(new Location[]{
-        new Location(WORLD, 22.0, 88.0, 143.0)
+        new Location(WORLD, 22.0, 88.5, 143.0)
     }, Items.ipad, 0.1),
 
     EMILIAS_BRIEF(new Location[]{
