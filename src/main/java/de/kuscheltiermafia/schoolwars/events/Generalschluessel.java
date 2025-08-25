@@ -45,8 +45,6 @@ import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
 public class Generalschluessel implements Listener {
 
-    private static final double riskIncrease = ProbabilityConfig.getProbability("generalschluessel.risk_increase", 0.05);
-
     void summonSekritaerin(Location loc) {
         Vindicator sekritaerin = WORLD.spawn(loc.add(0.5, 0, 0.5), Vindicator.class);
 
@@ -92,7 +90,7 @@ public class Generalschluessel implements Listener {
                         }
                     }.runTaskLater(SchoolWars.getPlugin(), 20 * 5);
 
-                    playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk += riskIncrease;
+                    playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk += ProbabilityConfig.getProbability("generalschluessel.risk_increase", 0.05);
 
                     // Check if seki appears based on risk probability
                     if (Math.random() <= playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk) {
