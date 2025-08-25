@@ -22,6 +22,7 @@ package de.kuscheltiermafia.schoolwars.commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
 import de.kuscheltiermafia.schoolwars.events.Minasisierung;
 import de.kuscheltiermafia.schoolwars.events.SchulbuchLevels;
 import de.kuscheltiermafia.schoolwars.lehrer.*;
@@ -285,6 +286,13 @@ public class Debug extends BaseCommand {
     @CommandPermission("schoolwars.debug.schulbuch")
     public static void onFlyCommand(CommandSender sender) {
             sender.sendMessage(debugPrefix + "Next book location: " + SchulbuchLevels.currentBookshelfLoc.getX() + ", " + SchulbuchLevels.currentBookshelfLoc.getY() + ", " + SchulbuchLevels.currentBookshelfLoc.getZ());
+    }
+
+    @Subcommand("rl-probs")
+    @CommandPermission("schoolwars.debug.reload-probs")
+    public static void onReloadProbabilitiesCommand(CommandSender sender) {
+        ProbabilityConfig.reload();
+        sender.sendMessage(debugPrefix + "Reloaded probabilities!");
     }
 
 }
