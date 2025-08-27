@@ -49,7 +49,7 @@ public class LeaveEvent implements Listener {
 
         if(StartGame.menuOpen){
             StartGame.openGUI(StartGame.menuOpener, true);
-            Bukkit.broadcastMessage("Opening start menu");
+            StartGame.menuOpen = true;
         }
 
     }

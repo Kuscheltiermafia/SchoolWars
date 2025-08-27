@@ -84,13 +84,13 @@ public class JoinEvent implements Listener {
         e.setJoinMessage("");
 
         for(Player a : Debug.joinMsg) {
-            a.sendMessage(ChatColor.DARK_RED + "[!] " + ChatColor.YELLOW + "" + e.getPlayer().getName() + ChatColor.DARK_GRAY + " joined SchoolWars.");
+            a.sendMessage( ChatColor.YELLOW + "" + e.getPlayer().getName() + ChatColor.DARK_GRAY + " joined SchoolWars.");
         }
 
 //update game start menu
         if(StartGame.menuOpen){
             StartGame.openGUI(StartGame.menuOpener, false);
-            Bukkit.broadcastMessage("Opening start menu");
+            StartGame.menuOpen = true;
         }
 
     }

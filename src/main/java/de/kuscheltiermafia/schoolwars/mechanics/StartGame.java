@@ -37,7 +37,7 @@ public class StartGame implements Listener {
 
         ItemStack player_count = Items.player_count_display;
         if (triggerByLeaveEvent) {
-            player_count.setAmount(52);
+            player_count.setAmount(Bukkit.getOnlinePlayers().size() - 1);
         }else {
             player_count.setAmount(Bukkit.getOnlinePlayers().size());
         }
@@ -64,6 +64,8 @@ public class StartGame implements Listener {
 
     @EventHandler
     public static void onCloseMenu(InventoryCloseEvent e){
+        if (!e.getView().getTitle().equals("Spiel starten")) return;
+        if(e.getReason().equals(InventoryCloseEvent.Reason.OPEN_NEW)) return;
         menuOpen = false;
         menuOpener = null;
     }
@@ -156,9 +158,7 @@ public class StartGame implements Listener {
 
 //prepare Teams
         Team.joinTeams();
-        Team.NWS.prepare();
-        Team.SPORTLER.prepare();
-        Team.SPRACHLER.prepare();
+        Team.prepare();
 
 //revive Player
         for (Player p : Bukkit.getOnlinePlayers()) {

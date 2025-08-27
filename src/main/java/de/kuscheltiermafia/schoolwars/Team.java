@@ -76,9 +76,8 @@ public enum Team {
                 teamChoices.add(j);
             }
             Collections.shuffle(teamChoices);
-        }else{}  //Logic for manual team choice
+        }else{}  //TODO: Logic for manual team choice
 
-        Bukkit.broadcastMessage("Team Choices: " + teamChoices);
 
         for (Player p : players) {
             Team.values()[teamChoices.get(i % teamCount)].mitglieder.add(p.getName());

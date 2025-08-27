@@ -54,13 +54,15 @@ public final class SchoolWars extends JavaPlugin {
 
     public static boolean gameStarted;
 
-    public static final World WORLD = Bukkit.getWorld("schoolwars");
+    public static World WORLD;
 
 
     @Override
     public void onEnable() {
 
         SunriseLib.setPlugin(this);
+
+        WORLD  = Bukkit.getWorld("schoolwars");
 
         gameStarted = false;
 
@@ -120,8 +122,9 @@ public final class SchoolWars extends JavaPlugin {
         manager.registerCommand(new EndCommand());
         manager.registerCommand(new ItemList());
         manager.registerCommand(new SläschRechtsklick());
-        manager.registerCommand(new StartCommand());
+//        manager.registerCommand(new StartCommand());
 
+        Bukkit.getPluginCommand("start").setExecutor(new StartCommand());
 
         Team.clearTeams();
         Ranzen.clearRanzen();
