@@ -23,6 +23,7 @@ import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.commands.Debug;
 import de.kuscheltiermafia.schoolwars.PlayerMirror;
 import de.kuscheltiermafia.schoolwars.Team;
+import de.kuscheltiermafia.schoolwars.mechanics.StartGame;
 import io.github.realMorgon.sunriseLib.Particles;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -79,11 +80,17 @@ public class JoinEvent implements Listener {
 
             Team.resetPlayer(p);
         }
-
+//Custom Join Message for selected Players
         e.setJoinMessage("");
 
         for(Player a : Debug.joinMsg) {
-            a.sendMessage(ChatColor.DARK_RED + "[!] " + ChatColor.YELLOW + "" + e.getPlayer().getName() + ChatColor.DARK_GRAY + " joined SchoolWars.");
+            a.sendMessage( ChatColor.YELLOW + "" + e.getPlayer().getName() + ChatColor.DARK_GRAY + " joined SchoolWars.");
+        }
+
+//update game start menu
+        if(StartGame.menuOpen){
+            StartGame.openGUI(StartGame.menuOpener, false);
+            StartGame.menuOpen = true;
         }
 
     }
