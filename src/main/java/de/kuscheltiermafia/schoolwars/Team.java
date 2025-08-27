@@ -19,6 +19,7 @@
 
 package de.kuscheltiermafia.schoolwars;
 
+import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -98,6 +99,12 @@ public enum Team {
     }
 
     public void readyPlayer(Player p){
+
+        if (Math.random() == ProbabilityConfig.getProbability("message.wizard_harry", 0.05)){
+            p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist ein " + ChatColor.LIGHT_PURPLE + "Zauberer" + ChatColor.YELLOW + ", Harry");
+            p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Ne, warte... Falscher Text...");
+        }
+
         p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist ein " + joinMessage + ", " + ChatColor.YELLOW + p.getName() + "!");
 
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();

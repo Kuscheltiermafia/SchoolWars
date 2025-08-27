@@ -95,7 +95,7 @@ public class Generalschluessel implements Listener {
                     // Check if seki appears based on risk probability
                     if (Math.random() <= playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk) {
                         // Check for message variant (10% chance for alternate message)
-                        if (Math.random() < ProbabilityConfig.getProbability("generalschluessel.message_variant_chance", 0.1)) {
+                        if (Math.random() < ProbabilityConfig.getProbability("message.generalschluessel_variant_chance", 0.1)) {
                             Message.sendInArea("§4Die Kollegin von der Seki-Frau hat dich erwischt!", block.getLocation(), 5, 3, 5);
                         } else {
                             Message.sendInArea("§4Die Seki-Frau hat dich erwischt!", block.getLocation(), 5, 3, 5);

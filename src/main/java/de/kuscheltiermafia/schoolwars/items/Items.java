@@ -45,6 +45,8 @@ public class Items {
     public static ArrayList<ItemStack> itemList = new ArrayList<ItemStack>();
     public static HashMap<Interaction, Item> itemHitboxes = new HashMap<>();
 
+    public static ArrayList<ItemStack> ranzenList = new ArrayList<ItemStack>();
+
     public static NamespacedKey dmgAttributeKey = new NamespacedKey(SchoolWars.getPlugin(), "attribute_key_dmg");
     public static NamespacedKey spdAttributeKey = new NamespacedKey(SchoolWars.getPlugin(), "attribute_key_spd");
 
@@ -384,10 +386,15 @@ public class Items {
 
         nws_ranzen = createItem(Material.GREEN_WOOL, "§2Grüner Ranzen", 1, 1, ranzen_lore, false, false, false);
         itemList.add(nws_ranzen);
+        ranzenList.add(nws_ranzen);
+
         sprach_ranzen = createItem(Material.YELLOW_WOOL, "§6Gelber Ranzen", 1, 1, ranzen_lore, false, false, false);
         itemList.add(sprach_ranzen);
+        ranzenList.add(sprach_ranzen);
+
         sport_ranzen = createItem(Material.RED_WOOL, "§4Roter Ranzen", 1, 1, ranzen_lore, false, false, false);
         itemList.add(sport_ranzen);
+        ranzenList.add(sport_ranzen);
 
         Team.SPORTLER.ranzen = Items.sport_ranzen;
         Team.SPRACHLER.ranzen = Items.sprach_ranzen;

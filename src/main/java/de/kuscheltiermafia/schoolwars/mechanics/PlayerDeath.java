@@ -105,6 +105,8 @@ public class PlayerDeath implements Listener {
             mount.setPassenger(player);
 
             playerBatMap.put(player.getName(), mount.getUniqueId());
+
+            playerMirror.get(player.getName()).setAlive(false);
         }
     }
 
@@ -122,19 +124,22 @@ public class PlayerDeath implements Listener {
     //Prevent dead Players from interacting
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
-        if (!playerMirror.get(e.getPlayer().getName()).isAlive()) {
-            e.setCancelled(true);
-        }
-
+        try {
+            if (!playerMirror.get(e.getPlayer().getName()).isAlive()) {
+                e.setCancelled(true);
+            }
+        }catch (Exception ignored){}
     }
 
     //Prevent dead Players from hitting
     @EventHandler
     public void onPunch(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player) {
-            if (!playerMirror.get(e.getDamager().getName()).isAlive()) {
-                e.setCancelled(true);
-            }
+            try {
+                if (!playerMirror.get(e.getDamager().getName()).isAlive()) {
+                    e.setCancelled(true);
+                }
+            }catch (Exception ignored){}
         }
     }
 }

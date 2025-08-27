@@ -34,6 +34,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
@@ -90,9 +91,12 @@ public class Ranzen implements Listener {
             display.remove();
         }
         for(Player p : Bukkit.getOnlinePlayers()) {
-           p.getInventory().remove(new ItemStack(Items.nws_ranzen));
-           p.getInventory().remove(new ItemStack(Items.sport_ranzen));
-           p.getInventory().remove(new ItemStack(Items.sprach_ranzen));
+
+            for (ItemStack ranzen : Items.ranzenList) {
+                if (p.getInventory().contains(ranzen)) {
+                    p.getInventory().remove(ranzen);
+                }
+            }
         }
     }
 
@@ -139,7 +143,7 @@ public class Ranzen implements Listener {
     public void onRanzenPlace(BlockPlaceEvent e) {
         Player p = e.getPlayer();
         ItemStack ranzen = e.getItemInHand();
-        if (ranzen.equals(Items.nws_ranzen) || ranzen.equals(Items.sprach_ranzen) || ranzen.equals(Items.sport_ranzen)) {
+        if (Items.ranzenList.contains(ranzen)) {
             if (!SchoolWars.gameStarted) {
                 p.sendMessage(ChatColor.RED + "Ranzen können nur während dem Spiel platziert werden!");
                 e.setCancelled(true);
@@ -151,17 +155,18 @@ public class Ranzen implements Listener {
                 e.getPlayer().sendMessage(ChatColor.RED + "Du kannst hier nichts platzieren!");
                 return;
             }
-            if (ranzen.equals(Items.nws_ranzen)) {
-                ranzenPlace(e, p, Team.NWS);
-            } else if (ranzen.equals(Items.sprach_ranzen)) {
-                ranzenPlace(e, p, Team.SPRACHLER);
-            } else if (ranzen.equals(Items.sport_ranzen)) {
-                ranzenPlace(e, p, Team.SPORTLER);
+
+            for (Team team : Team.values()) {
+                if (ranzen.equals(team.ranzen)) {
+                    ranzenPlace(e, p, team);
+                }
             }
         }
     }
 
     private static void ranzenPickup(Player player, Interaction ranzen, PlayerInteractEntityEvent event) {
+
+        if (!playerMirror.get(player.getName()).isAlive()) return;
 
         Team team = playerMirror.get(player.getName()).getTeam();
 
@@ -190,7 +195,7 @@ public class Ranzen implements Listener {
     private static void ranzenPlace(BlockPlaceEvent e, Player p, Team team){
 
         Ranzen.placeRanzen(team, e.getBlock().getLocation());
-        p.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+        p.getInventory().setItem(e.getHand(), new ItemStack(Material.AIR));
         p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§2Du hast deinen Ranzen plaziert!"));
         e.setCancelled(true);
 

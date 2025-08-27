@@ -145,4 +145,8 @@ public class PlayerMirror {
     public void setInBossfight(boolean inBossfight) {
         this.inBossfight = inBossfight;
     }
+
+    public String getName() {
+        return playerName;
+    }
 }
