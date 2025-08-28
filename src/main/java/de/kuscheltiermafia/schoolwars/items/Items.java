@@ -20,7 +20,6 @@
 package de.kuscheltiermafia.schoolwars.items;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
-import de.kuscheltiermafia.schoolwars.Team;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -326,7 +325,7 @@ public class Items {
         zehn_boehm_gutschein = createItem(Material.PAPER, ChatColor.WHITE + "10€ Böhms Gutschein", 1, 96, null, false, false, false);
         itemList.add(zehn_boehm_gutschein);
 
-        strick = createItem(Material.LEAD, ChatColor.BOLD + "" + ChatColor.DARK_RED + "Du bist momentan nicht in der Lage dich zu bewegen!", 1, 1, null, true, false, false);
+        strick = createItem(Material.LEAD, ChatColor.BOLD + "" + ChatColor.DARK_RED + "Du bist momentan nicht in der Lage dich zu bewegen!", 2, 1, null, false, false, false);
         itemList.add(strick);
 
 //Vapes
@@ -400,13 +399,13 @@ public class Items {
 
 //Create item method
 
-    public static ItemStack createItem(Material material, String name, int id, int stackSize, List<String> lore, boolean glint, boolean hideTooltip, boolean hideAdditionalTooltip) {
+    public static ItemStack createItem(Material material, String name, int customModelData, int stackSize, List<String> lore, boolean glint, boolean hideTooltip, boolean hideAdditionalTooltip) {
 
         ItemStack genItem = new ItemStack(material);
         ItemMeta meta = genItem.getItemMeta();
 
         meta.setMaxStackSize(stackSize);
-        meta.setCustomModelData(id);
+        meta.setCustomModelData(customModelData);
         meta.setDisplayName(name);
         meta.setLore(lore);
         meta.setEnchantmentGlintOverride(glint);
