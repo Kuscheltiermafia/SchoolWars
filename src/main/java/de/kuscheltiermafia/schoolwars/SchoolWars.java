@@ -116,6 +116,7 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new BaarsKaffee(), this);
         pluginManager.registerEvents(new Vapes(), this);
         pluginManager.registerEvents(new StartGame(), this);
+        pluginManager.registerEvents(new ManageFoodLevel(), this);
 
         PaperCommandManager manager = new PaperCommandManager(this);
         manager.registerCommand(new Debug());
@@ -124,6 +125,7 @@ public final class SchoolWars extends JavaPlugin {
         manager.registerCommand(new SläschRechtsklick());
 //        manager.registerCommand(new StartCommand());
 
+        //This needs to work with command blocks
         Bukkit.getPluginCommand("start").setExecutor(new StartCommand());
 
         Team.clearTeams();

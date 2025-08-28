@@ -55,6 +55,8 @@ import static de.kuscheltiermafia.schoolwars.SchoolWars.WORLD;
 //    }
 //}
 
+
+//Has to work with command blocks
 public class StartCommand implements CommandExecutor{
 
     Location commandBlockLocation = new Location(WORLD, -32.0, 81.0, 181.0);
