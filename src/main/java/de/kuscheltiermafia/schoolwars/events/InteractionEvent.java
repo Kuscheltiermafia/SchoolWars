@@ -180,6 +180,17 @@ public class InteractionEvent implements Listener {
         }
     }
 
+    //Prevent players from interacting with the dragon egg
+    @EventHandler
+    public void onInteractDragonEgg(PlayerInteractEvent e) {
+        Player p = e.getPlayer();
+        try {
+            if (e.getClickedBlock().getType() == Material.DRAGON_EGG && p.getGameMode() != GameMode.CREATIVE) {
+                e.setCancelled(true);
+            }
+        } catch (Exception ignored) {}
+    }
+
     /*
 Brot hier, willkommen zu einem neuem GROOVETUBE VIDEO. Heute BROTEN WIR mein riesiges Brot, man könnte es auch *****, das wäre aber etwas brot (aka gay)
  Mein Bro heißt BERND das Brot, was ein ziemlich schöner Name ist. Aber ich heiße ANTON VIVALDI KLEMMT IM BROT™, ich weiß, ein viel schöneren Namen.
