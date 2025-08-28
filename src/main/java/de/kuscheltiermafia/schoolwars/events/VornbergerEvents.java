@@ -39,7 +39,7 @@ public class VornbergerEvents implements Listener {
     }
 
     @EventHandler
-    public void onZwiebelKrate(PlayerInteractEvent e) {
+    public void onZwiebelCrate(PlayerInteractEvent e) {
         if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             if(e.getClickedBlock().getLocation().equals(new Location(SchoolWars.WORLD, -60.0, 80.0, 196.0)) || e.getClickedBlock().getLocation().equals(new Location(SchoolWars.WORLD, -58.0, 80.0, 197.0))) {
                 Player p = e.getPlayer();

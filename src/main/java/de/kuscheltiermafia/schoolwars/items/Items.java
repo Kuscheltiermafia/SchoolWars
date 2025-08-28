@@ -396,10 +396,6 @@ public class Items {
         itemList.add(sport_ranzen);
         ranzenList.add(sport_ranzen);
 
-        Team.SPORTLER.ranzen = Items.sport_ranzen;
-        Team.SPRACHLER.ranzen = Items.sprach_ranzen;
-        Team.NWS.ranzen = Items.nws_ranzen;
-
     }
 
 //Create item method

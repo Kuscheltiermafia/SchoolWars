@@ -21,6 +21,7 @@ package de.kuscheltiermafia.schoolwars;
 
 import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
+import de.kuscheltiermafia.schoolwars.win_conditions.Ranzen;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -30,7 +31,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,9 +39,9 @@ import static de.kuscheltiermafia.schoolwars.win_conditions.Ranzen.ranzenAmount;
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
 public enum Team {
-    SPORTLER(ChatColor.DARK_RED + "sportler", ChatColor.DARK_RED + "[Sport] ", ChatColor.DARK_RED + "Sportler", new Location(Bukkit.getWorld("schoolwars"), 68.5, 80.0, 167.0, 90, 0)),
-    SPRACHLER(ChatColor.GOLD + "sprachler", ChatColor.GOLD + "[Sprache] ", ChatColor.GOLD + "Sprachler", new Location(Bukkit.getWorld("schoolwars"), -21.5, 88.0, 146.0, -90, 0)),
-    NWS(ChatColor.GREEN + "naturwissenschaftler", ChatColor.GREEN + "[NWS] ", ChatColor.GREEN + "Naturwissenschaftler", new Location(Bukkit.getWorld("schoolwars"), 4.5, 81.0, 191.5, 90, 0));
+    SPORTLER(ChatColor.DARK_RED + "sportler", ChatColor.DARK_RED + "[Sport] ", ChatColor.DARK_RED + "Sportler", new Location(Bukkit.getWorld("schoolwars"), 68.5, 80.0, 167.0, 90, 0), Items.sport_ranzen, Ranzen.SPORTLER),
+    SPRACHLER(ChatColor.GOLD + "sprachler", ChatColor.GOLD + "[Sprache] ", ChatColor.GOLD + "Sprachler", new Location(Bukkit.getWorld("schoolwars"), -21.5, 88.0, 146.0, -90, 0), Items.sprach_ranzen, Ranzen.SPRACHLER),
+    NWS(ChatColor.GREEN + "naturwissenschaftler", ChatColor.GREEN + "[NWS] ", ChatColor.GREEN + "Naturwissenschaftler", new Location(Bukkit.getWorld("schoolwars"), 4.5, 81.0, 191.5, 90, 0), Items.nws_ranzen, Ranzen.NWS);
 
     public static int teamCount = 2;
     public static boolean randomTeams = true;
@@ -50,17 +50,19 @@ public enum Team {
     public final String prefix;
     public final String joinMessage;
     public final Location spawn;
-
-    public ItemStack ranzen;
+    public final ItemStack ranzen_item;
+    public final Ranzen ranzen;
 
     public final ArrayList<String> mitglieder = new ArrayList<>();
     public double sekiRisk;
 
-    Team(String teamName, String prefix, String joinMessage, Location spawn) {
+    Team(String teamName, String prefix, String joinMessage, Location spawn, ItemStack ranzen_item, Ranzen ranzen) {
         this.teamName = teamName;
         this.prefix = prefix;
         this.joinMessage = joinMessage;
         this.spawn = spawn;
+        this.ranzen_item = ranzen_item;
+        this.ranzen = ranzen;
     }
 
 
@@ -117,7 +119,7 @@ public enum Team {
         playerMirror.get(p.getName()).setTeam(this);
 
         if (!SchoolWars.gameStarted) {
-            p.getInventory().addItem(ranzen);
+            p.getInventory().addItem(ranzen_item);
             ranzenAmount.put(this, ranzenAmount.get(this) + 1);
             p.getInventory().addItem(Items.schulbuch1);
         }
@@ -129,10 +131,9 @@ public enum Team {
 
 
     public static void clearTeams(){
-        if (SPRACHLER.mitglieder != null) {
-            SPRACHLER.mitglieder.clear();
-            NWS.mitglieder.clear();
-            SPORTLER.mitglieder.clear();
+        for (Team team : Team.values()) {
+            team.mitglieder.clear();
+            team.sekiRisk = 0.0;
         }
     }
 

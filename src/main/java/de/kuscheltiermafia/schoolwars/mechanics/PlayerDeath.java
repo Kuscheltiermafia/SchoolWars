@@ -55,9 +55,9 @@ public class PlayerDeath implements Listener {
 
 //destroy Ranzen
 
-            if(player.getKiller() != null && player.getInventory().contains(team.ranzen)) {
+            if(player.getKiller() != null && player.getInventory().contains(team.ranzen_item)) {
                 Ranzen.destroyRanzen(player.getKiller(), team, player.getLocation());
-                player.getInventory().remove(new ItemStack(team.ranzen));
+                player.getInventory().remove(new ItemStack(team.ranzen_item));
             }
 
 

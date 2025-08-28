@@ -23,7 +23,6 @@ import co.aikar.commands.PaperCommandManager;
 import de.kuscheltiermafia.schoolwars.commands.*;
 import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
 import de.kuscheltiermafia.schoolwars.events.*;
-import de.kuscheltiermafia.schoolwars.lehrer.Stundenplan;
 import de.kuscheltiermafia.schoolwars.mechanics.*;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.lehrer.LehrerQuests;
@@ -81,7 +80,7 @@ public final class SchoolWars extends JavaPlugin {
         Items.initItems();
         SchulbuchLevels.initShelfLocations();
         SchulbuchLevels.resetBookshelf();
-        Ranzen.generateRanzenCounter();
+        Ranzen.initRanzenCounter();
         //LehrerQuests.initLehrerAlgorithm();
         LehrerQuests.initLehrerQuests();
         DialogueHandler.initDialogues();
@@ -107,7 +106,7 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new FischersSpielzeug(), this);
         pluginManager.registerEvents(new DialogueHandler(), this);
         pluginManager.registerEvents(new BossWaves(), this);
-        pluginManager.registerEvents(new Ranzen(), this);
+        pluginManager.registerEvents(new RanzenEvents(), this);
         pluginManager.registerEvents(new DisableProfessions(), this);
         pluginManager.registerEvents(new FachraumSchluessel(), this);
         pluginManager.registerEvents(new VornbergerEvents(), this);

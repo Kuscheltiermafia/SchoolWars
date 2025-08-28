@@ -34,35 +34,46 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
 
-public class Ranzen implements Listener {
+public enum Ranzen {
+
+    SPRACHLER("§6Gelber Ranzen", Material.YELLOW_WOOL),
+    SPORTLER("§4Roter Ranzen", Material.RED_WOOL),
+    NWS("§2Grüner Ranzen", Material.GREEN_WOOL);
+
+    public final String ranzenName;
+    public final Material ranzenMaterial;
+
+    public static ArrayList<String> ranzenMetadatas = new ArrayList<>();
+
+    static {
+        for (Team team : Team.values()) {
+            ranzenMetadatas.add(team.teamName);
+        }
+    }
 
     public static HashMap<Location, BlockDisplay> displayPositions = new HashMap<>();
     public static HashMap<BlockDisplay, Interaction> placedRanzen = new HashMap<>();
     public static HashMap<Interaction, Team> ranzenTeam = new HashMap<>();
     public static HashMap<Team, Integer> ranzenAmount = new HashMap<>();
 
-
-    public static void placeRanzen(Team team, Location loc) {
-
-        if (team == Team.NWS) createRanzen(team, "§2Grüner Ranzen", Material.GREEN_WOOL, loc);
-        else if (team == Team.SPRACHLER) createRanzen(team, "§6Gelber Ranzen", Material.YELLOW_WOOL, loc);
-        else if (team == Team.SPORTLER) createRanzen(team, "§4Roter Ranzen", Material.RED_WOOL, loc);
-
+    Ranzen(String ranzenName, Material ranzenMaterial) {
+        this.ranzenName = ranzenName;
+        this.ranzenMaterial = ranzenMaterial;
     }
 
-    public static void generateRanzenCounter(){
-        ranzenAmount.put(Team.SPORTLER, 0);
-        ranzenAmount.put(Team.NWS, 0);
-        ranzenAmount.put(Team.SPRACHLER, 0);
+    public static void initRanzenCounter(){
+        for (Team team : Team.values()) {
+            ranzenAmount.put(team, 0);
+        }
     }
 
     public static void destroyRanzen(Player p, Team team, Location loc) {
@@ -72,7 +83,7 @@ public class Ranzen implements Listener {
 
             //todo: remove prefix
 
-            online.sendTitle(ChatColor.DARK_RED + p.getDisplayName() + " hat einen Ranzen zerstört!", ChatColor.DARK_GRAY + "- Es war ein Ranzen von den " + team.name().substring(0, 1).toUpperCase() + team.name().substring(1) + "n " + ChatColor.DARK_GRAY + "-", 10, 50, 10);
+            online.sendTitle(ChatColor.DARK_RED + p.getDisplayName() + " hat einen Ranzen zerstört!", ChatColor.DARK_GRAY + "- Es war ein Ranzen von den " + team.name().substring(0, 1).toUpperCase() + team.name().substring(1) + "N " + ChatColor.DARK_GRAY + "-", 10, 50, 10);
 
         }
         Bukkit.broadcastMessage(p.getDisplayName() + ChatColor.DARK_GRAY + " hat einen Ranzen der " + team.name().substring(0, 1).toUpperCase() + team.name().substring(1) + ChatColor.DARK_GRAY + " zerstört!");
@@ -100,71 +111,34 @@ public class Ranzen implements Listener {
         }
     }
 
-    static void createRanzen(Team team, String ranzenName, Material ranzenMaterial, Location loc) {
+    public static void createRanzen(Team team, Location loc) {
+
+        Ranzen ranzen = team.ranzen;
 
         Interaction ranzen_hb = Bukkit.getServer().getWorld("schoolwars").spawn(loc.add(0.5, 0, 0.5), Interaction.class);
-        BlockDisplay ranzen = Bukkit.getServer().getWorld("schoolwars").spawn(loc.subtract(0.5, 0, 0.5), BlockDisplay.class);
+        BlockDisplay ranzen_display = Bukkit.getServer().getWorld("schoolwars").spawn(loc.subtract(0.5, 0, 0.5), BlockDisplay.class);
 
-        ranzen.setBlock(Bukkit.createBlockData(ranzenMaterial));
+        ranzen_display.setBlock(Bukkit.createBlockData(ranzen.ranzenMaterial));
 
-        ranzen.setCustomName(ranzenName);
-        ranzen.setCustomNameVisible(true);
+        ranzen_display.setCustomName(ranzen.ranzenName);
+        ranzen_display.setCustomNameVisible(true);
 
-        ranzen.setDisplayHeight(0.9f);
-        ranzen.setDisplayWidth(0.9f);
+        ranzen_display.setDisplayHeight(0.9f);
+        ranzen_display.setDisplayWidth(0.9f);
 
-        displayPositions.put(loc, ranzen);
+        displayPositions.put(loc, ranzen_display);
 
         ranzen_hb.setInteractionHeight(1);
         ranzen_hb.setInteractionWidth(1);
 
         ranzen_hb.setMetadata(team.teamName, new FixedMetadataValue(SchoolWars.getPlugin(), "dummyValue"));
 
-        placedRanzen.put(ranzen, ranzen_hb);
+        placedRanzen.put(ranzen_display, ranzen_hb);
         ranzenTeam.put(ranzen_hb, team);
 
     }
 
-    @EventHandler
-    public void onRanzenPickup(PlayerInteractEntityEvent e) {
-
-        Player p = e.getPlayer();
-
-        if (!(e.getRightClicked() instanceof Interaction ranzen)) return;
-
-
-        if (ranzen.hasMetadata(Team.NWS.teamName) || ranzen.hasMetadata(Team.SPORTLER.teamName) || ranzen.hasMetadata(Team.SPRACHLER.teamName)) {
-            ranzenPickup(p, ranzen, e);
-        }
-
-    }
-
-    @EventHandler
-    public void onRanzenPlace(BlockPlaceEvent e) {
-        Player p = e.getPlayer();
-        ItemStack ranzen = e.getItemInHand();
-        if (Items.ranzenList.contains(ranzen)) {
-            if (!SchoolWars.gameStarted) {
-                p.sendMessage(ChatColor.RED + "Ranzen können nur während dem Spiel platziert werden!");
-                e.setCancelled(true);
-                return;
-            }
-            BlockState replcaedState =  e.getBlockReplacedState();
-            if(replcaedState.getType() != Material.AIR && replcaedState.getType() != Material.CAVE_AIR && replcaedState.getType() != Material.VOID_AIR) {
-                e.setCancelled(true);
-                e.getPlayer().sendMessage(ChatColor.RED + "Du kannst hier nichts platzieren!");
-                return;
-            }
-
-            for (Team team : Team.values()) {
-                if (ranzen.equals(team.ranzen)) {
-                    ranzenPlace(e, p, team);
-                }
-            }
-        }
-    }
-
-    private static void ranzenPickup(Player player, Interaction ranzen, PlayerInteractEntityEvent event) {
+    public static void ranzenPickup(Player player, Interaction ranzen, PlayerInteractEntityEvent event) {
 
         if (!playerMirror.get(player.getName()).isAlive()) return;
 
@@ -177,7 +151,7 @@ public class Ranzen implements Listener {
             }
             Ranzen.placedRanzen.remove(ranzen);
             ranzen.remove();
-            player.getInventory().addItem(new ItemStack(team.ranzen));
+            player.getInventory().addItem(new ItemStack(team.ranzen_item));
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§2Du hast deinen Ranzen aufgehoben!"));
             event.setCancelled(true);
         }else{
@@ -189,15 +163,6 @@ public class Ranzen implements Listener {
             Ranzen.placedRanzen.remove(ranzen);
             ranzen.remove();
         }
-
-    }
-
-    private static void ranzenPlace(BlockPlaceEvent e, Player p, Team team){
-
-        Ranzen.placeRanzen(team, e.getBlock().getLocation());
-        p.getInventory().setItem(e.getHand(), new ItemStack(Material.AIR));
-        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§2Du hast deinen Ranzen plaziert!"));
-        e.setCancelled(true);
 
     }
 
