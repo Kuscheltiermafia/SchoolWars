@@ -100,7 +100,7 @@ public enum ItemDrops {
         this.raum = null;
 
         for (Location loc : this.locations) {
-            loc.add(0.5, 0, 0.5); // Center in the block
+            loc.add(0.5, 0.2, 0.5); // Center in the block, put above carpets etc.
         }
     }
 
