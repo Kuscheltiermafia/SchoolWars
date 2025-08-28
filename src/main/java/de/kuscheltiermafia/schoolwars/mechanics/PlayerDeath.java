@@ -22,6 +22,7 @@ package de.kuscheltiermafia.schoolwars.mechanics;
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.Team;
 import de.kuscheltiermafia.schoolwars.win_conditions.Ranzen;
+import io.github.realMorgon.sunriseLib.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -42,7 +43,7 @@ import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 public class PlayerDeath implements Listener {
 
     @EventHandler
-    public void onPlayerDamage(EntityDamageEvent e){
+    public void onPlayerDamage(EntityDamageByEntityEvent e){
 
         if (!SchoolWars.gameStarted) {
             e.setCancelled(true);
@@ -74,10 +75,12 @@ public class PlayerDeath implements Listener {
             }
 
 //send death message
-            if (player.getKiller() == null) {
-                Bukkit.broadcastMessage(playerName + ChatColor.GRAY + " hat auf natürliche Weise sein Ende gefunden.");
+            if (e.getDamager().getType() == EntityType.PLAYER) {
+                Message.sendToAllPlayers(playerName + ChatColor.GRAY + " wurde von " + killerName + ChatColor.GRAY + " besiegt.");
+            } else if (e.getDamager().getType() == EntityType.VINDICATOR) {
+                Message.sendToAllPlayers(playerName + ChatColor.GRAY + " wurde von wild gewordenem Schulpersonal besiegt.");
             } else {
-                Bukkit.broadcastMessage(playerName + ChatColor.GRAY + " wurde von " + killerName + ChatColor.GRAY + " besiegt.");
+                Message.sendToAllPlayers(playerName + ChatColor.GRAY + " hat auf natürliche Weise sein Ende gefunden.");
             }
 
 //set player to dead state

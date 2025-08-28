@@ -107,9 +107,8 @@ public class Items {
     public static ItemStack bound_peilsender;
     public static ItemStack kerze;
     public static ItemStack zehn_boehm_gutschein;
-    public static ItemStack strick;
 
-//Vapes
+    //Vapes
     public static ItemStack vape_fruitberry;
     public static ItemStack vape_arschwasser;
     public static ItemStack vape_strawberry;
@@ -119,7 +118,8 @@ public class Items {
     public static ItemStack vape_air;
     public static ItemStack vape_empty;
 
-//UI Items
+    //UI Items
+    public static ItemStack strick;
     public static ItemStack spacer;
     public static ItemStack available_item;
     public static ItemStack not_available_item;
@@ -325,9 +325,6 @@ public class Items {
         zehn_boehm_gutschein = createItem(Material.PAPER, ChatColor.WHITE + "10€ Böhms Gutschein", 1, 96, null, false, false, false);
         itemList.add(zehn_boehm_gutschein);
 
-        strick = createItem(Material.LEAD, ChatColor.BOLD + "" + ChatColor.DARK_RED + "Du bist momentan nicht in der Lage dich zu bewegen!", 2, 1, null, false, false, false);
-        itemList.add(strick);
-
 //Vapes
         vape_fruitberry = createItem(Material.PINK_CANDLE, ChatColor.LIGHT_PURPLE + "Vape Fruitberry Punch", 1, 1, null, false, false, false);
         itemList.add(vape_fruitberry);
@@ -354,6 +351,7 @@ public class Items {
         itemList.add(vape_empty);
 
 //UI Items
+        strick = createItem(Material.LEAD, ChatColor.BOLD + "" + ChatColor.DARK_RED + "Du bist momentan nicht in der Lage dich zu bewegen!", 2, 1, null, false, false, false);
         spacer = createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, " ", 20, 1, null, false, true, false);
         available_item = createItem(Material.LIME_STAINED_GLASS_PANE, ChatColor.GREEN + "Du kannst diese Quest abschließen!", 20, 1, null, false, false, false);
         not_available_item = createItem(Material.RED_STAINED_GLASS_PANE, ChatColor.DARK_RED + "Du kannst diese Quest noch nicht abschließen!", 20, 1, null, false, false, false);
