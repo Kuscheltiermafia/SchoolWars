@@ -40,8 +40,8 @@ public class RevivePlayer {
 
     public static void revivePlayer(Player player, Player target) {
 
-        if (!playerMirror.get(target.getName()).isAlive()) {
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, (BaseComponent) Component.text(ChatColor.RED + "Dieser Spieler ist tot und kann nicht wiederbelebt werden."));
+        if (playerMirror.get(target.getName()).isAlive()) {
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + "Dieser Spieler ist nicht tot und kann nicht wiederbelebt werden."));
             return;
         }
 

@@ -37,7 +37,7 @@ public class RevivePlayerEvent implements Listener {
 
             Player player = e.getPlayer();
 
-            if (target.getLocation().distance(player.getLocation()) <= 3 && playerMirror.get(target.getName()).isAlive() && player.getInventory().getItemInMainHand().equals(Items.kuehlpack) && !playerMirror.get(player.getName()).isInCombat()) {
+            if (target.getLocation().distance(player.getLocation()) <= 3 && !playerMirror.get(target.getName()).isAlive() && player.getInventory().getItemInMainHand().equals(Items.kuehlpack) && !playerMirror.get(player.getName()).isInCombat()) {
 
                 RevivePlayer.revivePlayer(player, target);
 

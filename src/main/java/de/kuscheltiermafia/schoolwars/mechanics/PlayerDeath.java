@@ -19,6 +19,7 @@
 
 package de.kuscheltiermafia.schoolwars.mechanics;
 
+import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.Team;
 import de.kuscheltiermafia.schoolwars.win_conditions.Ranzen;
 import org.bukkit.Bukkit;
@@ -41,7 +42,12 @@ import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 public class PlayerDeath implements Listener {
 
     @EventHandler
-    public void onPlayerDeath(EntityDamageEvent e){
+    public void onPlayerDamage(EntityDamageEvent e){
+
+        if (!SchoolWars.gameStarted) {
+            e.setCancelled(true);
+            return;
+        }
 
         if (e.getEntity() instanceof Player player && e.getFinalDamage() >= ((Player) e.getEntity()).getHealth()) {
 
