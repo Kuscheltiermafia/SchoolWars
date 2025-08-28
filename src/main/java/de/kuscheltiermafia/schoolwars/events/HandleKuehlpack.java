@@ -20,6 +20,7 @@
 package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.items.Items;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
@@ -38,6 +39,11 @@ public class HandleKuehlpack implements Listener {
         if (e.getRightClicked() instanceof ItemFrame) {
 
             Player p = e.getPlayer();
+
+            //Abort if player is in creative mode
+            if (p.getGameMode() == GameMode.CREATIVE) return;
+
+            //Handle Kuehlpack
             ItemFrame itemFrame = (ItemFrame) e.getRightClicked();
 
             if (itemFrame.getItem().equals(Items.kuehlpack)) {

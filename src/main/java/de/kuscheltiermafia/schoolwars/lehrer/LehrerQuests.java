@@ -92,8 +92,8 @@ public class LehrerQuests implements Listener {
 
     @EventHandler
     public void onLehrerClick(PlayerInteractEntityEvent e) {
-        e.setCancelled(true);
         if(e.getRightClicked() instanceof Villager && questLehrerList.contains(e.getRightClicked())) {
+            e.setCancelled(true);
             Player p = e.getPlayer();
             Villager l = (Villager) e.getRightClicked();
             Lehrer lehrer = Lehrer.getLehrerByEntity(l);

@@ -38,6 +38,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -169,6 +170,14 @@ public class InteractionEvent implements Listener {
                 event.setCancelled(true);
             }
         } catch (Exception ignored) {}
+    }
+
+    //Prevent Item frames from being rotated
+    @EventHandler
+    public void onRotateItemFrame(PlayerInteractEntityEvent e) {
+        if (e.getRightClicked() instanceof ItemFrame && ((Player) e.getPlayer()).getGameMode() != GameMode.CREATIVE) {
+            e.setCancelled(true);
+        }
     }
 
     /*

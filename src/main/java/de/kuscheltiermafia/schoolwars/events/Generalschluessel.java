@@ -24,6 +24,7 @@ import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
 import io.github.realMorgon.sunriseLib.Message;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -116,6 +117,11 @@ public class Generalschluessel implements Listener {
         if (e.getRightClicked() instanceof ItemFrame) {
 
             Player p = e.getPlayer();
+
+            //Abort if player is in creative mode
+            if (p.getGameMode() == GameMode.CREATIVE) return;
+
+            //Handle Kuehlpack
             ItemFrame itemFrame = (ItemFrame) e.getRightClicked();
 
             if (itemFrame.getItem().equals(Items.general_schluessel)) {
