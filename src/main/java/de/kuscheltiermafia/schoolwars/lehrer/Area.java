@@ -114,6 +114,22 @@ public enum Area {
         return null;
     }
 
+    public static ArrayList<Player> getPlayersInArea(Location minLoc, Location maxLoc) {
+        ArrayList<Player> playersInArea = new ArrayList<>();
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            Location playerLocation = player.getLocation();
+
+            // Check if the player's location is within the area
+            if (playerLocation.getX() >= minLoc.blockX() && playerLocation.getX() <= maxLoc.blockX() &&
+                    playerLocation.getY() >= minLoc.blockY() && playerLocation.getY() <= maxLoc.blockY() &&
+                    playerLocation.getZ() >= minLoc.blockZ() && playerLocation.getZ() <= maxLoc.blockZ()) {
+                playersInArea.add(player);
+            }
+        }
+        return playersInArea;
+    }
+
     public String getName() {
         return name;
     }

@@ -19,6 +19,7 @@
 
 package de.kuscheltiermafia.schoolwars.mechanics;
 
+import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.Team;
 import de.kuscheltiermafia.schoolwars.win_conditions.Ranzen;
 import org.bukkit.Bukkit;
@@ -41,7 +42,12 @@ import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 public class PlayerDeath implements Listener {
 
     @EventHandler
-    public void onPlayerDeath(EntityDamageEvent e){
+    public void onPlayerDamage(EntityDamageEvent e){
+
+        if (!SchoolWars.gameStarted) {
+            e.setCancelled(true);
+            return;
+        }
 
         if (e.getEntity() instanceof Player player && e.getFinalDamage() >= ((Player) e.getEntity()).getHealth()) {
 
@@ -55,9 +61,9 @@ public class PlayerDeath implements Listener {
 
 //destroy Ranzen
 
-            if(player.getKiller() != null && player.getInventory().contains(team.ranzen)) {
+            if(player.getKiller() != null && player.getInventory().contains(team.ranzen_item)) {
                 Ranzen.destroyRanzen(player.getKiller(), team, player.getLocation());
-                player.getInventory().remove(new ItemStack(team.ranzen));
+                player.getInventory().remove(new ItemStack(team.ranzen_item));
             }
 
 
@@ -105,6 +111,8 @@ public class PlayerDeath implements Listener {
             mount.setPassenger(player);
 
             playerBatMap.put(player.getName(), mount.getUniqueId());
+
+            playerMirror.get(player.getName()).setAlive(false);
         }
     }
 
@@ -122,19 +130,22 @@ public class PlayerDeath implements Listener {
     //Prevent dead Players from interacting
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
-        if (!playerMirror.get(e.getPlayer().getName()).isAlive()) {
-            e.setCancelled(true);
-        }
-
+        try {
+            if (!playerMirror.get(e.getPlayer().getName()).isAlive()) {
+                e.setCancelled(true);
+            }
+        }catch (Exception ignored){}
     }
 
     //Prevent dead Players from hitting
     @EventHandler
     public void onPunch(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player) {
-            if (!playerMirror.get(e.getDamager().getName()).isAlive()) {
-                e.setCancelled(true);
-            }
+            try {
+                if (!playerMirror.get(e.getDamager().getName()).isAlive()) {
+                    e.setCancelled(true);
+                }
+            }catch (Exception ignored){}
         }
     }
 }

@@ -20,10 +20,12 @@
 package de.kuscheltiermafia.schoolwars.win_conditions.events_atombombe;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.events.ManageFoodLevel;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.EndGame;
 import de.kuscheltiermafia.schoolwars.mechanics.ProgressBarHandler;
 import de.kuscheltiermafia.schoolwars.Team;
+import de.kuscheltiermafia.schoolwars.win_conditions.AtombombeBossfight;
 import de.kuscheltiermafia.schoolwars.win_conditions.Ranzen;
 import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ChatMessageType;
@@ -53,6 +55,7 @@ public class AtombombeEvents implements Listener {
     static boolean nukePlaced = false;
     static Location nukeLoc;
     private static BukkitTask timer;
+    private static BlockDisplay nuke;
 
 
     @EventHandler
@@ -93,7 +96,7 @@ public class AtombombeEvents implements Listener {
 
             event.setCancelled(true);
             player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
-            BlockDisplay nuke = Bukkit.getServer().getWorld("schoolwars").spawn(nukeLoc, BlockDisplay.class);
+            nuke = Bukkit.getServer().getWorld("schoolwars").spawn(nukeLoc, BlockDisplay.class);
             nuke.setBlock(Bukkit.createBlockData(Material.TNT));
             nuke.setGlowing(true);
             nuke.setGlowColorOverride(Color.RED);
@@ -153,6 +156,8 @@ public class AtombombeEvents implements Listener {
                                 player.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(1);
                                 player.teleport(new Location(player.getWorld(), 14.0, 32.0, 179.0));
                                 playerMirror.get(player.getName()).setInBossfight(true);
+
+                                AtombombeBossfight.startBossfight();
                             }
                         }
                     }
@@ -164,7 +169,7 @@ public class AtombombeEvents implements Listener {
         }
     }
 
-    private static void stopNuke(BlockDisplay nuke) {
+    public static void stopNuke() {
         if (nukePlaced) {
             Bukkit.getScheduler().cancelTask(timer.getTaskId());
             nuke.remove();

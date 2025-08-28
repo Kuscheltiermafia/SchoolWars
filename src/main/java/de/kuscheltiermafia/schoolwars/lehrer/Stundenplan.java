@@ -20,6 +20,7 @@
 package de.kuscheltiermafia.schoolwars.lehrer;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
 import de.kuscheltiermafia.schoolwars.items.ItemDrops;
 import io.github.realMorgon.sunriseLib.Sounds;
 import org.bukkit.Sound;
@@ -73,7 +74,7 @@ public class Stundenplan {
             int i = 0;
 
             do {
-                if (!shuffledLehrer.isEmpty() && Math.random() > 0.1) {
+                if (!shuffledLehrer.isEmpty() && Math.random() < ProbabilityConfig.getProbability("teacher.spawn_probability", 0.9)) {
                     if (area.raum == Raum.GENERAL || shuffledLehrer.get(0).raum.equals(area.raum)) {
 
                         Lehrer.summonLehrer(area.lehrerSpawnPos, shuffledLehrer.get(0));

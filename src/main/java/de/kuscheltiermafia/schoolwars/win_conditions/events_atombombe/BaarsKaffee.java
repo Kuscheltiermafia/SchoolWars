@@ -1,11 +1,13 @@
 package de.kuscheltiermafia.schoolwars.win_conditions.events_atombombe;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.BlockInteraction;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
@@ -28,6 +30,11 @@ public class BaarsKaffee implements Listener {
         if (e.getRightClicked() instanceof ItemFrame) {
 
             Player p = e.getPlayer();
+
+            //Abort if player is in creative mode
+            if (p.getGameMode() == GameMode.CREATIVE) return;
+
+            //Handle leere Tasse
             ItemFrame itemFrame = (ItemFrame) e.getRightClicked();
 
             if (itemFrame.getItem().equals(Items.leere_tasse)) {
@@ -38,13 +45,13 @@ public class BaarsKaffee implements Listener {
     }
 
     @EventHandler
-    public void onZwiebelKrate(PlayerInteractEvent e) {
+    public void onKaffeeCrate(PlayerInteractEvent e) {
         if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             if(e.getClickedBlock().getLocation().equals(new Location(SchoolWars.WORLD, -35.0, 73.0, 149.0)) || e.getClickedBlock().getLocation().equals(new Location(SchoolWars.WORLD, -32.0, 73.0, 149.0))) {
                 Player p = e.getPlayer();
 
                 Inventory kaffeeKiste = Bukkit.createInventory(null, 9 * 3, "Kaffeekiste");
-                for(int i = 0; i < 3; i++) {
+                for(int i = 0; i < ProbabilityConfig.getInteger("baar.coffee_count", 3); i++) {
                     Random rand = new Random();
                     int random = rand.nextInt(27);
 

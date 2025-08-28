@@ -20,9 +20,11 @@
 package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
 import io.github.realMorgon.sunriseLib.Message;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -38,7 +40,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
 import static de.kuscheltiermafia.schoolwars.SchoolWars.WORLD;
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
@@ -90,14 +91,12 @@ public class Generalschluessel implements Listener {
                         }
                     }.runTaskLater(SchoolWars.getPlugin(), 20 * 5);
 
-                    playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk += 5;
+                    playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk += ProbabilityConfig.getProbability("generalschluessel.risk_increase", 0.05);
 
-                    Random random = new Random();
-                    int randomRisk = random.nextInt(100);
-
-                    if (randomRisk <= playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk) {
-                        int randomMessage = random.nextInt(10);
-                        if (randomMessage == 1) {
+                    // Check if seki appears based on risk probability
+                    if (Math.random() <= playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk) {
+                        // Check for message variant (10% chance for alternate message)
+                        if (Math.random() < ProbabilityConfig.getProbability("message.generalschluessel_variant_chance", 0.1)) {
                             Message.sendInArea("§4Die Kollegin von der Seki-Frau hat dich erwischt!", block.getLocation(), 5, 3, 5);
                         } else {
                             Message.sendInArea("§4Die Seki-Frau hat dich erwischt!", block.getLocation(), 5, 3, 5);
@@ -118,6 +117,11 @@ public class Generalschluessel implements Listener {
         if (e.getRightClicked() instanceof ItemFrame) {
 
             Player p = e.getPlayer();
+
+            //Abort if player is in creative mode
+            if (p.getGameMode() == GameMode.CREATIVE) return;
+
+            //Handle Kuehlpack
             ItemFrame itemFrame = (ItemFrame) e.getRightClicked();
 
             if (itemFrame.getItem().equals(Items.general_schluessel)) {

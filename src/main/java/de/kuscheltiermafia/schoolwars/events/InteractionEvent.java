@@ -33,12 +33,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.management.openmbean.OpenMBeanInfoSupport;
+
+import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
 
 public class InteractionEvent implements Listener {
@@ -122,6 +128,55 @@ public class InteractionEvent implements Listener {
                 ParticleHandler.createParticles(hit.getLocation().add(0, 1, 0), Particle.CLOUD, 30, 0.2, true, null);
                 PlayerStun.stunPlayer(hit, 3, true);
             }
+        }
+    }
+
+    //Disable Leichenschändung
+    @EventHandler
+    public void onHitDeadPlayer(EntityDamageByEntityEvent e) {
+        if (e.getEntity() instanceof Player) {
+            Player p = (Player) e.getEntity();
+            try {
+                if (!playerMirror.get(p.getName()).isAlive()) {
+                    e.setCancelled(true);
+                }
+            }catch (Exception ignored) {}
+        }
+    }
+
+    //Disable ranzen Drop
+    @EventHandler
+    public void onDropRanzen(PlayerDropItemEvent e) {
+        if(Items.ranzenList.contains(e.getItemDrop().getItemStack())) {
+            e.setCancelled(true);
+        }
+    }
+
+    //Disable sign editing
+    @EventHandler
+    public void onSignEdit(SignChangeEvent e) {
+        Player p = e.getPlayer();
+        if (p.getGameMode() != GameMode.CREATIVE){
+            e.setCancelled(true);
+        }
+    }
+
+    //Disable chiseled bookshelf interaction
+    @EventHandler
+    public void onChiseledBookshelfInteract(PlayerInteractEvent event){
+        Player p = event.getPlayer();
+        try {
+            if (event.getClickedBlock().getType() == Material.CHISELED_BOOKSHELF && p.getGameMode() != GameMode.CREATIVE) {
+                event.setCancelled(true);
+            }
+        } catch (Exception ignored) {}
+    }
+
+    //Prevent Item frames from being rotated
+    @EventHandler
+    public void onRotateItemFrame(PlayerInteractEntityEvent e) {
+        if (e.getRightClicked() instanceof ItemFrame && ((Player) e.getPlayer()).getGameMode() != GameMode.CREATIVE) {
+            e.setCancelled(true);
         }
     }
 

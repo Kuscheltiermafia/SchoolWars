@@ -20,7 +20,6 @@
 package de.kuscheltiermafia.schoolwars.items;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
-import de.kuscheltiermafia.schoolwars.Team;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -45,78 +44,101 @@ public class Items {
     public static ArrayList<ItemStack> itemList = new ArrayList<ItemStack>();
     public static HashMap<Interaction, Item> itemHitboxes = new HashMap<>();
 
+    public static ArrayList<ItemStack> ranzenList = new ArrayList<ItemStack>();
+
     public static NamespacedKey dmgAttributeKey = new NamespacedKey(SchoolWars.getPlugin(), "attribute_key_dmg");
     public static NamespacedKey spdAttributeKey = new NamespacedKey(SchoolWars.getPlugin(), "attribute_key_spd");
 
+    //Waffen
+
     public static ItemStack minas_flasche;
-    public static ItemStack laptop;
     public static ItemStack buffed_minas_flasche;
-    public static ItemStack buffed_stuhl;
-    public static ItemStack placeholder;
-    public static ItemStack nuke;
-    public static ItemStack kuehlpack;
     public static ItemStack schulbuch1;
     public static ItemStack schulbuch2;
     public static ItemStack schulbuch3;
     public static ItemStack schulbuch4;
     public static ItemStack schulbuch5;
-    public static ItemStack moritz_hut;
-    public static ItemStack kaputtes_ipad;
-    public static ItemStack vape_fruitberry;
-    public static ItemStack vape_arschwasser;
-    public static ItemStack vape_mango;
-    public static ItemStack vape_strawberry;
-    public static ItemStack vape_triple;
-    public static ItemStack vape_arabics;
-    public static ItemStack vape_air;
-    public static ItemStack vape_empty;
-    public static ItemStack spacer;
-    public static ItemStack available_item;
-    public static ItemStack not_available_item;
-    public static ItemStack nws_ranzen;
-    public static ItemStack sprach_ranzen;
-    public static ItemStack sport_ranzen;
     public static ItemStack xlr_kabel;
     public static ItemStack attack_stuhl;
+    public static ItemStack buffed_stuhl;
+    public static ItemStack machete;
+
+//Support
+    public static ItemStack kuehlpack;
     public static ItemStack leberkaese;
-    public static ItemStack uranium;
-    public static ItemStack versuch;
-    public static ItemStack page_up;
-    public static ItemStack page_down;
-    public static ItemStack fischers_spiel;
-    public static ItemStack karls_elexier;
-    public static ItemStack baar_kaffee;
     public static ItemStack cookie;
+
+//Win condition
+    public static ItemStack stairway_heaven;
+    //nukes
+    public static ItemStack nuke;
+    public static ItemStack uranium;
+    public static ItemStack useless_uranium;
+    public static ItemStack fluor;
+    public static ItemStack versuch;
+    public static ItemStack emilia_ausland_brief;
+    public static ItemStack baar_kaffee;
+    public static ItemStack kaffeebohnen;
+    public static ItemStack verbrannte_bohnen;
+    public static ItemStack keks;
+    public static ItemStack aquatisiertes_fluor;
+    public static ItemStack natrium_fluorid;
+
+//Miscellaneous
+    public static ItemStack moritz_hut;
+    public static ItemStack kaputtes_ipad;
+    public static ItemStack ipad;
+    public static ItemStack laptop;
+    public static ItemStack zwiebel;
+    public static ItemStack geschimmelte_zwiebel;
+    public static ItemStack geschnittene_zwiebel;
+    public static ItemStack ausleihschein;
+    public static ItemStack fischers_spiel;
+    public static ItemStack leere_tasse;
+    public static ItemStack karls_elexier;
     public static ItemStack general_schluessel;
     public static ItemStack fachraum_schrank_schluessel;
     public static ItemStack rollator;
-    public static ItemStack no_page_down;
-    public static ItemStack no_page_up;
-    public static ItemStack leere_tasse;
-    public static ItemStack useless_uranium;
-    public static ItemStack fluor;
     public static ItemStack nobel_praemie;
     public static ItemStack focken;
     public static ItemStack script;
     public static ItemStack stroke_master;
-    public static ItemStack strick;
     public static ItemStack peilsender;
     public static ItemStack bound_peilsender;
-    public static ItemStack zwiebel;
-    public static ItemStack geschnittene_zwiebel;
-    public static ItemStack ausleihschein;
-    public static ItemStack stairway_heaven;
-    public static ItemStack zehn_boehm_gutschein;
-    public static ItemStack emilia_ausland_brief;
-    public static ItemStack keks;
-    public static ItemStack ipad;
-    public static ItemStack aquatisiertes_fluor;
-    public static ItemStack natrium_fluorid;
-    public static ItemStack kaffeebohnen;
-    public static ItemStack verbrannte_bohnen;
-    public static ItemStack machete;
-    public static ItemStack geschimmelte_zwiebel;
     public static ItemStack kerze;
+    public static ItemStack zehn_boehm_gutschein;
+    public static ItemStack strick;
+
+//Vapes
+    public static ItemStack vape_fruitberry;
+    public static ItemStack vape_arschwasser;
+    public static ItemStack vape_strawberry;
+    public static ItemStack vape_mango;
+    public static ItemStack vape_triple;
+    public static ItemStack vape_arabics;
+    public static ItemStack vape_air;
+    public static ItemStack vape_empty;
+
+//UI Items
+    public static ItemStack spacer;
+    public static ItemStack available_item;
+    public static ItemStack not_available_item;
+    public static ItemStack page_up;
+    public static ItemStack page_down;
+    public static ItemStack no_page_up;
+    public static ItemStack no_page_down;
+    public static ItemStack placeholder;
+    //startGUI
+    public static ItemStack start_game;
+    public static ItemStack player_count_display;
+    public static ItemStack gamemode_classic;
+    public static ItemStack team_count;
+    public static ItemStack choose_teams;
+
+//Ranzen
+    public static ItemStack nws_ranzen;
+    public static ItemStack sprach_ranzen;
+    public static ItemStack sport_ranzen;
 
     public static void initItems() {
 
@@ -151,9 +173,6 @@ public class Items {
         buffed_stuhl = weaponizeItem(createItem(Material.OAK_STAIRS, "§5§l§kA§r§f Stuhl §r§5§l§kA", 1, 1, null, true, false, false), 1, 0.5, EquipmentSlot.HAND);
         itemList.add(buffed_stuhl);
 
-        strick = createItem(Material.LEAD, ChatColor.BOLD + "" + ChatColor.DARK_RED + "Du bist momentan nicht in der Lage dich zu bewegen!", 1, 1, null, true, false, false);
-        itemList.add(strick);
-
         machete = weaponizeItem(createItem(Material.IRON_SWORD, ChatColor.GRAY + "Pazifisten-Machete", 1, 1, null, true, false, false), 4, 0.1, EquipmentSlot.HAND);
         itemList.add(machete);
 
@@ -170,10 +189,10 @@ public class Items {
         cookie = createItem(Material.COOKIE, "§6Cookie", 1, 16, null, false, false, false);
         itemList.add(cookie);
 
+//Win condition
         stairway_heaven = createItem(Material.QUARTZ_STAIRS, ChatColor.LIGHT_PURPLE + "Stairway to heaven", 1, 1, null, true, false, false);
         itemList.add(stairway_heaven);
 
-//Win condition
         //nukes
         nuke = createItem(Material.TNT, "§4Atombombe", 1, 1, null, true, false, false);
         itemList.add(nuke);
@@ -300,11 +319,14 @@ public class Items {
         bound_peilsender = createItem(Material.COMPASS, ChatColor.DARK_GRAY + "Peilsender", 1, 1, peilsender_lore, true, false, false);
         itemList.add(bound_peilsender);
 
-        kerze = createItem(Material.RED_CANDLE, ChatColor.RED + "Kerze", 1, 16, null, false, false, false);
+        kerze = createItem(Material.RED_CANDLE, ChatColor.RED + "Kerze", 1, 1, null, false, false, false);
         itemList.add(kerze);
 
         zehn_boehm_gutschein = createItem(Material.PAPER, ChatColor.WHITE + "10€ Böhms Gutschein", 1, 96, null, false, false, false);
         itemList.add(zehn_boehm_gutschein);
+
+        strick = createItem(Material.LEAD, ChatColor.BOLD + "" + ChatColor.DARK_RED + "Du bist momentan nicht in der Lage dich zu bewegen!", 2, 1, null, false, false, false);
+        itemList.add(strick);
 
 //Vapes
         vape_fruitberry = createItem(Material.PINK_CANDLE, ChatColor.LIGHT_PURPLE + "Vape Fruitberry Punch", 1, 1, null, false, false, false);
@@ -331,16 +353,29 @@ public class Items {
         vape_empty = createItem(Material.BLACK_CANDLE, ChatColor.WHITE + "Leere Vape", 1, 1, null, false, false, false);
         itemList.add(vape_empty);
 
-//Programming Utils
+//UI Items
         spacer = createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, " ", 20, 1, null, false, true, false);
         available_item = createItem(Material.LIME_STAINED_GLASS_PANE, ChatColor.GREEN + "Du kannst diese Quest abschließen!", 20, 1, null, false, false, false);
         not_available_item = createItem(Material.RED_STAINED_GLASS_PANE, ChatColor.DARK_RED + "Du kannst diese Quest noch nicht abschließen!", 20, 1, null, false, false, false);
         page_up = createItem(Material.ARROW, "§4Next Page", 21, 1, null, false, false, false);
         page_down = createItem(Material.ARROW, "§4Previous Page", 22, 1, null, false, false, false);
-        no_page_down = createItem(Material.BARRIER, "§4No previous Page available", 21, 1, null, false, false, false);
         no_page_up = createItem(Material.BARRIER, "§4No next Page available", 22, 1, null, false, false, false);
+        no_page_down = createItem(Material.BARRIER, "§4No previous Page available", 21, 1, null, false, false, false);
         placeholder = createItem(Material.STRUCTURE_VOID, "§5§l§kA§r§7 PLACEHOLDER §r§5§l§kA", 1, 1, null, true, false, false);
         itemList.add(placeholder);
+        //startGUI
+        start_game = createItem(Material.LIME_CONCRETE, "§aSpiel starten", 1, 1, null, false, false, false);
+        player_count_display = createItem(Material.PLAYER_HEAD, "§eAktuelle Spieleranzahl", 1, 64, null, false, false, false);
+
+        ArrayList<String> gamemode_classic_lore = new ArrayList<String>();
+        gamemode_classic_lore.add("§2-> Klassischer Modus");
+        gamemode_classic_lore.add("§7... more comming soon (maybe)™");
+        gamemode_classic = createItem(Material.KNOWLEDGE_BOOK, "§6Spielmodus: Klassisch", 1, 1, gamemode_classic_lore, false, false, false);
+        team_count = createItem(Material.OAK_SIGN, "§bAnzahl der Teams", 1, 64, null, false, false, false);
+
+        ArrayList<String> choose_teams_lore = new ArrayList<String>();
+        choose_teams_lore.add("May come if dev not too lazy");
+        choose_teams = createItem(Material.CHEST, "§bTeams auswählen", 1, 1, choose_teams_lore, false, false, false);
 
 //Ranzen
         ArrayList<String> ranzen_lore = new ArrayList<String>();
@@ -350,26 +385,27 @@ public class Items {
 
         nws_ranzen = createItem(Material.GREEN_WOOL, "§2Grüner Ranzen", 1, 1, ranzen_lore, false, false, false);
         itemList.add(nws_ranzen);
+        ranzenList.add(nws_ranzen);
+
         sprach_ranzen = createItem(Material.YELLOW_WOOL, "§6Gelber Ranzen", 1, 1, ranzen_lore, false, false, false);
         itemList.add(sprach_ranzen);
+        ranzenList.add(sprach_ranzen);
+
         sport_ranzen = createItem(Material.RED_WOOL, "§4Roter Ranzen", 1, 1, ranzen_lore, false, false, false);
         itemList.add(sport_ranzen);
-
-        Team.SPORTLER.ranzen = Items.sport_ranzen;
-        Team.SPRACHLER.ranzen = Items.sprach_ranzen;
-        Team.NWS.ranzen = Items.nws_ranzen;
+        ranzenList.add(sport_ranzen);
 
     }
 
 //Create item method
 
-    public static ItemStack createItem(Material material, String name, int id, int stackSize, List<String> lore, boolean glint, boolean hideTooltip, boolean hideAdditionalTooltip) {
+    public static ItemStack createItem(Material material, String name, int customModelData, int stackSize, List<String> lore, boolean glint, boolean hideTooltip, boolean hideAdditionalTooltip) {
 
         ItemStack genItem = new ItemStack(material);
         ItemMeta meta = genItem.getItemMeta();
 
         meta.setMaxStackSize(stackSize);
-        meta.setCustomModelData(id);
+        meta.setCustomModelData(customModelData);
         meta.setDisplayName(name);
         meta.setLore(lore);
         meta.setEnchantmentGlintOverride(glint);

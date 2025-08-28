@@ -34,17 +34,11 @@ public class TeamList extends BaseCommand {
     @Default
     public void onTeamListCommand(CommandSender commandSender) {
 
-        commandSender.sendMessage(ChatColor.GOLD + "§lSprachler:");
-        for (String playerName : Team.SPRACHLER.mitglieder) {
-            commandSender.sendMessage(ChatColor.GOLD + playerName);
-        }
-        commandSender.sendMessage(ChatColor.GREEN + "§lNaturwissenschaftler:");
-        for (String playerName : Team.NWS.mitglieder) {
-            commandSender.sendMessage(ChatColor.GREEN + playerName);
-        }
-        commandSender.sendMessage(ChatColor.DARK_RED + "§lSportler:");
-        for (String playerName : Team.SPORTLER.mitglieder) {
-            commandSender.sendMessage(ChatColor.DARK_RED + playerName);
+        for (Team team : Team.values()) {
+            commandSender.sendMessage(team.teamName + ":");
+            for (String playerName : team.mitglieder) {
+                commandSender.sendMessage(ChatColor.GOLD + playerName);
+            }
         }
     }
 }

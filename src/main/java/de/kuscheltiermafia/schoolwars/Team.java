@@ -19,7 +19,9 @@
 
 package de.kuscheltiermafia.schoolwars;
 
+import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
+import de.kuscheltiermafia.schoolwars.win_conditions.Ranzen;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -28,7 +30,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,32 +39,76 @@ import static de.kuscheltiermafia.schoolwars.win_conditions.Ranzen.ranzenAmount;
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
 public enum Team {
-    SPORTLER(ChatColor.DARK_RED + "sportler", ChatColor.DARK_RED + "[Sport] ", ChatColor.DARK_RED + "Sportler", new Location(Bukkit.getWorld("schoolwars"), 68.5, 80.0, 167.0, 90, 0)),
-    SPRACHLER(ChatColor.GOLD + "sprachler", ChatColor.GOLD + "[Sprache] ", ChatColor.GOLD + "Sprachler", new Location(Bukkit.getWorld("schoolwars"), -21.5, 88.0, 146.0, -90, 0)),
-    NWS(ChatColor.GREEN + "naturwissenschaftler", ChatColor.GREEN + "[NWS] ", ChatColor.GREEN + "Naturwissenschaftler", new Location(Bukkit.getWorld("schoolwars"), 4.5, 81.0, 191.5, 90, 0));
+    SPORTLER(ChatColor.DARK_RED + "sportler", ChatColor.DARK_RED + "[Sport] ", ChatColor.DARK_RED + "Sportler", new Location(Bukkit.getWorld("schoolwars"), 68.5, 80.0, 167.0, 90, 0), Items.sport_ranzen, Ranzen.SPORTLER),
+    SPRACHLER(ChatColor.GOLD + "sprachler", ChatColor.GOLD + "[Sprache] ", ChatColor.GOLD + "Sprachler", new Location(Bukkit.getWorld("schoolwars"), -21.5, 88.0, 146.0, -90, 0), Items.sprach_ranzen, Ranzen.SPRACHLER),
+    NWS(ChatColor.GREEN + "naturwissenschaftler", ChatColor.GREEN + "[NWS] ", ChatColor.GREEN + "Naturwissenschaftler", new Location(Bukkit.getWorld("schoolwars"), 4.5, 81.0, 191.5, 90, 0), Items.nws_ranzen, Ranzen.NWS);
+
+    public static int teamCount = 2;
+    public static boolean randomTeams = true;
 
     public final String teamName;
     public final String prefix;
     public final String joinMessage;
     public final Location spawn;
-
-    public ItemStack ranzen;
+    public final ItemStack ranzen_item;
+    public final Ranzen ranzen;
 
     public final ArrayList<String> mitglieder = new ArrayList<>();
     public double sekiRisk;
 
-    Team(String teamName, String prefix, String joinMessage, Location spawn) {
+    Team(String teamName, String prefix, String joinMessage, Location spawn, ItemStack ranzen_item, Ranzen ranzen) {
         this.teamName = teamName;
         this.prefix = prefix;
         this.joinMessage = joinMessage;
         this.spawn = spawn;
+        this.ranzen_item = ranzen_item;
+        this.ranzen = ranzen;
     }
 
 
-    public void readyPlayer(Player p){
-        p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist ein " + joinMessage);
+    public static void joinTeams(){
 
-        // Beispiel: Spieler einem Scoreboard-Team mit Prefix hinzufügen
+        int i = Bukkit.getOnlinePlayers().size();
+
+        List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
+        Collections.shuffle(players);
+
+        List<Integer> teamChoices = new ArrayList<>();
+        if(randomTeams) {   //Logic for random team choice; note that this is not the player assigning but the choice which teams will be played
+            for (int j = 0; j < Team.values().length; j++) {
+                teamChoices.add(j);
+            }
+            Collections.shuffle(teamChoices);
+        }else{}  //TODO: Logic for manual team choice
+
+
+        for (Player p : players) {
+            Team.values()[teamChoices.get(i % teamCount)].mitglieder.add(p.getName());
+            i--;
+        }
+
+
+    }
+
+    public static void prepare(){
+        for(Team team : Team.values()) {
+            for (String playerName : team.mitglieder) {
+                Player player = Bukkit.getPlayer(playerName);
+                team.readyPlayer(player);
+            }
+            team.sekiRisk = 0.0;
+        }
+    }
+
+    public void readyPlayer(Player p){
+
+        if (Math.random() == ProbabilityConfig.getProbability("message.wizard_harry", 0.05)){
+            p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist ein " + ChatColor.LIGHT_PURPLE + "Zauberer" + ChatColor.YELLOW + ", Harry");
+            p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Ne, warte... Falscher Text...");
+        }
+
+        p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist ein " + joinMessage + ", " + ChatColor.YELLOW + p.getName() + "!");
+
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
         org.bukkit.scoreboard.Team team = scoreboard.getTeam(this.teamName);
         if (team == null) team = scoreboard.registerNewTeam(this.teamName);
@@ -74,7 +119,7 @@ public enum Team {
         playerMirror.get(p.getName()).setTeam(this);
 
         if (!SchoolWars.gameStarted) {
-            p.getInventory().addItem(ranzen);
+            p.getInventory().addItem(ranzen_item);
             ranzenAmount.put(this, ranzenAmount.get(this) + 1);
             p.getInventory().addItem(Items.schulbuch1);
         }
@@ -85,39 +130,10 @@ public enum Team {
     }
 
 
-    public void prepare(){
-        for(String s : mitglieder){
-            Player p = Bukkit.getPlayer(s);
-            readyPlayer(p);
-        }
-        sekiRisk = 0.0;
-    }
-
-    public static void joinTeams(){
-
-        int i = Bukkit.getOnlinePlayers().size();
-
-        List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
-        Collections.shuffle(players);
-
-        for (Player p : players) {
-            if (i % 3 == 0) {
-                SPRACHLER.mitglieder.add(p.getName());
-            } else if (i % 3 == 1) {
-                NWS.mitglieder.add(p.getName());
-            } else {
-                SPORTLER.mitglieder.add(p.getName());
-            }
-            i--;
-        }
-
-    }
-
     public static void clearTeams(){
-        if (SPRACHLER.mitglieder != null) {
-            SPRACHLER.mitglieder.clear();
-            NWS.mitglieder.clear();
-            SPORTLER.mitglieder.clear();
+        for (Team team : Team.values()) {
+            team.mitglieder.clear();
+            team.sekiRisk = 0.0;
         }
     }
 
