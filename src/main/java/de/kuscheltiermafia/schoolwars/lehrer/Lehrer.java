@@ -197,4 +197,12 @@ public enum Lehrer {
 
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public boolean isMale() {
+        return isMale;
+    }
+
 }

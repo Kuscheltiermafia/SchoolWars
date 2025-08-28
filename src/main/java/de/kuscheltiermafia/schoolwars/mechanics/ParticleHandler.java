@@ -53,7 +53,7 @@ public class ParticleHandler {
         }
     }
 
-    public void drawParticleLine(Location start, Location end, Particle particle, double spacing) {
+    public static void drawParticleLine(Location start, Location end, Particle particle, double spacing) {
         double distance = start.distance(end);
         int points = (int) (distance / spacing);
         double dx = (end.getX() - start.getX()) / points;

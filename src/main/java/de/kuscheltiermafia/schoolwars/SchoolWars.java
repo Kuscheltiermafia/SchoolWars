@@ -27,8 +27,8 @@ import de.kuscheltiermafia.schoolwars.mechanics.*;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.lehrer.LehrerQuests;
 import de.kuscheltiermafia.schoolwars.lehrer.SekretariatStundenplan;
+import de.kuscheltiermafia.schoolwars.win_conditions.AtombombeBossfight;
 import de.kuscheltiermafia.schoolwars.win_conditions.events_atombombe.AtombombeEvents;
-import de.kuscheltiermafia.schoolwars.win_conditions.BossWaves;
 import de.kuscheltiermafia.schoolwars.win_conditions.Ranzen;
 import de.kuscheltiermafia.schoolwars.win_conditions.events_atombombe.BaarsKaffee;
 import de.kuscheltiermafia.schoolwars.win_conditions.events_atombombe.Fluor;
@@ -105,8 +105,6 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new SekretariatStundenplan(), this);
         pluginManager.registerEvents(new FischersSpielzeug(), this);
         pluginManager.registerEvents(new DialogueHandler(), this);
-        pluginManager.registerEvents(new BossWaves(), this);
-        pluginManager.registerEvents(new RanzenEvents(), this);
         pluginManager.registerEvents(new DisableProfessions(), this);
         pluginManager.registerEvents(new FachraumSchluessel(), this);
         pluginManager.registerEvents(new VornbergerEvents(), this);
@@ -116,6 +114,8 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new Vapes(), this);
         pluginManager.registerEvents(new StartGame(), this);
         pluginManager.registerEvents(new ManageFoodLevel(), this);
+        pluginManager.registerEvents(new AtombombeBossfight(), this);
+        pluginManager.registerEvents(new RanzenEvents(), this);
 
         PaperCommandManager manager = new PaperCommandManager(this);
         manager.registerCommand(new Debug());

@@ -29,6 +29,7 @@ import de.kuscheltiermafia.schoolwars.lehrer.*;
 import de.kuscheltiermafia.schoolwars.mechanics.Intro;
 import de.kuscheltiermafia.schoolwars.mechanics.PlayerStun;
 import de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer;
+import de.kuscheltiermafia.schoolwars.win_conditions.AtombombeBossfight;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -234,7 +235,7 @@ public class Debug extends BaseCommand {
                 for (Lehrer lehrer : Stundenplan.studenplan.keySet()) {
                     p.sendMessage(debugPrefix + lehrer.name() + " -> " + Stundenplan.studenplan.get(lehrer).name());
                 }
-            }else {
+            } else {
                 p.sendMessage(debugPrefix + "Game has not started yet!");
             }
         }
@@ -245,7 +246,7 @@ public class Debug extends BaseCommand {
             if (SchoolWars.gameStarted) {
                 Stundenplan.updateStundenplan(true);
                 p.sendMessage(debugPrefix + "Sucessfully updated Stundenplan!");
-            }else  {
+            } else {
                 p.sendMessage(debugPrefix + "Game has not started yet!");
             }
         }
@@ -256,9 +257,19 @@ public class Debug extends BaseCommand {
             if (SchoolWars.gameStarted) {
                 p.openInventory(SekretariatStundenplan.createStundenplan(0));
                 p.sendMessage(debugPrefix + "Opened Stundenplan!");
-            }else  {
+            } else {
                 p.sendMessage(debugPrefix + "Game has not started yet!");
             }
+        }
+    }
+
+    @Subcommand("bossfight")
+    @CommandPermission("schoolwars.debug.bossfight")
+    public class onBossfightCommand extends BaseCommand {
+        @Subcommand("start")
+        public static void onBossfightStartCommand(CommandSender sender) {
+            AtombombeBossfight.startBossfight();
+            sender.sendMessage(debugPrefix + "Started bossfight!");
         }
     }
 
@@ -266,7 +277,7 @@ public class Debug extends BaseCommand {
     @CommandPermission("schoolwars.debug.intro")
     public static void onIntroCommand(CommandSender sender) {
         Intro.introScene((Player) sender);
-        sender.sendMessage(debugPrefix + "Started intro sequence!");
+        sender.sendMessage(Debug.debugPrefix + "Started intro sequence!");
     }
 
     @Subcommand("fly")

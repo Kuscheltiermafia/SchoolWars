@@ -95,6 +95,7 @@ public class Minasisierung implements Listener {
             try {
                 if (e.getItem().equals(Items.kerze)) {
                     e.setCancelled(true);
+                    p.getInventory().removeItem(Items.kerze);
                     if(!currentAutism.containsKey(p)) {
                         currentAutism.put(p, 0);
                     }
@@ -107,6 +108,7 @@ public class Minasisierung implements Listener {
 
                         ParticleHandler.createParticleCircle(p.getLocation().add(0, 1, 0), Particle.END_ROD, 1, 45);
 
+                        PlayerStun.stunPlayer(p, 2, false);
                         new BukkitRunnable() {
                             @Override
                             public void run() {
