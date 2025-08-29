@@ -31,7 +31,7 @@ public class Aufsicht implements Listener {
 
     @EventHandler
     public void onPlayerHit(EntityDamageByEntityEvent e) {
-        if(e.getDamager() instanceof Player) {
+        if(e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             playerMirror.get(e.getDamager().getName()).setCombat(true);
         }
     }

@@ -23,6 +23,7 @@ import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.Team;
 import de.kuscheltiermafia.schoolwars.win_conditions.Ranzen;
 import io.github.realMorgon.sunriseLib.Message;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
@@ -43,6 +44,11 @@ public class PlayerDeath implements Listener {
 
     @EventHandler
     public void onNaturalDeath(EntityDamageEvent event) {
+
+        if (!(event.getEntity() instanceof Player)){
+            return;
+        }
+
         if (!SchoolWars.gameStarted) {
             event.setCancelled(true);
             return;
@@ -63,6 +69,10 @@ public class PlayerDeath implements Listener {
 
     @EventHandler
     public void onDamageByEntity(EntityDamageByEntityEvent e){
+
+        if (!(e.getEntity() instanceof Player)){
+            return;
+        }
 
         if (!SchoolWars.gameStarted) {
             e.setCancelled(true);
