@@ -122,6 +122,8 @@ public final class SchoolWars extends JavaPlugin {
         manager.registerCommand(new EndCommand());
         manager.registerCommand(new ItemList());
         manager.registerCommand(new SläschRechtsklick());
+        manager.registerCommand(new TeamList());
+        manager.registerCommand(new BuildModeCommand());
 //        manager.registerCommand(new StartCommand());
 
         //This needs to work with command blocks

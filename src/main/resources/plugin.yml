@@ -1,19 +1,33 @@
 name: SchoolWars
 version: '${project.version}'
 main: de.kuscheltiermafia.schoolwars.SchoolWars
-api-version: '1.21'
+api-version: '1.21.10'
 commands:
   start:
     description: Starts the game
-  clearTeams:
-    description: clears all teams
-  itemlist:
-    description: opens a list with all items
-  teamlist:
-    description: lists all players in the teams
-  debug:
-    description: Debug commands
-  end:
-    description: Ends the game
-  rechtsklick:
-    description: Du machst Släsch Rechtsklick
+    #for more commands see the commands package and the @Description annotations
+permissions:
+  schoolwars.debug:
+    description: Allows use of debug commands
+    default: op
+  schoolwars.debug.autism:
+    description: Allows use of autism debug commands
+    default: op
+  schoolwars.debug.revive:
+    description: Allows use of revive debug command
+    default: op
+  schoolwars.debug.rep:
+    description: Allows use of rep debug command
+    default: op
+  schoolwars.debug.lehrer:
+    description: Allows use of lehrer debug command
+    default: op
+  schoolwars.command.end:
+    description: Allows use of end command
+    default: op
+  schoolwars.command.itemlist:
+    description: Allows use of itemlist command
+    default: true
+  schoolwars.buildmode:
+    description: Allows building in the game area
+    default: op

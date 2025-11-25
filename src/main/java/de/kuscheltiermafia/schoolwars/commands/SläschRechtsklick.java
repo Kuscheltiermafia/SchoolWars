@@ -3,12 +3,14 @@ package de.kuscheltiermafia.schoolwars.commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
+import co.aikar.commands.annotation.Description;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @CommandAlias("rechtsklick")
+@Description("Du machst Släsch Rechtsklick.")
 public class SläschRechtsklick extends BaseCommand {
 
     @Default

@@ -20,10 +20,7 @@
 package de.kuscheltiermafia.schoolwars.commands;
 
 import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandCompletion;
-import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Default;
+import co.aikar.commands.annotation.*;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -38,6 +35,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 
 @CommandAlias("itemlist")
+@Description("Öffnet die Itemliste.")
 public class ItemList extends BaseCommand {
 
     public static HashMap<Player, Integer> itemListPage = new HashMap<Player, Integer>();
@@ -45,7 +43,7 @@ public class ItemList extends BaseCommand {
     public static int[] spacers = new int[]{3, 4, 5, 6, 7, 8, 9, 18, 27, 36, 45, 17, 26, 35, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53};
 
     @Default
-    @CommandPermission("schoolwars.itemlist")
+    @CommandPermission("schoolwars.command.itemlist")
     public void onCommand(CommandSender sender) {
 
         if(sender instanceof Player) {

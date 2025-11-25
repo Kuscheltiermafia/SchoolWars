@@ -22,6 +22,7 @@ package de.kuscheltiermafia.schoolwars.commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
+import co.aikar.commands.annotation.Description;
 import de.kuscheltiermafia.schoolwars.Team;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -29,6 +30,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 @CommandAlias("teamlist")
+@Description("Zeigt die Mitglieder aller Teams an.")
 public class TeamList extends BaseCommand {
 
     @Default
