@@ -121,7 +121,7 @@ public enum Ranzen {
         ranzen_display.setBlock(Bukkit.createBlockData(ranzen.ranzenMaterial));
 
         ranzen_display.setCustomName(ranzen.ranzenName);
-        ranzen_display.setCustomNameVisible(true);
+        ranzen_display.setCustomNameVisible(false);
 
         ranzen_display.setDisplayHeight(0.9f);
         ranzen_display.setDisplayWidth(0.9f);

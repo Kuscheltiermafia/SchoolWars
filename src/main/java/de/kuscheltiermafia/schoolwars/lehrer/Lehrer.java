@@ -140,7 +140,7 @@ public enum Lehrer {
         }else{
             currentLehrer.setCustomName("Frau " + name);
         }
-        currentLehrer.setCustomNameVisible(true);
+        currentLehrer.setCustomNameVisible(false);
         currentLehrer.setVillagerType(type);
         currentLehrer.setAI(hasAI);
         currentLehrer.setInvulnerable(true);
