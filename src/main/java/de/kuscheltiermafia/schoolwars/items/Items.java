@@ -39,17 +39,40 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Central registry and factory for all custom items in SchoolWars.
+ * <p>
+ * This class manages all game items including weapons, support items, win condition items,
+ * miscellaneous items, vapes, UI elements, and team backpacks (Ranzen).
+ * Items are initialized once during plugin startup via {@link #initItems()}.
+ * </p>
+ * <p>
+ * The class also provides utility methods for:
+ * <ul>
+ *   <li>Creating custom items with specific properties</li>
+ *   <li>Adding weapon attributes to items</li>
+ *   <li>Spawning items as entities in the world</li>
+ * </ul>
+ * </p>
+ */
 public class Items {
 
+    /** List of all registered game items for the item list GUI. */
     public static ArrayList<ItemStack> itemList = new ArrayList<ItemStack>();
+    
+    /** Map linking Interaction entities to their corresponding Item entities for pickups. */
     public static HashMap<Interaction, Item> itemHitboxes = new HashMap<>();
 
+    /** List of all team backpack items. */
     public static ArrayList<ItemStack> ranzenList = new ArrayList<ItemStack>();
 
+    /** Namespaced key for damage attribute modifications. */
     public static NamespacedKey dmgAttributeKey = new NamespacedKey(SchoolWars.getPlugin(), "attribute_key_dmg");
+    
+    /** Namespaced key for attack speed attribute modifications. */
     public static NamespacedKey spdAttributeKey = new NamespacedKey(SchoolWars.getPlugin(), "attribute_key_spd");
 
-    //Waffen
+    // ==================== Weapon Items ====================
 
     public static ItemStack minas_flasche;
     public static ItemStack buffed_minas_flasche;
@@ -61,14 +84,21 @@ public class Items {
     public static ItemStack xlr_kabel;
     public static ItemStack attack_stuhl;
     public static ItemStack buffed_stuhl;
+    /** Pacifist machete - a non-lethal weapon. */
     public static ItemStack machete;
 
-//Support
+    // ==================== Support Items ====================
+    
+    /** Cooling pack for healing teammates. */
     public static ItemStack kuehlpack;
+    
+    /** Liver cheese food item. */
     public static ItemStack leberkaese;
+    
+    /** Cookie food item. */
     public static ItemStack cookie;
 
-//Win condition
+    // ==================== Win Condition Items ====================
     public static ItemStack stairway_heaven;
     //nukes
     public static ItemStack nuke;
@@ -82,9 +112,10 @@ public class Items {
     public static ItemStack verbrannte_bohnen;
     public static ItemStack keks;
     public static ItemStack aquatisiertes_fluor;
+    /** Sodium fluoride for atomic bomb crafting. */
     public static ItemStack natrium_fluorid;
 
-//Miscellaneous
+    // ==================== Miscellaneous Items ====================
     public static ItemStack moritz_hut;
     public static ItemStack kaputtes_ipad;
     public static ItemStack ipad;
@@ -106,9 +137,10 @@ public class Items {
     public static ItemStack peilsender;
     public static ItemStack bound_peilsender;
     public static ItemStack kerze;
+    /** 10€ Böhm's gift voucher item. */
     public static ItemStack zehn_boehm_gutschein;
 
-    //Vapes
+    // ==================== Vape Items ====================
     public static ItemStack vape_fruitberry;
     public static ItemStack vape_arschwasser;
     public static ItemStack vape_strawberry;
@@ -116,9 +148,10 @@ public class Items {
     public static ItemStack vape_triple;
     public static ItemStack vape_arabics;
     public static ItemStack vape_air;
+    /** Empty vape item. */
     public static ItemStack vape_empty;
 
-    //UI Items
+    // ==================== UI Items ====================
     public static ItemStack strick;
     public static ItemStack spacer;
     public static ItemStack available_item;
@@ -133,16 +166,25 @@ public class Items {
     public static ItemStack player_count_display;
     public static ItemStack gamemode_classic;
     public static ItemStack team_count;
+    /** Team selection button for start GUI. */
     public static ItemStack choose_teams;
 
-//Ranzen
+    // ==================== Team Backpack (Ranzen) Items ====================
     public static ItemStack nws_ranzen;
     public static ItemStack sprach_ranzen;
+    /** Sports team red backpack. */
     public static ItemStack sport_ranzen;
 
+    /**
+     * Initializes all game items.
+     * <p>
+     * This method creates and registers all custom items used in the game.
+     * Should be called once during plugin startup.
+     * </p>
+     */
     public static void initItems() {
 
-//Waffen
+        // ==================== Initialize Weapon Items ====================
         minas_flasche = weaponizeItem(createItem(Material.GLASS_BOTTLE, "§4Minas' Flasche", 1, 1, null, false, false, false), 3, 1, EquipmentSlot.HAND);
         itemList.add(minas_flasche);
 
@@ -176,7 +218,7 @@ public class Items {
         machete = weaponizeItem(createItem(Material.IRON_SWORD, ChatColor.GRAY + "Pazifisten-Machete", 1, 1, null, true, false, false), 4, 0.1, EquipmentSlot.HAND);
         itemList.add(machete);
 
-//Support
+        // ==================== Initialize Support Items ====================
         ArrayList<String> kuehlpack_lore = new ArrayList<String>();
         kuehlpack_lore.add("§7Kühle hiermit die Verletzungen");
         kuehlpack_lore.add("§7deiner Mitstreiter und hilf ihnen so.");
@@ -189,7 +231,7 @@ public class Items {
         cookie = createItem(Material.COOKIE, "§6Cookie", 1, 16, null, false, false, false);
         itemList.add(cookie);
 
-//Win condition
+        // ==================== Initialize Win Condition Items ====================
         stairway_heaven = createItem(Material.QUARTZ_STAIRS, ChatColor.LIGHT_PURPLE + "Stairway to heaven", 1, 1, null, true, false, false);
         itemList.add(stairway_heaven);
 
@@ -234,7 +276,7 @@ public class Items {
         itemList.add(natrium_fluorid);
 
 
-//Miscellaneous
+        // ==================== Initialize Miscellaneous Items ====================
         ArrayList<String> moritz_hut_lore = new ArrayList<String>();
         moritz_hut_lore.add("§7Dieses Item representiert die Stärke");
         moritz_hut_lore.add("§7und Macht unseres Schulleiters Morgon!");
@@ -325,7 +367,7 @@ public class Items {
         zehn_boehm_gutschein = createItem(Material.PAPER, ChatColor.WHITE + "10€ Böhms Gutschein", 1, 96, null, false, false, false);
         itemList.add(zehn_boehm_gutschein);
 
-//Vapes
+        // ==================== Initialize Vape Items ====================
         vape_fruitberry = createItem(Material.PINK_CANDLE, ChatColor.LIGHT_PURPLE + "Vape Fruitberry Punch", 1, 1, null, false, false, false);
         itemList.add(vape_fruitberry);
 
@@ -350,7 +392,7 @@ public class Items {
         vape_empty = createItem(Material.BLACK_CANDLE, ChatColor.WHITE + "Leere Vape", 1, 1, null, false, false, false);
         itemList.add(vape_empty);
 
-//UI Items
+        // ==================== Initialize UI Items ====================
         strick = createItem(Material.LEAD, ChatColor.BOLD + "" + ChatColor.DARK_RED + "Du bist momentan nicht in der Lage dich zu bewegen!", 2, 1, null, false, false, false);
         spacer = createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, " ", 20, 1, null, false, true, false);
         available_item = createItem(Material.LIME_STAINED_GLASS_PANE, ChatColor.GREEN + "Du kannst diese Quest abschließen!", 20, 1, null, false, false, false);
@@ -375,7 +417,7 @@ public class Items {
         choose_teams_lore.add("May come if dev not too lazy");
         choose_teams = createItem(Material.CHEST, "§bTeams auswählen", 1, 1, choose_teams_lore, false, false, false);
 
-//Ranzen
+        // ==================== Initialize Team Backpack Items ====================
         ArrayList<String> ranzen_lore = new ArrayList<String>();
         ranzen_lore.add("§7- Dies ist dein Ranzen -");
         ranzen_lore.add("§7Beschütze und verstecke ihn");
@@ -395,8 +437,21 @@ public class Items {
 
     }
 
-//Create item method
+    // ==================== Item Creation Utility Methods ====================
 
+    /**
+     * Creates a custom ItemStack with specified properties.
+     *
+     * @param material the material type for the item
+     * @param name the display name of the item
+     * @param customModelData custom model data for resource pack textures
+     * @param stackSize maximum stack size for this item
+     * @param lore list of lore lines, or null for no lore
+     * @param glint whether the item should have an enchantment glint
+     * @param hideTooltip whether to hide the entire tooltip
+     * @param hideAdditionalTooltip whether to hide additional tooltip info
+     * @return the created ItemStack
+     */
     public static ItemStack createItem(Material material, String name, int customModelData, int stackSize, List<String> lore, boolean glint, boolean hideTooltip, boolean hideAdditionalTooltip) {
 
         ItemStack genItem = new ItemStack(material);
@@ -417,6 +472,15 @@ public class Items {
         return genItem;
     }
 
+    /**
+     * Adds weapon attributes (damage and attack speed) to an item.
+     *
+     * @param item the item to modify
+     * @param damage the attack damage value
+     * @param attackSpeed the attack speed value
+     * @param slot the equipment slot where the attributes apply
+     * @return the modified item with weapon attributes
+     */
     public static ItemStack weaponizeItem(ItemStack item, double damage, double attackSpeed, EquipmentSlot slot) {
 
         ItemMeta meta = item.getItemMeta();
@@ -431,6 +495,16 @@ public class Items {
         return item;
     }
 
+    /**
+     * Spawns an item entity in the world with an invisible interaction hitbox for pickup detection.
+     * <p>
+     * The item is made persistent, invulnerable, and cannot be picked up normally.
+     * An Interaction entity is created at the same location to detect player interactions.
+     * </p>
+     *
+     * @param item the ItemStack to spawn
+     * @param loc the location to spawn the item at
+     */
     public static void createItemsEntity(ItemStack item, Location loc) {
         Block b = loc.getBlock();
 
@@ -447,6 +521,12 @@ public class Items {
         itemHitboxes.put(itemHitbox, itemEntity);
     }
 
+    /**
+     * Removes all spawned item entities and their hitboxes from the world.
+     * <p>
+     * Should be called when ending a game to clean up the world.
+     * </p>
+     */
     public static void clearSpawnedItems() {
         for (Interaction interaction : itemHitboxes.keySet()) {
             Item itemEntity = itemHitboxes.get(interaction);

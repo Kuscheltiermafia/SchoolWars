@@ -27,7 +27,22 @@ import java.util.ArrayList;
 
 import static de.kuscheltiermafia.schoolwars.SchoolWars.WORLD;
 
-
+/**
+ * Defines all physical areas/rooms within the school game world.
+ * <p>
+ * Each area represents a specific location with:
+ * <ul>
+ *   <li>Bounding box coordinates (min and max corners)</li>
+ *   <li>A spawn position for teachers</li>
+ *   <li>Maximum number of teachers that can occupy the area</li>
+ *   <li>Room type classification for teacher assignment</li>
+ * </ul>
+ * </p>
+ * <p>
+ * Areas are used by the scheduling system to determine where teachers should spawn
+ * and to detect which players are in specific locations.
+ * </p>
+ */
 public enum Area {
 
     NEUER_MUSIKSAAL("Neuer Musiksaal", new Location(WORLD, 43.0, 79.0, 187.0), new Location(WORLD, 57.0, 85.0, 200.0), new Location(WORLD, 46.0, 80.0, 199.0), 1, Raum.MUSIK),
@@ -73,11 +88,22 @@ public enum Area {
     PAUSENHOF("Pausenhof", new Location(WORLD, -34.0, 77.0, 160.0), new Location(WORLD, 42.0, 84.0, 185.0), new Location(WORLD, -15.0, 80, 175.0), 1, Raum.GENERAL);
 
 
+    /** Display name of the area. */
     final String name;
+    
+    /** Minimum coordinate corner of the bounding box. */
     final Location minCoord;
+    
+    /** Maximum coordinate corner of the bounding box. */
     final Location maxCoord;
+    
+    /** Spawn location for teachers in this area. */
     final Location lehrerSpawnPos;
+    
+    /** Maximum number of teachers that can be assigned to this area. */
     final int maxLehrerAmount;
+    
+    /** Room type classification for this area. */
     public final Raum raum;
 
     Area(String name, Location minCoord, Location maxCoord, Location lehrerSpawnPos, int maxLehrerAmount, Raum raum) {
@@ -89,7 +115,11 @@ public enum Area {
         this.raum = raum;
     }
 
-
+    /**
+     * Gets all players currently within this area's bounding box.
+     *
+     * @return list of players in this area
+     */
     public ArrayList<Player> getPlayersInArea() {
         ArrayList<Player> playersInArea = new ArrayList<>();
 
@@ -103,6 +133,12 @@ public enum Area {
         return playersInArea;
     }
 
+    /**
+     * Finds the area that contains a specific location.
+     *
+     * @param location the location to check
+     * @return the Area containing the location, or null if not in any defined area
+     */
     public static Area getAreaByLocation(Location location) {
         for (Area area : Area.values()) {
             if (location.getX() >= area.minCoord.getX() && location.getY() >= area.minCoord.getY() && location.getZ() >= area.minCoord.getZ()) {
@@ -114,6 +150,16 @@ public enum Area {
         return null;
     }
 
+    /**
+     * Gets all players within a custom bounding box.
+     * <p>
+     * This static method allows checking arbitrary areas not defined as Area enums.
+     * </p>
+     *
+     * @param minLoc minimum corner of the bounding box
+     * @param maxLoc maximum corner of the bounding box
+     * @return list of players within the specified bounds
+     */
     public static ArrayList<Player> getPlayersInArea(Location minLoc, Location maxLoc) {
         ArrayList<Player> playersInArea = new ArrayList<>();
 
@@ -130,6 +176,11 @@ public enum Area {
         return playersInArea;
     }
 
+    /**
+     * Gets the display name of this area.
+     *
+     * @return the area's name
+     */
     public String getName() {
         return name;
     }
