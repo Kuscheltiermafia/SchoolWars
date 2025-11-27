@@ -37,13 +37,27 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
+/**
+ * Command that opens a paginated GUI displaying all game items.
+ * <p>
+ * This command allows administrators to browse all available items in the game.
+ * The GUI supports pagination for navigating through large item lists.
+ * </p>
+ */
 @CommandAlias("itemlist")
 public class ItemList extends BaseCommand {
 
+    /** Tracks the current page each player is viewing. */
     public static HashMap<Player, Integer> itemListPage = new HashMap<Player, Integer>();
 
+    /** Slot indices used for spacer items in the GUI. */
     public static int[] spacers = new int[]{3, 4, 5, 6, 7, 8, 9, 18, 27, 36, 45, 17, 26, 35, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53};
 
+    /**
+     * Opens the item list GUI for the player.
+     *
+     * @param sender the command sender (must be a player)
+     */
     @Default
     @CommandPermission("schoolwars.itemlist")
     public void onCommand(CommandSender sender) {
@@ -61,6 +75,13 @@ public class ItemList extends BaseCommand {
         }
     }
 
+    /**
+     * Populates the item list inventory with items for the specified page.
+     *
+     * @param itemList the inventory to fill
+     * @param currentPage the page number to display (0-indexed)
+     * @param user the player viewing the inventory
+     */
     public static void fillItemlist(Inventory itemList, int currentPage, Player user) {
 
         int pageModi = 28 * (currentPage);

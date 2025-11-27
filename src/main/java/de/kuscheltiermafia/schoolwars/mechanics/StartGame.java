@@ -20,11 +20,38 @@ import org.bukkit.inventory.ItemStack;
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 import static de.kuscheltiermafia.schoolwars.SchoolWars.WORLD;
 
+/**
+ * Handles the game start menu GUI and game initialization.
+ * <p>
+ * This class provides:
+ * <ul>
+ *   <li>A GUI for configuring and starting games</li>
+ *   <li>Team count adjustment</li>
+ *   <li>Game initialization and player preparation</li>
+ * </ul>
+ * </p>
+ * <p>
+ * Only one player can have the start menu open at a time to prevent
+ * conflicting configurations.
+ * </p>
+ */
 public class StartGame implements Listener {
 
+    /** Whether the start menu is currently open. */
     public static boolean menuOpen = false;
+    
+    /** The player who currently has the menu open. */
     public static Player menuOpener;
 
+    /**
+     * Opens the game start GUI for a player.
+     * <p>
+     * If another player already has the menu open, the request is denied.
+     * </p>
+     *
+     * @param p the player to open the GUI for
+     * @param triggerByLeaveEvent whether this was triggered by a player leave event
+     */
     public static void openGUI(Player p, boolean triggerByLeaveEvent) {
 
         if(menuOpen && p != menuOpener) {
@@ -62,6 +89,11 @@ public class StartGame implements Listener {
 
     }
 
+    /**
+     * Handles the menu close event to reset menu state.
+     *
+     * @param e the inventory close event
+     */
     @EventHandler
     public static void onCloseMenu(InventoryCloseEvent e){
         if (!e.getView().getTitle().equals("Spiel starten")) return;
@@ -70,6 +102,12 @@ public class StartGame implements Listener {
         menuOpener = null;
     }
 
+    /**
+     * Handles clicks on the team count item to adjust the number of teams.
+     * Left-click increases, right-click decreases.
+     *
+     * @param e the inventory click event
+     */
     @EventHandler
     public static void onClickTeamCount(InventoryClickEvent e) {
         if (e.getView().getTitle() .equals("Spiel starten")) {
@@ -95,6 +133,11 @@ public class StartGame implements Listener {
         }
     }
 
+    /**
+     * Handles clicks on the start game button.
+     *
+     * @param e the inventory click event
+     */
     @EventHandler
     public static void onClickStart(InventoryClickEvent e) {
         if (e.getView().getTitle().equals("Spiel starten")) {
@@ -106,6 +149,21 @@ public class StartGame implements Listener {
         }
     }
 
+    /**
+     * Starts the SchoolWars game.
+     * <p>
+     * This method:
+     * <ul>
+     *   <li>Validates that the game can start</li>
+     *   <li>Clears existing game state</li>
+     *   <li>Initializes the class schedule and teachers</li>
+     *   <li>Assigns players to teams</li>
+     *   <li>Prepares all players for battle</li>
+     * </ul>
+     * </p>
+     *
+     * @return true if the game started successfully, false otherwise
+     */
     public static boolean start() {
 
         if (!Debug.startWorks || SchoolWars.gameStarted) {

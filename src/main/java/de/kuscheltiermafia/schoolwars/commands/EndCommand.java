@@ -24,8 +24,19 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import de.kuscheltiermafia.schoolwars.mechanics.EndGame;
 
+/**
+ * Command to end the current SchoolWars game.
+ * <p>
+ * Executing this command will immediately end any active game,
+ * resetting all players and cleaning up game entities.
+ * </p>
+ */
 @CommandAlias("end")
 public class EndCommand extends BaseCommand {
+    
+    /**
+     * Ends the current game when the command is executed.
+     */
     @Default
     public void onCommand() {
         EndGame.end();

@@ -44,13 +44,39 @@ import static de.kuscheltiermafia.schoolwars.lehrer.Lehrer.lehrerEntityList;
 import static de.kuscheltiermafia.schoolwars.lehrer.Lehrer.lehrerList;
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
+/**
+ * Debug command handler providing administrative and testing utilities.
+ * <p>
+ * This command provides various subcommands for:
+ * <ul>
+ *   <li>Testing game mechanics (autism, stun, bossfight)</li>
+ *   <li>Managing player state (revive, fly, verweise)</li>
+ *   <li>Viewing and modifying teacher data (rep, lehrer, stundenplan)</li>
+ *   <li>Toggling debug features (join messages, start command)</li>
+ *   <li>Getting location information</li>
+ * </ul>
+ * </p>
+ * <p>
+ * All subcommands require the "schoolwars.debug.*" permission unless otherwise specified.
+ * </p>
+ */
 @CommandAlias("debug")
 public class Debug extends BaseCommand {
 
+    /** List of players receiving join/leave debug messages. */
     public static ArrayList<Player> joinMsg = new ArrayList<>();
+    
+    /** Flag controlling whether the /start command is functional. */
     public static Boolean startWorks = true;
+    
+    /** Standard prefix for debug messages. */
     public static String debugPrefix = ChatColor.DARK_RED + "[!] " + ChatColor.GRAY;
 
+    /**
+     * Applies the "Minasisierung" (autism) effect to the sender.
+     *
+     * @param sender the command sender (must be a player)
+     */
     @Subcommand("autism")
     @CommandPermission("schoolwars.debug.autism")
     @CommandCompletion("autism")
@@ -59,6 +85,12 @@ public class Debug extends BaseCommand {
         sender.sendMessage(debugPrefix + "You now have autism!");
     }
 
+    /**
+     * Revives a player (self or specified target).
+     *
+     * @param sender the command sender (must be a player)
+     * @param playerName optional target player name; if null, revives self
+     */
     @Subcommand("revive")
     @CommandPermission("schoolwars.debug.revive")
     public static void onReviveCommand(CommandSender sender, @Name("player") @Optional String playerName){
@@ -73,6 +105,12 @@ public class Debug extends BaseCommand {
         }
     }
 
+    /**
+     * Gets and displays the location of the block the player is looking at.
+     * Provides a clickable message to copy coordinates to clipboard.
+     *
+     * @param sender the command sender (must be a player)
+     */
     @Subcommand("getloc")
     @CommandCompletion("getloc")
     public static void onGetLocCommand(CommandSender sender){
@@ -83,6 +121,13 @@ public class Debug extends BaseCommand {
         p.spigot().sendMessage(location);
     }
 
+    /**
+     * Gets a player's reputation with a specific teacher.
+     *
+     * @param sender the command sender
+     * @param lehrerName the name of the teacher to check
+     * @param playerName optional target player; if null, checks sender's reputation
+     */
     @Subcommand("rep")
     @CommandPermission("schoolwars.debug.rep")
     public static void onRepCommand(CommandSender sender, @Name("lehrer") String lehrerName, @Name("player") @Optional String playerName) {
@@ -105,10 +150,20 @@ public class Debug extends BaseCommand {
         }
     }
 
+    /**
+     * Subcommand group for teacher-related debug operations.
+     * Provides spawn, kill, and position update commands for teachers.
+     */
     @Subcommand("lehrer")
     @CommandPermission("schoolwars.debug.lehrer")
     public class onLehrerCommand extends BaseCommand {
 
+        /**
+         * Spawns a teacher at the player's location.
+         *
+         * @param sender the command sender
+         * @param lehrerName the name of the teacher to spawn
+         */
         @Subcommand("spawn")
         public static void onLehrerSpawnCommand(CommandSender sender, @Name("lehrer") String lehrerName) {
             Player p = (Player) sender;
@@ -123,6 +178,12 @@ public class Debug extends BaseCommand {
             }
         }
 
+        /**
+         * Removes a teacher or all teachers from the world.
+         *
+         * @param sender the command sender
+         * @param lehrerName the name of the teacher to remove, or "all" to remove all
+         */
         @Subcommand("kill")
         public static void onLehrerKillCommand(CommandSender sender, @Name("lehrer") String lehrerName) {
             Player p = (Player) sender;
@@ -140,16 +201,27 @@ public class Debug extends BaseCommand {
             }
         }
 
+        /**
+         * Forces an immediate update of all teacher positions.
+         */
         @Subcommand("position")
         public static void onLehrerPositionCommand() {
             Lehrer.updateLehrerPosition(true);
         }
     }
 
+    /**
+     * Subcommand group for toggling debug features.
+     */
     @Subcommand("toggle")
     @CommandPermission("schoolwars.debug.toggle")
     public class onToggleCommand extends BaseCommand {
 
+        /**
+         * Toggles whether the player receives join/leave debug messages.
+         *
+         * @param sender the command sender
+         */
         @Subcommand("join")
         public static void onToggleJoinCommand(CommandSender sender) {
             Player p = (Player) sender;
@@ -162,6 +234,11 @@ public class Debug extends BaseCommand {
             }
         }
 
+        /**
+         * Toggles whether the /start command is functional.
+         *
+         * @param sender the command sender
+         */
         @Subcommand("start")
         public static void onToggleStartCommand(CommandSender sender) {
             Player p = (Player) sender;
@@ -175,6 +252,14 @@ public class Debug extends BaseCommand {
         }
     }
 
+    /**
+     * Stuns a player, preventing movement for a duration.
+     *
+     * @param sender the command sender
+     * @param playerName the name of the player to stun
+     * @param duration the stun duration in seconds
+     * @param inGround whether to sink the player into the ground
+     */
     @Subcommand("stun")
     @CommandPermission("schoolwars.debug.stun")
     public static void onStunCommand(CommandSender sender, @Name("player") String playerName, @Name("duration") String duration, @Name("in-ground") String inGround) {
@@ -184,10 +269,20 @@ public class Debug extends BaseCommand {
         p.sendMessage(debugPrefix + "inGround: " + inGround);
     }
 
+    /**
+     * Subcommand group for managing player disciplinary warnings (Verweise).
+     */
     @Subcommand("verweise")
     @CommandPermission("schoolwars.debug.verweise")
     public class  onVerweiseCommand extends BaseCommand {
 
+        /**
+         * Adds warnings to a player.
+         *
+         * @param sender the command sender
+         * @param amount the number of warnings to add (can be negative)
+         * @param playerName optional target player; if null, applies to sender
+         */
         @Subcommand("add")
         public static void onVerweiseAddCommand(CommandSender sender, @Name("amount") String amount, @Name("player") @Optional String playerName) {
             Player p = (Player) sender;
@@ -206,6 +301,12 @@ public class Debug extends BaseCommand {
             }
         }
 
+        /**
+         * Gets the current warning count for a player.
+         *
+         * @param sender the command sender
+         * @param playerName optional target player; if null, shows sender's count
+         */
         @Subcommand("get")
         public static void onVerweiseGetCommand(CommandSender sender, @Name("player") @Optional String playerName) {
             Player p = (Player) sender;
@@ -223,10 +324,18 @@ public class Debug extends BaseCommand {
         }
     }
 
+    /**
+     * Subcommand group for class schedule (Stundenplan) management.
+     */
     @Subcommand("stundenplan")
     @CommandPermission("schoolwars.debug.stundenplan")
     public class onStundenplanCommand extends BaseCommand {
 
+        /**
+         * Displays the current class schedule.
+         *
+         * @param sender the command sender
+         */
         @Subcommand("get")
         public static void onStundenplanGetCommand(CommandSender sender) {
             Player p = (Player) sender;
@@ -240,6 +349,11 @@ public class Debug extends BaseCommand {
             }
         }
 
+        /**
+         * Forces an update of the class schedule.
+         *
+         * @param sender the command sender
+         */
         @Subcommand("update")
         public static void onStundenplanUpdateCommand(CommandSender sender) {
             Player p = (Player) sender;
@@ -251,6 +365,11 @@ public class Debug extends BaseCommand {
             }
         }
 
+        /**
+         * Opens the schedule viewer GUI.
+         *
+         * @param sender the command sender
+         */
         @Subcommand("view")
         public static void onStundenplanViewCommand(CommandSender sender) {
             Player p = (Player) sender;
@@ -263,9 +382,18 @@ public class Debug extends BaseCommand {
         }
     }
 
+    /**
+     * Subcommand group for boss fight control.
+     */
     @Subcommand("bossfight")
     @CommandPermission("schoolwars.debug.bossfight")
     public class onBossfightCommand extends BaseCommand {
+        
+        /**
+         * Starts the atomic bomb boss fight.
+         *
+         * @param sender the command sender
+         */
         @Subcommand("start")
         public static void onBossfightStartCommand(CommandSender sender) {
             AtombombeBossfight.startBossfight();
@@ -273,6 +401,11 @@ public class Debug extends BaseCommand {
         }
     }
 
+    /**
+     * Starts the intro cutscene for the sender.
+     *
+     * @param sender the command sender
+     */
     @Subcommand("intro")
     @CommandPermission("schoolwars.debug.intro")
     public static void onIntroCommand(CommandSender sender) {
@@ -280,6 +413,12 @@ public class Debug extends BaseCommand {
         sender.sendMessage(Debug.debugPrefix + "Started intro sequence!");
     }
 
+    /**
+     * Toggles flight mode for a player.
+     *
+     * @param sender the command sender
+     * @param player optional target player; if null, toggles for sender
+     */
     @Subcommand("fly")
     @CommandPermission("schoolwars.debug.fly")
     public static void onFlyCommand(CommandSender sender, @Name("player") @Optional String player) {
@@ -293,12 +432,22 @@ public class Debug extends BaseCommand {
         }
     }
 
+    /**
+     * Shows the location of the next schoolbook spawn.
+     *
+     * @param sender the command sender
+     */
     @Subcommand("schulbuch")
     @CommandPermission("schoolwars.debug.schulbuch")
-    public static void onFlyCommand(CommandSender sender) {
+    public static void onSchulbuchCommand(CommandSender sender) {
             sender.sendMessage(debugPrefix + "Next book location: " + SchulbuchLevels.currentBookshelfLoc.getX() + ", " + SchulbuchLevels.currentBookshelfLoc.getY() + ", " + SchulbuchLevels.currentBookshelfLoc.getZ());
     }
 
+    /**
+     * Reloads the probability configuration from disk.
+     *
+     * @param sender the command sender
+     */
     @Subcommand("rl-probs")
     @CommandPermission("schoolwars.debug.reload-probs")
     public static void onReloadProbabilitiesCommand(CommandSender sender) {
