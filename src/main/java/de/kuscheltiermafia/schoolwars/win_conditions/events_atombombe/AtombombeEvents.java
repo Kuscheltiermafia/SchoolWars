@@ -50,6 +50,13 @@ import java.util.*;
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
 
+/**
+ * Handles atomic bomb win condition events.
+ * <p>
+ * Manages the placement, countdown, and detonation of the nuclear device.
+ * Teams can win by placing a bomb and defending it until detonation.
+ * </p>
+ */
 public class AtombombeEvents implements Listener {
 
     static boolean nukePlaced = false;

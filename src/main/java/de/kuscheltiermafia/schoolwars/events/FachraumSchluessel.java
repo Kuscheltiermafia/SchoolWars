@@ -9,6 +9,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 
+/**
+ * Handles classroom key (Fachraum Schlüssel) interactions.
+ * <p>
+ * Allows players to use special keys to access locked classrooms
+ * or storage areas in the school.
+ * </p>
+ */
 public class FachraumSchluessel implements Listener {
 
     @EventHandler

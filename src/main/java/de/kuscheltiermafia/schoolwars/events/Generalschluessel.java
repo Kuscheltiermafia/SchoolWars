@@ -44,6 +44,13 @@ import java.util.Collections;
 import static de.kuscheltiermafia.schoolwars.SchoolWars.WORLD;
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
+/**
+ * Handles master key (Generalschlüssel) mechanics.
+ * <p>
+ * Allows players to use the master key to access restricted areas
+ * with a risk of triggering secretariat staff encounters.
+ * </p>
+ */
 public class Generalschluessel implements Listener {
 
     void summonSekritaerin(Location loc) {

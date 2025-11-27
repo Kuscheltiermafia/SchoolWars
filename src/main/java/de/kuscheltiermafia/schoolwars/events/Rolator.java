@@ -35,6 +35,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 
+/**
+ * Handles the Rollator (walker) vehicle item.
+ * <p>
+ * Allows players to ride a rollator for enhanced movement speed
+ * and mobility around the school.
+ * </p>
+ */
 public class Rolator implements Listener {
 
     private boolean BukkitRunnablesFicktEuch;

@@ -84,18 +84,11 @@ public class Items {
     public static ItemStack xlr_kabel;
     public static ItemStack attack_stuhl;
     public static ItemStack buffed_stuhl;
-    /** Pacifist machete - a non-lethal weapon. */
     public static ItemStack machete;
 
     // ==================== Support Items ====================
-    
-    /** Cooling pack for healing teammates. */
     public static ItemStack kuehlpack;
-    
-    /** Liver cheese food item. */
     public static ItemStack leberkaese;
-    
-    /** Cookie food item. */
     public static ItemStack cookie;
 
     // ==================== Win Condition Items ====================
@@ -112,7 +105,6 @@ public class Items {
     public static ItemStack verbrannte_bohnen;
     public static ItemStack keks;
     public static ItemStack aquatisiertes_fluor;
-    /** Sodium fluoride for atomic bomb crafting. */
     public static ItemStack natrium_fluorid;
 
     // ==================== Miscellaneous Items ====================
@@ -137,7 +129,6 @@ public class Items {
     public static ItemStack peilsender;
     public static ItemStack bound_peilsender;
     public static ItemStack kerze;
-    /** 10€ Böhm's gift voucher item. */
     public static ItemStack zehn_boehm_gutschein;
 
     // ==================== Vape Items ====================
@@ -148,7 +139,6 @@ public class Items {
     public static ItemStack vape_triple;
     public static ItemStack vape_arabics;
     public static ItemStack vape_air;
-    /** Empty vape item. */
     public static ItemStack vape_empty;
 
     // ==================== UI Items ====================
@@ -166,13 +156,11 @@ public class Items {
     public static ItemStack player_count_display;
     public static ItemStack gamemode_classic;
     public static ItemStack team_count;
-    /** Team selection button for start GUI. */
     public static ItemStack choose_teams;
 
     // ==================== Team Backpack (Ranzen) Items ====================
     public static ItemStack nws_ranzen;
     public static ItemStack sprach_ranzen;
-    /** Sports team red backpack. */
     public static ItemStack sport_ranzen;
 
     /**

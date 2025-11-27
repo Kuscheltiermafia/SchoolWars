@@ -24,6 +24,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Manages the atomic bomb boss fight encounter.
+ * <p>
+ * When players attempt to defuse the bomb, they must defeat "Herr Raithen"
+ * who spawns minion teachers in phases. Defeating the boss disarms the bomb.
+ * </p>
+ */
 public class AtombombeBossfight implements Listener {
 
     private static Location bossSpawnLocation = new Location(SchoolWars.WORLD, 13.0, 32.0, 180.0);

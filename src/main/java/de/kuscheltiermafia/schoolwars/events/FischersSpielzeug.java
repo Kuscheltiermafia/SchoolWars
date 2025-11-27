@@ -37,6 +37,13 @@ import java.util.HashMap;
 
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
+/**
+ * Handles Fischer's game item mechanics.
+ * <p>
+ * Manages the placement and behavior of Fischer's game pieces which
+ * can be used strategically on the map by teams.
+ * </p>
+ */
 public class FischersSpielzeug implements Listener {
 
     int fischerDauer = 60 * 20;

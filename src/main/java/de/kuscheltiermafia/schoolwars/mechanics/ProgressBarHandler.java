@@ -21,6 +21,13 @@ package de.kuscheltiermafia.schoolwars.mechanics;
 
 import org.bukkit.ChatColor;
 
+/**
+ * Utility class for creating text-based progress bars.
+ * <p>
+ * Displays progress using block characters (█) with customizable colors
+ * for completed and remaining portions.
+ * </p>
+ */
 public class ProgressBarHandler {
 
     public static int amountDone = 0;

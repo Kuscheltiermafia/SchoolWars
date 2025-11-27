@@ -30,6 +30,13 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * Handles cooling pack (Kühlpack) item mechanics.
+ * <p>
+ * Manages how players obtain and use cooling packs from item frames
+ * for healing purposes.
+ * </p>
+ */
 public class HandleKuehlpack implements Listener {
 
 //Give Kuehlpack to Player when he clicks on the Itemframe

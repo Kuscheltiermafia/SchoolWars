@@ -36,6 +36,14 @@ import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
 
+/**
+ * Provides an in-game GUI for viewing the current class schedule.
+ * <p>
+ * Players can access this schedule from a specific location in the secretariat
+ * to see which teachers are in which rooms. Supports pagination for large
+ * teacher lists.
+ * </p>
+ */
 public class SekretariatStundenplan implements Listener {
 
     private static int page = 0;

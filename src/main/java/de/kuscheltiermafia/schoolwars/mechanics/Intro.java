@@ -29,6 +29,14 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+/**
+ * Manages the intro cinematic sequence for new players.
+ * <p>
+ * Creates a multi-stage camera flythrough using invisible armor stands
+ * as camera positions. Players are set to spectator mode and shown
+ * title cards with credits and instructions.
+ * </p>
+ */
 public class Intro {
 
     public static void introScene(Player p) {

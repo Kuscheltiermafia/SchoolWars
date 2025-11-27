@@ -41,6 +41,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 
+/**
+ * Handles the "Minasisierung" effect (special ability).
+ * <p>
+ * Applies visual and gameplay effects to simulate a special state
+ * with camera distortions and movement modifications.
+ * </p>
+ */
 public class Minasisierung implements Listener {
 
     private static HashMap<Player, Integer> currentAutism = new HashMap<>();

@@ -23,6 +23,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Handles centrifuge interactions for uranium enrichment.
+ * <p>
+ * Players use the centrifuge to process materials needed
+ * for the atomic bomb crafting process.
+ * </p>
+ */
 public class Zentrifuge implements Listener {
 
     ArrayList<ItemStack> zentrifugeInventory = new ArrayList<>();

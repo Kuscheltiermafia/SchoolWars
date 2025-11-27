@@ -40,6 +40,14 @@ import org.bukkit.potion.PotionEffectType;
 import static de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer.playerBatMap;
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
+/**
+ * Handles player death mechanics in SchoolWars.
+ * <p>
+ * Instead of killing players normally, this system "downs" them by mounting
+ * them on an invisible bat and applying movement-restricting effects.
+ * Downed players must be revived by teammates.
+ * </p>
+ */
 public class PlayerDeath implements Listener {
 
     @EventHandler

@@ -42,6 +42,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashMap;
 
 
+/**
+ * Handles Karl's Elixir item effects.
+ * <p>
+ * When consumed, the elixir causes the player to shrink over time,
+ * enabling access to smaller spaces and alternate routes.
+ * </p>
+ */
 public class KarlElixier implements Listener {
 
     public int karlDauer = 60 * 20;

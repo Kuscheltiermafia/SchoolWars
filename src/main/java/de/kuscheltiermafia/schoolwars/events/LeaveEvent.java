@@ -1,3 +1,22 @@
+/**
+ * ███╗   ███╗ █████╗ ██████╗ ███████╗    ██████╗ ██╗   ██╗
+ * ████╗ ████║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗╚██╗ ██╔╝
+ * ██╔████╔██║███████║██║  ██║█████╗      ██████╔╝ ╚████╔╝
+ * ██║╚██╔╝██║██╔══██║██║  ██║██╔══╝      ██╔══██╗  ╚██╔╝
+ * ██║ ╚═╝ ██║██║  ██║██████╔╝███████╗    ██████╔╝   ██║
+ * ╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝ ╚══════╝    ╚═════╝    ╚═╝
+ *
+ * ██╗  ██╗██╗   ██╗███████╗ ██████╗██╗  ██╗███████╗██╗  ████████╗██╗███████╗██████╗ ███╗   ███╗ █████╗ ███████╗██╗ █████╗
+ * ██║ ██╔╝██║   ██║██╔════╝██╔════╝██║  ██║██╔════╝██║  ╚══██╔══╝██║██╔════╝██╔══██╗████╗ ████║██╔══██╗██╔════╝██║██╔══██╗
+ * █████╔╝ ██║   ██║███████╗██║     ███████║█████╗  ██║     ██║   ██║█████╗  ██████╔╝██╔████╔██║███████║█████╗  ██║███████║
+ * ██╔═██╗ ██║   ██║╚════██║██║     ██╔══██║██╔══╝  ██║     ██║   ██║██╔══╝  ██╔══██╗██║╚██╔╝██║██╔══██║██╔══╝  ██║██╔══██║
+ * ██║  ██╗╚██████╔╝███████║╚██████╗██║  ██║███████╗███████╗██║   ██║███████╗██║  ██║██║ ╚═╝ ██║██║  ██║██║     ██║██║  ██║
+ * ╚═╝  ╚═╝ ╚═════╝ ╚══════╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝   ╚═╝╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝
+ *
+ * This is a plugin from Morgon and CrAzyA22 - Unless explicitly stated otherwise you are not permitted to use any of the given code!
+ *
+ */
+
 package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
@@ -13,25 +32,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
-/**
- * Handles player leave events in SchoolWars.
- * <p>
- * When a player leaves, this class:
- * <ul>
- *   <li>Updates the player count</li>
- *   <li>Notifies debug message subscribers</li>
- *   <li>Ends the game if all players have left during an active game</li>
- *   <li>Updates the start menu if it's open</li>
- * </ul>
- * </p>
- */
 public class LeaveEvent implements Listener {
 
-    /**
-     * Handles a player leaving the server.
-     *
-     * @param e the player quit event
-     */
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent e){
         SchoolWars.setPlayerCount(SchoolWars.getPlayerCount() - 1);

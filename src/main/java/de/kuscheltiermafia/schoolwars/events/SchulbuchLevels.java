@@ -36,6 +36,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * Manages the schoolbook leveling and collection system.
+ * <p>
+ * Players can find and collect knowledge from bookshelves around the school,
+ * with locations cycling randomly to encourage exploration.
+ * </p>
+ */
 public class SchulbuchLevels implements Listener {
 
     public static HashMap<Player, Integer> knowledgeAquiered = new HashMap<Player, Integer>();
