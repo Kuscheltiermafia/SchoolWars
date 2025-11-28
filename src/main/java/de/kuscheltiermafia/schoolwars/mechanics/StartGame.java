@@ -166,39 +166,46 @@ public class StartGame implements Listener {
      */
     public static boolean start() {
 
+        // ========== Validate game can start ==========
         if (!Debug.startWorks || SchoolWars.gameStarted) {
             return false;
         }
 
-//reset
+        // ========== Reset existing game state ==========
         playerMirror.clear();
 
+        // Remove existing item entities
         try {
             for (Item item : WORLD.getEntitiesByClass(Item.class)) {
                 item.remove();
             }
         } catch (Exception ignored) {}
 
+        // Remove existing interaction entities
         try {
             for (Interaction interaction : WORLD.getEntitiesByClass(Interaction.class)) {
                 interaction.remove();
             }
         } catch (Exception ignored) {}
 
+        // Remove existing villager entities
         try {
             for (Villager villager : WORLD.getEntitiesByClass(Villager.class)) {
                 villager.remove();
             }
         }catch (Exception ignored) {}
 
-//prepare game
-
+        // ========== Initialize game systems ==========
+        
+        // Initialize class schedule and teacher positions
         Stundenplan.updateStundenplan(true);
         Stundenplan.updateStundenplan(false);
 
         Lehrer.updateLehrerPosition(false);
 
-//Set Playernames and ready them for battle
+        // ========== Prepare players ==========
+        
+        // Reset player names and clear teams
         Team.clearTeams();
         for (Player p : Bukkit.getOnlinePlayers()) {
             Team.resetPlayer(p);
@@ -208,17 +215,17 @@ public class StartGame implements Listener {
             p.getActivePotionEffects().clear();
         }
 
-//prepare player Mirrors
+        // Create player mirrors for tracking game state
         playerMirror.clear();
         for (Player p : Bukkit.getOnlinePlayers()) {
             playerMirror.put(p.getName(), new PlayerMirror(p.getName()));
         }
 
-//prepare Teams
+        // ========== Assign and prepare teams ==========
         Team.joinTeams();
         Team.prepare();
 
-//revive Player
+        // Ensure all players are alive
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (!playerMirror.get(p.getName()).isAlive()) {
                 RevivePlayer.revivePlayer(p, p);
