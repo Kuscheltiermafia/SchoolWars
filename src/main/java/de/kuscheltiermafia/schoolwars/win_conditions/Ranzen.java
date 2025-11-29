@@ -42,16 +42,34 @@ import java.util.HashMap;
 
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
-
+/**
+ * Represents team backpacks (Ranzen) that serve as the primary win condition.
+ * <p>
+ * Each team has backpacks that can be:
+ * <ul>
+ *   <li>Carried by team members</li>
+ *   <li>Placed in the world for safekeeping</li>
+ *   <li>Destroyed by enemy teams</li>
+ * </ul>
+ * </p>
+ * <p>
+ * When a team loses all their backpacks, they can no longer win through
+ * the standard win condition and must rely on alternative victory methods.
+ * </p>
+ */
 public enum Ranzen {
 
     SPRACHLER("§6Gelber Ranzen", Material.YELLOW_WOOL),
     SPORTLER("§4Roter Ranzen", Material.RED_WOOL),
     NWS("§2Grüner Ranzen", Material.GREEN_WOOL);
 
+    /** Display name of this backpack type. */
     public final String ranzenName;
+    
+    /** Block material used to represent this backpack. */
     public final Material ranzenMaterial;
 
+    /** List of valid metadata keys for team identification. */
     public static ArrayList<String> ranzenMetadatas = new ArrayList<>();
 
     static {
@@ -60,9 +78,16 @@ public enum Ranzen {
         }
     }
 
+    /** Map of locations to their placed backpack display entities. */
     public static HashMap<Location, BlockDisplay> displayPositions = new HashMap<>();
+    
+    /** Map of display entities to their interaction hitboxes. */
     public static HashMap<BlockDisplay, Interaction> placedRanzen = new HashMap<>();
+    
+    /** Map of interaction hitboxes to their owning teams. */
     public static HashMap<Interaction, Team> ranzenTeam = new HashMap<>();
+    
+    /** Count of backpacks remaining for each team. */
     public static HashMap<Team, Integer> ranzenAmount = new HashMap<>();
 
     Ranzen(String ranzenName, Material ranzenMaterial) {
@@ -70,12 +95,29 @@ public enum Ranzen {
         this.ranzenMaterial = ranzenMaterial;
     }
 
+    /**
+     * Initializes the backpack counter for all teams.
+     * <p>
+     * Sets all team backpack counts to zero at game start.
+     * </p>
+     */
     public static void initRanzenCounter(){
         for (Team team : Team.values()) {
             ranzenAmount.put(team, 0);
         }
     }
 
+    /**
+     * Handles the destruction of a team's backpack.
+     * <p>
+     * Announces the destruction to all players, updates the backpack count,
+     * and notifies if the team has lost all backpacks.
+     * </p>
+     *
+     * @param p the player who destroyed the backpack
+     * @param team the team whose backpack was destroyed
+     * @param loc the location where the backpack was destroyed
+     */
     public static void destroyRanzen(Player p, Team team, Location loc) {
 
         for(Player online : Bukkit.getOnlinePlayers()) {
@@ -96,6 +138,12 @@ public enum Ranzen {
 
     }
 
+    /**
+     * Removes all placed backpacks and backpack items from player inventories.
+     * <p>
+     * Should be called when ending a game to clean up all backpack entities.
+     * </p>
+     */
     public static void clearRanzen(){
         for(BlockDisplay display : placedRanzen.keySet()) {
             placedRanzen.get(display).remove();
@@ -111,6 +159,16 @@ public enum Ranzen {
         }
     }
 
+    /**
+     * Creates a placed backpack entity at the specified location.
+     * <p>
+     * Spawns both a BlockDisplay for visual representation and an Interaction
+     * entity for detecting player interactions.
+     * </p>
+     *
+     * @param team the team that owns this backpack
+     * @param loc the location to place the backpack
+     */
     public static void createRanzen(Team team, Location loc) {
 
         Ranzen ranzen = team.ranzen;
@@ -138,6 +196,17 @@ public enum Ranzen {
 
     }
 
+    /**
+     * Handles player interaction with a placed backpack.
+     * <p>
+     * If the player owns the backpack (same team), they pick it up.
+     * If the player is from an enemy team, the backpack is destroyed.
+     * </p>
+     *
+     * @param player the player interacting with the backpack
+     * @param ranzen the interaction entity representing the backpack
+     * @param event the interaction event
+     */
     public static void ranzenPickup(Player player, Interaction ranzen, PlayerInteractEntityEvent event) {
 
         if (!playerMirror.get(player.getName()).isAlive()) return;

@@ -28,6 +28,13 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
+/**
+ * Handles player revive interactions.
+ * <p>
+ * Allows players to revive downed teammates using cooling packs
+ * when not in combat and within range.
+ * </p>
+ */
 public class RevivePlayerEvent implements Listener {
 
     @EventHandler

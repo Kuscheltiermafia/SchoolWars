@@ -26,7 +26,13 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
-
+/**
+ * Tracks player combat status for teacher supervision mechanics.
+ * <p>
+ * When players hit each other, their combat flag is set which may
+ * trigger teacher intervention or other gameplay consequences.
+ * </p>
+ */
 public class Aufsicht implements Listener {
 
     @EventHandler

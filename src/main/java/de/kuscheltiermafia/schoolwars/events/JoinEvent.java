@@ -33,8 +33,26 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
+/**
+ * Handles player join events in SchoolWars.
+ * <p>
+ * When a player joins, this class:
+ * <ul>
+ *   <li>Creates or retrieves their PlayerMirror</li>
+ *   <li>Teleports them to the spawn location</li>
+ *   <li>Displays welcome particles and messages</li>
+ *   <li>Handles game state (rejoining during active game)</li>
+ *   <li>Updates the start menu if it's open</li>
+ * </ul>
+ * </p>
+ */
 public class JoinEvent implements Listener {
 
+    /**
+     * Handles a player joining the server.
+     *
+     * @param e the player join event
+     */
     @EventHandler
     public void onPLayerJoin(PlayerJoinEvent e){
 

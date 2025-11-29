@@ -22,6 +22,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Random;
 
+/**
+ * Handles Baar's coffee brewing mechanics.
+ * <p>
+ * Players can interact with coffee machines to brew coffee which
+ * may be used in various crafting recipes or quests.
+ * </p>
+ */
 public class BaarsKaffee implements Listener {
 
     @EventHandler

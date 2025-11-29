@@ -40,18 +40,52 @@ import java.util.HashMap;
 
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
+/**
+ * Handles teacher quests that players can complete for rewards.
+ * <p>
+ * Each quest-giving teacher has:
+ * <ul>
+ *   <li>A required item that must be brought</li>
+ *   <li>A reward item given upon completion</li>
+ *   <li>A reputation bonus for the completing player</li>
+ * </ul>
+ * </p>
+ * <p>
+ * When a player interacts with a quest teacher, a GUI opens showing
+ * the required and reward items. If the player has the required item,
+ * they can complete the quest.
+ * </p>
+ */
 public class LehrerQuests implements Listener {
 
+    /** Slot indices for spacer items in the quest GUI. */
     static int[] questSpacers = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 13, 17, 18, 22, 27, 31, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 17, 26, 35, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53};
+    
+    /** Slot indices for availability indicator items. */
     static int[] itemsIndicator = new int[]{10, 11, 12, 14, 15, 16, 19, 21, 23, 25, 28, 29, 30, 32, 33, 34};
 
+    /** Tracks which villager each player currently has a quest menu open for. */
     public HashMap<Player, Villager> openQuest = new HashMap<>();
 
+    /** Maps teachers to their required quest items. */
     public static HashMap<Lehrer, ItemStack> requieredLehrerItems = new HashMap<>();
+    
+    /** Maps teachers to their quest reward items. */
     public static HashMap<Lehrer, ItemStack> rewardLehrerItems = new HashMap<>();
+    
+    /** Maps teachers to their reputation reward amounts. */
     public static HashMap<Lehrer, Double> repReward = new HashMap<>();
+    
+    /** List of all villager entities that offer quests. */
     public static ArrayList<Villager> questLehrerList = new ArrayList<>();
 
+    /**
+     * Initializes all teacher quest configurations.
+     * <p>
+     * Sets up the required items, rewards, and reputation values for each
+     * quest-giving teacher.
+     * </p>
+     */
     public static void initLehrerQuests() {
         requieredLehrerItems.put(Lehrer.FISCHER, Items.stroke_master);
         rewardLehrerItems.put(Lehrer.FISCHER, Items.fischers_spiel);
@@ -90,6 +124,12 @@ public class LehrerQuests implements Listener {
         repReward.put(Lehrer.RAITH, 1.0);
     }
 
+    /**
+     * Handles player clicking on a quest-giving teacher.
+     * Opens the quest menu GUI showing required and reward items.
+     *
+     * @param e the player interact entity event
+     */
     @EventHandler
     public void onLehrerClick(PlayerInteractEntityEvent e) {
         if(e.getRightClicked() instanceof Villager && questLehrerList.contains(e.getRightClicked())) {
@@ -121,6 +161,13 @@ public class LehrerQuests implements Listener {
         }
     }
 
+    /**
+     * Handles clicks within the quest menu GUI.
+     * If the player clicks on the reward slot and has the required item,
+     * completes the quest.
+     *
+     * @param e the inventory click event
+     */
     @EventHandler
     public void onQuestMenuInteraction(InventoryClickEvent e) {
         if(e.getWhoClicked().getOpenInventory().getTitle().contains("'s Aufgabe:")) {
@@ -162,6 +209,11 @@ public class LehrerQuests implements Listener {
         }
     }
 
+    /**
+     * Cleans up tracking data when a player closes a quest menu.
+     *
+     * @param e the inventory close event
+     */
     @EventHandler
     public void onCloseQuestmenu(InventoryCloseEvent e) {
         if(e.getPlayer().getOpenInventory().getTitle().contains("'s Aufgabe:")) {

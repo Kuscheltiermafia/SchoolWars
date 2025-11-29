@@ -35,10 +35,28 @@ import java.util.HashMap;
 import static de.kuscheltiermafia.schoolwars.lehrer.Lehrer.lehrerEntityList;
 import static de.kuscheltiermafia.schoolwars.lehrer.Lehrer.lehrerList;
 
+/**
+ * Manages the class schedule (Stundenplan) that determines teacher positions.
+ * <p>
+ * The schedule periodically updates, reshuffling teachers to different areas.
+ * Teachers are assigned to areas based on their subject specialization and
+ * the room type of each area.
+ * </p>
+ * <p>
+ * Updates occur every 3 minutes during active gameplay, with a bell sound
+ * to notify players.
+ * </p>
+ */
 public class Stundenplan {
 
+    /** Maps each teacher to their currently assigned area. */
     public static HashMap<Lehrer, Area> studenplan = new HashMap<>();
 
+    /**
+     * Updates the class schedule, either immediately or after a delay.
+     *
+     * @param instant if true, updates immediately; otherwise schedules for 3 minutes later
+     */
     public static void updateStundenplan(boolean instant) {
 
         if(instant) {
@@ -56,6 +74,19 @@ public class Stundenplan {
         }
     }
 
+    /**
+     * Initializes the class schedule by spawning teachers in appropriate areas.
+     * <p>
+     * This method:
+     * <ul>
+     *   <li>Plays a bell sound to notify players</li>
+     *   <li>Removes all existing teachers</li>
+     *   <li>Shuffles the teacher list for randomization</li>
+     *   <li>Assigns teachers to areas based on room compatibility</li>
+     *   <li>Triggers item drops after teacher placement</li>
+     * </ul>
+     * </p>
+     */
     public static void initStundenplan() {
 
         Sounds.playForAll(Sound.BLOCK_NOTE_BLOCK_BELL, 1.0f, 1.0f, 1.5, 0.5);

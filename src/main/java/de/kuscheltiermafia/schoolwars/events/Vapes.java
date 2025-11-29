@@ -13,6 +13,13 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import java.util.HashMap;
 
+/**
+ * Handles vape item usage and effects.
+ * <p>
+ * Different vape flavors provide various potion effects when used,
+ * and vapes eventually run out of charges.
+ * </p>
+ */
 public class Vapes implements Listener {
 
     @EventHandler

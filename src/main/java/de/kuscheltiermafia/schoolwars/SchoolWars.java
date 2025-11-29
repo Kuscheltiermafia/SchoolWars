@@ -44,18 +44,51 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
-
+/**
+ * Main plugin class for SchoolWars - a Minecraft minigame plugin.
+ * <p>
+ * SchoolWars is a team-based game where players compete in a school-themed environment.
+ * Teams must protect their backpacks (Ranzen) while trying to destroy enemy backpacks
+ * or complete objectives like building an atomic bomb.
+ * </p>
+ * <p>
+ * This class handles plugin initialization, event registration, command registration,
+ * and manages the global game state.
+ * </p>
+ *
+ * @author Morgon
+ * @author CrAzyA22
+ * @version 0.1.0
+ */
 public final class SchoolWars extends JavaPlugin {
 
+    /** Singleton instance of the plugin for global access. */
     public static SchoolWars plugin;
 
+    /** Current number of players on the server. */
     private static int playerCount = 0;
 
+    /** Flag indicating whether a game is currently in progress. */
     public static boolean gameStarted;
 
+    /** Reference to the main game world ("schoolwars"). */
     public static World WORLD;
 
 
+    /**
+     * Called when the plugin is enabled.
+     * <p>
+     * Initializes all game components including:
+     * <ul>
+     *   <li>Game world reference</li>
+     *   <li>Probability configuration</li>
+     *   <li>Player mirrors for all online players</li>
+     *   <li>Game items and mechanics</li>
+     *   <li>Event listeners</li>
+     *   <li>Commands</li>
+     * </ul>
+     * </p>
+     */
     @Override
     public void onEnable() {
 
@@ -147,6 +180,12 @@ public final class SchoolWars extends JavaPlugin {
 
     }
 
+    /**
+     * Called when the plugin is disabled.
+     * <p>
+     * Cleans up by ending any active game and removing all spawned villager entities.
+     * </p>
+     */
     @Override
     public void onDisable() {
         EndGame.end();
@@ -157,14 +196,29 @@ public final class SchoolWars extends JavaPlugin {
         }
     }
 
+    /**
+     * Gets the singleton instance of the plugin.
+     *
+     * @return the SchoolWars plugin instance
+     */
     public static SchoolWars getPlugin(){
         return plugin;
     }
 
+    /**
+     * Sets the current player count.
+     *
+     * @param playerCount the new player count
+     */
     public static void setPlayerCount(int playerCount) {
         SchoolWars.playerCount = playerCount;
     }
 
+    /**
+     * Gets the current player count.
+     *
+     * @return the number of players currently tracked
+     */
     public static int getPlayerCount() {
         return playerCount;
     }

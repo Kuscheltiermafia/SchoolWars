@@ -34,6 +34,13 @@ import java.util.HashMap;
 
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
+/**
+ * Handles NPC dialogue interactions with teachers.
+ * <p>
+ * Manages dialogue sequences where text is revealed character by character
+ * to create a typing effect when talking to villager NPCs.
+ * </p>
+ */
 public class DialogueHandler implements Listener {
 
     public static ArrayList<Entity> talkedEntities = new ArrayList<>();

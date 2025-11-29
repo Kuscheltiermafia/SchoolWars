@@ -36,8 +36,26 @@ import org.bukkit.scoreboard.ScoreboardManager;
 import static de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer.revivePlayer;
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
+/**
+ * Handles the cleanup and reset when a SchoolWars game ends.
+ * <p>
+ * This class is responsible for:
+ * <ul>
+ *   <li>Reviving all downed players</li>
+ *   <li>Resetting player display names</li>
+ *   <li>Removing all game entities (teachers, backpacks, items)</li>
+ *   <li>Clearing team assignments and scoreboards</li>
+ * </ul>
+ * </p>
+ */
 public class EndGame {
 
+    /**
+     * Ends the current game and resets all game state.
+     * <p>
+     * Does nothing if no game is currently active.
+     * </p>
+     */
     public static void end(){
 
         if(!SchoolWars.gameStarted) {

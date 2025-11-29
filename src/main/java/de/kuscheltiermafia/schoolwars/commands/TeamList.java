@@ -29,10 +29,22 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+/**
+ * Command that displays all teams and their members.
+ * <p>
+ * Lists each team's name followed by all player names belonging to that team.
+ * Useful for debugging team assignments and checking player distribution.
+ * </p>
+ */
 @CommandAlias("teamlist")
 @Description("Zeigt die Mitglieder aller Teams an.")
 public class TeamList extends BaseCommand {
 
+    /**
+     * Displays the team list when the command is executed.
+     *
+     * @param commandSender the command sender
+     */
     @Default
     public void onTeamListCommand(CommandSender commandSender) {
 
