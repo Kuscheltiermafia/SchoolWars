@@ -38,14 +38,19 @@ import org.bukkit.scheduler.BukkitRunnable;
 /**
  * Handles the Rollator (walker) vehicle item.
  * <p>
- * Allows players to ride a rollator for enhanced movement speed
- * and mobility around the school.
+ * Allows players to use the rollator for a short dash attack that
+ * moves them forward and damages nearby players on contact.
  * </p>
  */
 public class Rolator implements Listener {
 
+    /** Flag to stop the dash early when hitting an obstacle. */
     private boolean BukkitRunnablesFicktEuch;
 
+    /**
+     * Handles using the rollator for a dash attack.
+     * Consumes the item and propels the player forward, damaging enemies.
+     */
     @EventHandler
     public void onRolatorRide(PlayerInteractEvent e) {
         Player p = e.getPlayer();
@@ -55,15 +60,18 @@ public class Rolator implements Listener {
         if(item.equals(Items.rollator)) {
             if(e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
 
+                // ========== Start dash attack ==========
                 e.setCancelled(true);
                 p.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
                 BukkitRunnablesFicktEuch = false;
 
+                // ========== Dash movement loop (3 seconds) ==========
                 for (int i = 0; i < 20 * 3; i++) {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
 
+                            // Check for collision or player stopping
                             if (!loc.getBlock().getType().equals(Material.AIR) || p.isSneaking()) {
                                 if(!BukkitRunnablesFicktEuch) {
                                     BukkitRunnablesFicktEuch = true;
@@ -71,9 +79,12 @@ public class Rolator implements Listener {
                                 }
                             }
 
+                            // Continue dash if no collision
                             if(loc.getBlock().getType().equals(Material.AIR) || !p.isSneaking()) {
                                 if(!BukkitRunnablesFicktEuch) {
                                     p.teleport(loc);
+                                    
+                                    // Damage nearby players on contact
                                     for(Entity e : p.getNearbyEntities(1, 1, 1)) {
                                         if(e instanceof Player) {
                                             Player t = (Player) e;
@@ -81,6 +92,8 @@ public class Rolator implements Listener {
                                             t.damage(15);
                                         }
                                     }
+                                    
+                                    // Move forward in player's facing direction
                                     ParticleHandler.createParticles(loc, Particle.CLOUD, 10, 0, true, null);
                                     loc.add(loc.getDirection().getX() / 1.3, 0, loc.getDirection().getZ() / 1.3);
                                 }
