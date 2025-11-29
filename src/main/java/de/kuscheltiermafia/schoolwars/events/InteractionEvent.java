@@ -46,10 +46,28 @@ import javax.management.openmbean.OpenMBeanInfoSupport;
 
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
-
+/**
+ * Handles various player interaction events in SchoolWars.
+ * <p>
+ * This listener manages:
+ * <ul>
+ *   <li>GUI navigation (clicking spacers, page buttons)</li>
+ *   <li>Block protection (preventing breaking/placing in survival)</li>
+ *   <li>Entity protection (item frames, paintings)</li>
+ *   <li>Special item interactions (buffed chair stun)</li>
+ *   <li>Dead player interaction prevention</li>
+ *   <li>Backpack drop prevention</li>
+ * </ul>
+ * </p>
+ */
 public class InteractionEvent implements Listener {
 
-//Prevent players from clicking spacers, allow moving between UI pages
+    /**
+     * Handles clicks on spacers and pagination items in GUIs.
+     * Prevents clicking spacers and handles page navigation.
+     *
+     * @param e the inventory click event
+     */
     @EventHandler
     public void clickSpacer(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
@@ -72,7 +90,11 @@ public class InteractionEvent implements Listener {
         }catch (Exception ignored){}
     }
 
-//Prevent Players from breaking Blocks
+    /**
+     * Prevents players from breaking blocks unless in creative mode.
+     *
+     * @param e the block break event
+     */
     @EventHandler
     public void OnBreakBlock(BlockBreakEvent e){
         Player p = e.getPlayer();
@@ -81,7 +103,11 @@ public class InteractionEvent implements Listener {
         }
     }
 
-//Prevent Players from placing Blocks
+    /**
+     * Prevents players from placing blocks unless in creative mode.
+     *
+     * @param e the block place event
+     */
     @EventHandler
     public void OnPlaceBlock(BlockPlaceEvent e){
         Player p = e.getPlayer();
@@ -90,7 +116,11 @@ public class InteractionEvent implements Listener {
         }
     }
 
-    //Prevent Item frame from being destroyed
+    /**
+     * Prevents item frames from being destroyed unless in creative mode.
+     *
+     * @param e the hanging break event
+     */
     @EventHandler
     public void onBreakItemFrame(HangingBreakByEntityEvent e) {
         if (e.getEntity() instanceof ItemFrame && ((Player) e.getRemover()).getGameMode() != GameMode.CREATIVE) {
@@ -98,7 +128,11 @@ public class InteractionEvent implements Listener {
         }
     }
 
-    //Prevent players from taking items out of item frames
+    /**
+     * Prevents players from taking items out of item frames unless in creative mode.
+     *
+     * @param e the entity damage event
+     */
     @EventHandler
     public void onDamageItemFrame(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof ItemFrame && ((Player) e.getDamager()).getGameMode() != GameMode.CREATIVE) {
@@ -106,7 +140,11 @@ public class InteractionEvent implements Listener {
         }
     }
 
-    //Prevent Paintings from being destroyed
+    /**
+     * Prevents paintings from being destroyed unless in creative mode.
+     *
+     * @param e the hanging break event
+     */
     @EventHandler
     public void onBreakPainting(HangingBreakByEntityEvent e) {
         if (e.getEntity() instanceof Painting && ((Player) e.getRemover()).getGameMode() != GameMode.CREATIVE) {
@@ -116,7 +154,12 @@ public class InteractionEvent implements Listener {
 
 
 
-    //Minas Stuhl hit
+    /**
+     * Handles the special buffed chair attack that stuns players.
+     * When a player hits another with the buffed chair, the target is stunned.
+     *
+     * @param e the entity damage event
+     */
     @EventHandler
     public void OnStuhlHit(EntityDamageByEntityEvent e) {
         if(e.getDamager() instanceof Player hitter && e.getEntity() instanceof Player hit) {
@@ -131,7 +174,11 @@ public class InteractionEvent implements Listener {
         }
     }
 
-    //Disable Leichenschändung
+    /**
+     * Prevents attacking downed (dead) players.
+     *
+     * @param e the entity damage event
+     */
     @EventHandler
     public void onHitDeadPlayer(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof Player) {
@@ -144,7 +191,11 @@ public class InteractionEvent implements Listener {
         }
     }
 
-    //Disable ranzen Drop
+    /**
+     * Prevents players from dropping their team backpack.
+     *
+     * @param e the player drop item event
+     */
     @EventHandler
     public void onDropRanzen(PlayerDropItemEvent e) {
         if(Items.ranzenList.contains(e.getItemDrop().getItemStack())) {
@@ -152,7 +203,11 @@ public class InteractionEvent implements Listener {
         }
     }
 
-    //Disable sign editing
+    /**
+     * Prevents sign editing unless in creative mode.
+     *
+     * @param e the sign change event
+     */
     @EventHandler
     public void onSignEdit(SignChangeEvent e) {
         Player p = e.getPlayer();
@@ -161,7 +216,11 @@ public class InteractionEvent implements Listener {
         }
     }
 
-    //Disable chiseled bookshelf interaction
+    /**
+     * Prevents chiseled bookshelf interaction unless in creative mode.
+     *
+     * @param event the player interact event
+     */
     @EventHandler
     public void onChiseledBookshelfInteract(PlayerInteractEvent event){
         Player p = event.getPlayer();
@@ -172,7 +231,11 @@ public class InteractionEvent implements Listener {
         } catch (Exception ignored) {}
     }
 
-    //Prevent Item frames from being rotated
+    /**
+     * Prevents item frames from being rotated unless in creative mode.
+     *
+     * @param e the player interact entity event
+     */
     @EventHandler
     public void onRotateItemFrame(PlayerInteractEntityEvent e) {
         if (e.getRightClicked() instanceof ItemFrame && ((Player) e.getPlayer()).getGameMode() != GameMode.CREATIVE) {
@@ -180,7 +243,11 @@ public class InteractionEvent implements Listener {
         }
     }
 
-    //Prevent players from interacting with the dragon egg
+    /**
+     * Prevents players from interacting with the dragon egg unless in creative mode.
+     *
+     * @param e the player interact event
+     */
     @EventHandler
     public void onInteractDragonEgg(PlayerInteractEvent e) {
         Player p = e.getPlayer();

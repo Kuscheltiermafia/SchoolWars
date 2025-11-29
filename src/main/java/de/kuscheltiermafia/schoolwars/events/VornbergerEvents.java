@@ -19,6 +19,13 @@ import org.bukkit.inventory.Inventory;
 
 import java.util.Random;
 
+/**
+ * Handles Vornberger-related crafting events.
+ * <p>
+ * Manages special recipes like onion cutting with the machete
+ * which has a chance of success or failure.
+ * </p>
+ */
 public class VornbergerEvents implements Listener {
 
     @EventHandler

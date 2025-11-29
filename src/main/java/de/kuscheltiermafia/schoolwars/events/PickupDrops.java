@@ -28,6 +28,13 @@ import org.bukkit.event.entity.ItemDespawnEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * Handles custom item pickup mechanics.
+ * <p>
+ * Manages player interaction with dropped items that use custom
+ * hitbox entities for pickup detection.
+ * </p>
+ */
 public class PickupDrops implements Listener {
 
     @EventHandler

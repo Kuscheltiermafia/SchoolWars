@@ -34,12 +34,33 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Handles player stun mechanics that temporarily immobilize players.
+ * <p>
+ * When stunned, a player:
+ * <ul>
+ *   <li>Cannot move</li>
+ *   <li>Cannot interact with items or the world</li>
+ *   <li>Has their hotbar replaced with "rope" items</li>
+ *   <li>Can optionally be sunk into the ground</li>
+ * </ul>
+ * </p>
+ */
 public class PlayerStun implements Listener {
 
+    /** List of currently stunned players. */
     public static ArrayList<Player> stunned = new ArrayList<>();
+    
+    /** Backup of player hotbar items during stun. */
     public static HashMap<Player, ItemStack[]> playerInvsave = new HashMap<>();
 
-
+    /**
+     * Stuns a player for a specified duration.
+     *
+     * @param p the player to stun
+     * @param duration the stun duration in seconds
+     * @param inFloor if true, sinks the player 1.4 blocks into the ground
+     */
     public static void stunPlayer(Player p, int duration, boolean inFloor) {
         stunned.add(p);
         ItemStack[] hotbarItems = new ItemStack[]{p.getInventory().getItem(0), p.getInventory().getItem(1), p.getInventory().getItem(2), p.getInventory().getItem(3), p.getInventory().getItem(4), p.getInventory().getItem(5), p.getInventory().getItem(6), p.getInventory().getItem(7), p.getInventory().getItem(8)};
@@ -81,24 +102,47 @@ public class PlayerStun implements Listener {
     }
 
 
+    /**
+     * Prevents stunned players from moving.
+     *
+     * @param e the player move event
+     */
     @EventHandler
     public void onStunnedJump(PlayerMoveEvent e) {
         if(stunned.contains(e.getPlayer())) {
             e.setCancelled(true);
         }
     }
+    
+    /**
+     * Prevents stunned players from interacting with the world.
+     *
+     * @param e the player interact event
+     */
     @EventHandler
     public void onStunnedInteraction(PlayerInteractEvent e) {
         if(stunned.contains(e.getPlayer())) {
             e.setCancelled(true);
         }
     }
+    
+    /**
+     * Prevents stunned players from dropping items.
+     *
+     * @param e the player drop item event
+     */
     @EventHandler
     public void onStunnedDrop(PlayerDropItemEvent e) {
         if(stunned.contains(e.getPlayer())) {
             e.setCancelled(true);
         }
     }
+    
+    /**
+     * Prevents stunned players from interacting with their inventory.
+     *
+     * @param e the inventory click event
+     */
     @EventHandler
     public void onStunnedInv(InventoryClickEvent e) {
         if(stunned.contains(e.getWhoClicked())) {

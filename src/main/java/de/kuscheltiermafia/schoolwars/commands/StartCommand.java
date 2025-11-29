@@ -56,30 +56,58 @@ import static de.kuscheltiermafia.schoolwars.SchoolWars.WORLD;
 //}
 
 
+/**
+ * Command to open the game start GUI.
+ * <p>
+ * This command works with both players and command blocks to open
+ * the game configuration and start menu.
+ * </p>
+ */
 //Has to work with command blocks
 public class StartCommand implements CommandExecutor{
 
+    /** Expected location of the start command block. */
     Location commandBlockLocation = new Location(WORLD, -32.0, 81.0, 181.0);
+    
+    /** Location to search for players near the command block. */
     Location playerLocation = new Location(WORLD, -32.0, 80.0, 178.0);
 
+    /**
+     * Handles the start command execution.
+     *
+     * @param sender the command sender (player or command block)
+     * @param command the command that was executed
+     * @param s the alias used
+     * @param strings command arguments
+     * @return true if the command was handled successfully
+     */
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
 
         Player target = null;
+        
+        // Handle player sender directly
         if (sender instanceof Player) {
             target = (Player) sender;
-        }else if (sender instanceof BlockCommandSender) {
+        }
+        // Handle command block sender - find nearby player
+        else if (sender instanceof BlockCommandSender) {
+            // Verify command block is at expected location
             if (((BlockCommandSender) sender).getBlock().getLocation().equals(commandBlockLocation)) {
                 target = playerLocation.getNearbyPlayers(3).stream().findFirst().orElse(null);
             }else{
+                // Command block location mismatch - notify admins
                 Message.sendToAllPlayers(ChatColor.YELLOW + "[SchoolWars] Please update the command block location for the start command! Contact the plugin authors to do this");
                 return false;
             }
-        }else{
+        }
+        // Unknown sender type
+        else{
             sender.sendMessage("Non Players and non Command Blocks must specify a player!");
             return false;
         }
 
+        // Open the game start GUI for the target player
         StartGame.openGUI(target, false);
 
         return true;

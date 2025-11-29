@@ -40,20 +40,34 @@ import org.bukkit.potion.PotionEffectType;
 import static de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer.playerBatMap;
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
+/**
+ * Handles player death mechanics in SchoolWars.
+ * <p>
+ * Instead of killing players normally, this system "downs" them by mounting
+ * them on an invisible bat and applying movement-restricting effects.
+ * Downed players must be revived by teammates.
+ * </p>
+ */
 public class PlayerDeath implements Listener {
 
+    /**
+     * Handles natural/environmental death (fall damage, fire, etc.).
+     */
     @EventHandler
     public void onNaturalDeath(EntityDamageEvent event) {
 
+        // Only process player deaths
         if (!(event.getEntity() instanceof Player)){
             return;
         }
 
+        // No damage outside of game
         if (!SchoolWars.gameStarted) {
             event.setCancelled(true);
             return;
         }
 
+        // Check if this damage would kill the player
         if (event.getEntity() instanceof Player player && event.getFinalDamage() >= ((Player) event.getEntity()).getHealth()) {
 
             event.setCancelled(true);
@@ -67,18 +81,24 @@ public class PlayerDeath implements Listener {
         }
     }
 
+    /**
+     * Handles death from entity damage (players, mobs, etc.).
+     */
     @EventHandler
     public void onDamageByEntity(EntityDamageByEntityEvent e){
 
+        // Only process player deaths
         if (!(e.getEntity() instanceof Player)){
             return;
         }
 
+        // No damage outside of game
         if (!SchoolWars.gameStarted) {
             e.setCancelled(true);
             return;
         }
 
+        // Check if this damage would kill the player
         if (e.getEntity() instanceof Player player && e.getFinalDamage() >= ((Player) e.getEntity()).getHealth()) {
 
             e.setCancelled(true);
@@ -88,13 +108,13 @@ public class PlayerDeath implements Listener {
 
             String killerName = "";
 
-//Ready Killers Name for message
+            // Prepare killer's name for death message
             if (player.getKiller() != null) {
                 Player killer = player.getKiller();
                 killerName = playerMirror.get(killer.getName()).getTeam().prefix + killer.getName();
             }
 
-//send death message
+            // Send appropriate death message based on damager type
             if (e.getDamager().getType() == EntityType.PLAYER) {
                 Message.sendToAllPlayers(playerName + ChatColor.GRAY + " wurde von " + killerName + ChatColor.GRAY + " besiegt.");
             } else if (e.getDamager().getType() == EntityType.VINDICATOR) {
@@ -103,8 +123,7 @@ public class PlayerDeath implements Listener {
                 Message.sendToAllPlayers(playerName + ChatColor.GRAY + " hat auf natürliche Weise sein Ende gefunden.");
             }
 
-//destroy Ranzen
-
+            // Drop the team's backpack if player was carrying it
             if(player.getInventory().contains(team.ranzen_item)) {
                 Ranzen.destroyRanzen(player.getKiller(), team, player.getLocation());
                 player.getInventory().remove(new ItemStack(team.ranzen_item));
@@ -115,8 +134,13 @@ public class PlayerDeath implements Listener {
         }
     }
 
+    /**
+     * Processes a player death by applying downed state.
+     * Handles bossfight deaths differently (respawn in medical room).
+     */
     private static void handleDeath(Player player) {
 
+        // ========== Handle bossfight death (special respawn) ==========
         if (playerMirror.get(player.getName()).isInBossfight()) {
             player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 40, 1, false, false, false));
             player.sendTitle("§4Du wurdest besiegt!", "Du wachst im Krankenzimmer wieder auf", 10, 70, 20);
@@ -127,12 +151,18 @@ public class PlayerDeath implements Listener {
             return;
         }
 
+        // ========== Handle normal death (downed state) ==========
+        
+        // Restore health and show death message
         player.setHealth(20);
         player.sendTitle("§4Du wurdest besiegt!", "Dein Team muss dich wiederbeleben.", 10, 70, 20);
         player.playSound(player.getLocation(), "minecraft:block.beacon.deactivate", 1, 1);
+        
+        // Apply movement lock effects
         player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 999999, 255, false, false, false));
         player.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 999999, 255, false, false, false));
 
+        // Create invisible bat mount to lock player position
         Bat mount = (Bat) player.getWorld().spawnEntity(player.getLocation().add(0, -1, 0), EntityType.BAT);
         mount.setInvisible(true);
         mount.setSilent(true);
@@ -142,12 +172,16 @@ public class PlayerDeath implements Listener {
 
         mount.setPassenger(player);
 
+        // Track the bat for later revival
         playerBatMap.put(player.getName(), mount.getUniqueId());
 
+        // Mark player as dead
         playerMirror.get(player.getName()).setAlive(false);
     }
 
-    //Prevent dead Players from standing up
+    /**
+     * Prevents downed players from dismounting their bat.
+     */
     @EventHandler
     public void onDismount(EntityDismountEvent e){
         if (e.getEntity() instanceof Player){
@@ -158,7 +192,9 @@ public class PlayerDeath implements Listener {
     }
 
 
-    //Prevent dead Players from interacting
+    /**
+     * Prevents downed players from interacting with the world.
+     */
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
         try {
@@ -168,7 +204,9 @@ public class PlayerDeath implements Listener {
         }catch (Exception ignored){}
     }
 
-    //Prevent dead Players from hitting
+    /**
+     * Prevents downed players from dealing damage.
+     */
     @EventHandler
     public void onPunch(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player) {

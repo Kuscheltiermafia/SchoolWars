@@ -16,6 +16,17 @@ import java.util.stream.Collectors;
 
 import static de.kuscheltiermafia.schoolwars.SchoolWars.WORLD;
 
+/**
+ * Defines all item drop locations and spawn chances in SchoolWars.
+ * <p>
+ * Each enum value represents an item that can spawn at specific locations
+ * with a configurable probability. Some drops are tied to teacher locations
+ * and only spawn when the teacher is in the correct room.
+ * </p>
+ * <p>
+ * Drop chances can be configured via the probability configuration file.
+ * </p>
+ */
 public enum ItemDrops {
 
     MINAS_FLASCHE(new Location[]{
@@ -75,11 +86,22 @@ public enum ItemDrops {
     }, Items.kerze, "drops.kerze", 0.4)
     ;
 
+    /** The teacher associated with this drop (if any). */
     private final Lehrer lehrer;
+    
+    /** Possible spawn locations for this drop. */
     private final Location[] locations;
+    
+    /** The item to spawn. */
     private final ItemStack item;
+    
+    /** Configuration key for looking up spawn probability. */
     private final String probabilityKey;
+    
+    /** Default spawn chance if not configured. */
     private final double defaultChance;
+    
+    /** Room type requirement for teacher-based drops. */
     private final Raum raum;
 
     ItemDrops(Lehrer lehrer, ItemStack item, String probabilityKey, double defaultChance, @Nullable Raum raum) {
@@ -91,6 +113,14 @@ public enum ItemDrops {
         this.raum = raum;
     }
 
+    /**
+     * Constructor for location-based drops without teacher association.
+     *
+     * @param locations possible spawn locations
+     * @param item the item to spawn
+     * @param probabilityKey config key for spawn chance
+     * @param defaultChance default probability if not configured
+     */
     ItemDrops(Location[] locations, ItemStack item, String probabilityKey, double defaultChance) {
         this.lehrer = null; // No specific teacher for this drop
         this.locations = locations;
@@ -105,12 +135,22 @@ public enum ItemDrops {
     }
 
     /**
-     * Get the current probability for this drop from the config
+     * Get the current probability for this drop from the config.
+     *
+     * @return the spawn probability (0.0 to 1.0)
      */
     public double getChance() {
         return ProbabilityConfig.getProbability(probabilityKey, defaultChance);
     }
 
+    /**
+     * Rolls for all possible drops and spawns items based on probability.
+     * <p>
+     * Each drop is checked against its probability, and if successful,
+     * the item is spawned at a random location from its location list.
+     * Duplicate items are prevented (only one of each type can exist).
+     * </p>
+     */
     public static void rollDrops() {
         outer:
         for (ItemDrops drop : values()){

@@ -18,6 +18,13 @@ import org.bukkit.inventory.ItemStack;
 
 import static de.kuscheltiermafia.schoolwars.win_conditions.Ranzen.*;
 
+/**
+ * Handles backpack (Ranzen) placement and pickup events.
+ * <p>
+ * Manages how players interact with team backpacks including
+ * placing them in the world and picking them back up.
+ * </p>
+ */
 public class RanzenEvents implements Listener {
 
     @EventHandler

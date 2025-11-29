@@ -34,10 +34,33 @@ import java.util.UUID;
 
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
+/**
+ * Handles player revival mechanics.
+ * <p>
+ * When a player is downed, they are mounted on an invisible bat to prevent movement.
+ * This class provides functionality to revive those players, restoring their ability to play.
+ * </p>
+ */
 public class RevivePlayer {
 
+    /** Maps player names to the UUID of their mount bat entity. */
     public static HashMap<String, UUID> playerBatMap = new HashMap<>();
 
+    /**
+     * Revives a downed player.
+     * <p>
+     * This method:
+     * <ul>
+     *   <li>Removes the invisible bat mount</li>
+     *   <li>Clears debuff potion effects</li>
+     *   <li>Restores full health with brief invulnerability</li>
+     *   <li>Notifies both the reviver and the revived player</li>
+     * </ul>
+     * </p>
+     *
+     * @param player the player performing the revival
+     * @param target the downed player to revive
+     */
     public static void revivePlayer(Player player, Player target) {
 
         if (playerMirror.get(target.getName()).isAlive()) {

@@ -24,6 +24,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Collection;
 
+/**
+ * Handles fluorine processing for atomic bomb crafting.
+ * <p>
+ * Players must process fluorine at sinks and furnaces to create
+ * components needed for the nuclear device.
+ * </p>
+ */
 public class Fluor implements Listener {
 
     private static final Location waschbecken1 = new Location(SchoolWars.WORLD, 12.0, 94.0, 188.0);

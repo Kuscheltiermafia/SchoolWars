@@ -13,6 +13,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Collection;
 
+/**
+ * Handles timed block interactions with progress feedback.
+ * <p>
+ * Displays a progress bar in the action bar and plays sounds at intervals
+ * while a player interacts with a block over a duration.
+ * </p>
+ */
 public class BlockInteraction {
 
     public static void progressBlock(Block b, int duration, String actionBarText, String sound, int soundInverval) {
