@@ -132,6 +132,11 @@ public class LehrerQuests implements Listener {
      */
     @EventHandler
     public void onLehrerClick(PlayerInteractEntityEvent e) {
+        if (e.getRightClicked() instanceof Villager && Lehrer.lehrerEntityList.contains(e.getRightClicked()) && !questLehrerList.contains(e.getRightClicked())) {;
+            e.getPlayer().sendMessage(ChatColor.GOLD + "Dieser Lehrer hat keine Aufgaben für dich!");
+            ((Villager) e.getRightClicked()).shakeHead();
+            e.setCancelled(true);
+        }
         if(e.getRightClicked() instanceof Villager && questLehrerList.contains(e.getRightClicked())) {
             e.setCancelled(true);
             Player p = e.getPlayer();

@@ -39,10 +39,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static de.kuscheltiermafia.schoolwars.lehrer.Lehrer.lehrerEntityList;
 import static de.kuscheltiermafia.schoolwars.lehrer.Lehrer.lehrerList;
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.lehrer.LehrerQuests.questLehrerList;
 
 /**
  * Debug command handler providing administrative and testing utilities.
@@ -217,6 +219,15 @@ public class Debug extends BaseCommand {
         public static void onLehrerPositionCommand() {
             Lehrer.updateLehrerPosition(true);
         }
+
+        @Subcommand("get-quests")
+        @Description("Returns lehrer quest list")
+        public static void onLehrerGetQuestsCommand(CommandSender sender) {
+            Player p = (Player) sender;
+            for (Villager lehrer : questLehrerList) {
+                p.sendMessage(debugPrefix + lehrer.getName() + " is in the list!");
+            }
+        }
     }
 
     /**
@@ -277,7 +288,15 @@ public class Debug extends BaseCommand {
     @Description("Stuns a player for a certain duration")
     public static void onStunCommand(CommandSender sender, @Name("player") String playerName, @Name("duration") String duration, @Name("in-ground") String inGround) {
         Player p = (Player) sender;
-        PlayerStun.stunPlayer(Bukkit.getPlayer(playerName), Integer.parseInt(duration), Boolean.getBoolean(inGround));
+        List<String> validInGround = List.of("true", "1", "yes", "y", "false", "0", "no", "n");
+        List<String> trueValues = List.of("true", "1", "yes", "y");
+        boolean inGroundBool;
+        if (!validInGround.contains(inGround.toLowerCase())) {
+            p.sendMessage(debugPrefix + "Please use a valid value for in-ground: true/false, 1/0, yes/no, y/n");
+            return;
+        }
+        inGroundBool = trueValues.contains(inGround.toLowerCase());
+        PlayerStun.stunPlayer(Bukkit.getPlayer(playerName), Integer.parseInt(duration), inGroundBool);
         p.sendMessage(debugPrefix + "You stunned " + playerName + " for " + duration + " seconds.");
         p.sendMessage(debugPrefix + "inGround: " + inGround);
     }
@@ -431,7 +450,13 @@ public class Debug extends BaseCommand {
     @Subcommand("intro")
     @CommandPermission("schoolwars.debug.intro")
     @Description("Starts the intro sequence for a player")
-    public static void onIntroCommand(CommandSender sender) {
+    public static void onIntroCommand(CommandSender sender, @Optional String target) {
+        if (target != null && !target.isEmpty()) {
+            Player targetPlayer = Bukkit.getPlayer(target);
+            Intro.introScene(targetPlayer);
+            sender.sendMessage(Debug.debugPrefix + "Started intro sequence for " + target + "!");
+            return;
+        }
         Intro.introScene((Player) sender);
         sender.sendMessage(Debug.debugPrefix + "Started intro sequence!");
     }

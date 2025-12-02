@@ -67,26 +67,28 @@ public class SekretariatStundenplan implements Listener {
     public void onStundenplanInteraction(InventoryClickEvent e) {
         if(e.getWhoClicked().getOpenInventory().getTitle().equals("§4Momentaner Stundenplan")) {
             e.setCancelled(true);
-            if(e.getCurrentItem().equals(Items.page_down)) {
-                Inventory stundenplan = createStundenplan(page - 1);
+            try {
+                if (e.getCurrentItem().equals(Items.page_down)) {
+                    Inventory stundenplan = createStundenplan(page - 1);
 
-                for(Player player : viewingPlayers) {
-                    if(player.getOpenInventory().getTitle().equals("§4Momentaner Stundenplan")) {
-                        player.openInventory(stundenplan);
-                    }else{
-                        viewingPlayers.remove(player);
+                    for (Player player : viewingPlayers) {
+                        if (player.getOpenInventory().getTitle().equals("§4Momentaner Stundenplan")) {
+                            player.openInventory(stundenplan);
+                        } else {
+                            viewingPlayers.remove(player);
+                        }
+                    }
+                }else if (e.getCurrentItem().equals(Items.page_up)) {
+                    Inventory stundenplan = createStundenplan(page + 1);
+                    for (Player player : viewingPlayers) {
+                        if (player.getOpenInventory().getTitle().equals("§4Momentaner Stundenplan")) {
+                            player.openInventory(stundenplan);
+                        } else {
+                            viewingPlayers.remove(player);
+                        }
                     }
                 }
-            }
-            if(e.getCurrentItem().equals(Items.page_up)) {
-                Inventory stundenplan = createStundenplan(page + 1);
-                for(Player player : viewingPlayers) {
-                    if(player.getOpenInventory().getTitle().equals("§4Momentaner Stundenplan")) {
-                        player.openInventory(stundenplan);
-                    }else{
-                        viewingPlayers.remove(player);
-                    }
-                }
+            }catch (NullPointerException ignored) {
             }
         }
     }

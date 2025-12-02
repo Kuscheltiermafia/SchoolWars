@@ -114,21 +114,21 @@ public enum Ranzen {
      * and notifies if the team has lost all backpacks.
      * </p>
      *
-     * @param p the player who destroyed the backpack
+     * @param killer the player or Mob who destroyed the backpack
      * @param team the team whose backpack was destroyed
      * @param loc the location where the backpack was destroyed
      */
-    public static void destroyRanzen(Player p, Team team, Location loc) {
+    public static void destroyRanzen(Entity killer, Team team, Location loc) {
 
         for(Player online : Bukkit.getOnlinePlayers()) {
             online.spawnParticle(Particle.EXPLOSION, loc, 5, 0, 0, 0);
 
             //todo: remove prefix
 
-            online.sendTitle(ChatColor.DARK_RED + p.getDisplayName() + " hat einen Ranzen zerstört!", ChatColor.DARK_GRAY + "- Es war ein Ranzen von den " + team.name().substring(0, 1).toUpperCase() + team.name().substring(1) + "N " + ChatColor.DARK_GRAY + "-", 10, 50, 10);
+            online.sendTitle(ChatColor.DARK_RED + killer.getName() + " hat einen Ranzen zerstört!", ChatColor.DARK_GRAY + "- Es war ein Ranzen von den " + team.name().substring(0, 1).toUpperCase() + team.name().substring(1) + "N " + ChatColor.DARK_GRAY + "-", 10, 50, 10);
 
         }
-        Bukkit.broadcastMessage(p.getDisplayName() + ChatColor.DARK_GRAY + " hat einen Ranzen der " + team.name().substring(0, 1).toUpperCase() + team.name().substring(1) + ChatColor.DARK_GRAY + " zerstört!");
+        Bukkit.broadcastMessage(killer.getName() + ChatColor.DARK_GRAY + " hat einen Ranzen der " + team.name().substring(0, 1).toUpperCase() + team.name().substring(1) + ChatColor.DARK_GRAY + " zerstört!");
 
         ranzenAmount.put(team, ranzenAmount.get(team) - 1);
 

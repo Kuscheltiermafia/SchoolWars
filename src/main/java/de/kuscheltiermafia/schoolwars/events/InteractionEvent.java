@@ -198,8 +198,20 @@ public class InteractionEvent implements Listener {
      */
     @EventHandler
     public void onDropRanzen(PlayerDropItemEvent e) {
+        Player p = e.getPlayer();
         if(Items.ranzenList.contains(e.getItemDrop().getItemStack())) {
             e.setCancelled(true);
+            p.sendMessage(ChatColor.RED + "Du kannst deinen Ranzen nicht droppen!");
+        }
+    }
+
+    @EventHandler
+    public void onDropSchulbuch(PlayerDropItemEvent e) {
+        Player p = e.getPlayer();
+        ItemStack droppedItem = e.getItemDrop().getItemStack();
+        if (droppedItem.equals(Items.schulbuch1) || droppedItem.equals(Items.schulbuch2) || droppedItem.equals(Items.schulbuch3) || droppedItem.equals(Items.schulbuch4) || droppedItem.equals(Items.schulbuch5)) {
+            e.setCancelled(true);
+            p.sendMessage(ChatColor.RED + "Du kannst dein Schulbuch nicht droppen!");
         }
     }
 

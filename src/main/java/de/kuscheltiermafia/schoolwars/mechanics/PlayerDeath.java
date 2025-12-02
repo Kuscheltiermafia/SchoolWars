@@ -21,9 +21,12 @@ package de.kuscheltiermafia.schoolwars.mechanics;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.Team;
+import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
+import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.win_conditions.Ranzen;
 import io.github.realMorgon.sunriseLib.Message;
-import org.bukkit.Bukkit;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
@@ -36,6 +39,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import static de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer.playerBatMap;
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
@@ -50,6 +54,8 @@ import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
  */
 public class PlayerDeath implements Listener {
 
+    static final int DOWNED_DURATION_TICKS = 20 * 30; // 30 seconds
+
     /**
      * Handles natural/environmental death (fall damage, fire, etc.).
      */
@@ -58,6 +64,11 @@ public class PlayerDeath implements Listener {
 
         // Only process player deaths
         if (!(event.getEntity() instanceof Player)){
+            return;
+        }
+
+        //Only process natural causes
+        if (event instanceof EntityDamageByEntityEvent){
             return;
         }
 
@@ -124,7 +135,7 @@ public class PlayerDeath implements Listener {
             }
 
             // Drop the team's backpack if player was carrying it
-            if(player.getInventory().contains(team.ranzen_item)) {
+            if(player.getInventory().contains(team.ranzen_item) && player.getKiller() != null) {
                 Ranzen.destroyRanzen(player.getKiller(), team, player.getLocation());
                 player.getInventory().remove(new ItemStack(team.ranzen_item));
             }
@@ -142,12 +153,7 @@ public class PlayerDeath implements Listener {
 
         // ========== Handle bossfight death (special respawn) ==========
         if (playerMirror.get(player.getName()).isInBossfight()) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 40, 1, false, false, false));
-            player.sendTitle("§4Du wurdest besiegt!", "Du wachst im Krankenzimmer wieder auf", 10, 70, 20);
-            player.playSound(player.getLocation(), "minecraft:block.beacon.deactivate", 1, 1);
-            player.teleport(new Location(player.getWorld(), -35.0, 88.0, 144.0, -90, 0));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 60, 255, true, true, true));
-            playerMirror.get(player.getName()).setInBossfight(false);
+            respawnPlayerAtMedicalRoom(player);
             return;
         }
 
@@ -159,8 +165,8 @@ public class PlayerDeath implements Listener {
         player.playSound(player.getLocation(), "minecraft:block.beacon.deactivate", 1, 1);
         
         // Apply movement lock effects
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 999999, 255, false, false, false));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 999999, 255, false, false, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, DOWNED_DURATION_TICKS, 255, false, false, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, DOWNED_DURATION_TICKS, 255, false, false, false));
 
         // Create invisible bat mount to lock player position
         Bat mount = (Bat) player.getWorld().spawnEntity(player.getLocation().add(0, -1, 0), EntityType.BAT);
@@ -177,6 +183,50 @@ public class PlayerDeath implements Listener {
 
         // Mark player as dead
         playerMirror.get(player.getName()).setAlive(false);
+
+
+        for(int i = 0; i < DOWNED_DURATION_TICKS; i++) {
+            int finalI = i;
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    // Show progress bar in action bar
+                    double calcProgress = (double) finalI / DOWNED_DURATION_TICKS * 100;
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "-- Dauer bis respawn: " + ProgressBarHandler.progressBarsUpdate(calcProgress, ChatColor.DARK_RED) + ChatColor.GRAY + " --"));
+
+
+                    if (finalI == DOWNED_DURATION_TICKS - 1) {
+                        mount.setPassenger(null);
+                        mount.remove();
+                        playerBatMap.remove(player.getName());
+
+                        playerMirror.get(player.getName()).setAlive(true);
+                        respawnPlayerAtMedicalRoom(player);
+
+                        for (int i = 0; i < 36; i++) {
+                            if (player.getInventory().getItem(i) == null || player.getInventory().getItem(i).equals(Items.schulbuch1) || player.getInventory().getItem(i).equals(Items.schulbuch2)
+                                    || player.getInventory().getItem(i).equals(Items.schulbuch3) || player.getInventory().getItem(i).equals(Items.schulbuch4)
+                                    || player.getInventory().getItem(i).equals(Items.schulbuch5) || Items.ranzenList.contains(player.getInventory().getItem(i))) {
+                                continue;
+                            }
+                            if (Math.random() < ProbabilityConfig.getProbability("item_loss_on_death", 0.2)) {
+                                player.sendMessage(ChatColor.RED + "Du hast beim Sterben " + player.getInventory().getItem(i).getItemMeta().getDisplayName() + ChatColor.RED + " verloren!");
+                                player.getInventory().setItem(i, null);
+                            }
+                        }
+                    }
+                }
+            }.runTaskLater(SchoolWars.getPlugin(), i);
+        }
+    }
+
+    static void respawnPlayerAtMedicalRoom(Player player) {
+        player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 40, 1, false, false, false));
+        player.sendTitle("§4Du wurdest besiegt!", "Du wachst im Krankenzimmer wieder auf", 10, 70, 20);
+        player.playSound(player.getLocation(), "minecraft:block.beacon.deactivate", 1, 1);
+        player.teleport(new Location(player.getWorld(), -35.0, 88.0, 144.0, -90, 0));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 60, 255, true, true, true));
+        playerMirror.get(player.getName()).setInBossfight(false);
     }
 
     /**
