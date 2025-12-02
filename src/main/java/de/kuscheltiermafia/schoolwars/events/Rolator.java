@@ -20,6 +20,7 @@
 package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.config.TimeConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
 import org.bukkit.Location;
@@ -65,8 +66,9 @@ public class Rolator implements Listener {
                 p.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
                 BukkitRunnablesFicktEuch = false;
 
-                // ========== Dash movement loop (3 seconds) ==========
-                for (int i = 0; i < 20 * 3; i++) {
+                // ========== Dash movement loop (configurable duration) ==========
+                int rolatorDuration = TimeConfig.getTicks("rolator.duration", 20 * 3);
+                for (int i = 0; i < rolatorDuration; i++) {
                     new BukkitRunnable() {
                         @Override
                         public void run() {

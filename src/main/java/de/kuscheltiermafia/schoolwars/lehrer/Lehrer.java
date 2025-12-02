@@ -20,6 +20,7 @@
 package de.kuscheltiermafia.schoolwars.lehrer;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.config.TimeConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
@@ -266,7 +267,7 @@ public enum Lehrer {
     /**
      * Updates all teacher positions according to the current schedule.
      * <p>
-     * If instant is false, schedules the update to run after 15 seconds
+     * If instant is false, schedules the update based on times.properties
      * and then recursively schedules the next update.
      * </p>
      *
@@ -284,7 +285,7 @@ public enum Lehrer {
                         updateLehrerPosition(false);
                     }
                 }
-            }.runTaskLater(SchoolWars.getPlugin(), 20 * 15);
+            }.runTaskLater(SchoolWars.getPlugin(), TimeConfig.getTicks("lehrer.position_update_interval", 20 * 15));
         }
     }
 

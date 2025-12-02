@@ -20,6 +20,7 @@
 package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.config.TimeConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
 import de.kuscheltiermafia.schoolwars.mechanics.PlayerStun;
@@ -54,8 +55,8 @@ public class Minasisierung implements Listener {
     /** Tracks the current sacrifice progress for each player. */
     private static HashMap<Player, Integer> currentAutism = new HashMap<>();
 
-    /** Duration of the Minasisierung effect in ticks (30 seconds). */
-    public static int minasDauer = 20 * 30;
+    /** Duration of the Minasisierung effect in ticks. Configurable via times.properties. */
+    public static int minasDauer = TimeConfig.getTicks("minasisierung.duration", 20 * 30);
 
     /**
      * Activates the Minasisierung effect for a player.
@@ -149,7 +150,7 @@ public class Minasisierung implements Listener {
                                 onMinasisierung(p);
                                 currentAutism.put(p, 4);
                             }
-                        }.runTaskLater(SchoolWars.getPlugin(), 20 * 2);
+                        }.runTaskLater(SchoolWars.getPlugin(), TimeConfig.getTicks("minasisierung.activation_delay", 20 * 2));
                     }
                 }
             }catch (Exception ignored) {}
