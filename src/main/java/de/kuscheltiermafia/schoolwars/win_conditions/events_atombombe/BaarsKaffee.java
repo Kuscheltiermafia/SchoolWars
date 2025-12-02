@@ -2,6 +2,7 @@ package de.kuscheltiermafia.schoolwars.win_conditions.events_atombombe;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
+import de.kuscheltiermafia.schoolwars.config.TimeConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.BlockInteraction;
 import net.kyori.adventure.text.Component;
@@ -75,7 +76,8 @@ public class BaarsKaffee implements Listener {
         }
     }
 
-    private static final int duration = 20 * 60;
+    /** Duration of coffee brewing in ticks. Configurable via times.properties. */
+    private static final int duration = TimeConfig.getTicks("kaffee.brewing_duration", 20 * 60);
     private static boolean amBrauen = false;
 
     @EventHandler
@@ -102,7 +104,7 @@ public class BaarsKaffee implements Listener {
                             amBrauen = false;
                         }
                     }.runTaskLater(SchoolWars.getPlugin(), duration);
-                    BlockInteraction.progressBlock(e.getClickedBlock(), 20 * 60, "Kaffee kochen", "entity.cow.milk", 20 * 3);
+                    BlockInteraction.progressBlock(e.getClickedBlock(), duration, "Kaffee kochen", "entity.cow.milk", 20 * 3);
 
                 } else {
                     p.sendActionBar(Component.text( ChatColor.RED + "Du hast nicht die richtigen Zutaten, um Kaffee zu brauen!"));

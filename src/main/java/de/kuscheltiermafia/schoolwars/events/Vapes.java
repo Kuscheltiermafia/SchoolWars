@@ -1,5 +1,6 @@
 package de.kuscheltiermafia.schoolwars.events;
 
+import de.kuscheltiermafia.schoolwars.config.TimeConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
 import org.bukkit.Particle;
@@ -32,11 +33,12 @@ public class Vapes implements Listener {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 40, 1, false, false, false));
                 ParticleHandler.createParticles(p.getEyeLocation(), Particle.POOF, 10, 0, true, null);
 
+                int vapeEffectDuration = TimeConfig.getTicks("vape.effect_duration", 20 * 20);
                 for(ItemStack vape : getVapeEffects().keySet()) {
                     if (e.getItem().equals(vape)) {
                         PotionEffectType effectType = getVapeEffects().get(vape);
 
-                        p.addPotionEffect(new PotionEffect(effectType, 20 * 20, 1, false, false, false));
+                        p.addPotionEffect(new PotionEffect(effectType, vapeEffectDuration, 1, false, false, false));
                         p.getInventory().remove(e.getItem());
                         break;
                     }

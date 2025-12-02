@@ -21,6 +21,7 @@ package de.kuscheltiermafia.schoolwars.lehrer;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
+import de.kuscheltiermafia.schoolwars.config.TimeConfig;
 import de.kuscheltiermafia.schoolwars.items.ItemDrops;
 import io.github.realMorgon.sunriseLib.Sounds;
 import org.bukkit.Sound;
@@ -55,7 +56,7 @@ public class Stundenplan {
     /**
      * Updates the class schedule, either immediately or after a delay.
      *
-     * @param instant if true, updates immediately; otherwise schedules for 3 minutes later
+     * @param instant if true, updates immediately; otherwise schedules based on times.properties
      */
     public static void updateStundenplan(boolean instant) {
 
@@ -70,7 +71,7 @@ public class Stundenplan {
                         updateStundenplan(false);
                     }
                 }
-            }.runTaskLater(SchoolWars.getPlugin(), 20 * 60 * 3);
+            }.runTaskLater(SchoolWars.getPlugin(), TimeConfig.getTicks("stundenplan.update_interval", 20 * 60 * 3));
         }
     }
 

@@ -1,6 +1,7 @@
 package de.kuscheltiermafia.schoolwars.win_conditions;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.config.TimeConfig;
 import de.kuscheltiermafia.schoolwars.lehrer.Area;
 import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
 import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
@@ -48,7 +49,7 @@ public class AtombombeBossfight implements Listener {
     private static ArrayList<Player> fighters;
 
     /**
-     * Initiates the boss fight after a 5-second delay.
+     * Initiates the boss fight after a configurable delay.
      * Spawns the boss entity and sets up the fight area.
      */
     public static void startBossfight() {
@@ -89,7 +90,7 @@ public class AtombombeBossfight implements Listener {
                     raithenHealth.addPlayer(p);
                 }
             }
-        }.runTaskLater(SchoolWars.getPlugin(), 20 * 5);
+        }.runTaskLater(SchoolWars.getPlugin(), TimeConfig.getTicks("bossfight.start_delay", 20 * 5));
     }
 
     /**

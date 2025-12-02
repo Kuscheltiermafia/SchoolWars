@@ -21,6 +21,7 @@ package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
+import de.kuscheltiermafia.schoolwars.config.TimeConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
 import io.github.realMorgon.sunriseLib.Message;
@@ -105,14 +106,14 @@ public class Generalschluessel implements Listener {
                     door.setOpen(true);
                     block.setBlockData(door);
 
-                    // Auto-close door after 5 seconds
+                    // Auto-close door after configurable duration
                     new BukkitRunnable() {
                         @Override
                         public void run() {
                             door.setOpen(false);
                             block.setBlockData(door);
                         }
-                    }.runTaskLater(SchoolWars.getPlugin(), 20 * 5);
+                    }.runTaskLater(SchoolWars.getPlugin(), TimeConfig.getTicks("generalschluessel.door_duration", 20 * 5));
 
                     // ========== Risk check for secretariat encounter ==========
                     // Increase team's secretariat risk

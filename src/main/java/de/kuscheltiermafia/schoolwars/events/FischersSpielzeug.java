@@ -20,6 +20,7 @@
 package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.config.TimeConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
 import de.kuscheltiermafia.schoolwars.Team;
@@ -47,8 +48,8 @@ import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
  */
 public class FischersSpielzeug implements Listener {
 
-    /** Duration the game piece stays active in ticks (60 seconds). */
-    int fischerDauer = 60 * 20;
+    /** Duration the game piece stays active in ticks. Configurable via times.properties. */
+    int fischerDauer = TimeConfig.getTicks("fischer.duration", 60 * 20);
 
     /** Tracks game pieces by location with their hit count. */
     public static HashMap<Location, Integer> fischers_spielzeuge = new HashMap<>();

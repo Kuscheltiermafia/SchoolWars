@@ -1,6 +1,7 @@
 package de.kuscheltiermafia.schoolwars.win_conditions.events_atombombe;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.config.TimeConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.BlockInteraction;
 import de.kuscheltiermafia.schoolwars.mechanics.ProgressBarHandler;
@@ -38,7 +39,8 @@ public class Fluor implements Listener {
     private static final Location waschbecken3 = new Location(SchoolWars.WORLD, -15.0, 94.0, 194.0);
     private static final Location waschbecken4 = new Location(SchoolWars.WORLD, -17.0, 94.0, 194.0);
 
-    private static final int duration = 20 * 30;
+    /** Duration of fluorine evaporation in ticks. Configurable via times.properties. */
+    private static final int duration = TimeConfig.getTicks("fluor.evaporation_duration", 20 * 30);
     private static final Location ofen = new Location(SchoolWars.WORLD, -9.0, 94.0, 194.0);
 
     @EventHandler

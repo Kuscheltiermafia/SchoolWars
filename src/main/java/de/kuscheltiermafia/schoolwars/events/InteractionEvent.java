@@ -20,6 +20,7 @@
 package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.commands.ItemList;
+import de.kuscheltiermafia.schoolwars.config.TimeConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.lehrer.Raum;
 import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
@@ -165,7 +166,7 @@ public class InteractionEvent implements Listener {
         if(e.getDamager() instanceof Player hitter && e.getEntity() instanceof Player hit) {
 
             if(hitter.getInventory().getItemInMainHand().equals(Items.buffed_stuhl) && hitter.getCooldown(Material.OAK_STAIRS) < 2) {
-                hitter.setCooldown(Material.OAK_STAIRS, 20 * 6);
+                hitter.setCooldown(Material.OAK_STAIRS, TimeConfig.getTicks("stuhl.cooldown", 20 * 6));
 
                 ParticleHandler.createParticles(hit.getLocation().add(0, 1, 0), Particle.CRIT, 20, 0.2, true, null);
                 ParticleHandler.createParticles(hit.getLocation().add(0, 1, 0), Particle.CLOUD, 30, 0.2, true, null);

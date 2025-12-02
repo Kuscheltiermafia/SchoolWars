@@ -20,6 +20,7 @@
 package de.kuscheltiermafia.schoolwars.events;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.config.TimeConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.ProgressBarHandler;
 import io.github.realMorgon.sunriseLib.Sounds;
@@ -51,8 +52,8 @@ import java.util.HashMap;
  */
 public class KarlElixier implements Listener {
 
-    /** Duration of the shrinking effect in ticks (60 seconds). */
-    public int karlDauer = 60 * 20;
+    /** Duration of the shrinking effect in ticks. Configurable via times.properties. */
+    public int karlDauer = TimeConfig.getTicks("karl.duration", 60 * 20);
     
     /** Tracks whether each player is currently in the size increase phase. */
     static HashMap<String, Boolean> increase = new HashMap<>();

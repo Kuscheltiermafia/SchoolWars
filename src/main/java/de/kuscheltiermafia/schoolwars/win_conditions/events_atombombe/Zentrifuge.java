@@ -1,6 +1,7 @@
 package de.kuscheltiermafia.schoolwars.win_conditions.events_atombombe;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
+import de.kuscheltiermafia.schoolwars.config.TimeConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.BlockInteraction;
 import de.kuscheltiermafia.schoolwars.mechanics.ProgressBarHandler;
@@ -34,7 +35,8 @@ public class Zentrifuge implements Listener {
 
     ArrayList<ItemStack> zentrifugeInventory = new ArrayList<>();
 
-    static int duration = 20 * 30;
+    /** Duration of centrifuge processing in ticks. Configurable via times.properties. */
+    static int duration = TimeConfig.getTicks("zentrifuge.duration", 20 * 30);
 
     @EventHandler
     public void onZentrifugeUse(PlayerInteractEvent e) {
