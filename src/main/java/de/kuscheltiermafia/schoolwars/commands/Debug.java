@@ -506,4 +506,28 @@ public class Debug extends BaseCommand {
         sender.sendMessage(debugPrefix + "Reloaded probabilities!");
     }
 
+    /**
+     * Toggles presentation mode, which disables most game mechanics for demonstration purposes.
+     *
+     * @param sender
+     */
+    @Subcommand("presentationmode")
+    @CommandPermission("schoolwars.debug.presentationmode")
+    @Description("Toggles presentation mode for the sender")
+    public static void onPresentationModeCommand(CommandSender sender) {
+        switch (SchoolWars.presentationMode){
+            case true -> {
+                SchoolWars.presentationMode = false;
+                sender.sendMessage(debugPrefix + "Presentation mode disabled!");
+            }
+            case false -> {
+                SchoolWars.presentationMode = true;
+                sender.sendMessage(debugPrefix + "Presentation mode enabled!");
+            }
+        }
+        SchoolWars.getPlugin().getConfig().set("presentationMode", SchoolWars.presentationMode);
+        SchoolWars.getPlugin().saveConfig();
+        //TODO: Call presentation mode method
+    }
+
 }

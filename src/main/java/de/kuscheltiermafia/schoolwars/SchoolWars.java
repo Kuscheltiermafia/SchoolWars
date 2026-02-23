@@ -75,6 +75,9 @@ public final class SchoolWars extends JavaPlugin {
     /** Reference to the main game world ("schoolwars"). */
     public static World WORLD;
 
+    /** Flag indicating whether the world is in presentation mode (e.g., for showcasing features without starting a game). */
+    public static boolean presentationMode = false;
+
 
     /**
      * Called when the plugin is enabled.
@@ -101,11 +104,17 @@ public final class SchoolWars extends JavaPlugin {
 
         plugin = this;
 
+        //Create default config if not exists
+        saveDefaultConfig();
+
         // Initialize probability configuration
         ProbabilityConfig.initialize(this);
 
         // Initialize time configuration
         TimeConfig.initialize(this);
+
+        // Set the presentation mode flag based on config
+        presentationMode = getConfig().getBoolean("presentationMode", false);
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             try {
