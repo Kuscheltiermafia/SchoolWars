@@ -28,6 +28,7 @@ import de.kuscheltiermafia.schoolwars.events.SchulbuchLevels;
 import de.kuscheltiermafia.schoolwars.lehrer.*;
 import de.kuscheltiermafia.schoolwars.mechanics.Intro;
 import de.kuscheltiermafia.schoolwars.mechanics.PlayerStun;
+import de.kuscheltiermafia.schoolwars.mechanics.PresentationMode;
 import de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer;
 import de.kuscheltiermafia.schoolwars.win_conditions.AtombombeBossfight;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -531,4 +532,11 @@ public class Debug extends BaseCommand {
         PresentationMode.reloadPresentationMode();
     }
 
+    @Subcommand("rl-times")
+    @CommandPermission("schoolwars.debug.reload-times")
+    @Description("Reloads the time configuration")
+    public static void onReloadTimesCommand(CommandSender sender) {
+        de.kuscheltiermafia.schoolwars.config.TimeConfig.reload();
+        sender.sendMessage(debugPrefix + "Reloaded times config!");
+    }
 }
