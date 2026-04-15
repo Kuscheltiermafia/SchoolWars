@@ -19,6 +19,7 @@
 
 package de.kuscheltiermafia.schoolwars.lehrer;
 
+import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
 import org.bukkit.Bukkit;
@@ -132,6 +133,11 @@ public class LehrerQuests implements Listener {
      */
     @EventHandler
     public void onLehrerClick(PlayerInteractEntityEvent e) {
+        if(e.getRightClicked() instanceof Villager && SchoolWars.presentationMode) {
+            ((Villager) e.getRightClicked()).shakeHead();
+            e.setCancelled(true);
+            return;
+        }
         if (e.getRightClicked() instanceof Villager && Lehrer.lehrerEntityList.contains(e.getRightClicked()) && !questLehrerList.contains(e.getRightClicked())) {;
             e.getPlayer().sendMessage(ChatColor.GOLD + "Dieser Lehrer hat keine Aufgaben für dich!");
             ((Villager) e.getRightClicked()).shakeHead();
