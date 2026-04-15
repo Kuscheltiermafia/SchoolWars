@@ -163,6 +163,7 @@ public final class SchoolWars extends JavaPlugin {
         pluginManager.registerEvents(new AtombombeBossfight(), this);
         pluginManager.registerEvents(new RanzenEvents(), this);
         pluginManager.registerEvents(new StartGameEvent(), this);
+        pluginManager.registerEvents(new PlayerFightEvent(), this);
 
         PaperCommandManager manager = new PaperCommandManager(this);
         manager.registerCommand(new Debug());

@@ -202,31 +202,35 @@ public class PlayerDeath implements Listener {
 
                         playerMirror.get(player.getName()).setAlive(true);
                         respawnPlayerAtMedicalRoom(player);
+                        loseItems(player);
 
-                        for (int i = 0; i < 36; i++) {
-                            if (player.getInventory().getItem(i) == null || player.getInventory().getItem(i).equals(Items.schulbuch1) || player.getInventory().getItem(i).equals(Items.schulbuch2)
-                                    || player.getInventory().getItem(i).equals(Items.schulbuch3) || player.getInventory().getItem(i).equals(Items.schulbuch4)
-                                    || player.getInventory().getItem(i).equals(Items.schulbuch5) || Items.ranzenList.contains(player.getInventory().getItem(i))) {
-                                continue;
-                            }
-                            if (Math.random() < ProbabilityConfig.getProbability("item_loss_on_death", 0.2)) {
-                                player.sendMessage(ChatColor.RED + "Du hast beim Sterben " + player.getInventory().getItem(i).getItemMeta().getDisplayName() + ChatColor.RED + " verloren!");
-                                player.getInventory().setItem(i, null);
-                            }
-                        }
                     }
                 }
             }.runTaskLater(SchoolWars.getPlugin(), i);
         }
     }
 
-    static void respawnPlayerAtMedicalRoom(Player player) {
+    public static void respawnPlayerAtMedicalRoom(Player player) {
         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 40, 1, false, false, false));
         player.sendTitle("§4Du wurdest besiegt!", "Du wachst im Krankenzimmer wieder auf", 10, 70, 20);
         player.playSound(player.getLocation(), "minecraft:block.beacon.deactivate", 1, 1);
         player.teleport(new Location(player.getWorld(), -35.0, 88.0, 144.0, -90, 0));
         player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 60, 255, true, true, true));
         playerMirror.get(player.getName()).setInBossfight(false);
+    }
+
+    public static void loseItems(Player player){
+        for (int i = 0; i < 36; i++) {
+            if (player.getInventory().getItem(i) == null || player.getInventory().getItem(i).equals(Items.schulbuch1) || player.getInventory().getItem(i).equals(Items.schulbuch2)
+                    || player.getInventory().getItem(i).equals(Items.schulbuch3) || player.getInventory().getItem(i).equals(Items.schulbuch4)
+                    || player.getInventory().getItem(i).equals(Items.schulbuch5) || Items.ranzenList.contains(player.getInventory().getItem(i))) {
+                continue;
+            }
+            if (Math.random() < ProbabilityConfig.getProbability("item_loss_on_death", 0.2)) {
+                player.sendMessage(ChatColor.RED + "Du hast beim Sterben " + player.getInventory().getItem(i).getItemMeta().getDisplayName() + ChatColor.RED + " verloren!");
+                player.getInventory().setItem(i, null);
+            }
+        }
     }
 
     /**

@@ -32,6 +32,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.mechanics.PlayerDeath.loseItems;
+import static de.kuscheltiermafia.schoolwars.mechanics.PlayerDeath.respawnPlayerAtMedicalRoom;
 
 /**
  * Handles player join events in SchoolWars.
@@ -62,17 +64,6 @@ public class JoinEvent implements Listener {
 
         if(!playerMirror.containsKey(p.getName())) playerMirror.put(p.getName(), new PlayerMirror(p.getName()));
 
-        p.teleport(new Location(p.getWorld(), -24, 80.5, 176, 90, 0));
-        p.setRespawnLocation(new Location(p.getWorld(), -33.5, 88, 145.5, -90, 0));
-        p.setFoodLevel(20);
-        p.setSaturation(0);
-
-//Spawn particles
-
-        Particles.showForAll(Particle.LAVA, p.getLocation(), 40, 0, 0.2, 0, 0, 0);
-        Particles.showForAll(Particle.EXPLOSION, p.getLocation(), 10, 0, 0.2, 0, 0, 0);
-        Particles.showForAll(Particle.PORTAL, p.getLocation(), 100, 0, 0.2, 0, 0, 0);
-
 //Send Welcome Message
         p.sendMessage( ChatColor.YELLOW + "---------------SCHOOL WARS---------------");
         p.sendMessage("Willkommen in diesem grandiosen Spiel,");
@@ -80,26 +71,7 @@ public class JoinEvent implements Listener {
         p.sendMessage("die " + ChatColor.RED + "Freuden der Schule" + ChatColor.WHITE + " erfahren kannst.");
         p.sendMessage( ChatColor.YELLOW + "-----------------------------------------");
 
-//Put Player back in Team after Disconnect
-        if (SchoolWars.gameStarted){
-
-            p.sendMessage("§e[SchoolWars] Das Spiel hat bereits begonnen.");
-
-            if (playerMirror.get(p.getName()).getTeam() != null){
-                playerMirror.get(p.getName()).getTeam().readyPlayer(p);
-                p.setGameMode(GameMode.SURVIVAL);
-            }else{
-                p.sendMessage("§e[SchoolWars] Du bist keinem Team mehr zugeordnet.");
-                p.setGameMode(GameMode.SPECTATOR);
-            }
-
-        }else {
-            e.getPlayer().sendMessage(ChatColor.YELLOW + "[SchoolWars] Das Spiel hat noch nicht begonnen.");
-            p.setGameMode(GameMode.SURVIVAL);
-
-            Team.resetPlayer(p);
-        }
-//Custom Join Message for selected Players
+        //Custom Join Message for selected Players
         e.setJoinMessage("");
 
         for(Player a : Debug.joinMsg) {
@@ -111,6 +83,48 @@ public class JoinEvent implements Listener {
             StartGame.openGUI(StartGame.menuOpener, false);
             StartGame.menuOpen = true;
         }
+
+        //Put Player back in Team after Disconnect
+        if (SchoolWars.gameStarted){
+
+            p.sendMessage("§e[SchoolWars] Das Spiel hat bereits begonnen.");
+
+
+            if (playerMirror.get(p.getName()).getTeam() != null){
+                playerMirror.get(p.getName()).getTeam().readyPlayer(p);
+                p.setGameMode(GameMode.SURVIVAL);
+            }else{
+                p.sendMessage("§e[SchoolWars] Du bist keinem Team mehr zugeordnet.");
+                p.setGameMode(GameMode.SPECTATOR);
+            }
+
+            //Handle Combat Logger
+            if(playerMirror.get(p.getName()).isInCombat()) {
+                p.sendMessage(ChatColor.RED + "[SchoolWars] Du hast das Spiel verlassen während du im Kampf warst. Du bist gestorben!");
+                respawnPlayerAtMedicalRoom(p);
+                loseItems(p);
+            }
+
+            return;
+
+        }else {
+            e.getPlayer().sendMessage(ChatColor.YELLOW + "[SchoolWars] Das Spiel hat noch nicht begonnen.");
+            p.setGameMode(GameMode.SURVIVAL);
+
+            Team.resetPlayer(p);
+        }
+
+        p.teleport(new Location(p.getWorld(), -24, 80.5, 176, 90, 0));
+        p.setRespawnLocation(new Location(p.getWorld(), -33.5, 88, 145.5, -90, 0));
+        p.setFoodLevel(20);
+        p.setSaturation(0);
+
+//Spawn particles
+
+        Particles.showForAll(Particle.LAVA, p.getLocation(), 40, 0, 0.2, 0, 0, 0);
+        Particles.showForAll(Particle.EXPLOSION, p.getLocation(), 10, 0, 0.2, 0, 0, 0);
+        Particles.showForAll(Particle.PORTAL, p.getLocation(), 100, 0, 0.2, 0, 0, 0);
+
 
     }
 }
