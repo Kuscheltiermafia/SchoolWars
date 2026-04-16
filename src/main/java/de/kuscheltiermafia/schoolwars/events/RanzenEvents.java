@@ -16,7 +16,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
-import static de.kuscheltiermafia.schoolwars.win_conditions.Ranzen.*;
+import static de.kuscheltiermafia.schoolwars.events.win_conditions.Ranzen.*;
 
 /**
  * Handles backpack (Ranzen) placement and pickup events.

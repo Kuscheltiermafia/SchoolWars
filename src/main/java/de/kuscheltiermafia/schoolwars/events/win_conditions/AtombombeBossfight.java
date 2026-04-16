@@ -1,11 +1,11 @@
-package de.kuscheltiermafia.schoolwars.win_conditions;
+package de.kuscheltiermafia.schoolwars.events.win_conditions;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.config.TimeConfig;
 import de.kuscheltiermafia.schoolwars.lehrer.Area;
 import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
 import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
-import de.kuscheltiermafia.schoolwars.win_conditions.events_atombombe.AtombombeEvents;
+import de.kuscheltiermafia.schoolwars.events.win_conditions.events_atombombe.AtombombeEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

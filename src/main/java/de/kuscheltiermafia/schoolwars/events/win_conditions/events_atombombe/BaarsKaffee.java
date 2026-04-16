@@ -1,4 +1,4 @@
-package de.kuscheltiermafia.schoolwars.win_conditions.events_atombombe;
+package de.kuscheltiermafia.schoolwars.events.win_conditions.events_atombombe;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;

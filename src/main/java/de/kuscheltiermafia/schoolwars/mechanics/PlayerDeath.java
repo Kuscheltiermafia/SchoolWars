@@ -23,7 +23,7 @@ import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.Team;
 import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
-import de.kuscheltiermafia.schoolwars.win_conditions.Ranzen;
+import de.kuscheltiermafia.schoolwars.events.win_conditions.Ranzen;
 import io.github.realMorgon.sunriseLib.Message;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;

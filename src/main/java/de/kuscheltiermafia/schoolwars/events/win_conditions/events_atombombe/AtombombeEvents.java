@@ -17,19 +17,15 @@
  *
  */
 
-package de.kuscheltiermafia.schoolwars.win_conditions.events_atombombe;
+package de.kuscheltiermafia.schoolwars.events.win_conditions.events_atombombe;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
-import de.kuscheltiermafia.schoolwars.events.ManageFoodLevel;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.EndGame;
-import de.kuscheltiermafia.schoolwars.mechanics.ProgressBarHandler;
 import de.kuscheltiermafia.schoolwars.Team;
-import de.kuscheltiermafia.schoolwars.win_conditions.AtombombeBossfight;
-import de.kuscheltiermafia.schoolwars.win_conditions.Ranzen;
+import de.kuscheltiermafia.schoolwars.events.win_conditions.AtombombeBossfight;
+import de.kuscheltiermafia.schoolwars.events.win_conditions.Ranzen;
 import net.kyori.adventure.text.Component;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;

@@ -22,11 +22,9 @@ package de.kuscheltiermafia.schoolwars.events;
 import de.kuscheltiermafia.schoolwars.commands.ItemList;
 import de.kuscheltiermafia.schoolwars.config.TimeConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
-import de.kuscheltiermafia.schoolwars.lehrer.Raum;
 import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
-import de.kuscheltiermafia.schoolwars.mechanics.PlayerStun;
+import de.kuscheltiermafia.schoolwars.events.autism.PlayerStun;
 import org.bukkit.*;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
@@ -42,8 +40,6 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-
-import javax.management.openmbean.OpenMBeanInfoSupport;
 
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 

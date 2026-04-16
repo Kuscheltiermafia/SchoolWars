@@ -17,7 +17,7 @@
  *
  */
 
-package de.kuscheltiermafia.schoolwars.mechanics;
+package de.kuscheltiermafia.schoolwars.events.autism;
 
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.items.Items;

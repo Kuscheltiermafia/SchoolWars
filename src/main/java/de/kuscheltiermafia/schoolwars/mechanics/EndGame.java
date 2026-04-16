@@ -23,15 +23,13 @@ import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.Team;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
-import de.kuscheltiermafia.schoolwars.win_conditions.Ranzen;
+import de.kuscheltiermafia.schoolwars.events.win_conditions.Ranzen;
 import io.github.realMorgon.sunriseLib.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
-import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.ScoreboardManager;
 
 import static de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer.revivePlayer;
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;

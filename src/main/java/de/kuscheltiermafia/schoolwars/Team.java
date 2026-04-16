@@ -21,7 +21,7 @@ package de.kuscheltiermafia.schoolwars;
 
 import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
-import de.kuscheltiermafia.schoolwars.win_conditions.Ranzen;
+import de.kuscheltiermafia.schoolwars.events.win_conditions.Ranzen;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static de.kuscheltiermafia.schoolwars.win_conditions.Ranzen.ranzenAmount;
+import static de.kuscheltiermafia.schoolwars.events.win_conditions.Ranzen.ranzenAmount;
 import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
 
 /**
