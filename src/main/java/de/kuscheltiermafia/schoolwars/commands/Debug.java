@@ -524,7 +524,6 @@ public class Debug extends BaseCommand {
             case false -> {
                 SchoolWars.presentationMode = true;
                 sender.sendMessage(debugPrefix + "Presentation mode enabled!");
-                sender.sendMessage(debugPrefix + "Please note that this will disable should the server restart!");
             }
         }
         SchoolWars.getPlugin().getConfig().set("presentationMode", SchoolWars.presentationMode);
