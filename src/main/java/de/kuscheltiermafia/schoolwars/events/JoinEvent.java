@@ -23,6 +23,7 @@ import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.commands.Debug;
 import de.kuscheltiermafia.schoolwars.PlayerMirror;
 import de.kuscheltiermafia.schoolwars.Team;
+import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.StartGame;
 import io.github.realMorgon.sunriseLib.Particles;
 import org.bukkit.*;
@@ -107,11 +108,17 @@ public class JoinEvent implements Listener {
 
             return;
 
-        }else {
+        }else if (!SchoolWars.presentationMode) {
             e.getPlayer().sendMessage(ChatColor.YELLOW + "[SchoolWars] Das Spiel hat noch nicht begonnen.");
             p.setGameMode(GameMode.SURVIVAL);
 
             Team.resetPlayer(p);
+        }else if(SchoolWars.presentationMode){
+            //Presentationmode
+            e.getPlayer().getInventory().clear();
+            e.getPlayer().getInventory().addItem(Items.general_schluessel);
+            e.getPlayer().sendMessage(ChatColor.YELLOW + "[SchoolWars] Die Schule ist im Präsentiermodus. Viel Spaß beim Erkunden!");
+            e.getPlayer().sendMessage(ChatColor.GRAY + "[SchoolWars] Nutze den Generalschlüssel für Eisentüren!");
         }
 
         p.teleport(new Location(p.getWorld(), -24, 80.5, 176, 90, 0));

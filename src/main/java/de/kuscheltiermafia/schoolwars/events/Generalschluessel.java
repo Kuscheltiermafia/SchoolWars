@@ -34,6 +34,7 @@ import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -158,6 +159,16 @@ public class Generalschluessel implements Listener {
                 e.setCancelled(true);
                 p.getInventory().addItem(new ItemStack(Items.general_schluessel));
             }
+        }
+    }
+
+    /**
+     *Prevents kids to drop the key when the map is in Presentationmode
+     */
+    @EventHandler
+    public void onDropGeneralschluessel(PlayerDropItemEvent e){
+        if(SchoolWars.presentationMode && e.getItemDrop().getItemStack().equals(Items.general_schluessel)){
+            e.setCancelled(true);
         }
     }
 }

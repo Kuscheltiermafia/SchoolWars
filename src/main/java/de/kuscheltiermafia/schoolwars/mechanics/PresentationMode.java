@@ -12,7 +12,6 @@ import org.bukkit.block.Sign;
 import org.bukkit.block.sign.Side;
 
 public class PresentationMode {
-    //TODO: Start Button entfernen, Ghost Busters Schränke zu machen, Login Nachricht entfernen (weil Ausgang nicht offensichtlich), Türen öffnen
 
     static Location ghostBustersLocation1 = new Location(SchoolWars.WORLD, 38.0, 95.0, 200.0);
     static Location ghostBustersLocation2 = new Location(SchoolWars.WORLD, 38.0, 94.0, 200.0);
@@ -53,13 +52,11 @@ public class PresentationMode {
                 destination.getBlock().setType(from.getBlock().getType());
                 destination.getBlock().setBlockData(from.getBlock().getBlockData());
                 if (from.getBlock().getState() instanceof Sign fromSign && destination.getBlock().getState() instanceof Sign toSign) {
-                    Bukkit.broadcastMessage("Copying sign at " + from + " to " + destination);
                     for (int k = 0; k < 4; k++) {
                         // Zeile als Component holen
                         Component line = fromSign.getSide(Side.FRONT).line(k);
                         // Zeile auf das Ziel-Schild setzen
                         toSign.getSide(Side.FRONT).line(k, line);
-                        Bukkit.broadcastMessage(line.toString());
                     }
                     toSign.update();
                 }
