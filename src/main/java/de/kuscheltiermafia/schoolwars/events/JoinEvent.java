@@ -19,9 +19,9 @@
 
 package de.kuscheltiermafia.schoolwars.events;
 
+import de.kuscheltiermafia.schoolwars.PlayerData;
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.commands.Debug;
-import de.kuscheltiermafia.schoolwars.PlayerMirror;
 import de.kuscheltiermafia.schoolwars.Team;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.mechanics.StartGame;
@@ -32,7 +32,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerData.playerData;
 import static de.kuscheltiermafia.schoolwars.mechanics.PlayerDeath.loseItems;
 import static de.kuscheltiermafia.schoolwars.mechanics.PlayerDeath.respawnPlayerAtMedicalRoom;
 
@@ -41,7 +41,7 @@ import static de.kuscheltiermafia.schoolwars.mechanics.PlayerDeath.respawnPlayer
  * <p>
  * When a player joins, this class:
  * <ul>
- *   <li>Creates or retrieves their PlayerMirror</li>
+ *   <li>Creates or retrieves their PlayerData</li>
  *   <li>Teleports them to the spawn location</li>
  *   <li>Displays welcome particles and messages</li>
  *   <li>Handles game state (rejoining during active game)</li>
@@ -63,7 +63,7 @@ public class JoinEvent implements Listener {
 
         Player p = e.getPlayer();
 
-        if(!playerMirror.containsKey(p.getName())) playerMirror.put(p.getName(), new PlayerMirror(p.getName()));
+        if(!playerData.containsKey(p.getName())) playerData.put(p.getName(), new PlayerData(p.getName()));
 
 //Send Welcome Message
         p.sendMessage( ChatColor.YELLOW + "---------------SCHOOL WARS---------------");
@@ -91,8 +91,8 @@ public class JoinEvent implements Listener {
             p.sendMessage("§e[SchoolWars] Das Spiel hat bereits begonnen.");
 
 
-            if (playerMirror.get(p.getName()).getTeam() != null){
-                playerMirror.get(p.getName()).getTeam().readyPlayer(p);
+            if (playerData.get(p.getName()).getTeam() != null){
+                playerData.get(p.getName()).getTeam().readyPlayer(p);
                 p.setGameMode(GameMode.SURVIVAL);
             }else{
                 p.sendMessage("§e[SchoolWars] Du bist keinem Team mehr zugeordnet.");
@@ -100,7 +100,7 @@ public class JoinEvent implements Listener {
             }
 
             //Handle Combat Logger
-            if(playerMirror.get(p.getName()).isInCombat()) {
+            if(playerData.get(p.getName()).isInCombat()) {
                 p.sendMessage(ChatColor.RED + "[SchoolWars] Du hast das Spiel verlassen während du im Kampf warst. Du bist gestorben!");
                 respawnPlayerAtMedicalRoom(p);
                 loseItems(p);

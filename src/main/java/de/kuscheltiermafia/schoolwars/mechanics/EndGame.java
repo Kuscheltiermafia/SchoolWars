@@ -32,7 +32,7 @@ import org.bukkit.entity.Villager;
 import org.bukkit.scoreboard.Scoreboard;
 
 import static de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer.revivePlayer;
-import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerData.playerData;
 
 /**
  * Handles the cleanup and reset when a SchoolWars game ends.
@@ -63,7 +63,7 @@ public class EndGame {
         SchoolWars.gameStarted = false;
 
         for(Player p : Bukkit.getOnlinePlayers()) {
-            if(!playerMirror.get(p.getName()).isAlive()) {
+            if(!playerData.get(p.getName()).isAlive()) {
                 revivePlayer(p, p);
             }
         }
@@ -85,7 +85,7 @@ public class EndGame {
         Items.clearSpawnedItems();
 
         Lehrer.removeAllLehrer();
-        playerMirror.clear();
+        playerData.clear();
 
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
         for (org.bukkit.scoreboard.Team team  : scoreboard.getTeams()) {

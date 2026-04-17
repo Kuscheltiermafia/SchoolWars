@@ -25,6 +25,7 @@ import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.events.win_conditions.Ranzen;
 import io.github.realMorgon.sunriseLib.Message;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
@@ -42,7 +43,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import static de.kuscheltiermafia.schoolwars.mechanics.RevivePlayer.playerBatMap;
-import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerData.playerData;
 
 /**
  * Handles player death mechanics in SchoolWars.
@@ -115,14 +116,14 @@ public class PlayerDeath implements Listener {
             e.setCancelled(true);
 
             String playerName = player.getName();
-            Team team = playerMirror.get(player.getName()).getTeam();
+            Team team = playerData.get(player.getName()).getTeam();
 
             String killerName = "";
 
             // Prepare killer's name for death message
             if (player.getKiller() != null) {
                 Player killer = player.getKiller();
-                killerName = playerMirror.get(killer.getName()).getTeam().prefix + killer.getName();
+                killerName = LegacyComponentSerializer.legacySection().serialize( playerData.get(killer.getName()).getTeam().prefix) + killer.getName();
             }
 
             // Send appropriate death message based on damager type
@@ -136,7 +137,7 @@ public class PlayerDeath implements Listener {
 
             // Drop the team's backpack if player was carrying it
             if(player.getInventory().contains(team.ranzen_item) && player.getKiller() != null) {
-                Ranzen.destroyRanzen(player.getKiller(), team, player.getLocation());
+                Ranzen.stealRanzen(player.getKiller(), team, player.getLocation());
                 player.getInventory().remove(new ItemStack(team.ranzen_item));
             }
 
@@ -152,7 +153,7 @@ public class PlayerDeath implements Listener {
     private static void handleDeath(Player player) {
 
         // ========== Handle bossfight death (special respawn) ==========
-        if (playerMirror.get(player.getName()).isInBossfight()) {
+        if (playerData.get(player.getName()).isInBossfight()) {
             respawnPlayerAtMedicalRoom(player);
             return;
         }
@@ -182,7 +183,7 @@ public class PlayerDeath implements Listener {
         playerBatMap.put(player.getName(), mount.getUniqueId());
 
         // Mark player as dead
-        playerMirror.get(player.getName()).setAlive(false);
+        playerData.get(player.getName()).setAlive(false);
 
 
         for(int i = 0; i < DOWNED_DURATION_TICKS; i++) {
@@ -200,7 +201,7 @@ public class PlayerDeath implements Listener {
                         mount.remove();
                         playerBatMap.remove(player.getName());
 
-                        playerMirror.get(player.getName()).setAlive(true);
+                        playerData.get(player.getName()).setAlive(true);
                         respawnPlayerAtMedicalRoom(player);
                         loseItems(player);
 
@@ -216,7 +217,7 @@ public class PlayerDeath implements Listener {
         player.playSound(player.getLocation(), "minecraft:block.beacon.deactivate", 1, 1);
         player.teleport(new Location(player.getWorld(), -35.0, 88.0, 144.0, -90, 0));
         player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 60, 255, true, true, true));
-        playerMirror.get(player.getName()).setInBossfight(false);
+        playerData.get(player.getName()).setInBossfight(false);
     }
 
     public static void loseItems(Player player){
@@ -252,7 +253,7 @@ public class PlayerDeath implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
         try {
-            if (!playerMirror.get(e.getPlayer().getName()).isAlive()) {
+            if (!playerData.get(e.getPlayer().getName()).isAlive()) {
                 e.setCancelled(true);
             }
         }catch (Exception ignored){}
@@ -265,7 +266,7 @@ public class PlayerDeath implements Listener {
     public void onPunch(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player) {
             try {
-                if (!playerMirror.get(e.getDamager().getName()).isAlive()) {
+                if (!playerData.get(e.getDamager().getName()).isAlive()) {
                     e.setCancelled(true);
                 }
             }catch (Exception ignored){}

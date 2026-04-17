@@ -19,9 +19,7 @@
 
 package de.kuscheltiermafia.schoolwars.mechanics;
 
-import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,7 +30,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.HashMap;
 import java.util.UUID;
 
-import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerData.playerData;
 
 /**
  * Handles player revival mechanics.
@@ -63,7 +61,7 @@ public class RevivePlayer {
      */
     public static void revivePlayer(Player player, Player target) {
 
-        if (playerMirror.get(target.getName()).isAlive()) {
+        if (playerData.get(target.getName()).isAlive()) {
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + "Dieser Spieler ist nicht tot und kann nicht wiederbelebt werden."));
             return;
         }
@@ -79,7 +77,7 @@ public class RevivePlayer {
 
         playerBatMap.remove(target.getName());
 
-        playerMirror.get(target.getName()).setAlive(true);
+        playerData.get(target.getName()).setAlive(true);
 
         target.sendTitle("§aDu wurdest wiederbelebt!", player.getDisplayName() + ChatColor.GRAY + " hat dir geholfen", 10, 70, 20);
     }

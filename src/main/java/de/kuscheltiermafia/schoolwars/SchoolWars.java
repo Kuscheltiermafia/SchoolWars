@@ -45,7 +45,7 @@ import org.bukkit.entity.Villager;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerData.playerData;
 
 /**
  * Main plugin class for SchoolWars - a Minecraft minigame plugin.
@@ -120,7 +120,7 @@ public final class SchoolWars extends JavaPlugin {
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             try {
-                playerMirror.put(p.getName(), new PlayerMirror(p.getName()));
+                playerData.put(p.getName(), new PlayerData(p.getName()));
             }catch (Exception ignored){}
             playerCount++;
         }

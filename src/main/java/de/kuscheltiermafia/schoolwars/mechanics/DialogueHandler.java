@@ -32,7 +32,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerData.playerData;
 
 /**
  * Handles NPC dialogue interactions with teachers.
@@ -60,19 +60,19 @@ public class DialogueHandler implements Listener {
     }
 
     public static void createDialogue(Player p, ArrayList<String> dialogue) {
-        if(playerMirror.get(p.getName()).getCurrentDialogueStep() != null) {
-            playerMirror.get(p.getName()).setCurrentDialogue(dialogue);
-            playerMirror.get(p.getName()).setCurrentDialogueStep(0);
+        if(playerData.get(p.getName()).getCurrentDialogueStep() != null) {
+            playerData.get(p.getName()).setCurrentDialogue(dialogue);
+            playerData.get(p.getName()).setCurrentDialogueStep(0);
             sendDialogue(p);
         }
     }
 
     public static void sendDialogue(Player p) {
-        if(playerMirror.get(p.getName()).getCurrentDialogueStep() != null && playerMirror.get(p.getName()).getCurrentDialogueStep() <= playerMirror.get(p.getName()).getCurrentDialogue().size()) {
-           splitDialogue(p, playerMirror.get(p.getName()).getCurrentDialogue().get(playerMirror.get(p.getName()).getCurrentDialogueStep()));
-           playerMirror.get(p.getName()).setCurrentDialogueStep(playerMirror.get(p.getName()).getCurrentDialogueStep() + 1);
+        if(playerData.get(p.getName()).getCurrentDialogueStep() != null && playerData.get(p.getName()).getCurrentDialogueStep() <= playerData.get(p.getName()).getCurrentDialogue().size()) {
+           splitDialogue(p, playerData.get(p.getName()).getCurrentDialogue().get(playerData.get(p.getName()).getCurrentDialogueStep()));
+           playerData.get(p.getName()).setCurrentDialogueStep(playerData.get(p.getName()).getCurrentDialogueStep() + 1);
         }else{
-            playerMirror.get(p.getName()).clearDialogue();
+            playerData.get(p.getName()).clearDialogue();
         }
     }
 

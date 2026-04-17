@@ -44,7 +44,7 @@ import java.util.List;
 
 import static de.kuscheltiermafia.schoolwars.lehrer.Lehrer.lehrerEntityList;
 import static de.kuscheltiermafia.schoolwars.lehrer.Lehrer.lehrerList;
-import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerData.playerData;
 import static de.kuscheltiermafia.schoolwars.lehrer.LehrerQuests.questLehrerList;
 
 /**
@@ -144,14 +144,14 @@ public class Debug extends BaseCommand {
 
         if (playerName == null || playerName.isEmpty()) {
             try {
-                p.sendMessage(debugPrefix + "Reputation: " + ChatColor.RED + playerMirror.get(p.getName()).getReputation(Lehrer.getLehrerByName(lehrerName)));
+                p.sendMessage(debugPrefix + "Reputation: " + ChatColor.RED + playerData.get(p.getName()).getReputation(Lehrer.getLehrerByName(lehrerName)));
             } catch (Exception faultyInput) {
                 p.sendMessage(debugPrefix + "Lehrer not found!");
             }
         } else if (playerName != null && !playerName.isEmpty()) {
             try {
                 Player target = Bukkit.getPlayer(playerName);
-                p.sendMessage(debugPrefix + "Reputation: " + ChatColor.RED + playerMirror.get(target.getName()).getReputation(Lehrer.getLehrerByName(lehrerName)));
+                p.sendMessage(debugPrefix + "Reputation: " + ChatColor.RED + playerData.get(target.getName()).getReputation(Lehrer.getLehrerByName(lehrerName)));
             } catch (Exception faultyInput) {
                 p.sendMessage(debugPrefix + "Lehrer not found!");
             }
@@ -322,10 +322,10 @@ public class Debug extends BaseCommand {
         public static void onVerweiseAddCommand(CommandSender sender, @Name("amount") String amount, @Name("player") @Optional String playerName) {
             Player p = (Player) sender;
             if (playerName == null || playerName.isEmpty()) {
-                playerMirror.get(p.getName()).addVerweis(Integer.parseInt(amount));
+                playerData.get(p.getName()).addVerweis(Integer.parseInt(amount));
                 p.sendMessage(debugPrefix + "Added Verweis: " + amount);
             } else if (playerName != null && !playerName.isEmpty()) {
-                playerMirror.get(playerName).addVerweis(Integer.parseInt(amount));
+                playerData.get(playerName).addVerweis(Integer.parseInt(amount));
                 p.sendMessage(debugPrefix + "Added Verweis: " + amount + " to " + playerName);
             }else {
                 p.sendMessage(debugPrefix + "Please use /debug verweise <get>");
@@ -347,9 +347,9 @@ public class Debug extends BaseCommand {
         public static void onVerweiseGetCommand(CommandSender sender, @Name("player") @Optional String playerName) {
             Player p = (Player) sender;
             if (playerName == null || playerName.isEmpty()) {
-                p.sendMessage(debugPrefix + "Your current Verweise: " + playerMirror.get(p.getName()).getVerweise());
+                p.sendMessage(debugPrefix + "Your current Verweise: " + playerData.get(p.getName()).getVerweise());
             } else if (playerName != null && !playerName.isEmpty()) {
-                p.sendMessage(debugPrefix + playerName + "'s current Verweise: " + playerMirror.get(playerName).getVerweise());
+                p.sendMessage(debugPrefix + playerName + "'s current Verweise: " + playerData.get(playerName).getVerweise());
             }else {
                 p.sendMessage(debugPrefix + "Please use /debug verweise <get>");
                 p.sendMessage(debugPrefix + "or /debug verweise <get> <player>");

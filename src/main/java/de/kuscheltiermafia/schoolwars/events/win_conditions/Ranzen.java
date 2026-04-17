@@ -22,6 +22,10 @@ package de.kuscheltiermafia.schoolwars.events.win_conditions;
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.Team;
 import de.kuscheltiermafia.schoolwars.items.Items;
+import io.github.realMorgon.sunriseLib.Message;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.title.Title;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
@@ -33,10 +37,12 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerData.playerData;
 
 /**
  * Represents team backpacks (Ranzen) that serve as the primary win condition.
@@ -70,7 +76,7 @@ public enum Ranzen {
 
     static {
         for (Team team : Team.values()) {
-            ranzenMetadatas.add(team.teamName);
+            ranzenMetadatas.add(LegacyComponentSerializer.legacySection().serialize(team.teamName));
         }
     }
 
@@ -104,32 +110,38 @@ public enum Ranzen {
     }
 
     /**
-     * Handles the destruction of a team's backpack.
+     * Handles the stealing of a team's backpack.
      * <p>
-     * Announces the destruction to all players, updates the backpack count,
+     * Announces the steal to all players, updates the backpack count,
      * and notifies if the team has lost all backpacks.
      * </p>
      *
-     * @param killer the player or Mob who destroyed the backpack
-     * @param team the team whose backpack was destroyed
-     * @param loc the location where the backpack was destroyed
+     * @param killer the player or Mob who stole the backpack
+     * @param team the team whose backpack was stolen
+     * @param loc the location where the backpack was stolen
      */
-    public static void destroyRanzen(Entity killer, Team team, Location loc) {
+    public static void stealRanzen(Player killer, Team team, Location loc) {
 
         for(Player online : Bukkit.getOnlinePlayers()) {
             online.spawnParticle(Particle.EXPLOSION, loc, 5, 0, 0, 0);
 
             //todo: remove prefix
 
-            online.sendTitle(ChatColor.DARK_RED + killer.getName() + " hat einen Ranzen zerstört!", ChatColor.DARK_GRAY + "- Es war ein Ranzen von den " + team.name().substring(0, 1).toUpperCase() + team.name().substring(1) + "N " + ChatColor.DARK_GRAY + "-", 10, 50, 10);
+            online.showTitle(Title.title(
+                    Component.text (ChatColor.DARK_RED + killer.getName() + " hat einen Ranzen gestohlen!"),
+                    Component.text(ChatColor.DARK_GRAY + "- Es war ein Ranzen von den " + LegacyComponentSerializer.legacySection().serialize(team.teamName).toUpperCase() + "N " + ChatColor.DARK_GRAY + "-"),
+                    Title.Times.times(Duration.of(10/20, ChronoUnit.SECONDS), Duration.of(50/20, ChronoUnit.SECONDS), Duration.of(10/20, ChronoUnit.SECONDS))
+            ));
 
         }
-        Bukkit.broadcastMessage(killer.getName() + ChatColor.DARK_GRAY + " hat einen Ranzen der " + team.name().substring(0, 1).toUpperCase() + team.name().substring(1) + ChatColor.DARK_GRAY + " zerstört!");
+        Message.sendToAllPlayers(killer.getName() + ChatColor.DARK_GRAY + " hat einen Ranzen der " + team.name().substring(0, 1).toUpperCase() + team.name().substring(1) + ChatColor.DARK_GRAY + " gestohlen!");
 
         ranzenAmount.put(team, ranzenAmount.get(team) - 1);
+        (killer).getInventory().addItem(new ItemStack(playerData.get(killer.getName()).getTeam().ranzen_item));
+        ranzenAmount.put(playerData.get(killer.getName()).getTeam(), ranzenAmount.get(playerData.get(killer.getName()).getTeam()) + 1);
 
         if (ranzenAmount.get(team) == 0) {
-            Bukkit.broadcastMessage(ChatColor.DARK_RED + "Das Team der " + team.name().substring(0, 1).toUpperCase() + team.name().substring(1) + ChatColor.DARK_RED + " hat keinen Ranzen mehr!");
+            Message.sendToAllPlayers(ChatColor.DARK_RED + "Das Team der " + team.name().substring(0, 1).toUpperCase() + team.name().substring(1) + ChatColor.DARK_RED + " hat keinen Ranzen mehr!");
         }
 
     }
@@ -185,7 +197,7 @@ public enum Ranzen {
         ranzen_hb.setInteractionHeight(1);
         ranzen_hb.setInteractionWidth(1);
 
-        ranzen_hb.setMetadata(team.teamName, new FixedMetadataValue(SchoolWars.getPlugin(), "dummyValue"));
+        ranzen_hb.setMetadata(LegacyComponentSerializer.legacySection().serialize(team.teamName), new FixedMetadataValue(SchoolWars.getPlugin(), "dummyValue"));
 
         placedRanzen.put(ranzen_display, ranzen_hb);
         ranzenTeam.put(ranzen_hb, team);
@@ -205,11 +217,12 @@ public enum Ranzen {
      */
     public static void ranzenPickup(Player player, Interaction ranzen, PlayerInteractEntityEvent event) {
 
-        if (!playerMirror.get(player.getName()).isAlive()) return;
+        if (!playerData.get(player.getName()).isAlive()) return;
 
-        Team team = playerMirror.get(player.getName()).getTeam();
+        Team team = playerData.get(player.getName()).getTeam();
 
-        if(ranzen.hasMetadata(team.teamName)) {
+        if(ranzen.hasMetadata(LegacyComponentSerializer.legacySection().serialize(team.teamName))) {
+            //EIGENER Ranzen
             if (Ranzen.displayPositions.containsKey(ranzen.getLocation().subtract(0.5, 0, 0.5))) {
                 Entity display = Ranzen.displayPositions.get(ranzen.getLocation().subtract(0.5, 0, 0.5));
                 display.remove();
@@ -220,7 +233,8 @@ public enum Ranzen {
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§2Du hast deinen Ranzen aufgehoben!"));
             event.setCancelled(true);
         }else{
-            Ranzen.destroyRanzen(player, ranzenTeam.get(ranzen), ranzen.getLocation());
+            //GEGNERISCHER Ranzen
+            Ranzen.stealRanzen(player, ranzenTeam.get(ranzen), ranzen.getLocation());
             if (Ranzen.displayPositions.containsKey(ranzen.getLocation().subtract(0.5, 0, 0.5))) {
                 Entity display = Ranzen.displayPositions.get(ranzen.getLocation().subtract(0.5, 0, 0.5));
                 display.remove();

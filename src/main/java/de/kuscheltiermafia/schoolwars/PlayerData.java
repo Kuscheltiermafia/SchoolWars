@@ -29,16 +29,16 @@ import java.util.HashMap;
  * <p>
  * This class stores additional player-specific data that isn't tracked by Minecraft,
  * including team assignment, reputation with teachers, combat status, and dialogue progress.
- * Each player has a corresponding PlayerMirror instance stored in the static {@link #playerMirror} map.
+ * Each player has a corresponding PlayerData instance stored in the static {@link #playerData} map.
  * </p>
  */
-public class PlayerMirror {
+public class PlayerData {
 
     /**
-     * Global map storing PlayerMirror instances keyed by player name.
+     * Global map storing PlayerData instances keyed by player name.
      * Used to quickly look up a player's game state.
      */
-    public static HashMap<String, PlayerMirror> playerMirror = new HashMap<>();
+    public static HashMap<String, PlayerData> playerData = new HashMap<>();
 
     /** The name of the player this mirror represents. */
     String playerName;
@@ -71,11 +71,11 @@ public class PlayerMirror {
     ArrayList<String> currentDialogue;
 
     /**
-     * Creates a new PlayerMirror for the specified player.
+     * Creates a new PlayerData for the specified player.
      *
      * @param playerName the name of the player to create a mirror for
      */
-    public PlayerMirror(String playerName) {
+    public PlayerData(String playerName) {
         this.playerName = playerName;
         inCombat = false;
         alive = true;

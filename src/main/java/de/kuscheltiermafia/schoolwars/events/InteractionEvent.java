@@ -41,7 +41,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerData.playerData;
 
 /**
  * Handles various player interaction events in SchoolWars.
@@ -181,7 +181,7 @@ public class InteractionEvent implements Listener {
         if (e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
             try {
-                if (!playerMirror.get(p.getName()).isAlive()) {
+                if (!playerData.get(p.getName()).isAlive()) {
                     e.setCancelled(true);
                 }
             }catch (Exception ignored) {}

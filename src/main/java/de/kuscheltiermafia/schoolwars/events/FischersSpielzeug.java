@@ -36,7 +36,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 
-import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerData.playerData;
 
 /**
  * Handles Fischer's game item mechanics.
@@ -78,7 +78,7 @@ public class FischersSpielzeug implements Listener {
             // ========== Register game piece ==========
             e.setCancelled(false);
             fischers_spielzeuge.put(e.getBlockPlaced().getLocation(), 0);
-            fischers_team.put(e.getBlockPlaced().getLocation(), playerMirror.get(e.getPlayer().getName()).getTeam());
+            fischers_team.put(e.getBlockPlaced().getLocation(), playerData.get(e.getPlayer().getName()).getTeam());
             
             // ========== Active effect loop ==========
             for(int i = 0; i < fischerDauer; i++) {
@@ -93,10 +93,10 @@ public class FischersSpielzeug implements Listener {
 
                                 // ========== Particle indicator (team colored) ==========
                                 if(finalI % 5 == 0) {
-                                    if (playerMirror.get(e.getPlayer().getName()).getTeam().equals(Team.SPRACHLER)) {
+                                    if (playerData.get(e.getPlayer().getName()).getTeam().equals(Team.SPRACHLER)) {
                                         Particle.DustOptions color = new Particle.DustOptions(Color.fromRGB(255, 170, 0), 5);
                                         p.spawnParticle(Particle.NOTE, e.getBlockPlaced().getLocation().add(0.5, 1.1, 0.5), 1, color);
-                                    } else if (playerMirror.get(e.getPlayer().getName()).getTeam().equals(Team.NWS)) {
+                                    } else if (playerData.get(e.getPlayer().getName()).getTeam().equals(Team.NWS)) {
                                         Particle.DustOptions color = new Particle.DustOptions(Color.fromRGB(85, 255, 85), 5);
                                         p.spawnParticle(Particle.NOTE, e.getBlockPlaced().getLocation().add(0.5, 1.1, 0.5), 1, color);
                                     } else {
@@ -106,7 +106,7 @@ public class FischersSpielzeug implements Listener {
                                 }
 
                                 // ========== Apply nausea to enemy players ==========
-                                if(!playerMirror.get(p.getName()).getTeam().equals(fischers_team.get(e.getBlockPlaced().getLocation())) && fischers_team.containsKey(e.getBlockPlaced().getLocation())) {
+                                if(!playerData.get(p.getName()).getTeam().equals(fischers_team.get(e.getBlockPlaced().getLocation())) && fischers_team.containsKey(e.getBlockPlaced().getLocation())) {
                                     p.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 4 * 20, 1, false, false, false));
                                 }
                             }

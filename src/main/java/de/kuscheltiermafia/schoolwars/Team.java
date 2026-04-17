@@ -22,6 +22,9 @@ package de.kuscheltiermafia.schoolwars;
 import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.events.win_conditions.Ranzen;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -36,7 +39,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static de.kuscheltiermafia.schoolwars.events.win_conditions.Ranzen.ranzenAmount;
-import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerData.playerData;
 
 /**
  * Represents the available teams in SchoolWars.
@@ -56,13 +59,13 @@ import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
  */
 public enum Team {
     /** Sports team (Sportler) - Red colored team focused on athletics. */
-    SPORTLER(ChatColor.DARK_RED + "sportler", ChatColor.DARK_RED + "[Sport] ", ChatColor.DARK_RED + "Sportler", new Location(Bukkit.getWorld("schoolwars"), 68.5, 80.0, 167.0, 90, 0), Items.sport_ranzen, Ranzen.SPORTLER),
+    SPORTLER(Component.text("sportler", NamedTextColor.DARK_RED),  Component.text("[Sport] ", NamedTextColor.DARK_RED), Component.text("Sportler", NamedTextColor.DARK_RED), new Location(Bukkit.getWorld("schoolwars"), 68.5, 80.0, 167.0, 90, 0), Items.sport_ranzen, Ranzen.SPORTLER, NamedTextColor.DARK_RED),
     
     /** Language team (Sprachler) - Gold/Yellow colored team focused on languages. */
-    SPRACHLER(ChatColor.GOLD + "sprachler", ChatColor.GOLD + "[Sprache] ", ChatColor.GOLD + "Sprachler", new Location(Bukkit.getWorld("schoolwars"), -21.5, 88.0, 146.0, -90, 0), Items.sprach_ranzen, Ranzen.SPRACHLER),
+    SPRACHLER(Component.text("sprachler", NamedTextColor.GOLD), Component.text("[Sprache] ", NamedTextColor.GOLD), Component.text("Sprachler", NamedTextColor.GOLD), new Location(Bukkit.getWorld("schoolwars"), -21.5, 88.0, 146.0, -90, 0), Items.sprach_ranzen, Ranzen.SPRACHLER, NamedTextColor.GOLD),
     
     /** Natural Sciences team (NWS) - Green colored team focused on science subjects. */
-    NWS(ChatColor.GREEN + "naturwissenschaftler", ChatColor.GREEN + "[NWS] ", ChatColor.GREEN + "Naturwissenschaftler", new Location(Bukkit.getWorld("schoolwars"), 4.5, 81.0, 191.5, 90, 0), Items.nws_ranzen, Ranzen.NWS);
+    NWS(Component.text("naturwissenschaftler", NamedTextColor.GREEN), Component.text("[NWS] ", NamedTextColor.GREEN), Component.text("Naturwissenschaftler", NamedTextColor.GREEN), new Location(Bukkit.getWorld("schoolwars"), 4.5, 81.0, 191.5, 90, 0), Items.nws_ranzen, Ranzen.NWS, NamedTextColor.GREEN);
 
     /** Number of teams participating in the current game. */
     public static int teamCount = 2;
@@ -71,13 +74,13 @@ public enum Team {
     public static boolean randomTeams = true;
 
     /** Internal team name identifier. */
-    public final String teamName;
+    public final Component teamName;
     
     /** Chat prefix displayed before player names. */
-    public final String prefix;
+    public final Component prefix;
     
     /** Message shown when a player joins this team. */
-    public final String joinMessage;
+    public final Component joinMessage;
     
     /** Spawn location for team members. */
     public final Location spawn;
@@ -90,17 +93,23 @@ public enum Team {
 
     /** List of player names that are members of this team. */
     public final ArrayList<String> mitglieder = new ArrayList<>();
-    
+
+    /**
+     * Display color of the team name
+     */
+    public final NamedTextColor color;
+
     /** Risk level for secretariat interactions. */
     public double sekiRisk;
 
-    Team(String teamName, String prefix, String joinMessage, Location spawn, ItemStack ranzen_item, Ranzen ranzen) {
+    Team(Component teamName, Component prefix, Component joinMessage, Location spawn, ItemStack ranzen_item, Ranzen ranzen, NamedTextColor color) {
         this.teamName = teamName;
         this.prefix = prefix;
         this.joinMessage = joinMessage;
         this.spawn = spawn;
         this.ranzen_item = ranzen_item;
         this.ranzen = ranzen;
+        this.color = color;
     }
 
     /**
@@ -160,7 +169,7 @@ public enum Team {
      * <ul>
      *   <li>Sends a welcome message to the player</li>
      *   <li>Sets up the player's scoreboard with team prefix</li>
-     *   <li>Associates the player with this team in their PlayerMirror</li>
+     *   <li>Associates the player with this team in their PlayerData</li>
      *   <li>Gives the player their team's backpack and starting equipment (if game not started)</li>
      *   <li>Teleports the player to the team spawn</li>
      *   <li>Applies a brief blindness effect for dramatic effect</li>
@@ -176,21 +185,21 @@ public enum Team {
             p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Ne, warte... Falscher Text...");
         }
 
-        p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist ein " + joinMessage + ", " + ChatColor.YELLOW + p.getName() + "!");
+        p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist ein " + LegacyComponentSerializer.legacySection().serialize(joinMessage) + ", " + ChatColor.YELLOW + p.getName() + "!");
 
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
-        org.bukkit.scoreboard.Team team = scoreboard.getTeam(this.teamName);
-        if (team == null) team = scoreboard.registerNewTeam(this.teamName);
-        team.setPrefix(ChatColor.DARK_RED + this.prefix);
+        org.bukkit.scoreboard.Team team = scoreboard.getTeam(LegacyComponentSerializer.legacySection().serialize(this.teamName));
+        if (team == null) team = scoreboard.registerNewTeam(LegacyComponentSerializer.legacySection().serialize(this.teamName));
+        team.prefix(this.prefix);
         team.addEntry(p.getName());
         p.setScoreboard(scoreboard);
 
-        playerMirror.get(p.getName()).setTeam(this);
+        playerData.get(p.getName()).setTeam(this);
 
         if (!SchoolWars.gameStarted) {
+            p.getInventory().addItem(Items.schulbuch1);
             p.getInventory().addItem(ranzen_item);
             ranzenAmount.put(this, ranzenAmount.get(this) + 1);
-            p.getInventory().addItem(Items.schulbuch1);
         }
 
 

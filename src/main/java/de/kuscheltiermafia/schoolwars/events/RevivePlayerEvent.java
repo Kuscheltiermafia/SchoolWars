@@ -26,7 +26,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
-import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerData.playerData;
 
 /**
  * Handles player revive interactions.
@@ -44,12 +44,12 @@ public class RevivePlayerEvent implements Listener {
 
             Player player = e.getPlayer();
 
-            if (target.getLocation().distance(player.getLocation()) <= 3 && !playerMirror.get(target.getName()).isAlive() && player.getInventory().getItemInMainHand().equals(Items.kuehlpack) && !playerMirror.get(player.getName()).isInCombat()) {
+            if (target.getLocation().distance(player.getLocation()) <= 3 && !playerData.get(target.getName()).isAlive() && player.getInventory().getItemInMainHand().equals(Items.kuehlpack) && !playerData.get(player.getName()).isInCombat()) {
 
                 RevivePlayer.revivePlayer(player, target);
 
                 player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
-                playerMirror.get(player.getName()).setRevives(true);
+                playerData.get(player.getName()).setRevives(true);
 
             }
         }

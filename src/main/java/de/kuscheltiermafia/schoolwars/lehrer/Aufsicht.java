@@ -24,7 +24,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerData.playerData;
 
 /**
  * Tracks player combat status for teacher supervision mechanics.
@@ -38,7 +38,7 @@ public class Aufsicht implements Listener {
     @EventHandler
     public void onPlayerHit(EntityDamageByEntityEvent e) {
         if(e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
-            playerMirror.get(e.getDamager().getName()).setCombat(true);
+            playerData.get(e.getDamager().getName()).setCombat(true);
         }
     }
 }

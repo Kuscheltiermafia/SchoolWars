@@ -1,6 +1,6 @@
 package de.kuscheltiermafia.schoolwars.mechanics;
 
-import de.kuscheltiermafia.schoolwars.PlayerMirror;
+import de.kuscheltiermafia.schoolwars.PlayerData;
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.Team;
 import de.kuscheltiermafia.schoolwars.commands.Debug;
@@ -17,7 +17,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerData.playerData;
 import static de.kuscheltiermafia.schoolwars.SchoolWars.WORLD;
 
 /**
@@ -172,7 +172,7 @@ public class StartGame implements Listener {
         }
 
         // ========== Reset existing game state ==========
-        playerMirror.clear();
+        playerData.clear();
 
         // Remove existing item entities
         try {
@@ -216,9 +216,9 @@ public class StartGame implements Listener {
         }
 
         // Create player mirrors for tracking game state
-        playerMirror.clear();
+        playerData.clear();
         for (Player p : Bukkit.getOnlinePlayers()) {
-            playerMirror.put(p.getName(), new PlayerMirror(p.getName()));
+            playerData.put(p.getName(), new PlayerData(p.getName()));
         }
 
         // ========== Assign and prepare teams ==========
@@ -227,7 +227,7 @@ public class StartGame implements Listener {
 
         // Ensure all players are alive
         for (Player p : Bukkit.getOnlinePlayers()) {
-            if (!playerMirror.get(p.getName()).isAlive()) {
+            if (!playerData.get(p.getName()).isAlive()) {
                 RevivePlayer.revivePlayer(p, p);
             }
         }

@@ -24,6 +24,7 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
 import de.kuscheltiermafia.schoolwars.Team;
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -49,7 +50,7 @@ public class TeamList extends BaseCommand {
     public void onTeamListCommand(CommandSender commandSender) {
 
         for (Team team : Team.values()) {
-            commandSender.sendMessage(team.teamName + ":");
+            commandSender.sendMessage(team.teamName.append(Component.text(":")));
             for (String playerName : team.mitglieder) {
                 commandSender.sendMessage(ChatColor.GOLD + playerName);
             }

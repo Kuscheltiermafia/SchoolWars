@@ -44,7 +44,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import static de.kuscheltiermafia.schoolwars.SchoolWars.WORLD;
-import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerData.playerData;
 
 /**
  * Handles master key (Generalschlüssel) mechanics.
@@ -118,10 +118,10 @@ public class Generalschluessel implements Listener {
 
                     // ========== Risk check for secretariat encounter ==========
                     // Increase team's secretariat risk
-                    playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk += ProbabilityConfig.getProbability("generalschluessel.risk_increase", 0.05);
+                    playerData.get(e.getPlayer().getName()).getTeam().sekiRisk += ProbabilityConfig.getProbability("generalschluessel.risk_increase", 0.05);
 
                     // Check if seki appears based on risk probability
-                    if (Math.random() <= playerMirror.get(e.getPlayer().getName()).getTeam().sekiRisk) {
+                    if (Math.random() <= playerData.get(e.getPlayer().getName()).getTeam().sekiRisk) {
                         // Check for message variant (10% chance for alternate message)
                         if (Math.random() < ProbabilityConfig.getProbability("message.generalschluessel_variant_chance", 0.1)) {
                             Message.sendInArea("§4Die Kollegin von der Seki-Frau hat dich erwischt!", block.getLocation(), 5, 3, 5);

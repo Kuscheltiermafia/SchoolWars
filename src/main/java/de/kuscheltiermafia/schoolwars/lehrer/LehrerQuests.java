@@ -25,7 +25,6 @@ import de.kuscheltiermafia.schoolwars.mechanics.ParticleHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
@@ -39,7 +38,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerData.playerData;
 
 /**
  * Handles teacher quests that players can complete for rewards.
@@ -204,7 +203,7 @@ public class LehrerQuests implements Listener {
                     p.getInventory().remove(p.getOpenInventory().getItem(20));
                     p.getInventory().addItem(p.getOpenInventory().getItem(24));
 
-                    playerMirror.get(p.getName()).addReputation(lehrer, repReward.get(lehrerName));
+                    playerData.get(p.getName()).addReputation(lehrer, repReward.get(lehrerName));
 
                     Villager l = openQuest.get(p);
 

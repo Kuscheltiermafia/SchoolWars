@@ -43,7 +43,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.util.*;
 
-import static de.kuscheltiermafia.schoolwars.PlayerMirror.playerMirror;
+import static de.kuscheltiermafia.schoolwars.PlayerData.playerData;
 
 
 /**
@@ -118,7 +118,7 @@ public class AtombombeEvents implements Listener {
             Player player = event.getPlayer();
             nukeLoc = event.getBlock().getLocation();
 
-            Team team = playerMirror.get(player.getName()).getTeam();
+            Team team = playerData.get(player.getName()).getTeam();
 
             // ========== Create visual nuke entity ==========
             event.setCancelled(true);
@@ -190,7 +190,7 @@ public class AtombombeEvents implements Listener {
                             if (player.getAttribute(Attribute.GENERIC_SCALE).getBaseValue() < 0.6) {
                                 player.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(1);
                                 player.teleport(new Location(player.getWorld(), 14.0, 32.0, 179.0));
-                                playerMirror.get(player.getName()).setInBossfight(true);
+                                playerData.get(player.getName()).setInBossfight(true);
 
                                 AtombombeBossfight.startBossfight();
                             }
@@ -221,8 +221,8 @@ public class AtombombeEvents implements Listener {
                 p.sendTitle(ChatColor.RED + "Atombombe entschärft", "");
                 
                 // Return bossfight players to nuke location
-                if(playerMirror.get(p.getName()).isInBossfight()) {
-                    playerMirror.get(p.getName()).setInBossfight(false);
+                if(playerData.get(p.getName()).isInBossfight()) {
+                    playerData.get(p.getName()).setInBossfight(false);
                     p.setGameMode(GameMode.SURVIVAL);
                     p.teleport(nukeLoc);
                 }
