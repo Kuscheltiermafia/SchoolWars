@@ -454,7 +454,6 @@ public class Items {
 
         if (hideAdditionalTooltip) meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 
-
         genItem.setItemMeta(meta);
 
         return genItem;
