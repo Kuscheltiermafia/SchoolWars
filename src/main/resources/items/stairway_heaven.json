@@ -1,0 +1,8 @@
+{
+  "material": "QUARTZ_STAIRS",
+  "displayName": "§dStairway to heaven",
+  "customModelData": 1,
+  "stackSize": 1,
+  "glint": true,
+  "showInItemList":true
+}

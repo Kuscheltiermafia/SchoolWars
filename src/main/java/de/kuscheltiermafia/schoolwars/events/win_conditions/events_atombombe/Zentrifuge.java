@@ -36,14 +36,14 @@ public class Zentrifuge implements Listener {
             Block b = e.getClickedBlock();
             Player p = e.getPlayer();
             if(b.getLocation().add(0, 1, 0).getBlock().getType().equals(Material.POLISHED_TUFF_WALL) && b.getLocation().add(0, 2, 0).getBlock().getType().equals(Material.STONE_BUTTON)) {
-                if(p.getInventory().getItemInMainHand().getItemMeta().equals(Items.useless_uranium.getItemMeta())) {
+                if (Items.isSpecificItem(p.getInventory().getItemInMainHand(), "useless_uranium")) {
                     p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount() - 1);
-                    zentrifugeInventory.add(Items.useless_uranium);
+                    zentrifugeInventory.add(Items.getItem("useless_uranium"));
                     onZentrifugeVoll(zentrifugeInventory, b);
                     e.setCancelled(true);
-                } else if(p.getInventory().getItemInMainHand().getItemMeta().equals(Items.fluor.getItemMeta())) {
+                } else if (Items.isSpecificItem(p.getInventory().getItemInMainHand(), "fluor")) {
                     p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount() - 1);
-                    zentrifugeInventory.add(Items.fluor);
+                    zentrifugeInventory.add(Items.getItem("fluor"));
                     onZentrifugeVoll(zentrifugeInventory, b);
                     e.setCancelled(true);
                 }
@@ -54,12 +54,16 @@ public class Zentrifuge implements Listener {
     public static int i = 0;
 
     public static void onZentrifugeVoll(ArrayList<ItemStack> inv, Block b) {
-        if (inv.contains(Items.fluor) && inv.contains(Items.useless_uranium)) {
+        boolean hasFluor = inv.stream().anyMatch(it -> Items.isSpecificItem(it, "fluor"));
+        boolean hasUran = inv.stream().anyMatch(it -> Items.isSpecificItem(it, "useless_uranium"));
+
+        if (hasFluor && hasUran) {
 
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    Items.createItemsEntity(new ItemStack(Items.uranium), b.getLocation().add(0.5, 2.75, 0.5));
+                    ItemStack uranium = Items.getItem("uranium");
+                    if (uranium != null) Items.createItemsEntity(uranium, b.getLocation().add(0.5, 2.75, 0.5));
                 }
             }.runTaskLater(SchoolWars.getPlugin(), duration);
 

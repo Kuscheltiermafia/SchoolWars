@@ -86,12 +86,15 @@ public class AtombombeEvents implements Listener {
             if(b.getLocation().add(0, 0, 1).getBlock().getType().equals(Material.BLAST_FURNACE) && b.getLocation().add(0, 0, -1).getBlock().getType().equals(Material.BLAST_FURNACE) && b.getLocation().add(0, 1, -1).getBlock().getType().equals(Material.IRON_BARS) && b.getLocation().add(0, 1, 1).getBlock().getType().equals(Material.HEAVY_CORE)) {
                 
                 // ========== Check for required materials ==========
-                if(p.getInventory().contains(Items.uranium) && p.getInventory().contains(Items.versuch)) {
+                if (p.getInventory().contains(Items.getItem("uranium")) && p.getInventory().contains(Items.getItem("versuch"))) {
 
                     // Consume materials and spawn nuke item
-                    p.getInventory().remove(Items.versuch);
-                    p.getInventory().remove(Items.uranium);
-                    Items.createItemsEntity(new ItemStack(Items.nuke), b.getLocation().add(0.5, 1, 0.5));
+                    ItemStack vers = Items.getItem("versuch");
+                    ItemStack ura = Items.getItem("uranium");
+                    if (vers != null) p.getInventory().remove(vers);
+                    if (ura != null) p.getInventory().remove(ura);
+                    ItemStack nukeItem = Items.getItem("nuke");
+                    if (nukeItem != null) Items.createItemsEntity(nukeItem, b.getLocation().add(0.5, 1, 0.5));
 
                     e.setCancelled(true);
 
@@ -107,7 +110,7 @@ public class AtombombeEvents implements Listener {
      */
     @EventHandler
     public static void onPlaceNuke(BlockPlaceEvent event) {
-        if(event.getItemInHand().equals(Items.nuke)) {
+        if (Items.isSpecificItem(event.getItemInHand(), "nuke")) {
             // ========== Validate placement ==========
             if (nukePlaced) {
                 event.setCancelled(true);

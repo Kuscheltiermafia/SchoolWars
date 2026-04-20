@@ -34,56 +34,56 @@ public enum ItemDrops {
         new Location(WORLD, -64, 81, 193),
         new Location(WORLD, 31, 88, 161),
         new Location(WORLD, 23, 81, 195)
-    }, Items.minas_flasche, "drops.minas_flasche", 1.0),
+    }, Items.getItem("minas_flasche"), "drops.minas_flasche", 1.0),
 
     BENS_VAPE_FRUITBERRY(new Location[]{
         new Location(WORLD, 43, 87, 143)
-    }, Items.vape_fruitberry, "drops.vape_fruitberry", 0.1),
+    }, Items.getItem("vape_fruitberry"), "drops.vape_fruitberry", 0.1),
 
     BENS_VAPE_ARSCHWASSER(new Location[]{
         new Location(WORLD, -54, 82, 155)
-    }, Items.vape_arschwasser, "drops.vape_arschwasser", 0.1),
+    }, Items.getItem("vape_arschwasser"), "drops.vape_arschwasser", 0.1),
 
     BENS_VAPE_STRAWBERRY(new Location[]{
         new Location(WORLD, -11, 73, 152)
-    }, Items.vape_strawberry, "drops.vape_strawberry", 0.1),
+    }, Items.getItem("vape_strawberry"), "drops.vape_strawberry", 0.1),
 
     BENS_VAPE_MANGO(new Location[]{
         new Location(WORLD, -50, 80, 203)
-    }, Items.vape_mango, "drops.vape_mango", 0.1),
+    }, Items.getItem("vape_mango"), "drops.vape_mango", 0.1),
 
     BENS_VAPE_TRIPLE(new Location[]{
         new Location(WORLD, 31, 87, 160)
-    }, Items.vape_triple, "drops.vape_triple", 0.1),
+    }, Items.getItem("vape_triple"), "drops.vape_triple", 0.1),
 
     BENS_VAPE_ARABICS(new Location[]{
         new Location(WORLD, 2, 74, 197)
-    }, Items.vape_arabics, "drops.vape_arabics", 0.1),
+    }, Items.getItem("vape_arabics"), "drops.vape_arabics", 0.1),
 
     BENS_VAPE_AIR(new Location[]{
         new Location(WORLD, -31, 80, 172)
-    }, Items.vape_air, "drops.vape_air", 0.1),
+    }, Items.getItem("vape_air"), "drops.vape_air", 0.1),
 
     BENS_VAPE_LEER(new Location[]{
         new Location(WORLD, 6, 79, 184),
         new Location(WORLD, -2, 78, 161),
         new Location(WORLD, 16, 80, 161)
-    }, Items.vape_empty, "drops.vape_leer", 0.1),
+    }, Items.getItem("vape_empty"), "drops.vape_leer", 0.1),
 
-    KEKS(Lehrer.KESSELRING, Items.keks, "drops.keks", 0.4, Raum.PHYSIK),
+    KEKS(Lehrer.KESSELRING, Items.getItem("keks"), "drops.keks", 0.4, Raum.PHYSIK),
 
     VASILIS_IPAD(new Location[]{
         new Location(WORLD, 22.0, 88.5, 143.0)
-    }, Items.ipad, "drops.vasilis_ipad", 0.1),
+    }, Items.getItem("ipad"), "drops.vasilis_ipad", 0.1),
 
     EMILIAS_BRIEF(new Location[]{
         new Location(WORLD, -2.0, 87.0, 201.0)
-    }, Items.emilia_ausland_brief, "drops.emilias_brief", 0.2),
+    }, Items.getItem("emilia_ausland_brief"), "drops.emilias_brief", 0.2),
 
     KERZE(new Location[]{
         new Location(WORLD, -56.0, 81.0, 164.0),
         new Location(WORLD, 12.0, 88.0, 187.0),
-    }, Items.kerze, "drops.kerze", 0.4)
+    }, Items.getItem("kerze"), "drops.kerze", 0.4)
     ;
 
     /** The teacher associated with this drop (if any). */

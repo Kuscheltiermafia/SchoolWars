@@ -1,0 +1,9 @@
+{
+  "material": "KNOWLEDGE_BOOK",
+  "displayName": "§4C.C.Buchner CHAOS",
+  "customModelData": 1,
+  "stackSize": 1,
+  "attackDamage": 15.0,
+  "attackSpeed": 1.4,
+  "showInItemList":true
+}

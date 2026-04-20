@@ -1,0 +1,9 @@
+{
+  "material": "OAK_STAIRS",
+  "displayName": "§fStuhl",
+  "customModelData": 1,
+  "stackSize": 1,
+  "attackDamage": 2.0,
+  "attackSpeed": 0.5,
+  "showInItemList":true
+}

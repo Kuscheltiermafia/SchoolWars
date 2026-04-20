@@ -1,0 +1,9 @@
+{
+  "material": "KNOWLEDGE_BOOK",
+  "displayName": "§1Diercke Slam",
+  "customModelData": 1,
+  "stackSize": 1,
+  "attackDamage": 6.0,
+  "attackSpeed": 1.1,
+  "showInItemList":true
+}

@@ -1,0 +1,9 @@
+{
+  "material": "KNOWLEDGE_BOOK",
+  "displayName": "§9Fokus Kampfkunst",
+  "customModelData": 1,
+  "stackSize": 1,
+  "attackDamage": 3.0,
+  "attackSpeed": 1.0,
+  "showInItemList":true
+}

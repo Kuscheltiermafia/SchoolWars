@@ -1,0 +1,13 @@
+{
+  "material": "DARK_OAK_BUTTON",
+  "displayName": "§dFocken",
+  "customModelData": 1,
+  "stackSize": 1,
+  "lore": [
+    "§7- §dFantastisches orientiertes cooles kurioses entanguliertes Neutron§7 -",
+    "§7oder kurz, FOCKEN!",
+    "§7Keine Ahnung was das ist..."
+  ],
+  "glint": true,
+  "showInItemList":true
+}

@@ -62,27 +62,30 @@ public class StartGame implements Listener {
         menuOpen = true;
         menuOpener = p;
 
-        ItemStack player_count = Items.player_count_display;
-        if (triggerByLeaveEvent) {
-            player_count.setAmount(Bukkit.getOnlinePlayers().size() - 1);
-        }else {
-            player_count.setAmount(Bukkit.getOnlinePlayers().size());
+        ItemStack player_count = Items.getItem("player_count_display");
+        if (player_count != null) {
+            if (triggerByLeaveEvent) {
+                player_count.setAmount(Bukkit.getOnlinePlayers().size() - 1);
+            } else {
+                player_count.setAmount(Bukkit.getOnlinePlayers().size());
+            }
         }
 
-        ItemStack team_count = Items.team_count;
-        team_count.setAmount(Team.teamCount);
+        ItemStack team_count = Items.getItem("team_count");
+        if (team_count != null) team_count.setAmount(Team.teamCount);
 
         Inventory startGUI = Bukkit.createInventory(null, 9 * 3, "Spiel starten");
         startGUI.setItem(10, player_count);
-        startGUI.setItem(12, Items.gamemode_classic);
-        startGUI.setItem(14, Items.team_count);
-        startGUI.setItem(16, Items.start_game);
-        startGUI.setItem(23, Items.choose_teams);
+        startGUI.setItem(12, Items.getItem("gamemode_classic"));
+        startGUI.setItem(14, team_count);
+        startGUI.setItem(16, Items.getItem("start_game"));
+        startGUI.setItem(23, Items.getItem("choose_teams"));
 
         for (int i = 0; i < 27; i++) {
-            if (startGUI.getItem(i) == null) {
-                startGUI.setItem(i, Items.spacer);
-            }
+                if (startGUI.getItem(i) == null) {
+                    ItemStack spacer = Items.getItem("spacer");
+                    startGUI.setItem(i, spacer);
+                }
         }
 
         p.openInventory(startGUI);
@@ -113,7 +116,7 @@ public class StartGame implements Listener {
         if (e.getView().getTitle() .equals("Spiel starten")) {
             e.setCancelled(true);
             if (e.getCurrentItem() == null) return;
-            if (!e.getCurrentItem().equals(Items.team_count)) return;
+            if (!Items.isSpecificItem(e.getCurrentItem(), "team_count")) return;
 
             if(e.getClick().isLeftClick()) {
                 if (Team.teamCount < Team.values().length) {
@@ -125,9 +128,11 @@ public class StartGame implements Listener {
                 }
             }
 
-            ItemStack team_count = Items.team_count;
-            team_count.setAmount(Team.teamCount);
-            e.getInventory().setItem(14, team_count);
+            ItemStack team_count = Items.getItem("team_count");
+            if (team_count != null) {
+                team_count.setAmount(Team.teamCount);
+                e.getInventory().setItem(14, team_count);
+            }
 
 
         }
@@ -143,7 +148,7 @@ public class StartGame implements Listener {
         if (e.getView().getTitle().equals("Spiel starten")) {
             e.setCancelled(true);
             if (e.getCurrentItem() == null) return;
-            if (!e.getCurrentItem().equals(Items.start_game)) return;
+            if (!Items.isSpecificItem(e.getCurrentItem(), "start_game")) return;
             start();
             e.getWhoClicked().closeInventory();
         }

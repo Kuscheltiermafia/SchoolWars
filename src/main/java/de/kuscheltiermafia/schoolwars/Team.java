@@ -197,7 +197,8 @@ public enum Team {
         playerData.get(p.getName()).setTeam(this);
 
         if (!SchoolWars.gameStarted) {
-            p.getInventory().addItem(Items.schulbuch1);
+            ItemStack schul = Items.getItem("schulbuch1");
+            if (schul != null) p.getInventory().addItem(schul);
             p.getInventory().addItem(ranzen_item);
             ranzenAmount.put(this, ranzenAmount.get(this) + 1);
         }

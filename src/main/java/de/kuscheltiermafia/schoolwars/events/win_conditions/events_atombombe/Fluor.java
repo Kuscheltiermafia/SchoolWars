@@ -40,9 +40,11 @@ public class Fluor implements Listener {
                     e.getClickedBlock().getLocation().equals(waschbecken2) ||
                     e.getClickedBlock().getLocation().equals(waschbecken3) ||
                     e.getClickedBlock().getLocation().equals(waschbecken4)) {
-                if (e.getPlayer().getInventory().getItemInMainHand().equals(Items.natrium_fluorid)) {
-                    e.getPlayer().getInventory().remove(Items.natrium_fluorid);
-                    e.getPlayer().getInventory().addItem(Items.aquatisiertes_fluor);
+                if (Items.isSpecificItem(e.getPlayer().getInventory().getItemInMainHand(), "natrium_fluorid")) {
+                    ItemStack nat = Items.getItem("natrium_fluorid");
+                    if (nat != null) e.getPlayer().getInventory().remove(nat);
+                    ItemStack aqu = Items.getItem("aquatisiertes_fluor");
+                    if (aqu != null) e.getPlayer().getInventory().addItem(aqu);
                     e.getPlayer().sendActionBar(Component.text("§aDu hast das Fluor aquatisiert!"));
                     e.setCancelled(true);
                 }
@@ -53,7 +55,7 @@ public class Fluor implements Listener {
 
     @EventHandler
     public static void onDrinkAquatisiertesFluor(PlayerItemConsumeEvent e) {
-        if (e.getPlayer().getInventory().getItemInMainHand().equals(Items.aquatisiertes_fluor)) {
+        if (Items.isSpecificItem(e.getPlayer().getInventory().getItemInMainHand(), "aquatisiertes_fluor")) {
             e.setCancelled(true);
         }
 
@@ -68,18 +70,20 @@ public class Fluor implements Listener {
             Block b = e.getClickedBlock();
             if (b.getLocation().equals(ofen)) {
                 e.setCancelled(true);
-                if (e.getPlayer().getInventory().getItemInMainHand().equals(Items.aquatisiertes_fluor) && !amVerdampfen) {
+                if (Items.isSpecificItem(e.getPlayer().getInventory().getItemInMainHand(), "aquatisiertes_fluor") && !amVerdampfen) {
                     amVerdampfen = true;
 
                     Furnace furnace = (Furnace) b.getState();
                     furnace.setBurnTime((short) duration);
                     furnace.update();
 
-                    e.getPlayer().getInventory().remove(Items.aquatisiertes_fluor);
+                    ItemStack aqu = Items.getItem("aquatisiertes_fluor");
+                    if (aqu != null) e.getPlayer().getInventory().remove(aqu);
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            Items.createItemsEntity(new ItemStack(Items.fluor), b.getLocation().add(0.5, 1, 0.5));
+                            ItemStack fluor = Items.getItem("fluor");
+                            if (fluor != null) Items.createItemsEntity(fluor, b.getLocation().add(0.5, 1, 0.5));
                             amVerdampfen = false;
                         }
                     }.runTaskLater(SchoolWars.getPlugin(), duration);

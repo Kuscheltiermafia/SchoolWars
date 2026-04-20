@@ -1,0 +1,10 @@
+{
+  "material": "OAK_STAIRS",
+  "displayName": "§5§l§kA§r§f Stuhl §r§5§l§kA",
+  "customModelData": 1,
+  "stackSize": 1,
+  "glint": true,
+  "attackDamage": 1.0,
+  "attackSpeed": 0.5,
+  "showInItemList":true
+}

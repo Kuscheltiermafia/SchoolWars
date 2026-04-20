@@ -1,0 +1,15 @@
+{
+  "material":"DIAMOND",
+  "displayName":"JsonTest",
+  "customModelData":1,
+  "stackSize":1,
+  "lore":
+    [
+      "This is a test item to check if json loading works correctly.",
+      "If you see this, it works!"
+    ],
+  "glint":true,
+  "showInItemList":true,
+  "attackDamage":6.9,
+  "attackSpeed":6.7
+}

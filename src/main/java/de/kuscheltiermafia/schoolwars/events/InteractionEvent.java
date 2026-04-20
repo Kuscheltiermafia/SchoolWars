@@ -69,19 +69,22 @@ public class InteractionEvent implements Listener {
     public void clickSpacer(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
         try {
-            if (e.getCurrentItem().equals(Items.spacer)) {
+            if (e.getCurrentItem() == null) return;
+            if (Items.isSpecificItem(e.getCurrentItem(), "spacer")) {
                 e.setCancelled(true);
-            }else if(e.getCurrentItem().equals(Items.page_up) && e.getWhoClicked().getOpenInventory().getTitle().equals("§4Itemlist")) {
+            } else if (Items.isSpecificItem(e.getCurrentItem(), "page_up") && e.getWhoClicked().getOpenInventory().getTitle().equals("§4Itemlist")) {
                 e.setCancelled(true);
-                p.getInventory().remove(Items.page_up);
+                ItemStack pageUp = Items.getItem("page_up");
+                if (pageUp != null) p.getInventory().remove(pageUp);
                 ItemList.itemListPage.put(p, ItemList.itemListPage.get(p) + 1);
                 ItemList.fillItemlist(e.getInventory(), ItemList.itemListPage.get(p), p);
-            }else if(e.getCurrentItem().equals(Items.page_down) && e.getWhoClicked().getOpenInventory().getTitle().equals("§4Itemlist")) {
+            } else if (Items.isSpecificItem(e.getCurrentItem(), "page_down") && e.getWhoClicked().getOpenInventory().getTitle().equals("§4Itemlist")) {
                 e.setCancelled(true);
-                p.getInventory().remove(Items.page_down);
+                ItemStack pageDown = Items.getItem("page_down");
+                if (pageDown != null) p.getInventory().remove(pageDown);
                 ItemList.itemListPage.put(p, ItemList.itemListPage.get(p) - 1);
                 ItemList.fillItemlist(e.getInventory(), ItemList.itemListPage.get(p), p);
-            }else if(e.getCurrentItem().equals(Items.no_page_down) || e.getCurrentItem().equals(Items.no_page_up) || e.getCurrentItem().equals(new ItemStack(Items.createItem(Material.BOOK, ChatColor.DARK_RED + "Current Page: " + ItemList.itemListPage.get(p), 20, 1, null, false, false, false)))) {
+            } else if (Items.isSpecificItem(e.getCurrentItem(), "no_page_down") || Items.isSpecificItem(e.getCurrentItem(), "no_page_up") || Items.isSpecificItem(e.getCurrentItem(), "page_indicator")) {
                 e.setCancelled(true);
             }
         }catch (Exception ignored){}
@@ -161,7 +164,7 @@ public class InteractionEvent implements Listener {
     public void OnStuhlHit(EntityDamageByEntityEvent e) {
         if(e.getDamager() instanceof Player hitter && e.getEntity() instanceof Player hit) {
 
-            if(hitter.getInventory().getItemInMainHand().equals(Items.buffed_stuhl) && hitter.getCooldown(Material.OAK_STAIRS) < 2) {
+            if (Items.isSpecificItem(hitter.getInventory().getItemInMainHand(), "buffed_stuhl") && hitter.getCooldown(Material.OAK_STAIRS) < 2) {
                 hitter.setCooldown(Material.OAK_STAIRS, TimeConfig.getTicks("stuhl.cooldown", 20 * 6));
 
                 ParticleHandler.createParticles(hit.getLocation().add(0, 1, 0), Particle.CRIT, 20, 0.2, true, null);
@@ -196,7 +199,8 @@ public class InteractionEvent implements Listener {
     @EventHandler
     public void onDropRanzen(PlayerDropItemEvent e) {
         Player p = e.getPlayer();
-        if(Items.ranzenList.contains(e.getItemDrop().getItemStack())) {
+        ItemStack dropped = e.getItemDrop().getItemStack();
+        if (Items.isSpecificItem(dropped, "nws_ranzen") || Items.isSpecificItem(dropped, "sprach_ranzen") || Items.isSpecificItem(dropped, "sport_ranzen")) {
             e.setCancelled(true);
             p.sendMessage(ChatColor.RED + "Du kannst deinen Ranzen nicht droppen!");
         }
@@ -206,7 +210,7 @@ public class InteractionEvent implements Listener {
     public void onDropSchulbuch(PlayerDropItemEvent e) {
         Player p = e.getPlayer();
         ItemStack droppedItem = e.getItemDrop().getItemStack();
-        if (droppedItem.equals(Items.schulbuch1) || droppedItem.equals(Items.schulbuch2) || droppedItem.equals(Items.schulbuch3) || droppedItem.equals(Items.schulbuch4) || droppedItem.equals(Items.schulbuch5)) {
+        if (Items.isSpecificItem(droppedItem, "schulbuch1") || Items.isSpecificItem(droppedItem, "schulbuch2") || Items.isSpecificItem(droppedItem, "schulbuch3") || Items.isSpecificItem(droppedItem, "schulbuch4") || Items.isSpecificItem(droppedItem, "schulbuch5")) {
             e.setCancelled(true);
             p.sendMessage(ChatColor.RED + "Du kannst dein Schulbuch nicht droppen!");
         }

@@ -21,6 +21,7 @@ package de.kuscheltiermafia.schoolwars.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
+import de.kuscheltiermafia.schoolwars.items.ItemBuilder;
 import de.kuscheltiermafia.schoolwars.items.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,7 +33,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Command that opens a paginated GUI displaying all game items.
@@ -89,22 +92,32 @@ public class ItemList extends BaseCommand {
         }
 
         if(itemListPage.get(user) == 0) {
-            itemList.setItem(0, new ItemStack(Items.no_page_down));
-        }else{itemList.setItem(0, new ItemStack(Items.page_down));}
+            itemList.setItem(0, Items.getItem("no_page_down"));
+        }else{itemList.setItem(0, Items.getItem("page_down"));}
 
         if((itemListPage.get(user) + 1) * 28 <= Items.itemList.size()) {
-            itemList.setItem(2, new ItemStack(Items.page_up));
-        }else{itemList.setItem(2, new ItemStack(Items.no_page_up));}
+            itemList.setItem(2, Items.getItem("page_up"));
+        } else {
+            itemList.setItem(2, Items.getItem("no_page_up"));
+        }
 
-        itemList.setItem(1, new ItemStack(Items.createItem(Material.BOOK, ChatColor.DARK_RED + "Current Page: " + itemListPage.get(user), 20, 1, null, false, false, false)));
+        ItemStack pageIndicator = new ItemBuilder("page_indicator", Material.BOOK).hideInItemList().setDisplayName(ChatColor.DARK_RED + "Current Page: " + (itemListPage.get(user) + 1)).hasGlint().build();
+        itemList.setItem(1, pageIndicator);
 
         for(int i = 0; i < spacers.length; i++) {
             int slot = spacers[i];
-            itemList.setItem(slot, new ItemStack(Items.spacer));
+            ItemStack spacer = Items.getItem("spacer");
+            if (spacer != null) itemList.setItem(slot, spacer);
         }
 
+        //Clear-Up item list
+        List<ItemStack> allItems = new ArrayList<>(Items.itemList.values());
+        allItems.removeIf(s -> Items.hiddenItems.contains(s));
+
         for (int i = 0; i < 28; i++) {
-            itemList.addItem(Items.itemList.get(i + pageModi));
+            int idx = i + pageModi;
+            if (idx >= allItems.size()) break;
+            itemList.addItem(allItems.get(idx));
         }
 
     }

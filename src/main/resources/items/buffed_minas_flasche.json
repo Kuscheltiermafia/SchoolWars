@@ -1,0 +1,10 @@
+{
+  "material": "GLASS_BOTTLE",
+  "displayName": "§5§l§kA§r§4 Minas' Flasche §r§5§l§kA",
+  "customModelData": 1,
+  "stackSize": 1,
+  "glint": true,
+  "attackDamage": 10.0,
+  "attackSpeed": 0.95,
+  "showInItemList":true
+}

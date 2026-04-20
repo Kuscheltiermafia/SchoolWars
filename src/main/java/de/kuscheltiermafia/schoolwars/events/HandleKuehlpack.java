@@ -53,10 +53,11 @@ public class HandleKuehlpack implements Listener {
             //Handle Kuehlpack
             ItemFrame itemFrame = (ItemFrame) e.getRightClicked();
 
-            if (itemFrame.getItem().equals(Items.kuehlpack)) {
+            if (Items.isSpecificItem(itemFrame.getItem(), "kuehlpack")) {
                 e.setCancelled(true);
-                if(!p.getInventory().contains(Items.kuehlpack)) {
-                    p.getInventory().addItem(new ItemStack(Items.kuehlpack));
+                ItemStack k = Items.getItem("kuehlpack");
+                if (k != null && !p.getInventory().contains(k)) {
+                    p.getInventory().addItem(k);
                 }
             }
         }
@@ -65,7 +66,7 @@ public class HandleKuehlpack implements Listener {
 //Prevent Players from dropping Kuehlpack
     @EventHandler
     public void onDropKuehlpack(PlayerDropItemEvent e) {
-        if(e.getItemDrop().getItemStack().equals(Items.kuehlpack)) {
+        if (Items.isSpecificItem(e.getItemDrop().getItemStack(), "kuehlpack")) {
             e.setCancelled(true);
         }
     }

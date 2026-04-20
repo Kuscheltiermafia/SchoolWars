@@ -1,0 +1,13 @@
+{
+  "material": "POTION",
+  "displayName": "§dElexir Karls des Kleinen",
+  "customModelData": 1,
+  "stackSize": 1,
+  "lore": [
+    "§fNomen est omen",
+    "§fMit Bedacht zu verwenden",
+    "§fMögliche Nebenwirkungen: Tod"
+  ],
+  "hideAdditionalTooltip": true,
+  "showInItemList":true
+}

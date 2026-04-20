@@ -66,7 +66,7 @@ public class FischersSpielzeug implements Listener {
      */
     @EventHandler
     public void onFischerPlace(BlockPlaceEvent e) {
-        if(e.getItemInHand().equals(Items.fischers_spiel)) {
+        if (Items.isSpecificItem(e.getItemInHand(), "fischers_spiel")) {
 
             // ========== Validate game state ==========
             if(!SchoolWars.gameStarted) {

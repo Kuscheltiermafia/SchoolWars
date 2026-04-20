@@ -16,6 +16,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Random;
 
@@ -31,11 +32,12 @@ public class VornbergerEvents implements Listener {
     @EventHandler
     public void onVornbergerEvent(PlayerInteractEvent event) {
         if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            if( event.getPlayer().getInventory().getItemInMainHand().equals(Items.machete) && event.getPlayer().getInventory().getItemInOffHand().equals(Items.zwiebel)) {
-                
+            if (Items.isSpecificItem(event.getPlayer().getInventory().getItemInMainHand(), "machete") && Items.isSpecificItem(event.getPlayer().getInventory().getItemInOffHand(), "zwiebel")) {
+
                 // Check for success based on probability (33% chance)
                 if (Math.random() < ProbabilityConfig.getProbability("vornberger.onion_cutting_success_chance", 0.33)) {
-                    event.getPlayer().getInventory().setItemInOffHand(Items.geschnittene_zwiebel);
+                    ItemStack ges = Items.getItem("geschnittene_zwiebel");
+                    if (ges != null) event.getPlayer().getInventory().setItemInOffHand(ges);
                 } else {
                     PlayerStun.stunPlayer(event.getPlayer(), 4, false);
                     event.getPlayer().setHealth(event.getPlayer().getHealth() - 4);
@@ -56,11 +58,13 @@ public class VornbergerEvents implements Listener {
                     Random rand = new Random();
                     int random = rand.nextInt(27);
 
-                    zwiebelKiste.setItem(random, Items.zwiebel);
+                    ItemStack zw = Items.getItem("zwiebel");
+                    if (zw != null) zwiebelKiste.setItem(random, zw);
                 }
                 for(int i = 0; i < zwiebelKiste.getSize(); i++) {
                     if(zwiebelKiste.getItem(i) == null) {
-                        zwiebelKiste.setItem(i, Items.geschimmelte_zwiebel);
+                        ItemStack gesch = Items.getItem("geschimmelte_zwiebel");
+                        if (gesch != null) zwiebelKiste.setItem(i, gesch);
                     }
                 }
 
@@ -74,11 +78,12 @@ public class VornbergerEvents implements Listener {
         if( e.getView().getTitle().equals(ChatColor.DARK_RED + "Zwiebelkiste")) {
             e.setCancelled(true);
             Player p = (Player) e.getWhoClicked();
-            if (e.getCurrentItem() != null && e.getCurrentItem().equals(Items.zwiebel)) {
-                p.getInventory().addItem(Items.zwiebel);
+            if (e.getCurrentItem() != null && Items.isSpecificItem(e.getCurrentItem(), "zwiebel")) {
+                ItemStack zw = Items.getItem("zwiebel");
+                if (zw != null) p.getInventory().addItem(zw);
                 p.sendMessage(ChatColor.GREEN + "Du hast eine Zwiebel erhalten!");
                 p.closeInventory();
-            } else if (e.getCurrentItem() != null && e.getCurrentItem().equals(Items.geschimmelte_zwiebel)) {
+            } else if (e.getCurrentItem() != null && Items.isSpecificItem(e.getCurrentItem(), "geschimmelte_zwiebel")) {
                 p.sendMessage(ChatColor.RED + "Tja, die war verschimmelt...");
                 p.closeInventory();
             }

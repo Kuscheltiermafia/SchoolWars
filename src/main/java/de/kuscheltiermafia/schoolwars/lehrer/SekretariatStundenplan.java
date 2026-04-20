@@ -22,6 +22,7 @@ package de.kuscheltiermafia.schoolwars.lehrer;
 import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.commands.ItemList;
 import de.kuscheltiermafia.schoolwars.items.Items;
+import de.kuscheltiermafia.schoolwars.items.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -33,6 +34,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
@@ -68,7 +70,7 @@ public class SekretariatStundenplan implements Listener {
         if(e.getWhoClicked().getOpenInventory().getTitle().equals("§4Momentaner Stundenplan")) {
             e.setCancelled(true);
             try {
-                if (e.getCurrentItem().equals(Items.page_down)) {
+                if (Items.isSpecificItem(e.getCurrentItem(), "page_down")) {
                     Inventory stundenplan = createStundenplan(page - 1);
 
                     for (Player player : viewingPlayers) {
@@ -78,7 +80,7 @@ public class SekretariatStundenplan implements Listener {
                             viewingPlayers.remove(player);
                         }
                     }
-                }else if (e.getCurrentItem().equals(Items.page_up)) {
+                } else if (Items.isSpecificItem(e.getCurrentItem(), "page_up")) {
                     Inventory stundenplan = createStundenplan(page + 1);
                     for (Player player : viewingPlayers) {
                         if (player.getOpenInventory().getTitle().equals("§4Momentaner Stundenplan")) {
@@ -98,20 +100,21 @@ public class SekretariatStundenplan implements Listener {
         page = tempPage;
         Inventory stundenplan = Bukkit.createInventory(null, 9*6, "§4Momentaner Stundenplan");
 
-        if(page > 0) {
-            stundenplan.setItem(0, Items.page_down);
-        }else{
-            stundenplan.setItem(0, Items.no_page_down);
+        if (page > 0) {
+            stundenplan.setItem(0, Items.getItem("page_down"));
+        } else {
+            stundenplan.setItem(0, Items.getItem("no_page_down"));
         }
 
-        if(page < Math.ceil(Stundenplan.studenplan.size() / 28.0) - 1) {
-            stundenplan.setItem(2, Items.page_up);
-        }else{
-            stundenplan.setItem(2, Items.no_page_up);
+        if (page < Math.ceil(Stundenplan.studenplan.size() / 28.0) - 1) {
+            stundenplan.setItem(2, Items.getItem("page_up"));
+        } else {
+            stundenplan.setItem(2, Items.getItem("no_page_up"));
         }
 
-        for(int i = 0; i < ItemList.spacers.length; i++) {
-            stundenplan.setItem(ItemList.spacers[i], Items.spacer);
+        for (int i = 0; i < ItemList.spacers.length; i++) {
+            ItemStack spacer = Items.getItem("spacer");
+            if (spacer != null) stundenplan.setItem(ItemList.spacers[i], spacer);
         }
 
         for(int i = 0; i < 28; i++) {
@@ -125,15 +128,41 @@ public class SekretariatStundenplan implements Listener {
                 ArrayList<String> lore = new ArrayList<>();
                 lore.add(ChatColor.GRAY + area.name);
 
-                if(lehrer.isMale) {
-                    stundenplan.setItem(slotsForLehrer[i], Items.createItem(Material.OAK_SIGN, ChatColor.WHITE + "Herr " + lehrer.name, 1, 1, lore, false, false, false));
+                // Build a temporary sign item for the schedule using ItemBuilder instead of the removed Items.createItem helper.
+                // Use a unique id per slot so the ItemBuilder doesn't accidentally collide; hide it from the global item list.
+                String signId = "stundenplan_lehrer_" + index;
+                ItemStack signItem;
+                if (lehrer.isMale) {
+                    signItem = new ItemBuilder(signId, Material.OAK_SIGN)
+                            .setDisplayName(ChatColor.WHITE + "Herr " + lehrer.name)
+                            .setCustomModelData(1)
+                            .setStackSize(1)
+                            .setLore(lore.toArray(new String[0]))
+                            .hideInItemList()
+                            .build();
                 } else {
-                    stundenplan.setItem(slotsForLehrer[i], Items.createItem(Material.OAK_SIGN, ChatColor.WHITE + "Frau " + lehrer.name, 1, 1, lore, false, false, false));
+                    signItem = new ItemBuilder(signId, Material.OAK_SIGN)
+                            .setDisplayName(ChatColor.WHITE + "Frau " + lehrer.name)
+                            .setCustomModelData(1)
+                            .setStackSize(1)
+                            .setLore(lore.toArray(new String[0]))
+                            .hideInItemList()
+                            .build();
                 }
+
+                stundenplan.setItem(slotsForLehrer[i], signItem);
             }
         }
 
-        stundenplan.setItem(1, Items.createItem(Material.PAPER, ChatColor.DARK_RED + "" + returnLetter(stundenplan), 20, 1, null, false, false, false));
+        // Page display: build paper item via ItemBuilder. Hide from item list and use page in id to keep ids unique.
+        ItemStack pageInfo = new ItemBuilder("stundenplan_page_" + page, Material.PAPER)
+                .setDisplayName(ChatColor.DARK_RED + "" + returnLetter(stundenplan))
+                .setCustomModelData(20)
+                .setStackSize(1)
+                .hideInItemList()
+                .build();
+
+        stundenplan.setItem(1, pageInfo);
 
         return stundenplan;
     }
