@@ -97,7 +97,7 @@ public class Generalschluessel implements Listener {
             Block block = e.getClickedBlock();
 
             // ========== Validate key usage on iron door ==========
-            if (e.getItem().equals(Items.general_schluessel) && block.getType() == Material.IRON_DOOR) {
+            if (Items.isSpecificItem(e.getItem(), "general_schluessel") && block.getType() == Material.IRON_DOOR) {
                 e.setCancelled(true);
 
                 Door door = (Door) block.getBlockData();
@@ -155,9 +155,10 @@ public class Generalschluessel implements Listener {
             // Give master key from item frame
             ItemFrame itemFrame = (ItemFrame) e.getRightClicked();
 
-            if (itemFrame.getItem().equals(Items.general_schluessel)) {
+            if (Items.isSpecificItem(itemFrame.getItem(), "general_schluessel")) {
                 e.setCancelled(true);
-                p.getInventory().addItem(new ItemStack(Items.general_schluessel));
+                ItemStack key = Items.getItem("general_schluessel");
+                if (key != null) p.getInventory().addItem(key);
             }
         }
     }
@@ -167,7 +168,7 @@ public class Generalschluessel implements Listener {
      */
     @EventHandler
     public void onDropGeneralschluessel(PlayerDropItemEvent e){
-        if(SchoolWars.presentationMode && e.getItemDrop().getItemStack().equals(Items.general_schluessel)){
+        if (SchoolWars.presentationMode && Items.isSpecificItem(e.getItemDrop().getItemStack(), "general_schluessel")){
             e.setCancelled(true);
         }
     }

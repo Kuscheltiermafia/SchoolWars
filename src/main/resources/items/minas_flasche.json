@@ -1,0 +1,11 @@
+{
+  "material": "GLASS_BOTTLE",
+  "displayName": "§4Minas' Flasche",
+  "customModelData": 1,
+  "stackSize": 1,
+  "lore": null,
+  "glint": false,
+  "attackDamage": 3.0,
+  "attackSpeed": 1.0,
+  "showInItemList":true
+}

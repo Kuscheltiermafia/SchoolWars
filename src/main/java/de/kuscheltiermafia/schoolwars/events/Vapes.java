@@ -49,13 +49,13 @@ public class Vapes implements Listener {
 
     private HashMap<ItemStack, PotionEffectType> getVapeEffects() {
         HashMap<ItemStack, PotionEffectType> vapeEffects = new HashMap<>();
-        vapeEffects.put(Items.vape_fruitberry, PotionEffectType.STRENGTH);
-        vapeEffects.put(Items.vape_arschwasser, PotionEffectType.INSTANT_HEALTH);
-        vapeEffects.put(Items.vape_strawberry, PotionEffectType.JUMP_BOOST);
-        vapeEffects.put(Items.vape_mango, PotionEffectType.SPEED);
-        vapeEffects.put(Items.vape_triple, PotionEffectType.REGENERATION);
-        vapeEffects.put(Items.vape_arabics, PotionEffectType.NIGHT_VISION);
-        vapeEffects.put(Items.vape_air, PotionEffectType.SLOW_FALLING);
+        vapeEffects.put(Items.getItem("vape_fruitberry"), PotionEffectType.STRENGTH);
+        vapeEffects.put(Items.getItem("vape_arschwasser"), PotionEffectType.INSTANT_HEALTH);
+        vapeEffects.put(Items.getItem("vape_strawberry"), PotionEffectType.JUMP_BOOST);
+        vapeEffects.put(Items.getItem("vape_mango"), PotionEffectType.SPEED);
+        vapeEffects.put(Items.getItem("vape_triple"), PotionEffectType.REGENERATION);
+        vapeEffects.put(Items.getItem("vape_arabics"), PotionEffectType.NIGHT_VISION);
+        vapeEffects.put(Items.getItem("vape_air"), PotionEffectType.SLOW_FALLING);
         return vapeEffects;
     }
 }

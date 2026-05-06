@@ -1,0 +1,10 @@
+{
+  "material": "IRON_SWORD",
+  "displayName": "§7Pazifisten-Machete",
+  "customModelData": 1,
+  "stackSize": 1,
+  "glint": true,
+  "attackDamage": 4.0,
+  "attackSpeed": 0.1,
+  "showInItemList":true
+}

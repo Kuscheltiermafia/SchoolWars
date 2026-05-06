@@ -1,0 +1,9 @@
+{
+  "material": "KNOWLEDGE_BOOK",
+  "displayName": "§cDornbader Schlag",
+  "customModelData": 1,
+  "stackSize": 1,
+  "attackDamage": 9.0,
+  "attackSpeed": 1.2,
+  "showInItemList":true
+}

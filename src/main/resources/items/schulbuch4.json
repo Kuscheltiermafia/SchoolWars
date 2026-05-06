@@ -1,0 +1,9 @@
+{
+  "material": "KNOWLEDGE_BOOK",
+  "displayName": "§aGreen Line to Hell",
+  "customModelData": 1,
+  "stackSize": 1,
+  "attackDamage": 12.0,
+  "attackSpeed": 1.3,
+  "showInItemList":true
+}

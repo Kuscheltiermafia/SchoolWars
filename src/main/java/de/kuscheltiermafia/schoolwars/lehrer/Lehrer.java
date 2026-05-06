@@ -86,6 +86,9 @@ public enum Lehrer {
     RAITH("Raith", Villager.Type.PLAINS, Villager.Profession.ARMORER, true, 1, true, true, true, Raum.VERWALTUNG, null),
     BECK("Beck", Villager.Type.SNOW, Villager.Profession.ARMORER, true, 0.9, true, false, true, Raum.NORMAL, null),
     STOCK("Stock", Villager.Type.SAVANNA, Villager.Profession.MASON, true, 1.01, true, false, true, Raum.GLASKASTEN, null),
+    DOTZEL("Dotzel", Villager.Type.PLAINS, Villager.Profession.NITWIT, true, 1, true, false, true, Raum.NORMAL, null),
+    QUAST("Quast", Villager.Type.SWAMP, Villager.Profession.CLERIC, true, 1, true, false, true, Raum.PHYSIK, null),
+    AMANN("Amann", Villager.Type.SNOW, Villager.Profession.FARMER, true, 1, true, false, true, Raum.NORMAL, null),
     ERSETZBAR_07("Ersetzbarer Referendar #07", Villager.Type.SWAMP, Villager.Profession.NONE, true, 1, true, false, false, Raum.GLASKASTEN, null),
     ERSETZBAR_38("Ersetzbarer Referendar #38", Villager.Type.SWAMP, Villager.Profession.NONE, true, 1, true, false, false, Raum.GLASKASTEN, null),
     ERSETZBAR_69("Ersetzbarer Referendar #69", Villager.Type.PLAINS, Villager.Profession.NONE, true, 1, true, false, true, Raum.GLASKASTEN, null),
@@ -211,11 +214,7 @@ public enum Lehrer {
 
         Villager currentLehrer = (Villager) Bukkit.getWorld("schoolwars").spawnEntity(location, EntityType.VILLAGER);
 
-        if(isMale) {
-            currentLehrer.setCustomName("Herr " + name);
-        }else{
-            currentLehrer.setCustomName("Frau " + name);
-        }
+        currentLehrer.setCustomName((isMale ? "Herr " : "Frau ") + name);
         currentLehrer.setCustomNameVisible(false);
         currentLehrer.setVillagerType(type);
         currentLehrer.setAI(hasAI);

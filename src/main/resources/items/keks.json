@@ -1,0 +1,11 @@
+{
+  "material": "COOKIE",
+  "displayName": "§6Keks",
+  "customModelData": 1,
+  "stackSize": 1,
+  "lore": [
+    "§fKeks von Herr Kesselring",
+    "§fHerr Geitners lieblings Snack"
+  ],
+  "showInItemList":true
+}

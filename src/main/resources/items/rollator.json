@@ -1,0 +1,7 @@
+{
+  "material": "NETHER_BRICK_FENCE",
+  "displayName": "§7Rollator",
+  "customModelData": 1,
+  "stackSize": 1,
+  "showInItemList":true
+}

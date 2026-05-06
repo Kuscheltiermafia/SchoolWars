@@ -87,40 +87,40 @@ public class LehrerQuests implements Listener {
      * </p>
      */
     public static void initLehrerQuests() {
-        requieredLehrerItems.put(Lehrer.FISCHER, Items.stroke_master);
-        rewardLehrerItems.put(Lehrer.FISCHER, Items.fischers_spiel);
+        requieredLehrerItems.put(Lehrer.FISCHER, Items.getItem("stroke_master"));
+        rewardLehrerItems.put(Lehrer.FISCHER, Items.getItem("fischers_spiel"));
         repReward.put(Lehrer.FISCHER, 1.0);
 
-        requieredLehrerItems.put(Lehrer.SCHNEIDER, Items.ipad);
-        rewardLehrerItems.put(Lehrer.SCHNEIDER, Items.kaputtes_ipad);
+        requieredLehrerItems.put(Lehrer.SCHNEIDER, Items.getItem("ipad"));
+        rewardLehrerItems.put(Lehrer.SCHNEIDER, Items.getItem("kaputtes_ipad"));
         repReward.put(Lehrer.SCHNEIDER, 1.0);
 
-        requieredLehrerItems.put(Lehrer.BAAR, Items.baar_kaffee);
-        rewardLehrerItems.put(Lehrer.BAAR, Items.useless_uranium);
+        requieredLehrerItems.put(Lehrer.BAAR, Items.getItem("baar_kaffee"));
+        rewardLehrerItems.put(Lehrer.BAAR, Items.getItem("useless_uranium"));
         repReward.put(Lehrer.BAAR, 1.0);
 
-        requieredLehrerItems.put(Lehrer.KLIEM, Items.placeholder);
-        rewardLehrerItems.put(Lehrer.KLIEM, Items.placeholder);
+        requieredLehrerItems.put(Lehrer.KLIEM, Items.getItem("placeholder"));
+        rewardLehrerItems.put(Lehrer.KLIEM, Items.getItem("placeholder"));
         repReward.put(Lehrer.KLIEM, 0.0);
 
-        requieredLehrerItems.put(Lehrer.VORNBERGER, Items.geschnittene_zwiebel);
-        rewardLehrerItems.put(Lehrer.VORNBERGER, Items.ausleihschein);
+        requieredLehrerItems.put(Lehrer.VORNBERGER, Items.getItem("geschnittene_zwiebel"));
+        rewardLehrerItems.put(Lehrer.VORNBERGER, Items.getItem("ausleihschein"));
         repReward.put(Lehrer.VORNBERGER, 1.0);
 
-        requieredLehrerItems.put(Lehrer.GEITNER, Items.keks);
-        rewardLehrerItems.put(Lehrer.GEITNER, Items.fachraum_schrank_schluessel);
+        requieredLehrerItems.put(Lehrer.GEITNER, Items.getItem("keks"));
+        rewardLehrerItems.put(Lehrer.GEITNER, Items.getItem("fachraum_schrank_schluessel"));
         repReward.put(Lehrer.GEITNER, 1.0);
 
-        requieredLehrerItems.put(Lehrer.DICKERT, Items.emilia_ausland_brief);
-        rewardLehrerItems.put(Lehrer.DICKERT, Items.natrium_fluorid);
+        requieredLehrerItems.put(Lehrer.DICKERT, Items.getItem("emilia_ausland_brief"));
+        rewardLehrerItems.put(Lehrer.DICKERT, Items.getItem("natrium_fluorid"));
         repReward.put(Lehrer.DICKERT, 1.0);
 
-        requieredLehrerItems.put(Lehrer.BIEBER, Items.kuehlpack);
-        rewardLehrerItems.put(Lehrer.BIEBER, Items.machete);
+        requieredLehrerItems.put(Lehrer.BIEBER, Items.getItem("kuehlpack"));
+        rewardLehrerItems.put(Lehrer.BIEBER, Items.getItem("machete"));
         repReward.put(Lehrer.BIEBER, 1.0);
 
-        requieredLehrerItems.put(Lehrer.RAITH, Items.kaputtes_ipad);
-        rewardLehrerItems.put(Lehrer.RAITH, Items.rollator);
+        requieredLehrerItems.put(Lehrer.RAITH, Items.getItem("kaputtes_ipad"));
+        rewardLehrerItems.put(Lehrer.RAITH, Items.getItem("rollator"));
         repReward.put(Lehrer.RAITH, 1.0);
     }
 
@@ -150,7 +150,8 @@ public class LehrerQuests implements Listener {
 
             Inventory questMenu = Bukkit.createInventory(null, 9*6, ChatColor.DARK_RED + lehrer.name + "'s Aufgabe:");
             for (int slot : questSpacers) {
-                questMenu.setItem(slot, new ItemStack(Items.spacer));
+                ItemStack spacer = Items.getItem("spacer");
+                if (spacer != null) questMenu.setItem(slot, spacer);
             }
 
             questMenu.setItem(20, requieredLehrerItems.get(lehrer));
@@ -158,11 +159,13 @@ public class LehrerQuests implements Listener {
 
             if(p.getInventory().contains(requieredLehrerItems.get(lehrer))) {
                 for (int slot : itemsIndicator) {
-                    questMenu.setItem(slot, new ItemStack(Items.available_item));
+                    ItemStack avail = Items.getItem("available_item");
+                    if (avail != null) questMenu.setItem(slot, avail);
                 }
-            }else {
+            } else {
                 for (int slot : itemsIndicator) {
-                    questMenu.setItem(slot, new ItemStack(Items.not_available_item));
+                    ItemStack notAvail = Items.getItem("not_available_item");
+                    if (notAvail != null) questMenu.setItem(slot, notAvail);
                 }
             }
 
@@ -185,7 +188,7 @@ public class LehrerQuests implements Listener {
             Player p = (Player) e.getWhoClicked();
 
             if(e.getSlot() == 24) {
-                if(p.getOpenInventory().getItem(10).equals(Items.available_item)) {
+                if (Items.isSpecificItem(p.getOpenInventory().getItem(10), "available_item")) {
 
                     String stringOhneFarbe = p.getOpenInventory().getTitle().replaceAll(ChatColor.DARK_RED.toString(), "");
                     String lehrerName = stringOhneFarbe.replaceAll("'s Aufgabe:", "");

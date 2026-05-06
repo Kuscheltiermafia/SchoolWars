@@ -1,0 +1,12 @@
+{
+  "material": "TIDE_ARMOR_TRIM_SMITHING_TEMPLATE",
+  "displayName": "§bKühlpack",
+  "customModelData": 1,
+  "stackSize": 1,
+  "lore": [
+    "§7Kühle hiermit die Verletzungen",
+    "§7deiner Mitstreiter und hilf ihnen so."
+  ],
+  "hideAdditionalTooltip": true,
+  "showInItemList":true
+}

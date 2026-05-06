@@ -1,0 +1,15 @@
+{
+  "material": "PAPER",
+  "displayName": "§6Script: Alice im Wunderland",
+  "customModelData": 1,
+  "stackSize": 1,
+  "lore": [
+    "§l§f                   - Prolog -",
+    "§fRegisseurin geht nachdenklich auf der Bühne auf und ab,",
+    "§fsich gelegentlich die Hände reibend bzw. am Kopf kratzend.",
+    "§fKritikerin liest am vorderen rechten Bühnenrand",
+    "§fvöllig unbewegt „Die Kritik der reinen Vernunft“."
+  ],
+  "glint": true,
+  "showInItemList":true
+}

@@ -1,0 +1,10 @@
+{
+  "material": "COMPASS",
+  "displayName": "§8Peilsender",
+  "customModelData": 1,
+  "stackSize": 1,
+  "lore": [
+    "§8Herr Fischer kann sich nicht länger verstecken!"
+  ],
+  "showInItemList":true
+}

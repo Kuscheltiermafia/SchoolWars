@@ -67,14 +67,14 @@ public class Minasisierung implements Listener {
         for(ItemStack item : p.getInventory().getContents()) {
             if(item != null) {
                 // Upgrade Minas bottle to buffed version
-                if (item.equals(Items.minas_flasche)) {
-                    item.setType(Items.buffed_minas_flasche.getType());
-                    item.setItemMeta(Items.buffed_minas_flasche.getItemMeta());
+                if (Items.isSpecificItem(item, "minas_flasche")) {
+                    item.setType(Items.getItem("buffed_minas_flasche").getType());
+                    item.setItemMeta(Items.getItem("buffed_minas_flasche").getItemMeta());
                 }
                 // Upgrade attack chair to buffed version
-                if (item.equals(Items.attack_stuhl)) {
-                    item.setType(Items.buffed_stuhl.getType());
-                    item.setItemMeta(Items.buffed_stuhl.getItemMeta());
+                if (Items.isSpecificItem(item, "attack_stuhl")) {
+                    item.setType(Items.getItem("buffed_stuhl").getType());
+                    item.setItemMeta(Items.getItem("buffed_stuhl").getItemMeta());
                 }
             }
         }
@@ -93,11 +93,11 @@ public class Minasisierung implements Listener {
                     if(finalI == minasDauer - 1) {
                         for(ItemStack item : p.getInventory().getContents()) {
                             if(item != null) {
-                                if (item.equals(Items.buffed_minas_flasche)) {
-                                    item.setItemMeta(Items.minas_flasche.getItemMeta());
+                                if (Items.isSpecificItem(item, "buffed_minas_flasche")) {
+                                    item.setItemMeta(Items.getItem("minas_flasche").getItemMeta());
                                 }
-                                if (item.equals(Items.buffed_stuhl)) {
-                                    item.setItemMeta(Items.attack_stuhl.getItemMeta());
+                                if (Items.isSpecificItem(item, "buffed_stuhl")) {
+                                    item.setItemMeta(Items.getItem("attack_stuhl").getItemMeta());
                                 }
                                 currentAutism.remove(p);
                             }
@@ -119,9 +119,10 @@ public class Minasisierung implements Listener {
             Player p = e.getPlayer();
 
             try {
-                if (e.getItem().equals(Items.kerze)) {
+                assert e.getItem() != null;
+                if (Items.isSpecificItem(e.getItem(), "kerze")) {
                     e.setCancelled(true);
-                    p.getInventory().removeItem(Items.kerze);
+                    p.getInventory().removeItem(Items.getItem("kerze"));
                     
                     // Initialize sacrifice counter if needed
                     if(!currentAutism.containsKey(p)) {

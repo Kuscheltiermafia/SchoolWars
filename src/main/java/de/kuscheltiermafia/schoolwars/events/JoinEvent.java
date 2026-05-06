@@ -116,7 +116,7 @@ public class JoinEvent implements Listener {
         }else if(SchoolWars.presentationMode){
             //Presentationmode
             e.getPlayer().getInventory().clear();
-            e.getPlayer().getInventory().addItem(Items.general_schluessel);
+            e.getPlayer().getInventory().addItem(Items.getItem("generalschluessel"));
             e.getPlayer().sendMessage(ChatColor.YELLOW + "[SchoolWars] Die Schule ist im Präsentiermodus. Viel Spaß beim Erkunden!");
             e.getPlayer().sendMessage(ChatColor.GRAY + "[SchoolWars] Nutze den Generalschlüssel für Eisentüren!");
         }

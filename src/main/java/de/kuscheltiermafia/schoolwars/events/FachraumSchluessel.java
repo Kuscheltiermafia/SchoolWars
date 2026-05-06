@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Handles special cabinet key (Fachraum Schlüssel) interactions.
@@ -25,14 +26,15 @@ public class FachraumSchluessel implements Listener {
     public void onFachraumSchluessel (PlayerInteractEvent e){
         try{
             // Check if player is using the cabinet key on a blue shulker box
-            if (e.getItem().equals(Items.fachraum_schrank_schluessel) && e.getClickedBlock().getType() == Material.BLUE_SHULKER_BOX) {
+            if (Items.isSpecificItem(e.getItem(), "fachraum_schrank_schluessel") && e.getClickedBlock().getType() == Material.BLUE_SHULKER_BOX) {
                 e.setCancelled(true);
                 
                 // Verify the cabinet is at the correct location
                 if (e.getClickedBlock().getLocation().getX() == -5 && e.getClickedBlock().getLocation().getY() == 81 && e.getClickedBlock().getLocation().getZ() == 187) {
                     // Open the cabinet inventory and consume the key
                     schrankInventory(e.getPlayer());
-                    e.getPlayer().getInventory().remove(Items.fachraum_schrank_schluessel);
+                    ItemStack key = Items.getItem("fachraum_schrank_schluessel");
+                    if (key != null) e.getPlayer().getInventory().remove(key);
                 } else {
                     // Wrong cabinet location
                     e.getPlayer().sendMessage("§cDieser Schrank ist nicht für dich zugänglich!");
@@ -47,7 +49,8 @@ public class FachraumSchluessel implements Listener {
      */
     private void schrankInventory(Player player) {
         Inventory inventory = Bukkit.createInventory(null, 9 * 3, "§4Fachraum Schrank");
-        inventory.setItem(13, Items.versuch);
+        ItemStack vers = Items.getItem("versuch");
+        if (vers != null) inventory.setItem(13, vers);
         player.openInventory(inventory);
     }
 

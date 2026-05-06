@@ -25,6 +25,7 @@ import de.kuscheltiermafia.schoolwars.SchoolWars;
 import de.kuscheltiermafia.schoolwars.config.ProbabilityConfig;
 import de.kuscheltiermafia.schoolwars.events.autism.Minasisierung;
 import de.kuscheltiermafia.schoolwars.events.SchulbuchLevels;
+import de.kuscheltiermafia.schoolwars.items.Items;
 import de.kuscheltiermafia.schoolwars.lehrer.*;
 import de.kuscheltiermafia.schoolwars.mechanics.Intro;
 import de.kuscheltiermafia.schoolwars.events.autism.PlayerStun;
@@ -419,6 +420,19 @@ public class Debug extends BaseCommand {
             } else {
                 p.sendMessage(debugPrefix + "Game has not started yet!");
             }
+        }
+    }
+
+    @Subcommand("item")
+    @CommandPermission("schoolwars.debug.giveitem")
+    @Description("Gives an item to a player")
+    public class onItemGiveCommand extends BaseCommand {
+
+        @Subcommand("give")
+        @Description("Gives an item to a player")
+        public static void onGiveItemCommand(CommandSender sender, @Optional String itemIdentifier) {
+            Player p = (Player) sender;
+            p.getInventory().addItem(Items.getItem(itemIdentifier));
         }
     }
 

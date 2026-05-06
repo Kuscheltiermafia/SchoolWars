@@ -222,9 +222,12 @@ public class PlayerDeath implements Listener {
 
     public static void loseItems(Player player){
         for (int i = 0; i < 36; i++) {
-            if (player.getInventory().getItem(i) == null || player.getInventory().getItem(i).equals(Items.schulbuch1) || player.getInventory().getItem(i).equals(Items.schulbuch2)
-                    || player.getInventory().getItem(i).equals(Items.schulbuch3) || player.getInventory().getItem(i).equals(Items.schulbuch4)
-                    || player.getInventory().getItem(i).equals(Items.schulbuch5) || Items.ranzenList.contains(player.getInventory().getItem(i))) {
+            ItemStack invItem = player.getInventory().getItem(i);
+            if (invItem == null) continue;
+            if (Items.isSpecificItem(invItem, "schulbuch1") || Items.isSpecificItem(invItem, "schulbuch2")
+                    || Items.isSpecificItem(invItem, "schulbuch3") || Items.isSpecificItem(invItem, "schulbuch4")
+                    || Items.isSpecificItem(invItem, "schulbuch5")
+                    || Items.isSpecificItem(invItem, "nws_ranzen") || Items.isSpecificItem(invItem, "sprach_ranzen") || Items.isSpecificItem(invItem, "sport_ranzen")) {
                 continue;
             }
             if (Math.random() < ProbabilityConfig.getProbability("item_loss_on_death", 0.2)) {

@@ -1,0 +1,7 @@
+{
+  "material": "NETHER_WART",
+  "displayName": "§dZiebelstücke",
+  "customModelData": 1,
+  "stackSize": 16,
+  "showInItemList":true
+}

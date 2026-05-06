@@ -1,0 +1,14 @@
+{
+  "material": "NETHERITE_HELMET",
+  "displayName": "§fMoritz' Hut",
+  "customModelData": 1,
+  "stackSize": 1,
+  "lore": [
+    "§7Dieses Item representiert die Stärke",
+    "§7und Macht unseres Schulleiters Morgon!",
+    "§7Geehrt sei Morgon!",
+    "§7Victory at all costs!",
+    "§4Heil Morgon!"
+  ],
+  "showInItemList":true
+}

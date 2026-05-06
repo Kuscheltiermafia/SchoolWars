@@ -45,9 +45,9 @@ public class BaarsKaffee implements Listener {
             //Handle leere Tasse
             ItemFrame itemFrame = (ItemFrame) e.getRightClicked();
 
-            if (itemFrame.getItem().equals(Items.leere_tasse)) {
+            if (Items.isSpecificItem(itemFrame.getItem(), "leere_tasse")) {
                 e.setCancelled(true);
-                p.getInventory().addItem(new ItemStack(Items.leere_tasse));
+                p.getInventory().addItem(Items.getItem("leere_tasse"));
             }
         }
     }
@@ -63,11 +63,11 @@ public class BaarsKaffee implements Listener {
                     Random rand = new Random();
                     int random = rand.nextInt(27);
 
-                    kaffeeKiste.setItem(random, Items.kaffeebohnen);
+                    kaffeeKiste.setItem(random, Items.getItem("kaffeebohnen"));
                 }
                 for(int i = 0; i < kaffeeKiste.getSize(); i++) {
                     if(kaffeeKiste.getItem(i) == null) {
-                        kaffeeKiste.setItem(i, Items.verbrannte_bohnen);
+                        kaffeeKiste.setItem(i, Items.getItem("verbrannte_bohnen"));
                     }
                 }
 
@@ -92,15 +92,16 @@ public class BaarsKaffee implements Listener {
                 }
 
                 Player p = e.getPlayer();
-                if (p.getInventory().contains(Items.leere_tasse) && p.getInventory().contains(Items.kaffeebohnen)) {
+                if (p.getInventory().contains(Items.getItem("leere_tasse")) && p.getInventory().contains(Items.getItem("kaffeebohnen"))) {
                     amBrauen = true;
-                    p.getInventory().removeItem(Items.leere_tasse);
-                    p.getInventory().removeItem(Items.kaffeebohnen);
+                    p.getInventory().removeItem(Items.getItem("leere_tasse"));
+                    p.getInventory().removeItem(Items.getItem("kaffeebohnen"));
 
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            Items.createItemsEntity(new ItemStack(Items.baar_kaffee), e.getClickedBlock().getLocation().add(0.5, 0, -0.5));
+                            ItemStack baar = Items.getItem("baar_kaffee");
+                            if (baar != null) Items.createItemsEntity(baar, e.getClickedBlock().getLocation().add(0.5, 0, -0.5));
                             amBrauen = false;
                         }
                     }.runTaskLater(SchoolWars.getPlugin(), duration);

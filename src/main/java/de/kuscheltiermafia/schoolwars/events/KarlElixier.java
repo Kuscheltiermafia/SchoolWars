@@ -68,7 +68,7 @@ public class KarlElixier implements Listener {
             
             // ========== Validate elixir usage ==========
             // Only work if player is at normal size and holding the elixir
-            if(e.getPlayer().getInventory().getItemInMainHand().equals(Items.karls_elexier) && p.getAttribute(Attribute.GENERIC_SCALE).getBaseValue() > 0.95) {
+            if (Items.isSpecificItem(e.getPlayer().getInventory().getItemInMainHand(), "karls_elexier") && p.getAttribute(Attribute.GENERIC_SCALE).getBaseValue() > 0.95) {
                 increase.put(p.getName(), true);
                 p.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
                 

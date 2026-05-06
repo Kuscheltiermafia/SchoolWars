@@ -58,7 +58,7 @@ public class Rolator implements Listener {
         ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
         Location loc = p.getLocation();
 
-        if(item.equals(Items.rollator)) {
+        if (Items.isSpecificItem(item, "rollator")) {
             if(e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
 
                 // ========== Start dash attack ==========

@@ -65,7 +65,7 @@ public class PlayerStun implements Listener {
         stunned.add(p);
         ItemStack[] hotbarItems = new ItemStack[]{p.getInventory().getItem(0), p.getInventory().getItem(1), p.getInventory().getItem(2), p.getInventory().getItem(3), p.getInventory().getItem(4), p.getInventory().getItem(5), p.getInventory().getItem(6), p.getInventory().getItem(7), p.getInventory().getItem(8)};
         for(int i = 0; i < 9; i++) {
-            p.getInventory().setItem(i, Items.strick);
+            p.getInventory().setItem(i, Items.getItem("strick"));
         }
 
         playerInvsave.put(p, hotbarItems);
@@ -86,7 +86,7 @@ public class PlayerStun implements Listener {
             @Override
             public void run() {
                 stunned.remove(p);
-                p.getInventory().remove(Items.strick);
+                p.getInventory().remove(Items.getItem("strick"));
 
                 for(int i = 0; i < 9; i++) {
                     ItemStack[] hotbarStacks = playerInvsave.get(p);

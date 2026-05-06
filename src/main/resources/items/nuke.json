@@ -1,0 +1,7 @@
+{
+  "material": "TNT",
+  "displayName": "§4Atombombe",
+  "customModelData": 1,
+  "stackSize": 1,
+  "showInItemList":true
+}

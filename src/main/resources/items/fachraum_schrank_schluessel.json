@@ -1,0 +1,10 @@
+{
+  "material": "TRIPWIRE_HOOK",
+  "displayName": "§6Fachraumschrankschlüssel",
+  "customModelData": 1,
+  "stackSize": 1,
+  "lore": [
+    "§fÖffnet die Blaue Box in der Physik Vorbereitung"
+  ],
+  "showInItemList":true
+}
