@@ -38,6 +38,8 @@ public class PresentationMode {
             ghostBustersBlock2.setType(Material.AIR);
 
             replaceButtonArea(startButtonOn);
+
+            Lehrer.removeAllLehrer();
         }
     }
 

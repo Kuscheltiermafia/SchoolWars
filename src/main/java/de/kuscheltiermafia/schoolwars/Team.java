@@ -34,9 +34,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.lang.reflect.Array;
+import java.util.*;
 
 import static de.kuscheltiermafia.schoolwars.events.win_conditions.Ranzen.ranzenAmount;
 import static de.kuscheltiermafia.schoolwars.PlayerData.playerData;
@@ -180,12 +179,25 @@ public enum Team {
      */
     public void readyPlayer(Player p){
 
-        if (Math.random() == ProbabilityConfig.getProbability("message.wizard_harry", 0.05)){
-            p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist ein " + ChatColor.LIGHT_PURPLE + "Zauberer" + ChatColor.YELLOW + ", Harry");
-            p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Ne, warte... Falscher Text...");
+        final Component[] secretMessage = {
+                Component.text("Zauberer", NamedTextColor.LIGHT_PURPLE),
+                Component.text("Ominösös Stöngöbödö", NamedTextColor.GRAY),
+                Component.text("Steuerzahler", NamedTextColor.DARK_RED)
+        };
+
+        if (Math.random() <= ProbabilityConfig.getProbability("message.wizard_harry", 0.05)){
+            int rand = new Random().nextInt(secretMessage.length) - 1;
+            p.sendMessage(Component.text("[SchoolWars] Du bist ein ", NamedTextColor.YELLOW)
+                    .append(secretMessage[rand])
+                    .append(Component.text(", Harry!", NamedTextColor.YELLOW)));
+            p.sendMessage(Component.text("[SchoolWars] Ne, warte... Falscher Text...", NamedTextColor.YELLOW));
         }
 
-        p.sendMessage(ChatColor.YELLOW + "[SchoolWars] Du bist ein " + LegacyComponentSerializer.legacySection().serialize(joinMessage) + ", " + ChatColor.YELLOW + p.getName() + "!");
+        p.sendMessage(Component.text("[SchoolWars] Du bist ein ", NamedTextColor.YELLOW)
+                .append(joinMessage)
+                .append(Component.text(", ", NamedTextColor.YELLOW))
+                .append(Component.text(p.getName(), NamedTextColor.YELLOW))
+                .append(Component.text("!", NamedTextColor.YELLOW)));
 
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
         org.bukkit.scoreboard.Team team = scoreboard.getTeam(LegacyComponentSerializer.legacySection().serialize(this.teamName));
@@ -232,6 +244,7 @@ public enum Team {
     public static void resetPlayer(Player p){
         p.setDisplayName(p.getName());
         p.setPlayerListName(p.getName());
+        p.getInventory().clear();
     }
 
     /**

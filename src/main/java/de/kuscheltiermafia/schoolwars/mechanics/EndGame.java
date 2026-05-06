@@ -26,6 +26,7 @@ import de.kuscheltiermafia.schoolwars.lehrer.Lehrer;
 import de.kuscheltiermafia.schoolwars.events.win_conditions.Ranzen;
 import io.github.realMorgon.sunriseLib.Message;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -73,8 +74,11 @@ public class EndGame {
         }
         Team.clearTeams();
 
-        for (Villager lehrer : Lehrer.lehrerEntityList) {
-            lehrer.remove();
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if(p.getGameMode() != org.bukkit.GameMode.SURVIVAL) {
+                p.setGameMode(org.bukkit.GameMode.SURVIVAL);
+                p.teleport(new Location(SchoolWars.WORLD, -32.0, 81.0, 176.0));
+            }
         }
 
         for(BlockDisplay ranzen : Ranzen.placedRanzen.keySet()) {
